@@ -122,6 +122,7 @@
 }
 
 - (void)beginRelayout {
+    NSAssert(!_relayoutInProgress, @"Relayout should not be in progress.");
     _relayoutInProgress = YES;
 }
 
@@ -130,6 +131,7 @@
 }
 
 - (void)endRelayout {
+    NSAssert(_relayoutInProgress, @"Relayout should be in progress.");
     _relayoutInProgress = NO;
 }
 

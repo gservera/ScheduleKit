@@ -40,35 +40,25 @@ static NSDictionary * __subHourLabelAttrs = nil;
         __hourLabelAttrs = @{NSParagraphStyleAttributeName:  style,
                             NSForegroundColorAttributeName: [NSColor darkGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:11.0]};
-        __subHourLabelAttrs = @{NSParagraphStyleAttributeName:  style,
+        NSMutableParagraphStyle *right = [style mutableCopy];
+        right.alignment = NSRightTextAlignment;
+        __subHourLabelAttrs = @{NSParagraphStyleAttributeName:  right,
                             NSForegroundColorAttributeName: [NSColor lightGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:10.0]};
     }
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self prepare];
-    }
-    return self;
-}
-
-- (instancetype)initWithFrame:(NSRect)frameRect {
-    self = [super initWithFrame:frameRect];
-    if (self) {
-        [self prepare];
-    }
-    return self;
-}
-
 - (void)prepare {
     [super prepare];
-    _calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(markAsNeedingDisplay) userInfo:nil repeats:YES];
+    _calendar = [NSCalendar currentCalendar];
+    _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(minuteTimerFired:) userInfo:nil repeats:YES];
     _minuteTimer.tolerance = 10.0;
     _dayCount = 1; _hourCount = 1; _firstHour = 1;
     _hourHeight = [[NSUserDefaults standardUserDefaults] doubleForKey:@"MEKZoom"];
+}
+
+- (void)minuteTimerFired:(NSTimer*)timer {
+    [self markAsNeedingDisplay];
 }
 
 - (NSRect)contentRect {
@@ -76,9 +66,11 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)setHourHeight:(CGFloat)hourHeight {
-    _hourHeight = hourHeight;
-    [[NSUserDefaults standardUserDefaults] setDouble:hourHeight forKey:@"MEKZoom"];
-    [self invalidateIntrinsicContentSize];
+    if (_hourHeight != hourHeight) {
+        _hourHeight = hourHeight;
+        [[NSUserDefaults standardUserDefaults] setDouble:hourHeight forKey:@"MEKZoom"];
+        [self invalidateIntrinsicContentSize];
+    }
 }
 
 - (void)viewWillMoveToSuperview:(NSView *)newSuperview {
@@ -280,16 +272,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
         return;
     } else {
         [self drawUnavailableTimeRanges];
-        
-        NSRect dayLabelingRect = NSMakeRect(kHourLabelWidth, NSMinY(self.bounds), NSWidth(self.frame) - kHourLabelWidth, kDayLabelHeight);
-        
-        if (NSIntersectsRect(dirtyRect, NSInsetRect(dayLabelingRect, 1, 1))) {
-            [self drawDayLabelRect];
-        } else {
-            NSLog(@"Prevented drawing of day labels");
-        }
-        
-        
+        [self drawDayLabelRect];
         [self drawHourDelimiters];
         [self drawCurrentTimeLine];
         if (_eventViewBeingDragged) {
@@ -327,7 +310,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
 
 - (IBAction)increaseZoomFactor:(id)sender {
     if (_hourHeight < 300.0) {
-        _hourHeight += 8.0;
+        self.hourHeight += 8.0;
         self.needsDisplay = YES;
     }
 }
@@ -378,7 +361,6 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 }
                             }
                             if (available) {
-                                NSLog(@"Moving event from pos %ld to pos %ld",posInColumn,testPos);
                                 NSRect newFrame = sV.frame;
                                 newFrame.origin.x -= newFrame.size.width;
                                 sV.frame = newFrame;
@@ -400,7 +382,6 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 }
                             }
                             if (available) {
-                                NSLog(@"Moving event from pos %ld to pos %ld",posInColumn,testPos);
                                 NSRect newFrame = sV.frame;
                                 newFrame.origin.x += newFrame.size.width;
                                 sV.frame = newFrame;

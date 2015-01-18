@@ -165,12 +165,14 @@
     if (eM == _dayEventManager) {
         _reloadingDayData = YES;
         _dayEventArrayController.filterPredicate = [NSPredicate predicateWithFormat:@"scheduledDate BETWEEN %@",@[sD,eD]];
+        [_dayEventArrayController rearrangeObjects];
         _reloadingDayData = NO;
         NSLog(@"DayEventManager: %lu events",[_dayEventArrayController.arrangedObjects count]);
         return _dayEventArrayController.arrangedObjects;
     } else {
         _reloadingWeekData = YES;
         _weekEventArrayController.filterPredicate = [NSPredicate predicateWithFormat:@"scheduledDate BETWEEN %@",@[sD,eD]];
+        [_weekEventArrayController rearrangeObjects];
         _reloadingWeekData = NO;
         NSLog(@"WeekEventManager: %lu events",[_weekEventArrayController.arrangedObjects count]);
         return _weekEventArrayController.arrangedObjects;

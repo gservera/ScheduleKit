@@ -108,6 +108,11 @@ static void * KVOContext = &KVOContext;
                 self.cachedDuration = [_representedObject duration];
             } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(scheduledDate))]) {
                 self.cachedScheduleDate = [_representedObject scheduledDate];
+                SCKView *supremeOwner = (SCKView*)_owningView.superview;
+                if ([_cachedScheduleDate isLessThan:supremeOwner.startDate] || [_cachedScheduleDate isGreaterThan:supremeOwner.endDate]) {
+                    [[supremeOwner eventManager] reloadData];
+                    return;
+                }
             } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
                 self.cachedTitle = [_representedObject title];
                 self.owningView.innerLabel.stringValue = _cachedTitle;

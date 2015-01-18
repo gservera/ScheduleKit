@@ -14,7 +14,7 @@ static NSCalendar * __calendar;
 
 + (void)initialize {
     if (self == [SCKDayPoint self]) {
-        __calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+        __calendar = [NSCalendar currentCalendar];
     }
 }
 

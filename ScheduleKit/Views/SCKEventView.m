@@ -22,30 +22,27 @@ SCKActionContext SCKActionContextZero() {
 
 @implementation SCKEventView
 
-+ (NSColor*)colorForEventType:(SCKEventType)type {
-    switch (type) {
-        case SCKEventTypeDefault:
-            return [NSColor colorWithCalibratedRed:0.60 green:0.90 blue:0.60 alpha:1.0]; break;
-        case SCKEventTypeSession:
-            return [NSColor colorWithCalibratedRed:1.00 green:0.86 blue:0.29 alpha:1.0]; break;
-        case SCKEventTypeSurgery:
-            return [NSColor colorWithCalibratedRed:0.66 green:0.82 blue:1.00 alpha:1.0]; break;
-        case SCKEventTypeSpecial:
-            return [NSColor colorWithCalibratedRed:1.00 green:0.40 blue:0.10 alpha:1.0]; break;
+static NSArray *__colors, *__strokeColors;
+
++ (void)initialize {
+    if (self == [SCKEventView self]) {
+        __colors = @[[NSColor colorWithCalibratedRed:0.60 green:0.90 blue:0.60 alpha:1.0],
+                     [NSColor colorWithCalibratedRed:1.00 green:0.86 blue:0.29 alpha:1.0],
+                     [NSColor colorWithCalibratedRed:0.66 green:0.82 blue:1.00 alpha:1.0],
+                     [NSColor colorWithCalibratedRed:1.00 green:0.40 blue:0.10 alpha:1.0]];
+        __strokeColors = @[[NSColor colorWithCalibratedRed:0.50 green:0.80 blue:0.50 alpha:1.0],
+                           [NSColor colorWithCalibratedRed:0.90 green:0.76 blue:0.19 alpha:1.0],
+                           [NSColor colorWithCalibratedRed:0.56 green:0.72 blue:0.90 alpha:1.0],
+                           [NSColor colorWithCalibratedRed:0.90 green:0.30 blue:0.00 alpha:1.0]];
     }
 }
 
++ (NSColor*)colorForEventType:(SCKEventType)type {
+    return __colors[type];
+}
+
 + (NSColor*)strokeColorForEventType:(SCKEventType)type {
-    switch (type) {
-        case SCKEventTypeDefault:
-            return [NSColor colorWithCalibratedRed:0.50 green:0.80 blue:0.50 alpha:1.0]; break;
-        case SCKEventTypeSession:
-            return [NSColor colorWithCalibratedRed:0.90 green:0.76 blue:0.19 alpha:1.0]; break;
-        case SCKEventTypeSurgery:
-            return [NSColor colorWithCalibratedRed:0.56 green:0.72 blue:0.90 alpha:1.0]; break;
-        case SCKEventTypeSpecial:
-            return [NSColor colorWithCalibratedRed:0.90 green:0.30 blue:0.00 alpha:1.0]; break;
-    }
+    return __strokeColors[type];
 }
 
 - (instancetype)initWithFrame:(NSRect)f {
@@ -53,6 +50,7 @@ SCKActionContext SCKActionContextZero() {
     if (self) {
         _actionContext = SCKActionContextZero();
         _innerLabel = [[SCKTextField alloc] initWithFrame:NSMakeRect(0, 0, f.size.width, f.size.height)];
+        self.canDrawConcurrently = YES;
     }
     return self;
 }
@@ -220,12 +218,16 @@ SCKActionContext SCKActionContextZero() {
         _innerLabel.font = [NSFont systemFontOfSize:12.0];
         [self addSubview:_innerLabel];
         _innerLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        _innerLabel.stringValue = _eventHolder.cachedTitle;
         [_innerLabel setContentCompressionResistancePriority:250 forOrientation:NSLayoutConstraintOrientationHorizontal];
         [_innerLabel setContentCompressionResistancePriority:250 forOrientation:NSLayoutConstraintOrientationVertical];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[_innerLabel]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_innerLabel)]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_innerLabel]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_innerLabel)]];
     }
+}
+
+- (void)setEventHolder:(SCKEventHolder *)eventHolder {
+    _eventHolder = eventHolder;
+    _innerLabel.stringValue = _eventHolder.cachedTitle?:@"";
 }
 
 - (BOOL)isFlipped {

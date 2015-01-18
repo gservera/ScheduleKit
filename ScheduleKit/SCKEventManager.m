@@ -34,8 +34,7 @@ static NSArray * __sorters = nil;
     return self;
 }
 
-- (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e
-                            holdersInConflict:(NSArray**)conflictsPtr {
+- (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr {
     SCKRelativeTimeLocation eStart = e.cachedRelativeStart;
     SCKRelativeTimeLocation eEnd = e.cachedRelativeEnd;
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"(%K == YES) AND NOT (cachedRelativeEnd < %@ OR cachedRelativeStart > %@)",SCKKey(ready),@(eStart),@(eEnd)];
@@ -57,6 +56,9 @@ static NSArray * __sorters = nil;
             return;
         }
         NSMutableArray *events = [[_dataSource eventManager:self requestsEventsBetweenDate:_view.startDate andDate:_view.endDate] mutableCopy];
+        for (id <SCKEvent> e in events) {
+            NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
+        }
         for (SCKEventHolder *holder in [_managedContainers copy]) {
             if (![events containsObject:holder.representedObject]) {
                 //Remove
@@ -69,9 +71,9 @@ static NSArray * __sorters = nil;
         }
         for (id <SCKEvent> e in events) {
             SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
+            [_view addSubview:aView];
             SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
             aView.eventHolder = aHolder;
-            [_view addSubview:aView];
             [_managedContainers addObject:aHolder];
         }
         //TRIGGER RELAYOUT

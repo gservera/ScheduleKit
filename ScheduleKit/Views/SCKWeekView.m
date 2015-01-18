@@ -54,7 +54,7 @@
             _dayEndPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayEndHourForWeekView:self] minute:0 second:0];
             _firstHour = _dayStartPoint.hour;
             _hourCount = _dayEndPoint.hour - _dayStartPoint.hour;
-            self.hourHeight = NSHeight([self contentRect])/(CGFloat)_hourCount;
+            [self invalidateIntrinsicContentSize];
             [self triggerRelayoutForAllEventViews];
         }
     }
@@ -74,7 +74,7 @@
     NSDate *sDate = [_calendar dateBySettingHour:rng.startHour minute:rng.startMinute second:0 ofDate:self.startDate options:0];
     SCKRelativeTimeLocation sOffset = [self calculateRelativeTimeLocationForDate:sDate];
     if (sOffset != SCKRelativeTimeLocationNotFound) {
-        NSDate *eDate = [_calendar dateBySettingHour:rng.endHour minute:rng.endMinute second:0 ofDate:self.startDate options:0];
+        NSDate *eDate = [sDate dateByAddingTimeInterval:(rng.endMinute*60+rng.endHour*3600)-(rng.startMinute*60+rng.startHour*3600)];
         SCKRelativeTimeLocation eOffset = [self calculateRelativeTimeLocationForDate:eDate];
         CGFloat yOrigin, yLength;
         if (eOffset != SCKRelativeTimeLocationNotFound) {

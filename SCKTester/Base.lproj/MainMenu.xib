@@ -677,7 +677,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="MedEventKit Framework - TestFlight" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window identifier="Main" title="MedEventKit Framework - TestFlight" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="Main" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="93" y="178" width="1160" height="600"/>
@@ -689,7 +689,7 @@
                     <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgB-Sp-Or5">
                         <rect key="frame" x="0.0" y="0.0" width="1160" height="600"/>
                         <subviews>
-                            <customView id="Bq1-zZ-Nns" customClass="WhiteView">
+                            <customView identifier="Main" id="Bq1-zZ-Nns" customClass="WhiteView">
                                 <rect key="frame" x="0.0" y="0.0" width="201" height="600"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
@@ -1215,12 +1215,12 @@
             </view>
             <point key="canvasLocation" x="626" y="384"/>
         </window>
-        <arrayController automaticallyRearrangesObjects="YES" id="rq2-9e-onH" userLabel="Day Array Controller">
+        <arrayController objectClassName="TestEvent" automaticallyRearrangesObjects="YES" id="rq2-9e-onH" userLabel="Day Array Controller">
             <connections>
                 <binding destination="Voe-Tx-rLC" name="contentArray" keyPath="eventArray" id="84U-c3-FiC"/>
             </connections>
         </arrayController>
-        <arrayController automaticallyRearrangesObjects="YES" id="mrc-qz-did" userLabel="Week Array Controller">
+        <arrayController objectClassName="TestEvent" automaticallyRearrangesObjects="YES" id="mrc-qz-did" userLabel="Week Array Controller">
             <connections>
                 <binding destination="Voe-Tx-rLC" name="contentArray" keyPath="eventArray" id="4Mb-Q5-3r9"/>
             </connections>

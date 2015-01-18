@@ -23,6 +23,10 @@
     return self;
 }
 
+- (NSString *)debugDescription {
+    return [NSString stringWithFormat:@"%@ : %@",_title,_scheduledDate];
+}
+
 + (NSArray*)sampleEvents:(NSArray*)userArray {
     NSMutableArray *array = [NSMutableArray new];
     
