@@ -30,6 +30,7 @@ static NSArray * __sorters = nil;
     self = [super init];
     if (self) {
         _managedContainers = [[NSMutableArray alloc] init];
+        _lastRequest = [NSPointerArray weakObjectsPointerArray];
     }
     return self;
 }
@@ -37,8 +38,11 @@ static NSArray * __sorters = nil;
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr {
     SCKRelativeTimeLocation eStart = e.cachedRelativeStart;
     SCKRelativeTimeLocation eEnd = e.cachedRelativeEnd;
-    NSPredicate *filter = [NSPredicate predicateWithFormat:@"(%K == YES) AND NOT (cachedRelativeEnd < %@ OR cachedRelativeStart > %@)",SCKKey(ready),@(eStart),@(eEnd)];
+    NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(SCKEventHolder *x, NSDictionary *bindings) {
+        return ([x isReady] && !(x.cachedRelativeEnd <= eStart || x.cachedRelativeStart >= eEnd));
+    }];
     NSArray *unsortedConflicts = [_managedContainers filteredArrayUsingPredicate:filter];
+    NSAssert(unsortedConflicts.count >0,@"Must find itself!");
     NSArray *sortedEventsInConflict = [unsortedConflicts sortedArrayUsingDescriptors:__sorters];
     if (conflictsPtr != NULL) {
         *conflictsPtr = sortedEventsInConflict;
@@ -55,29 +59,36 @@ static NSArray * __sorters = nil;
             });
             return;
         }
-        NSMutableArray *events = [[_dataSource eventManager:self requestsEventsBetweenDate:_view.startDate andDate:_view.endDate] mutableCopy];
-        for (id <SCKEvent> e in events) {
-            NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
-        }
-        for (SCKEventHolder *holder in [_managedContainers copy]) {
-            if (![events containsObject:holder.representedObject]) {
-                //Remove
-                [holder lock];
-                [holder.owningView removeFromSuperview];
-                [_managedContainers removeObject:holder];
-            } else {
-                [events removeObject:holder.representedObject];
+        NSMutableArray *events = [[_dataSource eventManager:self
+                                  requestsEventsBetweenDate:_view.startDate
+                                                    andDate:[_view.endDate dateByAddingTimeInterval:-1]] mutableCopy];
+        if (![events isEqualToArray:_lastRequest.allObjects]) {
+            _lastRequest = nil;
+            _lastRequest = [NSPointerArray weakObjectsPointerArray];
+            for (id <SCKEvent> e in events) {
+                NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
+                [_lastRequest addPointer:(__bridge void *)(e)];
             }
+            for (SCKEventHolder *holder in [_managedContainers copy]) {
+                if (![events containsObject:holder.representedObject]) {
+                    //Remove
+                    [holder lock];
+                    [holder.owningView removeFromSuperview];
+                    [_managedContainers removeObject:holder];
+                } else {
+                    [events removeObject:holder.representedObject];
+                }
+            }
+            for (id <SCKEvent> e in events) {
+                SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
+                [_view addSubview:aView];
+                SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
+                aView.eventHolder = aHolder;
+                [_managedContainers addObject:aHolder];
+            }
+            //TRIGGER RELAYOUT
+            [_view triggerRelayoutForAllEventViews];
         }
-        for (id <SCKEvent> e in events) {
-            SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
-            [_view addSubview:aView];
-            SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
-            aView.eventHolder = aHolder;
-            [_managedContainers addObject:aHolder];
-        }
-        //TRIGGER RELAYOUT
-        [_view triggerRelayoutForAllEventViews];
     }
 }
 

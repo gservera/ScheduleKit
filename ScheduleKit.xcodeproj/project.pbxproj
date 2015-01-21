@@ -23,6 +23,7 @@
 		9902071E1A55722B00912DF5 /* SCKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902071C1A55722B00912DF5 /* SCKTextField.m */; };
 		9902074B1A55E14A00912DF5 /* ScheduleKitDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0BD1A4AF54800713F18 /* ScheduleKitDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9902074C1A55E14F00912DF5 /* SCKEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		99101E531A6D090B00E435E6 /* ScheduleKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		995E936D1A634C5100A3D2BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E936C1A634C5100A3D2BF /* AppDelegate.m */; };
 		995E936F1A634C5100A3D2BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E936E1A634C5100A3D2BF /* main.m */; };
 		995E93711A634C5100A3D2BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995E93701A634C5100A3D2BF /* Images.xcassets */; };
@@ -69,6 +70,19 @@
 			remoteInfo = ScheduleKit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99101E521A6D08FE00E435E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99101E531A6D090B00E435E6 /* ScheduleKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		990206FC1A50590D00912DF5 /* SCKEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCKEventManager.h; path = ScheduleKit/SCKEventManager.h; sourceTree = SOURCE_ROOT; };
@@ -347,6 +361,7 @@
 				995E93631A634C5100A3D2BF /* Sources */,
 				995E93641A634C5100A3D2BF /* Frameworks */,
 				995E93651A634C5100A3D2BF /* Resources */,
+				99101E521A6D08FE00E435E6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -605,6 +620,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/SCKTesterTests",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -625,6 +641,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
+					"$(PROJECT_DIR)/SCKTesterTests",
 				);
 				INFOPLIST_FILE = SCKTesterTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -739,6 +756,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				GCC_PREPROCESSOR_DEFINITIONS = "NS_BLOCK_ASSERTIONS=1";
 				INFOPLIST_FILE = ScheduleKit/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";

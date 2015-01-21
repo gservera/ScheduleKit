@@ -677,7 +677,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window identifier="Main" title="MedEventKit Framework - TestFlight" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="Main" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="MedEventKit Framework - TestFlight" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="Main" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="93" y="178" width="1160" height="600"/>
@@ -913,7 +913,7 @@
                                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fd-vU-fyo" customClass="SCKDayView">
+                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="4fd-vU-fyo" customClass="SCKDayView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="251" height="567"/>
                                                                     <connections>
                                                                         <outlet property="eventManager" destination="fy9-p5-faF" id="A3L-si-iHP"/>
@@ -1035,7 +1035,7 @@
                                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <customView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyo-sV-bp4" customClass="SCKWeekView">
+                                                                <customView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="kyo-sV-bp4" customClass="SCKWeekView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="697" height="567"/>
                                                                     <connections>
                                                                         <outlet property="eventManager" destination="Alw-t4-dw3" id="B7x-yg-Bs5"/>

@@ -8,6 +8,12 @@
 
 #import "SCKUnavailableTimeRange.h"
 
+NSString * const SCKBreakWeekdayKey = @"BreakWeekday";
+NSString * const SCKBreakStartHourKey = @"BreakSH";
+NSString * const SCKBreakStartMinuteKey = @"BreakSM";
+NSString * const SCKBreakEndHourKey = @"BreakEH";
+NSString * const SCKBreakEndMinuteKey = @"BreakEM";
+
 @implementation SCKUnavailableTimeRange
 
 - (instancetype)initWithWeekday:(NSInteger)weekday
@@ -29,21 +35,21 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
     if (self) {
-        _weekday = [aDecoder decodeIntegerForKey:@"BreakWeekday"];
-        _startHour = [aDecoder decodeIntegerForKey:@"BreakSH"];
-        _startMinute = [aDecoder decodeIntegerForKey:@"BreakSM"];
-        _endHour = [aDecoder decodeIntegerForKey:@"BreakEH"];
-        _endMinute = [aDecoder decodeIntegerForKey:@"BreakEM"];
+        _weekday     = [aDecoder decodeIntegerForKey:SCKBreakWeekdayKey];
+        _startHour   = [aDecoder decodeIntegerForKey:SCKBreakStartHourKey];
+        _startMinute = [aDecoder decodeIntegerForKey:SCKBreakStartMinuteKey];
+        _endHour     = [aDecoder decodeIntegerForKey:SCKBreakEndHourKey];
+        _endMinute   = [aDecoder decodeIntegerForKey:SCKBreakEndMinuteKey];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeInteger:_weekday      forKey:@"BreakWeekday"];
-    [aCoder encodeInteger:_startHour    forKey:@"BreakSH"];
-    [aCoder encodeInteger:_startMinute  forKey:@"BreakSM"];
-    [aCoder encodeInteger:_endHour      forKey:@"BreakEH"];
-    [aCoder encodeInteger:_endMinute    forKey:@"BreakEM"];
+    [aCoder encodeInteger:_weekday     forKey:SCKBreakWeekdayKey];
+    [aCoder encodeInteger:_startHour   forKey:SCKBreakStartHourKey];
+    [aCoder encodeInteger:_startMinute forKey:SCKBreakStartMinuteKey];
+    [aCoder encodeInteger:_endHour     forKey:SCKBreakEndHourKey];
+    [aCoder encodeInteger:_endMinute   forKey:SCKBreakEndMinuteKey];
 }
 
 @end

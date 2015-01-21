@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, SCKDraggingStatus) {
 typedef struct SCKActionContext {
     SCKDraggingStatus status;
     BOOL doubleClick;
-    NSInteger oldDuration, newDuration;
+    NSInteger oldDuration, lastDuration, newDuration;
     SCKRelativeTimeLocation oldRelativeStart, newRelativeStart;
     CGFloat internalDelta;
     NSTimeInterval oldDateRef;

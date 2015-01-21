@@ -7,6 +7,13 @@
 //
 
 @import Foundation;
+
+extern NSString * const SCKBreakWeekdayKey;
+extern NSString * const SCKBreakStartHourKey;
+extern NSString * const SCKBreakStartMinuteKey;
+extern NSString * const SCKBreakEndHourKey;
+extern NSString * const SCKBreakEndMinuteKey;
+
 @interface SCKUnavailableTimeRange : NSObject <NSCoding>
 
 - (instancetype)initWithWeekday:(NSInteger)weekday

@@ -18,7 +18,11 @@
         _patient = patient;
         _title = title;
         _duration = @(duration);
-        _scheduledDate = date;
+        NSTimeInterval t = [date timeIntervalSinceReferenceDate];
+        while ((NSUInteger)t % 60 >0) {
+            t++;
+        }
+        _scheduledDate = [NSDate dateWithTimeIntervalSinceReferenceDate:t];
     }
     return self;
 }

@@ -45,9 +45,6 @@
         if (_dayCount != dayCount) {
             self.endDate = [_calendar dateByAddingUnit:NSCalendarUnitDay value:dayCount toDate:self.startDate options:0];
             [self.eventManager reloadData];
-            for (SCKEventView *subview in [self subviews]) {
-                [subview.eventHolder recalculateRelativeValues];
-            }
         }
         if (self.delegate != nil) {
             _dayStartPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayStartHourForWeekView:self] minute:0 second:0];

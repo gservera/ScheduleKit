@@ -14,8 +14,11 @@ SCKActionContext SCKActionContextZero() {
     SCKActionContext cx;
     cx.status = SCKDraggingStatusIlde;
     cx.doubleClick = NO;
-    cx.oldDuration = 0; cx.newDuration = 0;
-    cx.oldRelativeStart = 0.0; cx.newRelativeStart = 0.0;
+    cx.oldDuration = 0;
+    cx.lastDuration = 0;
+    cx.newDuration = 0;
+    cx.oldRelativeStart = 0.0;
+    cx.newRelativeStart = 0.0;
     cx.internalDelta = 0.0;
     return cx;
 }
@@ -49,8 +52,7 @@ static NSArray *__colors, *__strokeColors;
     self = [super initWithFrame:f];
     if (self) {
         _actionContext = SCKActionContextZero();
-        _innerLabel = [[SCKTextField alloc] initWithFrame:NSMakeRect(0, 0, f.size.width, f.size.height)];
-        self.canDrawConcurrently = YES;
+        _innerLabel = [[SCKTextField alloc] initWithFrame:NSMakeRect(0.0, 0.0, NSWidth(f),NSHeight(f))];
     }
     return self;
 }
@@ -66,7 +68,7 @@ static NSArray *__colors, *__strokeColors;
         strokeColor = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
     } else {
         if (view.colorMode == SCKEventColorModeByEventType) {
-            SCKEventType type = [_eventHolder.representedObject eventType];
+            SCKEventType type = [_eventHolder.representedObject eventType]; // Does not query db
             fillColor = [self.class colorForEventType:type];
             strokeColor = [self.class strokeColorForEventType:type];
         } else {
@@ -94,11 +96,11 @@ static NSArray *__colors, *__strokeColors;
     [path stroke];
 }
 
-- (void)prepareForRelayout {
+- (void)prepareForRedistribution {
     self.layoutDone = NO;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent {
+- (void)mouseDown:(NSEvent *)theEvent { // Reset context, select this view if needed and set doubleClick if needed.
     _actionContext = SCKActionContextZero();
     if ([(SCKGridView*)self.superview selectedEventView] != self) {
         [(SCKGridView*)self.superview setSelectedEventView:self];
@@ -109,55 +111,70 @@ static NSArray *__colors, *__strokeColors;
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent {
-    SCKGridView *view = (SCKGridView*)self.superview;
+    SCKGridView *rootView = (SCKGridView*)self.superview;
     if ((_actionContext.status == SCKDraggingStatusDraggingDuration) ||
         (_actionContext.status == SCKDraggingStatusIlde && [[NSCursor currentCursor] isEqual:[NSCursor resizeUpDownCursor]])) {
-        NSPoint loc = [self convertPoint:theEvent.locationInWindow fromView:nil];
         if (_actionContext.status == SCKDraggingStatusIlde) {
             _actionContext.status = SCKDraggingStatusDraggingDuration;
             _actionContext.oldDuration = [self.eventHolder.cachedDuration integerValue];
+            _actionContext.lastDuration = _actionContext.oldDuration;
+            [rootView beginDraggingEventView:self];
         }
-        NSRect newFrame = self.frame;
-        newFrame.size.height = loc.y;
-        
-        NSDate *sDate = _eventHolder.cachedScheduleDate;
-        NSDate *eDate = [view calculateDateForRelativeTimeLocation:[view relativeTimeLocationForPoint:[view convertPoint:theEvent.locationInWindow fromView:nil]]];
-        _actionContext.newDuration = (NSInteger)([eDate timeIntervalSinceDate:sDate] / 60.0);
-        if (_actionContext.newDuration >= 5) {
-            self.frame = newFrame;
-        } else {
-            _actionContext.newDuration = 5;
-        }
-        _innerLabel.stringValue = [NSString stringWithFormat:@"%ld min",_actionContext.newDuration];
+        [self parseDurationDrag:theEvent];
     } else {
-        NSPoint loc = [self convertPoint:theEvent.locationInWindow fromView:nil];
         if (_actionContext.status == SCKDraggingStatusIlde) {
             _actionContext.status = SCKDraggingStatusDraggingContent;
             _actionContext.oldRelativeStart = [_eventHolder cachedRelativeStart];
             _actionContext.oldDateRef = [[_eventHolder cachedScheduleDate] timeIntervalSinceReferenceDate];
-            _actionContext.internalDelta = loc.y;
-            [view beginDraggingEventView:self];
+            _actionContext.internalDelta = [self convertPoint:theEvent.locationInWindow fromView:nil].y;
+            [rootView beginDraggingEventView:self];
         }
-        NSPoint tPoint = [view convertPoint:theEvent.locationInWindow fromView:nil];
-        tPoint.y -= _actionContext.internalDelta;
-        
-        SCKRelativeTimeLocation newStartLoc = [view relativeTimeLocationForPoint:tPoint];
-        if (newStartLoc == SCKRelativeTimeLocationNotFound && (tPoint.y < NSMidY(view.frame))) { // May be too close to an edge. Check if too low
-            tPoint.y = NSMinY([view contentRect]);
-            newStartLoc = [view relativeTimeLocationForPoint:tPoint];
+        [self parseContentDrag:theEvent];
+    }
+    [rootView relayoutEventView:self animated:NO];
+    [rootView continueDraggingEventView:self];
+}
+
+- (void)parseDurationDrag:(NSEvent*)theEvent {
+    SCKGridView *view = (SCKGridView*)self.superview;
+    NSPoint superLoc = [view convertPoint:theEvent.locationInWindow fromView:nil];
+    
+    NSDate *sDate = _eventHolder.cachedScheduleDate;
+    NSDate *eDate = [view calculateDateForRelativeTimeLocation:[view relativeTimeLocationForPoint:superLoc]]; //Get new end
+    _actionContext.newDuration = (NSInteger)([eDate timeIntervalSinceDate:sDate] / 60.0); // Calculate new duration
+    if (_actionContext.newDuration != _actionContext.lastDuration) { // Check if difers from last call
+        if (_actionContext.newDuration >= 5) {
+            NSPoint localLoc = [self convertPoint:theEvent.locationInWindow fromView:nil];
+            NSRect newFrame = self.frame;
+            newFrame.size.height = localLoc.y;
+            self.frame = newFrame;
+            _eventHolder.cachedDuration = @(_actionContext.newDuration);
+        } else {
+            _actionContext.newDuration = 5;
         }
-        if (newStartLoc != SCKRelativeTimeLocationNotFound) {
-            tPoint.y += NSHeight(self.frame);
-            SCKRelativeTimeLocation newEndLoc =[view relativeTimeLocationForPoint:tPoint];
-            if (newEndLoc != SCKRelativeTimeLocationNotFound) {
-                _eventHolder.cachedRelativeStart = newStartLoc;
-                _eventHolder.cachedRelativeEnd = newEndLoc;
-                _eventHolder.cachedScheduleDate = [view calculateDateForRelativeTimeLocation:newStartLoc];
-                _actionContext.newRelativeStart = newStartLoc;
-                [view relayoutEventView:self animated:NO];
-                [view continueDraggingEventView:self];
-                [view markContentViewAsNeedingDisplay];
-            }
+        _innerLabel.stringValue = [NSString stringWithFormat:@"%ld min",_actionContext.newDuration];
+        _actionContext.lastDuration = _actionContext.newDuration; // Update context
+    }
+}
+
+- (void)parseContentDrag:(NSEvent*)theEvent {
+    SCKGridView *view = (SCKGridView*)self.superview;
+    NSPoint tPoint = [view convertPoint:theEvent.locationInWindow fromView:nil];
+    tPoint.y -= _actionContext.internalDelta;
+    
+    SCKRelativeTimeLocation newStartLoc = [view relativeTimeLocationForPoint:tPoint];
+    if (newStartLoc == SCKRelativeTimeLocationNotFound && (tPoint.y < NSMidY(view.frame))) { // May be too close to an edge. Check if too low
+        tPoint.y = NSMinY([view contentRect]);
+        newStartLoc = [view relativeTimeLocationForPoint:tPoint];
+    }
+    if (newStartLoc != SCKRelativeTimeLocationNotFound) {
+        tPoint.y += NSHeight(self.frame);
+        SCKRelativeTimeLocation newEndLoc =[view relativeTimeLocationForPoint:tPoint];
+        if (newEndLoc != SCKRelativeTimeLocationNotFound) {
+            _eventHolder.cachedRelativeStart = newStartLoc;
+            _eventHolder.cachedRelativeEnd = newEndLoc;
+            _eventHolder.cachedScheduleDate = [view calculateDateForRelativeTimeLocation:newStartLoc];
+            _actionContext.newRelativeStart = newStartLoc;
         }
     }
 }
@@ -173,12 +190,13 @@ static NSArray *__colors, *__strokeColors;
             }
             if (changeAllowed) {
                 [_eventHolder.representedObject setDuration:@(_actionContext.newDuration)];
-                [_eventHolder setCachedDuration:@(_actionContext.newDuration)];
                 [_eventHolder recalculateRelativeValues];
                 [view triggerRelayoutForAllEventViews];
             } else {
+                [_eventHolder setCachedDuration:@(_actionContext.oldDuration)];
                 [view relayoutEventView:self animated:YES];
             }
+            [view endDraggingEventView:self];
         } break;
         case SCKDraggingStatusDraggingContent: {
             BOOL changeAllowed = YES;
@@ -188,7 +206,6 @@ static NSArray *__colors, *__strokeColors;
             }
             if (changeAllowed) {
                 [_eventHolder.representedObject setScheduledDate:scheduledDate];
-                [_eventHolder setCachedScheduleDate:scheduledDate];
                 [_eventHolder recalculateRelativeValues];
                 [view triggerRelayoutForAllEventViews];
             } else {
@@ -210,7 +227,6 @@ static NSArray *__colors, *__strokeColors;
 
 - (void)viewDidMoveToWindow {
     if (self.superview != nil) {
-        [_eventHolder recalculateRelativeValues];
         _innerLabel.drawsBackground = NO;
         _innerLabel.editable = NO;
         _innerLabel.bezeled = NO;
@@ -220,8 +236,9 @@ static NSArray *__colors, *__strokeColors;
         _innerLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_innerLabel setContentCompressionResistancePriority:250 forOrientation:NSLayoutConstraintOrientationHorizontal];
         [_innerLabel setContentCompressionResistancePriority:250 forOrientation:NSLayoutConstraintOrientationVertical];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[_innerLabel]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_innerLabel)]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_innerLabel]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_innerLabel)]];
+        NSDictionary *dict = @{@"x":_innerLabel};
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[x]-0-|" options:0 metrics:nil views:dict]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[x]-0-|" options:0 metrics:nil views:dict]];
     }
 }
 
@@ -235,7 +252,8 @@ static NSArray *__colors, *__strokeColors;
 }
 
 - (void)resetCursorRects {
-    [self addCursorRect:NSMakeRect(0.0, NSHeight(self.frame)-2.0, NSWidth(self.frame), 4.0) cursor:[NSCursor resizeUpDownCursor]];
+    NSRect r = NSMakeRect(0.0, self.frame.size.height-2.0, self.frame.size.width, 4.0);
+    [self addCursorRect:r cursor:[NSCursor resizeUpDownCursor]];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "NSView+SKCAdditions.h"
 #import "SCKEventView.h"
 #import "SCKDayPoint.h"
+#import "SCKEventManagerPrivate.h"
 
 #define kHourLabelWidth 56.0
 #define kDayLabelHeight 36.0
@@ -104,13 +105,16 @@ static NSDictionary * __subHourLabelAttrs = nil;
     [subviews removeObject:eV];
     _otherEventViews = subviews;
     _eventViewBeingDragged = eV;
+    [eV.eventHolder lock];
 }
 
 - (void)continueDraggingEventView:(SCKEventView*)eV {
-    [self triggerRelayoutForEventViews:_otherEventViews animated:YES];
+    [self triggerRelayoutForEventViews:_otherEventViews animated:NO];
+    [self setNeedsDisplay:YES];
 }
 
 - (void)endDraggingEventView:(SCKEventView*)eV {
+    [_eventViewBeingDragged.eventHolder unlock];
     _otherEventViews = nil;
     _eventViewBeingDragged = nil;
     [self triggerRelayoutForAllEventViews];
@@ -333,27 +337,33 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)redistributeOverlappingEvents {
+    [self.subviews makeObjectsPerformSelector:@selector(prepareForRedistribution)];
     CGFloat dayWidth = NSWidth(self.contentRect)/(CGFloat)_dayCount;
     
     for (SCKEventView *eV in self.subviews) {
         NSRect frame = eV.frame;
         NSUInteger day = (NSUInteger)trunc((NSMidX(frame)-kHourLabelWidth)/dayWidth);
         for (SCKEventView *sV in self.subviews) {
-            if (sV != eV) {
+            if (sV != eV && !sV.layoutDone) {
                 
                 if (NSIntersectsRect(NSInsetRect(frame, 1, 1), NSInsetRect(sV.frame, 1, 1))) {
                     // Get offset in day width
+                    NSRect dayRect = NSMakeRect(self.contentRect.origin.x+day*dayWidth, NSMinY(self.contentRect), dayWidth, NSHeight(self.contentRect));
                     NSRect altFrame = sV.frame;
                     NSUInteger eventsInColumn = (NSUInteger)round(dayWidth/NSWidth(altFrame));
                     NSUInteger posInColumn = (NSUInteger)trunc((NSMidX(altFrame)-kHourLabelWidth-day*dayWidth)/dayWidth);
+                    //NSLog(@"Mask:(%lu:%lu)",posInColumn,eventsInColumn);
                     BOOL moved = NO;
                     // Check if previous places are empty
                     if (posInColumn > 0) {
                         NSUInteger testPos = posInColumn;
                         while (testPos > 0) {
                             testPos--;
-                            NSRect testRect = NSInsetRect(altFrame, 5, 5);
+                            NSRect testRect = NSInsetRect(altFrame, 1, 1);
                             testRect.origin.x -= NSWidth(altFrame);
+                            if (!NSContainsRect(dayRect, testRect)) {
+                                continue;
+                            }
                             BOOL available = YES;
                             for (SCKEventView *xV in self.subviews) {
                                 if (NSIntersectsRect(xV.frame, testRect)) {
@@ -365,6 +375,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 newFrame.origin.x -= newFrame.size.width;
                                 sV.frame = newFrame;
                                 moved = YES;
+                                //NSLog(@"Moved %@ from pos %lu to pos %lu",sV.eventHolder.cachedTitle,posInColumn,testPos);
                                 break;
                             }
                         }
@@ -373,8 +384,11 @@ static NSDictionary * __subHourLabelAttrs = nil;
                         NSUInteger testPos = posInColumn;
                         while (testPos < eventsInColumn) {
                             testPos++;
-                            NSRect testRect = NSInsetRect(altFrame, 5, 5);
+                            NSRect testRect = NSInsetRect(altFrame, 1, 1);
                             testRect.origin.x += NSWidth(altFrame);
+                            if (!NSContainsRect(dayRect, testRect)) {
+                                continue;
+                            }
                             BOOL available = YES;
                             for (SCKEventView *xV in self.subviews) {
                                 if (NSIntersectsRect(xV.frame, testRect)) {
@@ -385,6 +399,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 NSRect newFrame = sV.frame;
                                 newFrame.origin.x += newFrame.size.width;
                                 sV.frame = newFrame;
+                                //NSLog(@"Moved %@ from pos %lu to pos %lu",sV.eventHolder.cachedTitle,posInColumn,testPos);
                                 break;
                             }
                         }

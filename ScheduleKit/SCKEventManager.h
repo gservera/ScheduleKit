@@ -44,6 +44,7 @@ shouldChangeDateOfEvent:(id <SCKEvent>)e
 
 @interface SCKEventManager : NSObject {
     NSMutableArray * _managedContainers;
+    NSPointerArray * _lastRequest;
 }
 
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e

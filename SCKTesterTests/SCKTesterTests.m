@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Guillem Servera. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <XCTest/XCTest.h>
+@import Cocoa;
+@import XCTest;
 
 @interface SCKTesterTests : XCTestCase
 

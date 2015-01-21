@@ -1,24 +1,31 @@
-//
-//  SCKEventHolder.m
-//  ScheduleKit
-//
-//  Created by Guillem on 24/12/14.
-//  Copyright (c) 2014 Guillem Servera. All rights reserved.
-//
+/*
+ *  SCKEventHolder.m
+ *  ScheduleKit
+ *
+ *  Created:    Guillem Servera on 24/12/2014.
+ *  Copyright:  © 2014-2015 Guillem Servera. All rights reserved.
+ */
 
 #import "SCKEventHolder.h"
 #import "SCKEventView.h"
 #import "SCKView.h"
 #import "SCKEventManager.h"
 
-static void * KVOContext = &KVOContext;
+/*  DISCUSSION:
+ *  - We're not initializing @c _observing, @c _lockBalance, @c _ready or @c _locked (defaults to 0/false)
+ *  - We're not calling @c -stopObservingRepresentedObject since SCKEventManager will call @c lock
+ *    in case this holder was going to be removed from its pool.
+ */
 
 @implementation SCKEventHolder {
-    NSArray *_previousConflicts;
-    BOOL _observing;
-#if DEBUG
-    NSInteger _lockBalance;
-#endif
+    /// A set to track holders in conflict before a change in either @c representedObject 's @c scheduledDate or @c duration takes place, since that info won't be accessible afterwards. Set when a prior KVO notification for these properties is triggered and set back to @c nil after KVO parsing. @discussion We use NSSet instead of NSArray to prevent objects being included multiple times when combining with conflicts after the change.
+    NSSet* _previousConflicts;
+    
+    BOOL            _observing; // Indicates wether we're observing changes in represented object or not.
+    __weak id       _cachedUser; // A weak reference to @c representedObject's user (to safely parse labelColor changes)
+    __weak id       _eventManager; // A convenience reference to the event manager.
+    __weak SCKView* _rootView; // A convenience reference to owningView's superview.
+    NSInteger       _lockBalance; // The number of times @c lock: has been called over @c unlock:
 }
 
 - (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v {
@@ -26,123 +33,104 @@ static void * KVOContext = &KVOContext;
     NSParameterAssert([v isKindOfClass:[SCKEventView class]]);
     self = [super init];
     if (self) {
-        _observing = NO;
-#if DEBUG
-        _lockBalance = 0;
-#endif
-        [self reset];
-        [self setOwningView:v];
-        [self setRepresentedObject:e];
+        _cachedUser = [e user];
+        _cachedUserLabelColor = [[_cachedUser labelColor] copy];
+        _cachedTitle = [[e title] copy];
+        _cachedScheduleDate = [[e scheduledDate] copy];
+        _cachedDuration = [[e duration] copy];
+        _owningView = v;
+        _rootView = (SCKView*)_owningView.superview;
+        _eventManager = [_rootView eventManager];
+        _representedObject = e;
+        [self recalculateRelativeValues];
+        NSAssert(_ready,@"Should be ready");
+        [self startObservingRepresentedObject];
     }
     return self;
 }
 
-- (void)reset {
-    _ready = NO;
-    _locked = NO;
-    self.cachedUserLabelColor = nil;
-    self.cachedTitle = nil;
-    self.cachedScheduleDate = nil;
-    self.cachedDuration = nil;
-    self.cachedRelativeStart = SCKRelativeTimeLocationNotFound;
-    self.cachedRelativeEnd = SCKRelativeTimeLocationNotFound;
-    self.cachedRelativeLength = 0;
-}
-
-- (void)setRepresentedObject:(id<SCKEvent>)representedObject {
-    if (_representedObject != representedObject) {
-        if (_representedObject && _observing) {
-            [self stopObservingRepresentedObject];
-        }
-        _representedObject = representedObject;
-        _cachedUserLabelColor = [[representedObject user] labelColor];
-        _cachedTitle = [representedObject title];
-        _cachedScheduleDate = [representedObject scheduledDate];
-        _cachedDuration = [representedObject duration];
-        [self recalculateRelativeValues];
-        if (representedObject) {
-            [self startObservingRepresentedObject];
-        }
-    }
-    
-}
-
+/** Stops observing @c representedObject properties. Called from @c lock: */
 - (void)stopObservingRepresentedObject {
     if (_representedObject != nil && _observing) {
-        id obj = self.representedObject;
+        id obj = _representedObject;
         [obj removeObserver:self forKeyPath:NSStringFromSelector(@selector(scheduledDate))];
         [obj removeObserver:self forKeyPath:NSStringFromSelector(@selector(duration))];
         [obj removeObserver:self forKeyPath:NSStringFromSelector(@selector(title))];
+        [obj removeObserver:self forKeyPath:NSStringFromSelector(@selector(user))];
     }
     _observing = NO;
 }
 
+/** Begins or resumes observing @c representedObject properties. Called from @c unlock: and during initialization */
 - (void)startObservingRepresentedObject {
-    if (_representedObject != nil) {
-        id obj = self.representedObject;
-        [obj addObserver:self
-              forKeyPath:NSStringFromSelector(@selector(scheduledDate))
-                 options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior
-                 context:KVOContext];
-        [obj addObserver:self
-              forKeyPath:NSStringFromSelector(@selector(duration))
-                 options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior
-                 context:KVOContext];
-        [obj addObserver:self
-              forKeyPath:NSStringFromSelector(@selector(title))
-                 options:NSKeyValueObservingOptionNew context:KVOContext];
+    if (_representedObject != nil && !_observing) {
+        id obj = _representedObject;
+        [obj addObserver:self forKeyPath:NSStringFromSelector(@selector(scheduledDate))
+                 options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior context:NULL];
+        [obj addObserver:self forKeyPath:NSStringFromSelector(@selector(duration))
+                 options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionPrior context:NULL];
+        [obj addObserver:self forKeyPath:NSStringFromSelector(@selector(title))
+                 options:NSKeyValueObservingOptionNew context:NULL];
+        [obj addObserver:self forKeyPath:NSStringFromSelector(@selector(user))
+                 options:NSKeyValueObservingOptionNew context:NULL];
         _observing = YES;
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)o change:(NSDictionary *)change context:(void *)context {
-    if (context == KVOContext) {
-        if (change[NSKeyValueChangeNotificationIsPriorKey] != nil) {
-            // Is prior, we'll cache actual conflicting events to trigger relayout on them, too.
-            _previousConflicts = nil;
-            NSArray *previousConflicts;
-            [[(SCKView*)self.owningView.superview eventManager] positionInConflictForEventHolder:self holdersInConflict:&previousConflicts];
-            _previousConflicts = previousConflicts;
-        } else {
-            if ([keyPath isEqualToString:NSStringFromSelector(@selector(duration))]) {
-                self.cachedDuration = [_representedObject duration];
-            } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(scheduledDate))]) {
-                self.cachedScheduleDate = [_representedObject scheduledDate];
-                SCKView *supremeOwner = (SCKView*)_owningView.superview;
-                if ([_cachedScheduleDate isLessThan:supremeOwner.startDate] || [_cachedScheduleDate isGreaterThan:supremeOwner.endDate]) {
-                    [[supremeOwner eventManager] reloadData];
-                    return;
-                }
-            } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
-                self.cachedTitle = [_representedObject title];
-                self.owningView.innerLabel.stringValue = _cachedTitle;
-            }
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)o change:(NSDictionary *)change context:(void *)cx {
+    NSAssert(o == _representedObject,@"Recieved a KVO notification from an unexpected object");
+    if (change[NSKeyValueChangeNotificationIsPriorKey] != nil) { // Track conflicts before value change (KVO-prior)
+        NSArray *conflictsBefore;
+        (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsBefore];
+        _previousConflicts = [NSSet setWithArray:conflictsBefore];
+    } else { // Notification is not prior
+        id theNewValue = change[NSKeyValueChangeNewKey];
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(duration))]) {
+            _cachedDuration = [theNewValue copy];
             [self recalculateRelativeValues];
-            NSArray *conflicts;
-            [[(SCKView*)self.owningView.superview eventManager] positionInConflictForEventHolder:self holdersInConflict:&conflicts];
-            [(SCKView*)self.owningView.superview triggerRelayoutForEventViews:[[conflicts arrayByAddingObjectsFromArray:_previousConflicts] valueForKey:@"owningView"] animated:YES];
+            NSArray *conflictsNow;
+            (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsNow];
+            NSArray *updatingHolders = [[_previousConflicts setByAddingObjectsFromArray:conflictsNow] allObjects];
+            NSArray *updatingViews = [updatingHolders valueForKey:NSStringFromSelector(@selector(owningView))];
+            [_rootView triggerRelayoutForEventViews:updatingViews animated:YES];
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(scheduledDate))]) {
+            _cachedScheduleDate = [theNewValue copy];
+            if ([_cachedScheduleDate isLessThan:_rootView.startDate] || [_cachedScheduleDate isGreaterThan:_rootView.endDate]) {
+                [_eventManager reloadData];
+                return;
+            } else {
+                [self recalculateRelativeValues];
+                NSArray *conflictsNow;
+                (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsNow];
+                NSArray *updatingHolders = [[_previousConflicts setByAddingObjectsFromArray:conflictsNow] allObjects];
+                NSArray *updatingViews = [updatingHolders valueForKey:NSStringFromSelector(@selector(owningView))];
+                [_rootView triggerRelayoutForEventViews:updatingViews animated:YES];
+            }
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(title))]) {
+            _cachedTitle = [theNewValue copy];
+            _owningView.innerLabel.stringValue = _cachedTitle;
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(user))]) {
+            if (_cachedUser != theNewValue) {
+                _cachedUser = theNewValue;
+                _cachedUserLabelColor = [_cachedUser labelColor];
+                _owningView.needsDisplay = YES;
+            }
         }
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:o change:change context:context];
     }
 }
 
-
-
 - (void)lock {
-#if DEBUG 
-    _lockBalance++; NSAssert(_lockBalance == 1, @"Overlocked");
-#endif
+    _lockBalance++;
+    NSAssert1(_lockBalance == 1, @"Overlocked (%ld times)",_lockBalance);
     [self stopObservingRepresentedObject];
     _locked = YES;
 }
 
 - (void)unlock {
-#if DEBUG
-    _lockBalance--; NSAssert(_lockBalance == 0, @"Overunlocked");
-#endif
-    _locked = NO;
+    _lockBalance--;
+    NSAssert1(_lockBalance == 0, @"Overunlocked (+%ld times)",-_lockBalance);
     [self startObservingRepresentedObject];
+    _locked = NO;
 }
 
 - (void)recalculateRelativeValues {
@@ -150,20 +138,18 @@ static void * KVOContext = &KVOContext;
     _cachedRelativeStart = SCKRelativeTimeLocationNotFound;
     _cachedRelativeEnd = SCKRelativeTimeLocationNotFound;
     _cachedRelativeLength = 0;
-    if ([_owningView superview]) {
-        SCKView *rootView = (SCKView*)_owningView.superview;
-        if ([self cachedScheduleDate]) {
-            _cachedRelativeStart = [rootView calculateRelativeTimeLocationForDate:_cachedScheduleDate];
-            if (_cachedRelativeStart != SCKRelativeTimeLocationNotFound) {
-                if (_cachedDuration > 0) {
-                    NSDate *endDate = [_cachedScheduleDate dateByAddingTimeInterval:_cachedDuration.doubleValue*60.0];
-                    _cachedRelativeEnd = [rootView calculateRelativeTimeLocationForDate:endDate];
-                    if (_cachedRelativeEnd == SCKRelativeTimeLocationNotFound) {
-                        _cachedRelativeEnd = 1.0;
-                    }
-                    _cachedRelativeLength = _cachedRelativeEnd - _cachedRelativeStart;
-                    _ready = YES;
+    if (_cachedScheduleDate != nil) {
+        _cachedRelativeStart = [_rootView calculateRelativeTimeLocationForDate:_cachedScheduleDate];
+        if (_cachedRelativeStart != SCKRelativeTimeLocationNotFound) {
+            double cDuration = [_cachedDuration doubleValue];
+            if (cDuration > 0.0) {
+                NSDate *endDate = [_cachedScheduleDate dateByAddingTimeInterval:cDuration * 60.0];
+                _cachedRelativeEnd = [_rootView calculateRelativeTimeLocationForDate:endDate];
+                if (_cachedRelativeEnd == SCKRelativeTimeLocationNotFound) {
+                    _cachedRelativeEnd = 1.0;
                 }
+                _cachedRelativeLength = _cachedRelativeEnd - _cachedRelativeStart;
+                _ready = YES;
             }
         }
     }

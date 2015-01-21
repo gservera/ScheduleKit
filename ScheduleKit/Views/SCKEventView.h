@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Guillem Servera. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "SCKEventHolder.h"
-#import "ScheduleKitDefinitions.h"
 #import "SCKTextField.h"
 
 @interface SCKEventView : NSView {
@@ -18,7 +16,7 @@
 + (NSColor*)colorForEventType:(SCKEventType)type;
 + (NSColor*)strokeColorForEventType:(SCKEventType)type;
 
-- (void)prepareForRelayout;
+- (void)prepareForRedistribution;
 
 @property (nonatomic, assign) BOOL layoutDone;
 @property (nonatomic, strong) SCKEventHolder * eventHolder;

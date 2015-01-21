@@ -22,8 +22,7 @@
     NSInteger _dayCount, _hourCount;
     NSInteger _firstHour;
     
-    SCKEventView * _eventViewBeingDragged;
-    NSArray * _otherEventViews;
+    
 }
 
 - (void)readDefaultsFromDelegate;

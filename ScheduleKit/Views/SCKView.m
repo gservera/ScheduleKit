@@ -139,8 +139,10 @@
     NSAssert(!_relayoutInProgress,@"Relayout invoked when already triggered");
     [self beginRelayout];
     NSArray *allHolders = [_eventManager managedEventHolders];
+    if (_eventViewBeingDragged) {
+        allHolders = [_otherEventViews valueForKey:NSStringFromSelector(@selector(eventHolder))];
+    }
     [allHolders makeObjectsPerformSelector:@selector(lock)];
-    [eventViews makeObjectsPerformSelector:@selector(prepareForRelayout)];
     for (SCKEventView *eventView in [eventViews copy]) {
         [self relayoutEventView:eventView animated:animation];
     }

@@ -13,6 +13,8 @@
 @interface SCKView : NSView {
     double _absoluteStartTimeRef;
     double _absoluteEndTimeRef;
+    SCKEventView * _eventViewBeingDragged;
+    NSArray * _otherEventViews;
 }
 
 - (void)prepare;
