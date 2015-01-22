@@ -371,7 +371,7 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ScheduleKit/SCKDayPoint.m"
+            filePath = "ScheduleKit/Model/SCKDayPoint.m"
             timestampString = "443268939.006491"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"

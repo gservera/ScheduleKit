@@ -116,7 +116,7 @@ static NSArray *__colors, *__strokeColors;
         (_actionContext.status == SCKDraggingStatusIlde && [[NSCursor currentCursor] isEqual:[NSCursor resizeUpDownCursor]])) {
         if (_actionContext.status == SCKDraggingStatusIlde) {
             _actionContext.status = SCKDraggingStatusDraggingDuration;
-            _actionContext.oldDuration = [self.eventHolder.cachedDuration integerValue];
+            _actionContext.oldDuration = self.eventHolder.cachedDuration;
             _actionContext.lastDuration = _actionContext.oldDuration;
             [rootView beginDraggingEventView:self];
         }
@@ -148,7 +148,7 @@ static NSArray *__colors, *__strokeColors;
             NSRect newFrame = self.frame;
             newFrame.size.height = localLoc.y;
             self.frame = newFrame;
-            _eventHolder.cachedDuration = @(_actionContext.newDuration);
+            _eventHolder.cachedDuration = _actionContext.newDuration;
         } else {
             _actionContext.newDuration = 5;
         }
@@ -193,7 +193,7 @@ static NSArray *__colors, *__strokeColors;
                 [_eventHolder recalculateRelativeValues];
                 [view triggerRelayoutForAllEventViews];
             } else {
-                [_eventHolder setCachedDuration:@(_actionContext.oldDuration)];
+                [_eventHolder setCachedDuration:_actionContext.oldDuration];
                 [view relayoutEventView:self animated:YES];
             }
             [view endDraggingEventView:self];

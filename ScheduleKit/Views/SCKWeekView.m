@@ -104,7 +104,7 @@
 
     NSDate *scheduledDate = eventView.eventHolder.cachedScheduleDate;
     SCKDayPoint *sPoint = [[SCKDayPoint alloc] initWithDate:scheduledDate];
-    SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[scheduledDate dateByAddingTimeInterval:60.0*eventView.eventHolder.cachedDuration.doubleValue]];
+    SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[scheduledDate dateByAddingTimeInterval:60.0*eventView.eventHolder.cachedDuration]];
     newFrame.origin.y = [self yForHour:sPoint.hour minute:sPoint.minute];
     newFrame.size.height = [self yForHour:ePoint.hour minute: ePoint.minute]-newFrame.origin.y;
     

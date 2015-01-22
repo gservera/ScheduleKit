@@ -3,7 +3,25 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2015 Guillem Servera. All rights reserved.
+ *  Copyright:  © 2014-2015 Guillem Servera (http://github.com/gservera)
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
  */
 
 #import "SCKEventHolder.h"
@@ -37,7 +55,7 @@
         _cachedUserLabelColor = [[_cachedUser labelColor] copy];
         _cachedTitle = [[e title] copy];
         _cachedScheduleDate = [[e scheduledDate] copy];
-        _cachedDuration = [[e duration] copy];
+        _cachedDuration = [[e duration] integerValue];
         _owningView = v;
         _rootView = (SCKView*)_owningView.superview;
         _eventManager = [_rootView eventManager];
@@ -86,7 +104,7 @@
     } else { // Notification is not prior
         id theNewValue = change[NSKeyValueChangeNewKey];
         if ([keyPath isEqualToString:NSStringFromSelector(@selector(duration))]) {
-            _cachedDuration = [theNewValue copy];
+            _cachedDuration = [theNewValue integerValue];
             [self recalculateRelativeValues];
             NSArray *conflictsNow;
             (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsNow];
@@ -141,9 +159,8 @@
     if (_cachedScheduleDate != nil) {
         _cachedRelativeStart = [_rootView calculateRelativeTimeLocationForDate:_cachedScheduleDate];
         if (_cachedRelativeStart != SCKRelativeTimeLocationNotFound) {
-            double cDuration = [_cachedDuration doubleValue];
-            if (cDuration > 0.0) {
-                NSDate *endDate = [_cachedScheduleDate dateByAddingTimeInterval:cDuration * 60.0];
+            if (_cachedDuration > 0.0) {
+                NSDate *endDate = [_cachedScheduleDate dateByAddingTimeInterval:_cachedDuration * 60.0];
                 _cachedRelativeEnd = [_rootView calculateRelativeTimeLocationForDate:endDate];
                 if (_cachedRelativeEnd == SCKRelativeTimeLocationNotFound) {
                     _cachedRelativeEnd = 1.0;

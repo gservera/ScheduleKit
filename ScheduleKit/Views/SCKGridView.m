@@ -243,7 +243,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
         
         NSDate *startDate = [self calculateDateForRelativeTimeLocation:startOffset];
         SCKDayPoint *sPoint = [[SCKDayPoint alloc] initWithDate:startDate];
-        SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[startDate dateByAddingTimeInterval:eV.eventHolder.cachedDuration.doubleValue*60.0]];
+        SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[startDate dateByAddingTimeInterval:eV.eventHolder.cachedDuration*60.0]];
         NSString *sHourLabel = [NSString stringWithFormat:@"%ld:%02ld",sPoint.hour,sPoint.minute];
         NSString *eHourLabel = [NSString stringWithFormat:@"%ld:%02ld",ePoint.hour,ePoint.minute];
         CGFloat height = [sHourLabel sizeWithAttributes:__hourLabelAttrs].height;
@@ -252,7 +252,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
         [sHourLabel drawInRect:sHourLabelRect withAttributes:__hourLabelAttrs];
         [eHourLabel drawInRect:eHourLabelRect withAttributes:__hourLabelAttrs];
         
-        NSString *durationLabel = [NSString stringWithFormat:@"%d min",eV.eventHolder.cachedDuration.intValue];
+        NSString *durationLabel = [NSString stringWithFormat:@"%ld min",eV.eventHolder.cachedDuration];
         NSRect durationRect = NSMakeRect(0.0, NSMidY(eventRect)-height/2.0, NSMinX(canvasRect)-12, height);
         [durationLabel drawInRect:durationRect withAttributes:__hourLabelAttrs];
     }
