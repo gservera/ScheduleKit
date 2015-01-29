@@ -7,6 +7,7 @@
 //
 
 #import "SCKGridView.h"
+#import "SCKViewPrivate.h"
 #import "NSView+SKCAdditions.h"
 #import "SCKEventView.h"
 #import "SCKDayPoint.h"
@@ -49,8 +50,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
     }
 }
 
-- (void)prepare {
-    [super prepare];
+- (void)customInit {
+    [super customInit];
     _calendar = [NSCalendar currentCalendar];
     _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(minuteTimerFired:) userInfo:nil repeats:YES];
     _minuteTimer.tolerance = 10.0;
@@ -89,6 +90,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
 - (void)readDefaultsFromDelegate {
     if ([_delegate respondsToSelector:@selector(unavailableTimeRangesForGridView:)]) {
         _unavailableTimeRanges = [_delegate unavailableTimeRangesForGridView:self];
+        self.needsDisplay = YES;
     }
 }
 
@@ -98,27 +100,6 @@ static NSDictionary * __subHourLabelAttrs = nil;
 
 - (NSRect)rectForUnavailableTimeRange:(SCKUnavailableTimeRange*)rng {
     return NSZeroRect;
-}
-
-- (void)beginDraggingEventView:(SCKEventView*)eV {
-    NSMutableArray *subviews = [self.subviews mutableCopy];
-    [subviews removeObject:eV];
-    _otherEventViews = subviews;
-    _eventViewBeingDragged = eV;
-    [eV.eventHolder lock];
-}
-
-- (void)continueDraggingEventView:(SCKEventView*)eV {
-    [self triggerRelayoutForEventViews:_otherEventViews animated:NO];
-    [self setNeedsDisplay:YES];
-}
-
-- (void)endDraggingEventView:(SCKEventView*)eV {
-    [_eventViewBeingDragged.eventHolder unlock];
-    _otherEventViews = nil;
-    _eventViewBeingDragged = nil;
-    [self triggerRelayoutForAllEventViews];
-    self.needsDisplay = YES;
 }
 
 - (void)drawDayLabelRect { //private
@@ -337,13 +318,13 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)redistributeOverlappingEvents {
-    [self.subviews makeObjectsPerformSelector:@selector(prepareForRedistribution)];
+    [_eventViews makeObjectsPerformSelector:@selector(prepareForRedistribution)];
     CGFloat dayWidth = NSWidth(self.contentRect)/(CGFloat)_dayCount;
     
-    for (SCKEventView *eV in self.subviews) {
+    for (SCKEventView *eV in _eventViews) {
         NSRect frame = eV.frame;
         NSUInteger day = (NSUInteger)trunc((NSMidX(frame)-kHourLabelWidth)/dayWidth);
-        for (SCKEventView *sV in self.subviews) {
+        for (SCKEventView *sV in _eventViews) {
             if (sV != eV && !sV.layoutDone) {
                 
                 if (NSIntersectsRect(NSInsetRect(frame, 1, 1), NSInsetRect(sV.frame, 1, 1))) {
@@ -365,7 +346,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 continue;
                             }
                             BOOL available = YES;
-                            for (SCKEventView *xV in self.subviews) {
+                            for (SCKEventView *xV in _eventViews) {
                                 if (NSIntersectsRect(xV.frame, testRect)) {
                                     available = NO;
                                 }
@@ -390,7 +371,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 continue;
                             }
                             BOOL available = YES;
-                            for (SCKEventView *xV in self.subviews) {
+                            for (SCKEventView *xV in _eventViews) {
                                 if (NSIntersectsRect(xV.frame, testRect)) {
                                     available = NO;
                                 }

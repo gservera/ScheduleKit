@@ -42,6 +42,7 @@ static NSCalendar * __calendar;
 }
 
 - (instancetype)initWithDate:(NSDate*)date {
+    NSParameterAssert(date != nil);
     NSDateComponents *comps = [__calendar components:NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:date];
     return [self initWithHour:comps.hour minute:comps.minute second:comps.second];
 }

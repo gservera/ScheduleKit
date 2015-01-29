@@ -7,13 +7,14 @@
 //
 
 #import "SCKDayView.h"
+#import "SCKViewPrivate.h"
 #import "SCKEventView.h"
 #import "SCKEventManager.h"
 
 @implementation SCKDayView
 
-- (void)prepare {
-    [super prepare];
+- (void)customInit {
+    [super customInit];
     _dayCount = 1;
 }
 

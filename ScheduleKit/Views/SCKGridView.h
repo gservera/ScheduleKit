@@ -27,9 +27,7 @@
 
 - (void)readDefaultsFromDelegate;
 - (void)invalidateUserDefaults;
-- (void)beginDraggingEventView:(SCKEventView*)eV;
-- (void)continueDraggingEventView:(SCKEventView*)eV;
-- (void)endDraggingEventView:(SCKEventView*)eV;
+
 
 - (NSRect)rectForUnavailableTimeRange:(SCKUnavailableTimeRange*)rng;
 

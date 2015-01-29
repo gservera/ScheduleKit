@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Guillem Servera. All rights reserved.
 //
 
-#import "SCKEventManager.h"
 #import "SCKEventManagerPrivate.h"
 #import "SCKEventHolder.h"
 #import "ScheduleKitDefinitions.h"
 #import "SCKEventView.h"
-#import "SCKView.h"
+#import "SCKViewPrivate.h"
 
 #define SCKKey(key) NSStringFromSelector(@selector(key))
 #define SCKSorter(key,asc) [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(key)) ascending:asc]
@@ -73,6 +72,7 @@ static NSArray * __sorters = nil;
                 if (![events containsObject:holder.representedObject]) {
                     //Remove
                     [holder lock];
+                    [_view removeEventView:holder.owningView];
                     [holder.owningView removeFromSuperview];
                     [_managedContainers removeObject:holder];
                 } else {
@@ -82,6 +82,7 @@ static NSArray * __sorters = nil;
             for (id <SCKEvent> e in events) {
                 SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
                 [_view addSubview:aView];
+                [_view addEventView:aView];
                 SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
                 aView.eventHolder = aHolder;
                 [_managedContainers addObject:aHolder];

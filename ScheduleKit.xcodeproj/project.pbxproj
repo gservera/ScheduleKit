@@ -117,6 +117,7 @@
 		995E93901A65F29500A3D2BF /* WhiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteView.h; sourceTree = "<group>"; };
 		995E93911A65F29500A3D2BF /* WhiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteView.m; sourceTree = "<group>"; };
 		995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKEventManagerPrivate.h; sourceTree = "<group>"; };
+		99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKViewPrivate.h; sourceTree = "<group>"; };
 		99CDA4601A7066C200AFB505 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -293,6 +294,7 @@
 			children = (
 				99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */,
 				99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */,
+				99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */,
 				99E7D0BE1A4AF63F00713F18 /* SCKView.h */,
 				99E7D0BF1A4AF63F00713F18 /* SCKView.m */,
 				990207001A535D0400912DF5 /* SCKGridView.h */,

@@ -7,6 +7,7 @@
 //
 
 #import "SCKWeekView.h"
+#import "SCKViewPrivate.h"
 #import "SCKEventManager.h"
 #import "SCKDayPoint.h"
 #import "SCKEventView.h"
@@ -14,8 +15,8 @@
 
 @implementation SCKWeekView
 
-- (void)prepare {
-    [super prepare];
+- (void)customInit {
+    [super customInit];
     _dayCount = 7;
     _dayStartPoint = [[SCKDayPoint alloc] initWithHour:0 minute:0 second:0];
     _dayEndPoint = [[SCKDayPoint alloc] initWithHour:21 minute:0 second:0];
@@ -39,23 +40,24 @@
 }
 
 - (void)readDefaultsFromDelegate {
-    [super readDefaultsFromDelegate];
-    if ([self.delegate respondsToSelector:@selector(dayCountForWeekView:)]) {
-        NSInteger dayCount = [self.delegate dayCountForWeekView:self];
-        if (_dayCount != dayCount) {
-            self.endDate = [_calendar dateByAddingUnit:NSCalendarUnitDay value:dayCount toDate:self.startDate options:0];
-            [self.eventManager reloadData];
+    [super readDefaultsFromDelegate]; // Sets up unavailable ranges and marks as needing display
+    
+    if (self.delegate != nil) {
+        _dayStartPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayStartHourForWeekView:self] minute:0 second:0];
+        _dayEndPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayEndHourForWeekView:self] minute:0 second:0];
+        _firstHour = _dayStartPoint.hour;
+        _hourCount = _dayEndPoint.hour - _dayStartPoint.hour;
+        [self invalidateIntrinsicContentSize];
+        
+        if ([self.delegate respondsToSelector:@selector(dayCountForWeekView:)]) {
+            NSInteger dayCount = [self.delegate dayCountForWeekView:self];
+            if (_dayCount != dayCount) {
+                self.endDate = [_calendar dateByAddingUnit:NSCalendarUnitDay value:dayCount toDate:self.startDate options:0];
+                [self.eventManager reloadData];
+            }
         }
-        if (self.delegate != nil) {
-            _dayStartPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayStartHourForWeekView:self] minute:0 second:0];
-            _dayEndPoint = [[SCKDayPoint alloc] initWithHour:[self.delegate dayEndHourForWeekView:self] minute:0 second:0];
-            _firstHour = _dayStartPoint.hour;
-            _hourCount = _dayEndPoint.hour - _dayStartPoint.hour;
-            [self invalidateIntrinsicContentSize];
-            [self triggerRelayoutForAllEventViews];
-        }
+        [self triggerRelayoutForAllEventViews]; //Trigger this even if we call reloadData because it may not reload anything
     }
-    [self setNeedsDisplay:YES];
 }
 
 #pragma mark - Event layout calculations
@@ -104,7 +106,8 @@
 
     NSDate *scheduledDate = eventView.eventHolder.cachedScheduleDate;
     SCKDayPoint *sPoint = [[SCKDayPoint alloc] initWithDate:scheduledDate];
-    SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[scheduledDate dateByAddingTimeInterval:60.0*eventView.eventHolder.cachedDuration]];
+    SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithHour:sPoint.hour minute:sPoint.minute+eventView.eventHolder.cachedDuration second:sPoint.second];
+    //SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[scheduledDate dateByAddingTimeInterval:60.0*eventView.eventHolder.cachedDuration]];
     newFrame.origin.y = [self yForHour:sPoint.hour minute:sPoint.minute];
     newFrame.size.height = [self yForHour:ePoint.hour minute: ePoint.minute]-newFrame.origin.y;
     

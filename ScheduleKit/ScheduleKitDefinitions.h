@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, SCKEventColorMode) {
     SCKEventColorModeByEventOwner = 1
 };
 
+
 typedef NS_ENUM(NSInteger, SCKDraggingStatus) {
     SCKDraggingStatusIlde             = -1,
     SCKDraggingStatusDraggingDuration =  1,
