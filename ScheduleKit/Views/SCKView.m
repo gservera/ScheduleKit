@@ -36,7 +36,6 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        _eventViews = [[NSMutableArray alloc] init];
         [self customInit];
     }
     return self;
@@ -45,17 +44,13 @@
 - (instancetype)initWithFrame:(NSRect)frameRect {
     self = [super initWithFrame:frameRect];
     if (self) {
-        _eventViews = [[NSMutableArray alloc] init];
         [self customInit];
     }
     return self;
 }
 
 - (void)customInit {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(frameDidChangeNotification:)
-                                                 name:NSViewFrameDidChangeNotification
-                                               object:self];
+    _eventViews = [[NSMutableArray alloc] init];
 }
 
 - (void)dealloc {
@@ -84,6 +79,11 @@
             }
         }
     }
+}
+
+- (void)resizeWithOldSuperviewSize:(NSSize)oldSize {
+    [super resizeWithOldSuperviewSize:oldSize];
+    [self triggerRelayoutForAllEventViews];
 }
 
 - (BOOL)isFlipped {
@@ -240,10 +240,6 @@
 
 - (void)triggerRelayoutForAllEventViews {
     [self triggerRelayoutForEventViews:_eventViews animated:NO];
-}
-
-- (void)frameDidChangeNotification:(NSNotification*)note {
-    [self triggerRelayoutForAllEventViews];
 }
 
 @end

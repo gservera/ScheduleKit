@@ -71,14 +71,13 @@
         } else {
             eventView.frame = newFrame;
         }
-        eventView.needsDisplay = YES;
     }
 }
 
 - (SCKRelativeTimeLocation)relativeTimeLocationForPoint:(NSPoint)location {
-    NSRect canvasRect = [self contentRect];
-    if (NSPointInRect(location, canvasRect)) {
-        return (SCKRelativeTimeLocation)((location.y-canvasRect.origin.y)/NSHeight(canvasRect));
+    NSRect contentRect = [self contentRect];
+    if (NSPointInRect(location, contentRect)) {
+        return (location.y - contentRect.origin.y) / contentRect.size.height;
     } else {
         return SCKRelativeTimeLocationNotFound;
     }

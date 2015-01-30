@@ -107,7 +107,6 @@
     NSDate *scheduledDate = eventView.eventHolder.cachedScheduleDate;
     SCKDayPoint *sPoint = [[SCKDayPoint alloc] initWithDate:scheduledDate];
     SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithHour:sPoint.hour minute:sPoint.minute+eventView.eventHolder.cachedDuration second:sPoint.second];
-    //SCKDayPoint *ePoint = [[SCKDayPoint alloc] initWithDate:[scheduledDate dateByAddingTimeInterval:60.0*eventView.eventHolder.cachedDuration]];
     newFrame.origin.y = [self yForHour:sPoint.hour minute:sPoint.minute];
     newFrame.size.height = [self yForHour:ePoint.hour minute: ePoint.minute]-newFrame.origin.y;
     
@@ -122,7 +121,6 @@
         } else {
             eventView.frame = newFrame;
         }
-        eventView.needsDisplay = YES;
     }
 }
 

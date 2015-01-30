@@ -9,6 +9,7 @@
 #import "SCKEventView.h"
 #import "SCKGridView.h"
 #import "SCKEventManager.h"
+#import "SCKViewPrivate.h"
 
 SCKActionContext SCKActionContextZero() {
     SCKActionContext cx;

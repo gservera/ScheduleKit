@@ -14,12 +14,4 @@
     self.needsDisplay = YES;
 }
 
-- (void)hide {
-    self.hidden = YES;
-}
-
-- (void)unhide {
-    self.hidden = NO;
-}
-
 @end

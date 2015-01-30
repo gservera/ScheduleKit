@@ -10,6 +10,7 @@
 #import "SCKUnavailableTimeRange.h"
 
 @class SCKGridView;
+
 @protocol SCKGridViewDelegate <NSObject>
 @optional
 - (NSArray*)unavailableTimeRangesForGridView:(SCKGridView*)view;
@@ -19,10 +20,12 @@
     NSCalendar * _calendar;
     NSTimer *_minuteTimer;
     NSArray *_unavailableTimeRanges;
-    NSInteger _dayCount, _hourCount;
+    NSInteger _dayCount;
+    NSInteger _hourCount;
     NSInteger _firstHour;
     
-    
+    NSDateFormatter * _dayLabelDateFormatter;
+    NSDateFormatter * _monthLabelDateFormatter;
 }
 
 - (void)readDefaultsFromDelegate;

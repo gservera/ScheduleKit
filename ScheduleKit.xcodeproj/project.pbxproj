@@ -13,7 +13,7 @@
 		990207031A535D0400912DF5 /* SCKGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207011A535D0400912DF5 /* SCKGridView.m */; };
 		990207061A53692800912DF5 /* SCKUnavailableTimeRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207041A53692800912DF5 /* SCKUnavailableTimeRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		990207071A53692800912DF5 /* SCKUnavailableTimeRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207051A53692800912DF5 /* SCKUnavailableTimeRange.m */; };
-		9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207081A5417B100912DF5 /* SCKDayPoint.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207081A5417B100912DF5 /* SCKDayPoint.h */; };
 		9902070B1A5417B100912DF5 /* SCKDayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207091A5417B100912DF5 /* SCKDayPoint.m */; };
 		9902070E1A542DA300912DF5 /* SCKDayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9902070C1A542DA300912DF5 /* SCKDayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9902070F1A542DA300912DF5 /* SCKDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902070D1A542DA300912DF5 /* SCKDayView.m */; };
@@ -34,13 +34,14 @@
 		995E938F1A65EEB100A3D2BF /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E938E1A65EEB100A3D2BF /* TestEvent.m */; };
 		995E93921A65F29500A3D2BF /* WhiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E93911A65F29500A3D2BF /* WhiteView.m */; };
 		995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		99CDA4611A7066C200AFB505 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 99CDA4601A7066C200AFB505 /* LICENSE */; };
 		99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0AD1A4AF3B500713F18 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */; };
 		99E7D0C01A4AF63F00713F18 /* SCKView.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0BE1A4AF63F00713F18 /* SCKView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0C11A4AF63F00713F18 /* SCKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0BF1A4AF63F00713F18 /* SCKView.m */; };
-		99E7D0C71A4B016900713F18 /* NSView+SKCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0C51A4B016900713F18 /* NSView+SKCAdditions.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		99E7D0C71A4B016900713F18 /* NSView+SKCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0C51A4B016900713F18 /* NSView+SKCAdditions.h */; };
 		99E7D0C81A4B016900713F18 /* NSView+SKCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0C61A4B016900713F18 /* NSView+SKCAdditions.m */; };
 		99E7D0CB1A4B3B9B00713F18 /* SCKEventView.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */; };
@@ -171,14 +172,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		990206FB1A5058DD00912DF5 /* EventManager */ = {
+		990206FB1A5058DD00912DF5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				990206FC1A50590D00912DF5 /* SCKEventManager.h */,
 				995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */,
 				990206FD1A50590D00912DF5 /* SCKEventManager.m */,
 			);
-			name = EventManager;
+			name = Controller;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -226,6 +227,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		99A3740C1A7AF4CA00F0E2BB /* Schedule views */ = {
+			isa = PBXGroup;
+			children = (
+				99E7D0BE1A4AF63F00713F18 /* SCKView.h */,
+				99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */,
+				99E7D0BF1A4AF63F00713F18 /* SCKView.m */,
+				990207001A535D0400912DF5 /* SCKGridView.h */,
+				990207011A535D0400912DF5 /* SCKGridView.m */,
+				9902070C1A542DA300912DF5 /* SCKDayView.h */,
+				9902070D1A542DA300912DF5 /* SCKDayView.m */,
+				990207101A5457ED00912DF5 /* SCKWeekView.h */,
+				990207111A5457ED00912DF5 /* SCKWeekView.m */,
+			);
+			name = "Schedule views";
+			sourceTree = "<group>";
+		};
 		99E7D0971A4AF3B500713F18 = {
 			isa = PBXGroup;
 			children = (
@@ -254,10 +271,10 @@
 				99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */,
 				99E7D0BD1A4AF54800713F18 /* ScheduleKitDefinitions.h */,
 				99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */,
-				99E7D0CD1A4B3C2400713F18 /* Model */,
 				99E7D0C41A4B014900713F18 /* Categories */,
-				990206FB1A5058DD00912DF5 /* EventManager */,
+				99E7D0CD1A4B3C2400713F18 /* Model */,
 				99E7D0C21A4AF64500713F18 /* Views */,
+				990206FB1A5058DD00912DF5 /* Controller */,
 				99E7D0A41A4AF3B500713F18 /* Supporting Files */,
 			);
 			path = ScheduleKit;
@@ -294,15 +311,7 @@
 			children = (
 				99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */,
 				99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */,
-				99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */,
-				99E7D0BE1A4AF63F00713F18 /* SCKView.h */,
-				99E7D0BF1A4AF63F00713F18 /* SCKView.m */,
-				990207001A535D0400912DF5 /* SCKGridView.h */,
-				990207011A535D0400912DF5 /* SCKGridView.m */,
-				9902070C1A542DA300912DF5 /* SCKDayView.h */,
-				9902070D1A542DA300912DF5 /* SCKDayView.m */,
-				990207101A5457ED00912DF5 /* SCKWeekView.h */,
-				990207111A5457ED00912DF5 /* SCKWeekView.m */,
+				99A3740C1A7AF4CA00F0E2BB /* Schedule views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,7 +348,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9902070E1A542DA300912DF5 /* SCKDayView.h in Headers */,
-				9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */,
 				990207121A5457ED00912DF5 /* SCKWeekView.h in Headers */,
 				9902074B1A55E14A00912DF5 /* ScheduleKitDefinitions.h in Headers */,
 				9902074C1A55E14F00912DF5 /* SCKEvent.h in Headers */,
@@ -351,8 +359,10 @@
 				9902071D1A55722B00912DF5 /* SCKTextField.h in Headers */,
 				99E7D0C01A4AF63F00713F18 /* SCKView.h in Headers */,
 				99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */,
+				99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */,
 				995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */,
 				99E7D0C71A4B016900713F18 /* NSView+SKCAdditions.h in Headers */,
+				9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

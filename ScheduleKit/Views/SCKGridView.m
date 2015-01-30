@@ -15,36 +15,33 @@
 
 #define kHourLabelWidth 56.0
 #define kDayLabelHeight 36.0
+#define kMaxHourHeight 300.0
 
-static NSDateFormatter * __dayLabelDateFormatter = nil;
-static NSDateFormatter * __monthLabelDateFormatter = nil;
+NSString * const SCKDefaultsGridViewZoomLevelKey = @"MEKZoom";
+
+@implementation SCKGridView
+
 static NSDictionary * __dayLabelAttrs = nil;
 static NSDictionary * __monthLabelAttrs = nil;
 static NSDictionary * __hourLabelAttrs = nil;
 static NSDictionary * __subHourLabelAttrs = nil;
 
-@implementation SCKGridView
-
 + (void)initialize {
     if (self == [SCKGridView self]) {
-        __dayLabelDateFormatter = [[NSDateFormatter alloc] init];
-        __dayLabelDateFormatter.dateFormat = @"EEEE d";
-        __monthLabelDateFormatter = [[NSDateFormatter alloc] init];
-        __monthLabelDateFormatter.dateFormat = @"MMM";
-        NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-        style.alignment = NSCenterTextAlignment;
-        __dayLabelAttrs = @{NSParagraphStyleAttributeName:  style,
+        NSMutableParagraphStyle *cStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        NSMutableParagraphStyle *rStyle = [cStyle mutableCopy];
+        cStyle.alignment = NSCenterTextAlignment;
+        rStyle.alignment = NSRightTextAlignment;
+        __dayLabelAttrs = @{NSParagraphStyleAttributeName:  cStyle,
                             NSForegroundColorAttributeName: [NSColor darkGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:14.0]};
-        __monthLabelAttrs = @{NSParagraphStyleAttributeName:  style,
+        __monthLabelAttrs = @{NSParagraphStyleAttributeName:  cStyle,
                             NSForegroundColorAttributeName: [NSColor lightGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:12.0]};
-        __hourLabelAttrs = @{NSParagraphStyleAttributeName:  style,
+        __hourLabelAttrs = @{NSParagraphStyleAttributeName:  cStyle,
                             NSForegroundColorAttributeName: [NSColor darkGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:11.0]};
-        NSMutableParagraphStyle *right = [style mutableCopy];
-        right.alignment = NSRightTextAlignment;
-        __subHourLabelAttrs = @{NSParagraphStyleAttributeName:  right,
+        __subHourLabelAttrs = @{NSParagraphStyleAttributeName: rStyle,
                             NSForegroundColorAttributeName: [NSColor lightGrayColor],
                             NSFontAttributeName: [NSFont systemFontOfSize:10.0]};
     }
@@ -53,24 +50,38 @@ static NSDictionary * __subHourLabelAttrs = nil;
 - (void)customInit {
     [super customInit];
     _calendar = [NSCalendar currentCalendar];
-    _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(minuteTimerFired:) userInfo:nil repeats:YES];
+    _dayLabelDateFormatter = [[NSDateFormatter alloc] init];
+    _dayLabelDateFormatter.dateFormat = @"EEEE d";
+    _monthLabelDateFormatter = [[NSDateFormatter alloc] init];
+    _monthLabelDateFormatter.dateFormat = @"MMM";
+    _dayCount = 1;
+    _hourCount = 1;
+    _firstHour = 1;
+    _hourHeight = [[NSUserDefaults standardUserDefaults] doubleForKey:SCKDefaultsGridViewZoomLevelKey];
+    _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
+                                                    target:self
+                                                  selector:@selector(minuteTimerFired:)
+                                                  userInfo:nil
+                                                   repeats:YES];
     _minuteTimer.tolerance = 10.0;
-    _dayCount = 1; _hourCount = 1; _firstHour = 1;
-    _hourHeight = [[NSUserDefaults standardUserDefaults] doubleForKey:@"MEKZoom"];
 }
 
 - (void)minuteTimerFired:(NSTimer*)timer {
-    [self markAsNeedingDisplay];
+    [self setNeedsDisplay:YES];
 }
 
 - (NSRect)contentRect {
-    return NSMakeRect(kHourLabelWidth, kDayLabelHeight, self.frame.size.width-kHourLabelWidth, self.frame.size.height-kDayLabelHeight);
+    return NSMakeRect(kHourLabelWidth,
+                      kDayLabelHeight,
+                      self.frame.size.width - kHourLabelWidth,
+                      self.frame.size.height - kDayLabelHeight);
 }
 
 - (void)setHourHeight:(CGFloat)hourHeight {
     if (_hourHeight != hourHeight) {
         _hourHeight = hourHeight;
-        [[NSUserDefaults standardUserDefaults] setDouble:hourHeight forKey:@"MEKZoom"];
+        [[NSUserDefaults standardUserDefaults] setDouble:hourHeight
+                                                  forKey:SCKDefaultsGridViewZoomLevelKey];
         [self invalidateIntrinsicContentSize];
     }
 }
@@ -90,8 +101,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
 - (void)readDefaultsFromDelegate {
     if ([_delegate respondsToSelector:@selector(unavailableTimeRangesForGridView:)]) {
         _unavailableTimeRanges = [_delegate unavailableTimeRangesForGridView:self];
-        self.needsDisplay = YES;
     }
+    [self setNeedsDisplay:YES];
 }
 
 - (void)invalidateUserDefaults {
@@ -111,12 +122,12 @@ static NSDictionary * __subHourLabelAttrs = nil;
     NSRectFill(dayLabelingRect);
     
     CGFloat dayWidth = (NSWidth(self.frame) - kHourLabelWidth) / (CGFloat)_dayCount;
-    __dayLabelDateFormatter.dateFormat = (dayWidth < 100.0)? @"EEE d" : @"EEEE d";
-    __monthLabelDateFormatter.dateFormat = (dayWidth < 100.0)? @"MMM" : @"MMMM";
+    _dayLabelDateFormatter.dateFormat = (dayWidth < 100.0)? @"EEE d" : @"EEEE d";
+    _monthLabelDateFormatter.dateFormat = (dayWidth < 100.0)? @"MMM" : @"MMMM";
     
     for (NSInteger d = 0; d < _dayCount; d++) {
         NSDate *dayDate = [_calendar dateByAddingUnit:NSCalendarUnitDay value:d toDate:self.startDate options:0];
-        NSString *dayLabel = [[__dayLabelDateFormatter stringFromDate:dayDate] uppercaseString];
+        NSString *dayLabel = [[_dayLabelDateFormatter stringFromDate:dayDate] uppercaseString];
         NSSize dayLabelSize = [dayLabel sizeWithAttributes:__dayLabelAttrs];
         NSRect dayLabelRect = NSMakeRect(NSMinX(dayLabelingRect)+dayWidth*(CGFloat)d,
                                          kDayLabelHeight/2.0-dayLabelSize.height/2.0,
@@ -124,7 +135,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                          dayLabelSize.height);
         if ((d == 0) || ([[dayLabel componentsSeparatedByString:@" "][1] intValue] == 1)) {
             dayLabelRect.origin.y -= 8.0;
-            NSString *monthLabel = [[__monthLabelDateFormatter stringFromDate:dayDate] uppercaseString];
+            NSString *monthLabel = [[_monthLabelDateFormatter stringFromDate:dayDate] uppercaseString];
             NSSize monthLabelSize = [monthLabel sizeWithAttributes:__monthLabelAttrs];
             NSRect monthLabelRect = NSMakeRect(dayLabelRect.origin.x,
                                                kDayLabelHeight/2.0-dayLabelSize.height/2.0 + 7.0,
@@ -192,7 +203,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
 
 #define fill(x,y,w,h) NSRectFill(NSMakeRect(x,y,w,h))
 
-- (void)drawGuidesForDraggingEventView:(SCKEventView*)eV {
+- (void)drawDraggingGuides {
+    SCKEventView *eV = _eventViewBeingDragged;
     if (self.colorMode == SCKEventColorModeByEventType) {
         [[SCKEventView strokeColorForEventType:[eV.eventHolder.representedObject eventType]] setFill];
     } else if ([eV.eventHolder cachedUserLabelColor] != nil) {
@@ -241,7 +253,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
 
 - (void)drawCurrentTimeLine {
     NSRect canvas = [self contentRect];
-    NSDateComponents *components = [_calendar components:NSCalendarUnitHour|NSCalendarUnitMinute fromDate:[NSDate date]];
+    NSDateComponents *components = [_calendar components:NSCalendarUnitHour|NSCalendarUnitMinute
+                                                fromDate:[NSDate date]];
     double mOffset = (double)_hourCount * 60.0;
     double cOffset = (double)(components.hour-_firstHour) * 60.0 + (double)components.minute;
     CGFloat yOrigin = NSMinY(canvas) + NSHeight(canvas) * (cOffset / mOffset);
@@ -252,35 +265,29 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    if ((_absoluteStartTimeRef >= _absoluteEndTimeRef) || (_hourCount <= 0)) {
-        return;
-    } else {
+    [super drawRect:dirtyRect]; // Fills background
+    if ((_absoluteStartTimeRef < _absoluteEndTimeRef) && (_hourCount > 0)) {
         [self drawUnavailableTimeRanges];
         [self drawDayLabelRect];
         [self drawHourDelimiters];
         [self drawCurrentTimeLine];
         if (_eventViewBeingDragged) {
-            [self drawGuidesForDraggingEventView:_eventViewBeingDragged];
+            [self drawDraggingGuides];
         } else {
             [self drawHourLabels];
         }
-    }
-}
-
-- (void)markContentViewAsNeedingDisplay {
-    [self setNeedsDisplayInRect:NSMakeRect(0.0, kDayLabelHeight+0.1, self.frame.size.width, self.frame.size.height-kDayLabelHeight-0.1)];
+    } 
 }
 
 - (NSSize)intrinsicContentSize {
-    return NSMakeSize(NSViewNoInstrinsicMetric, (CGFloat)_hourCount*_hourHeight+kDayLabelHeight);
+    return NSMakeSize(NSViewNoInstrinsicMetric, kDayLabelHeight+(CGFloat)_hourCount*_hourHeight);
 }
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldSize {
+    [super resizeWithOldSuperviewSize:oldSize];
     if (((CGFloat)_hourCount*_hourHeight < NSHeight(self.superview.frame)-kDayLabelHeight) && _hourCount > 0) {
         self.hourHeight = (NSHeight(self.superview.frame)-kDayLabelHeight) / (CGFloat)_hourCount;
     }
-    [super resizeWithOldSuperviewSize:oldSize];
 }
 
 - (void)magnifyWithEvent:(NSEvent *)event {
@@ -294,7 +301,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (IBAction)increaseZoomFactor:(id)sender {
-    if (_hourHeight < 300.0) {
+    if (_hourHeight < kMaxHourHeight) {
         self.hourHeight += 8.0;
         self.needsDisplay = YES;
     }
@@ -313,7 +320,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
 - (void)viewDidMoveToWindow {
     [super viewDidMoveToWindow];
     if (self.superview != nil) {
-        [self setContentCompressionResistancePriority:490 forOrientation:NSLayoutConstraintOrientationVertical];
+        [self setContentCompressionResistancePriority:NSLayoutPriorityDragThatCannotResizeWindow
+                                       forOrientation:NSLayoutConstraintOrientationVertical];
     }
 }
 

@@ -11,7 +11,5 @@
 @interface NSView (SKCAdditions)
 
 - (void)markAsNeedingDisplay;
-- (void)hide;
-- (void)unhide;
 
 @end
