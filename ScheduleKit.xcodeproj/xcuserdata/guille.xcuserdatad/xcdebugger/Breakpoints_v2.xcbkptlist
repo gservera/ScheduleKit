@@ -217,7 +217,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "320"
             endingLineNumber = "320"
-            landmarkName = "-viewDidMoveToWindow"
+            landmarkName = "-decreaseZoomFactor:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -408,6 +408,22 @@
             startingLineNumber = "46"
             endingLineNumber = "46"
             landmarkName = "-readDefaultsFromDelegate"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScheduleKit/Views/SCKView.m"
+            timestampString = "444356530.214338"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "-triggerRelayoutForEventViews:animated:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

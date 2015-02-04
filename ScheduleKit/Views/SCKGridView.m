@@ -284,9 +284,11 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldSize {
-    [super resizeWithOldSuperviewSize:oldSize];
-    if (((CGFloat)_hourCount*_hourHeight < NSHeight(self.superview.frame)-kDayLabelHeight) && _hourCount > 0) {
-        self.hourHeight = (NSHeight(self.superview.frame)-kDayLabelHeight) / (CGFloat)_hourCount;
+    [super resizeWithOldSuperviewSize:oldSize]; // Triggers relayout
+    CGFloat visibleHeight = self.superview.frame.size.height - kDayLabelHeight;
+    CGFloat contentHeight = (CGFloat)_hourCount * _hourHeight;
+    if (contentHeight < visibleHeight && _hourCount > 0) {
+        [self setHourHeight:(visibleHeight / (CGFloat)_hourCount)];
     }
 }
 

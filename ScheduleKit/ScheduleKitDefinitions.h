@@ -9,7 +9,9 @@
 typedef double SCKRelativeTimeLocation;
 typedef double SCKRelativeTimeLength;
 
-#define SCKRelativeTimeLocationNotFound (double)NSNotFound
+#import <os/activity.h>
+#import <os/trace.h>
+#define SCKRelativeTimeLocationNotFound (SCKRelativeTimeLocation)NSNotFound
 
 typedef NS_ENUM(NSUInteger, SCKEventColorMode) {
     SCKEventColorModeByEventType  = 0,
@@ -26,8 +28,11 @@ typedef NS_ENUM(NSInteger, SCKDraggingStatus) {
 typedef struct SCKActionContext {
     SCKDraggingStatus status;
     BOOL doubleClick;
-    NSInteger oldDuration, lastDuration, newDuration;
-    SCKRelativeTimeLocation oldRelativeStart, newRelativeStart;
+    NSInteger oldDuration;
+    NSInteger lastDuration;
+    NSInteger newDuration;
+    SCKRelativeTimeLocation oldRelativeStart;
+    SCKRelativeTimeLocation newRelativeStart;
     CGFloat internalDelta;
     NSTimeInterval oldDateRef;
 } SCKActionContext;

@@ -35,6 +35,7 @@
 		995E93921A65F29500A3D2BF /* WhiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E93911A65F29500A3D2BF /* WhiteView.m */; };
 		995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */; };
 		99CDA4611A7066C200AFB505 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 99CDA4601A7066C200AFB505 /* LICENSE */; };
 		99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0AD1A4AF3B500713F18 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
@@ -119,6 +120,7 @@
 		995E93911A65F29500A3D2BF /* WhiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteView.m; sourceTree = "<group>"; };
 		995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKEventManagerPrivate.h; sourceTree = "<group>"; };
 		99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKViewPrivate.h; sourceTree = "<group>"; };
+		99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRangeTests.m; sourceTree = "<group>"; };
 		99CDA4601A7066C200AFB505 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,18 +215,10 @@
 		995E937C1A634C5200A3D2BF /* SCKTesterTests */ = {
 			isa = PBXGroup;
 			children = (
+				995E937E1A634C5200A3D2BF /* Info.plist */,
 				995E937F1A634C5200A3D2BF /* SCKTesterTests.m */,
-				995E937D1A634C5200A3D2BF /* Supporting Files */,
 			);
 			path = SCKTesterTests;
-			sourceTree = "<group>";
-		};
-		995E937D1A634C5200A3D2BF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				995E937E1A634C5200A3D2BF /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		99A3740C1A7AF4CA00F0E2BB /* Schedule views */ = {
@@ -292,18 +286,11 @@
 		99E7D0B01A4AF3B500713F18 /* ScheduleKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				99E7D0B21A4AF3B500713F18 /* Info.plist */,
 				99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */,
-				99E7D0B11A4AF3B500713F18 /* Supporting Files */,
+				99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */,
 			);
 			path = ScheduleKitTests;
-			sourceTree = "<group>";
-		};
-		99E7D0B11A4AF3B500713F18 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				99E7D0B21A4AF3B500713F18 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		99E7D0C21A4AF64500713F18 /* Views */ = {
@@ -565,6 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */,
+				99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
