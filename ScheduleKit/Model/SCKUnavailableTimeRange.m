@@ -52,8 +52,8 @@ NSString * const SCKBreakEndMinuteKey   = @"BreakEM";
 
 #pragma mark - NSCoding Protocol
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [self init];
     if (self) {
         _weekday     = [aDecoder decodeIntegerForKey:SCKBreakWeekdayKey];
         _startHour   = [aDecoder decodeIntegerForKey:SCKBreakStartHourKey];

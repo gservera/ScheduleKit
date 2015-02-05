@@ -239,7 +239,6 @@
 }
 
 - (void)triggerRelayoutForAllEventViews {
-    os_trace_debug("Triggered relayout for all event views");
     [self triggerRelayoutForEventViews:_eventViews animated:NO];
 }
 

@@ -30,15 +30,56 @@
     and the end of a day-width time range. */
 @interface SCKDayPoint : NSObject
 
+/**
+ *  Convenience method that initializes an @c SCKDayPoint with all properties set to zero.
+ *  @return The initialized object, autoreleased.
+ */
 + (instancetype)zeroPoint;
-- (instancetype)initWithDate:(NSDate*)date;
-- (instancetype)initWithHour:(NSInteger)h minute:(NSInteger)m second:(NSInteger)s;
 
+/**
+ *  Convenience initializer. Creates a new SCKDayPoint object with hour, minute and
+ *  second extracted from an NSDate object.
+ *  @param date The NSDate object from which to get h/m/s parameters. Must not be nil.
+ *  @return The initialized SCKDayPoint.
+ */
+- (instancetype)initWithDate:(NSDate*)date;
+
+/**
+ *  Initializes a new SCKDayPoint object with hour, minute and second set to the
+ *  specified values. If any parameter is less than 0 or more than 60, it gets passed
+ *  to the higher unit if possible.
+ *
+ *  @param h The point's hour.
+ *  @param m The point's minute. If less than 0 or greater than 60 it gets passed to hour.
+ *  @param s The point's second. If less than 0 or greater than 60 it gets passed to minute
+ *
+ *  @return The initialized SCKDayPoint.
+ */
+- (instancetype)initWithHour:(NSInteger)h minute:(NSInteger)m second:(NSInteger)s NS_DESIGNATED_INITIALIZER;
+
+/**
+ *  Compares two SCKDayPoint objects.
+ *  @param dayPoint The SCKDayPoint object to be compared to self.
+ *  @return YES if self is earlier in time than @c p. NO instead.
+ */
 - (BOOL)isEarlierThanDayPoint:(SCKDayPoint*)p;
+
+/**
+ *  Compares two SCKDayPoint objects.
+ *  @param dayPoint The SCKDayPoint object to be compared to self.
+ *  @return YES if self is later in time than @c p. NO instead.
+ */
 - (BOOL)isLaterThanDayPoint:(SCKDayPoint*)p;
 
-@property (readonly) NSTimeInterval dayOffset;
-@property (assign) NSInteger hour;
-@property (assign) NSInteger minute;
-@property (assign) NSInteger second;
+/**
+ *  Compares two SCKDayPoint objects.
+ *  @param dayPoint The SCKDayPoint object to be compared to self.
+ *  @return YES if dayOffsets are equal. NO instead.
+ */
+- (BOOL)isEqualToDayPoint:(SCKDayPoint*)dayPoint;
+
+@property (readonly) NSTimeInterval dayOffset; /**< Returns the total number of seconds */
+@property (assign) NSInteger hour;   /**< The day point's hour */
+@property (assign) NSInteger minute; /**< The day point's minute */
+@property (assign) NSInteger second; /**< The day point's second. Usually zero. */
 @end

@@ -56,7 +56,7 @@ extern NSString * const SCKBreakEndMinuteKey;
                       startHour:(NSInteger)startHour
                     startMinute:(NSInteger)startMinute
                         endHour:(NSInteger)endHour
-                      endMinute:(NSInteger)endMinute;
+                      endMinute:(NSInteger)endMinute NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Compares two @c SCKUnavailableTimeRange objects

@@ -41,7 +41,7 @@
  *  @param e The represented object. Can't be nil.
  *  @param v The owning view for this instance. Must have been already
  *  added to a view hierarchy. Can't be nil. */
-- (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v;
+- (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v NS_DESIGNATED_INITIALIZER;
 
 
 /**

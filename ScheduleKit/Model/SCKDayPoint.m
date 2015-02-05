@@ -24,12 +24,11 @@
  *  THE SOFTWARE.
  */
 
-
 #import "SCKDayPoint.h"
 
-static NSCalendar * __calendar;
-
 @implementation SCKDayPoint
+
+static NSCalendar * __calendar;
 
 + (void)initialize {
     if (self == [SCKDayPoint self]) {
@@ -43,7 +42,8 @@ static NSCalendar * __calendar;
 
 - (instancetype)initWithDate:(NSDate*)date {
     NSParameterAssert(date != nil);
-    NSDateComponents *comps = [__calendar components:NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:date];
+    NSCalendarUnit flags = NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond;
+    NSDateComponents *comps = [__calendar components:flags fromDate:date];
     return [self initWithHour:comps.hour minute:comps.minute second:comps.second];
 }
 
@@ -81,12 +81,23 @@ static NSCalendar * __calendar;
     return (self.dayOffset > p.dayOffset);
 }
 
+#pragma mark - Equalty testing
+
+- (BOOL)isEqualToDayPoint:(SCKDayPoint*)dayPoint {
+    return ([dayPoint dayOffset] == self.dayOffset);
+}
+
 - (BOOL)isEqual:(id)object {
-    return ([object isKindOfClass:self.class] && [object dayOffset] == self.dayOffset);
+    if (object == self) {
+        return YES;
+    } else if (![object isKindOfClass:[SCKDayPoint class]]) {
+        return NO;
+    }
+    return [self isEqualToDayPoint:(SCKDayPoint*)object];
 }
 
 - (NSUInteger)hash {
-    return (NSUInteger)[self dayOffset];
+    return @([self dayOffset]).hash;
 }
 
 @end
