@@ -298,9 +298,9 @@
 				99E7D0B21A4AF3B500713F18 /* Info.plist */,
 				996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */,
 				99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */,
-				99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */,
 				99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */,
 				996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */,
+				99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */,
 			);
 			path = ScheduleKitTests;
 			sourceTree = "<group>";
