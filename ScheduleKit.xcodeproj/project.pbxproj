@@ -34,6 +34,7 @@
 		995E938F1A65EEB100A3D2BF /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E938E1A65EEB100A3D2BF /* TestEvent.m */; };
 		995E93921A65F29500A3D2BF /* WhiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E93911A65F29500A3D2BF /* WhiteView.m */; };
 		995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		996BFFF01A97A0BE001E6470 /* SCKEventHolderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */; };
 		99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */; };
 		99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */; };
@@ -120,6 +121,8 @@
 		995E93901A65F29500A3D2BF /* WhiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteView.h; sourceTree = "<group>"; };
 		995E93911A65F29500A3D2BF /* WhiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteView.m; sourceTree = "<group>"; };
 		995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCKEventManagerPrivate.h; path = ../SCKEventManagerPrivate.h; sourceTree = "<group>"; };
+		996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolderTests.m; sourceTree = "<group>"; };
+		996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKTestMockObjects.h; sourceTree = "<group>"; };
 		99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKViewPrivate.h; sourceTree = "<group>"; };
 		99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRangeTests.m; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
@@ -293,9 +296,11 @@
 			isa = PBXGroup;
 			children = (
 				99E7D0B21A4AF3B500713F18 /* Info.plist */,
+				996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */,
 				99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */,
 				99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */,
 				99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */,
+				996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */,
 			);
 			path = ScheduleKitTests;
 			sourceTree = "<group>";
@@ -558,6 +563,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				996BFFF01A97A0BE001E6470 /* SCKEventHolderTests.m in Sources */,
 				99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */,
 				99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */,
 				99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */,

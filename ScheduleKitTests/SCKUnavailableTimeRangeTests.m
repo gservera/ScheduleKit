@@ -1,6 +1,6 @@
 /*
  *  SCKUnavailableTimeRangeTests.m
- *  ScheduleKit
+ *  ScheduleKitTests
  *
  *  Created:    Guillem Servera on 04/02/2015.
  *  Copyright:  © 2014-2015 Guillem Servera (http://github.com/gservera)

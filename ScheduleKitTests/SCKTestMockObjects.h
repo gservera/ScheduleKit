@@ -1,8 +1,8 @@
 /*
- *  ScheduleKitTests.h
+ *  SCKTestMockObjects.h
  *  ScheduleKitTests
  *
- *  Created:    Guillem Servera on 31/12/2014.
+ *  Created:    Guillem Servera on 20/02/2015.
  *  Copyright:  © 2014-2015 Guillem Servera (http://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,28 +24,19 @@
  *  THE SOFTWARE.
  */
 
-#import "SCKTestMockObjects.h"
+@import Cocoa;
+@import XCTest;
+@import ScheduleKit;
 
-@implementation SCKMockEvent
+@interface SCKMockEvent : NSObject <SCKEvent>
+@property (assign) SCKEventType eventType;
+@property (weak) id <SCKUser> user;
+@property (weak) id patient;
+@property (strong) NSString * title;
+@property (strong) NSNumber *duration;
+@property (strong) NSDate *scheduledDate;
 @end
 
-@implementation SCKMockUser
-@end
-
-
-@interface ScheduleKitTests : XCTestCase
-@end
-
-@implementation ScheduleKitTests
-
-- (void)testTargetIntegrity {
-    XCTAssertNotNil([SCKTextField class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKEventHolder class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKUnavailableTimeRange class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKEventView class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKWeekView class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKDayView class], @"Target integrity tests failed");
-    XCTAssertNotNil([SCKEventManager class], @"Target integrity tests failed");
-}
-
+@interface SCKMockUser : NSObject <SCKUser>
+@property (strong) NSColor * labelColor;
 @end

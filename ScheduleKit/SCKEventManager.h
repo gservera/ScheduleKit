@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Guillem Servera. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "SCKEvent.h"
 
 @class SCKEventManager, SCKEventHolder, SCKView;
@@ -21,14 +20,12 @@ requestsEventsBetweenDate:(NSDate*)sD
 
 @protocol SCKEventManagerDelegate <NSObject>
 @optional
-- (void)eventManager:(SCKEventManager*)eM
-      didSelectEvent:(id <SCKEvent>)e;
+
+- (void)eventManager:(SCKEventManager*)eM didSelectEvent:(id <SCKEvent>)e;
 
 - (void)eventManagerDidClearSelection:(SCKEventManager*)eM;
-- (void)eventManager:(SCKEventManager *)eM
- didDoubleClickEvent:(id <SCKEvent>)e;
-- (void)eventManager:(SCKEventManager *)eM
- didDoubleClickBlankDate:(NSDate*)d;
+- (void)eventManager:(SCKEventManager *)eM didDoubleClickEvent:(id <SCKEvent>)e;
+- (void)eventManager:(SCKEventManager *)eM didDoubleClickBlankDate:(NSDate*)d;
 
 - (BOOL)eventManager:(SCKEventManager *)eM
 shouldChangeLengthOfEvent:(id <SCKEvent>)e
