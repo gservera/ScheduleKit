@@ -48,27 +48,27 @@
     weekAfterComps.hour = -1;
     comps.hour = 9;
     
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 1" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 11" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSession user:user2 patient:nil title:@"Evento 12" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 1" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 11" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeVisit user:user2 patient:nil title:@"Event 12" duration:60 date:[cal dateFromComponents:comps]]];
     comps.hour = 10;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user1 patient:nil title:@"Evento 2" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSession user:user2 patient:nil title:@"Evento 3" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user1 patient:nil title:@"Event 2" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeVisit user:user2 patient:nil title:@"Event 3" duration:60 date:[cal dateFromComponents:comps]]];
     comps.hour = 12;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 4" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user1 patient:nil title:@"Evento 13" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 14" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 4" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user1 patient:nil title:@"Event 13" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 14" duration:60 date:[cal dateFromComponents:comps]]];
     comps.hour = 14;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 5" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSession user:user2 patient:nil title:@"Evento 6" duration:60 date:[cal dateFromComponents:comps]]];
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 7" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 5" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeVisit user:user2 patient:nil title:@"Event 6" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 7" duration:60 date:[cal dateFromComponents:comps]]];
     comps.minute = 30;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSession user:user2 patient:nil title:@"Evento 8" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeVisit user:user2 patient:nil title:@"Event 8" duration:60 date:[cal dateFromComponents:comps]]];
     comps.minute = 0;
     comps.hour = 16;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Evento 9" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeDefault user:user1 patient:nil title:@"Event 9" duration:60 date:[cal dateFromComponents:comps]]];
     comps.hour = 17;
-    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user2 patient:nil title:@"Evento 10" duration:60 date:[cal dateFromComponents:comps]]];
+    [array addObject:[[self alloc] initWithType:SCKEventTypeSurgery user:user2 patient:nil title:@"Event 10" duration:60 date:[cal dateFromComponents:comps]]];
     
     
     return array;

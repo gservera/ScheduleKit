@@ -15,7 +15,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        __users = @[[[TestUser alloc] initWithName:@"Dr. de ejemplo 1" color:[NSColor colorWithCalibratedRed:0.9 green:0.65 blue:0.4 alpha:1.0]],[[TestUser alloc] initWithName:@"Dr. de ejemplo 2" color:[NSColor colorWithCalibratedRed:0.4 green:0.65 blue:0.9 alpha:1.0]]];
+        __users = @[[[TestUser alloc] initWithName:@"Dr. Test 1" color:[NSColor colorWithCalibratedRed:0.9 green:0.65 blue:0.4 alpha:1.0]],[[TestUser alloc] initWithName:@"Dr. Test 2" color:[NSColor colorWithCalibratedRed:0.4 green:0.65 blue:0.9 alpha:1.0]]];
         _users = [NSMutableArray new];
         _eventArray = [[NSMutableArray alloc] initWithArray:[TestEvent sampleEvents:__users]];
         _reloadingDayData = NO;
@@ -104,7 +104,7 @@
 
 - (IBAction)addEvent:(id)sender {
     [self willChangeValueForKey:@"eventArray"];
-    [_eventArray addObject:[[TestEvent alloc] initWithType:SCKEventTypeDefault user:__users[1] patient:nil title:@"Evento nuevo" duration:60 date:[NSDate date]]];
+    [_eventArray addObject:[[TestEvent alloc] initWithType:SCKEventTypeDefault user:__users[1] patient:nil title:@"New event" duration:60 date:[NSDate date]]];
     [self didChangeValueForKey:@"eventArray"];
     [_tableView reloadData];
 }
@@ -193,8 +193,8 @@
 
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickEvent:(id<SCKEvent>)e {
     NSAlert *alert = [NSAlert new];
-    alert.messageText = @"Doble clic";
-    alert.informativeText = [NSString stringWithFormat:@"Ha hecho clic en el evento '%@'",[e title]];
+    alert.messageText = @"Double click";
+    alert.informativeText = [NSString stringWithFormat:@"Clicked on event '%@'",[e title]];
     [alert runModal];
 }
 
@@ -203,17 +203,17 @@
     df.dateStyle = NSDateFormatterMediumStyle;
     df.timeStyle = NSDateFormatterMediumStyle;
     NSAlert *alert = [NSAlert new];
-    alert.messageText = @"Doble clic en fecha en blanco";
-    alert.informativeText = [NSString stringWithFormat:@"Ha hecho clic en la fecha '%@'",[df stringFromDate:d]];
+    alert.messageText = @"Double click on empty date";
+    alert.informativeText = [NSString stringWithFormat:@"Clicked on empty date: '%@'",[df stringFromDate:d]];
     [alert runModal];
 }
 
 - (BOOL)eventManager:(SCKEventManager *)eM shouldChangeLengthOfEvent:(id<SCKEvent>)e fromValue:(NSInteger)oV toValue:(NSInteger)fV {
     NSAlert *alert = [NSAlert new];
-    alert.messageText = @"Confirmar cambio de duración";
-    alert.informativeText = [NSString stringWithFormat:@"Ha modificado la duración del evento '%@'.\n\nDuración anterior: %ld min.\nDuración actual: %ld min.\n\n¿Desea conservar los cambios?",[e title],oV,fV];
-    [alert addButtonWithTitle:@"Guardar cambios"];
-    [alert addButtonWithTitle:@"Descartar"];
+    alert.messageText = @"Duration change";
+    alert.informativeText = [NSString stringWithFormat:@"You've modified the duration of event '%@'.\n\nPrevious duration: %ld min.\nNew duration: %ld min.\n\nAre you sure?",[e title],oV,fV];
+    [alert addButtonWithTitle:@"Save changes"];
+    [alert addButtonWithTitle:@"Discard"];
     return ([alert runModal] == NSAlertFirstButtonReturn);
 }
 
@@ -222,10 +222,10 @@
     df.dateStyle = NSDateFormatterMediumStyle;
     df.timeStyle = NSDateFormatterMediumStyle;
     NSAlert *alert = [NSAlert new];
-    alert.messageText = @"Confirmar cambio de fecha y hora";
-    alert.informativeText = [NSString stringWithFormat:@"Ha modificado la fecha y hora del evento '%@'.\n\nFecha y hora anterior: %@.\nFecha y hora actual: %@.\n\n¿Desea conservar los cambios?",[e title],[df stringFromDate:oD],[df stringFromDate:fD]];
-    [alert addButtonWithTitle:@"Guardar cambios"];
-    [alert addButtonWithTitle:@"Descartar"];
+    alert.messageText = @"Date change";
+    alert.informativeText = [NSString stringWithFormat:@"You've modified the date and time of event '%@'.\n\nPrevious date: %@.\nNew date: %@.\n\nAre you sure?",[e title],[df stringFromDate:oD],[df stringFromDate:fD]];
+    [alert addButtonWithTitle:@"Save changes"];
+    [alert addButtonWithTitle:@"Discard"];
     return ([alert runModal] == NSAlertFirstButtonReturn);
 }
 

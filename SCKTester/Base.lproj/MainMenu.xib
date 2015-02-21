@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
@@ -677,7 +677,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="MedEventKit Framework - TestFlight" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="Main" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="ScheduleKit Framework Test App" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="Main" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="93" y="178" width="1160" height="600"/>
@@ -867,13 +867,13 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="96" id="6f2-g5-aZl"/>
                                         </constraints>
-                                        <popUpButtonCell key="cell" type="recessed" title="Por tipo" bezelStyle="recessed" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="gDN-sp-oxy" id="Af3-Vs-8Xr">
+                                        <popUpButtonCell key="cell" type="recessed" title="By type" bezelStyle="recessed" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="gDN-sp-oxy" id="Af3-Vs-8Xr">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="systemBold" size="12"/>
                                             <menu key="menu" id="8KX-po-X60">
                                                 <items>
-                                                    <menuItem title="Por tipo" state="on" id="gDN-sp-oxy"/>
-                                                    <menuItem title="Por usuario" id="c1a-fJ-xjK"/>
+                                                    <menuItem title="By type" state="on" id="gDN-sp-oxy"/>
+                                                    <menuItem title="By owner" id="c1a-fJ-xjK"/>
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
@@ -1080,8 +1080,8 @@
                                                         </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PYY-Ag-mid">
-                                                        <rect key="frame" x="36" y="6" width="93" height="19"/>
-                                                        <buttonCell key="cell" type="recessed" title="Esta semana" bezelStyle="recessed" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="usb-69-gTq">
+                                                        <rect key="frame" x="36" y="6" width="76" height="19"/>
+                                                        <buttonCell key="cell" type="recessed" title="This week" bezelStyle="recessed" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="usb-69-gTq">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="systemBold" size="12"/>
                                                         </buttonCell>
@@ -1111,7 +1111,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YoQ-LS-tU3">
-                                                        <rect key="frame" x="137" y="6" width="21" height="19"/>
+                                                        <rect key="frame" x="120" y="6" width="21" height="19"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="21" id="Mwk-rn-fBD"/>
                                                         </constraints>
@@ -1124,8 +1124,8 @@
                                                         </connections>
                                                     </button>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Otv-BQ-6bM">
-                                                        <rect key="frame" x="164" y="8" width="77" height="18"/>
-                                                        <buttonCell key="cell" type="check" title="Sábados" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="LKd-dc-UwM">
+                                                        <rect key="frame" x="147" y="8" width="84" height="18"/>
+                                                        <buttonCell key="cell" type="check" title="Saturdays" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="LKd-dc-UwM">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -1134,8 +1134,8 @@
                                                         </connections>
                                                     </button>
                                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="A7h-cD-wfv">
-                                                        <rect key="frame" x="245" y="8" width="85" height="18"/>
-                                                        <buttonCell key="cell" type="check" title="Domingos" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="90k-2G-lZw">
+                                                        <rect key="frame" x="235" y="8" width="76" height="18"/>
+                                                        <buttonCell key="cell" type="check" title="Sundays" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="90k-2G-lZw">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -1258,7 +1258,7 @@
                 </slider>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jE-dx-Bha">
                     <rect key="frame" x="49" y="172" width="136" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Hora de inicio de día" drawsBackground="YES" id="mRh-Wl-tzQ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Day start hour" drawsBackground="YES" id="mRh-Wl-tzQ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1288,7 +1288,7 @@
                 </slider>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y0I-Jr-iUZ">
                     <rect key="frame" x="58" y="50" width="118" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Hora de fin de día" drawsBackground="YES" id="ZhZ-Ht-pae">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Day end hour" drawsBackground="YES" id="ZhZ-Ht-pae">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1363,8 +1363,8 @@
                     </connections>
                 </datePicker>
                 <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="40Q-iu-L6q">
-                    <rect key="frame" x="70" y="9" width="38" height="19"/>
-                    <buttonCell key="cell" type="recessed" title="Hoy" bezelStyle="recessed" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="2gq-w4-RDm">
+                    <rect key="frame" x="64" y="9" width="50" height="19"/>
+                    <buttonCell key="cell" type="recessed" title="Today" bezelStyle="recessed" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="2gq-w4-RDm">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
                     </buttonCell>
