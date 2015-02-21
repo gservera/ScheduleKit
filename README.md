@@ -10,9 +10,10 @@ ScheduleKit is a new graphical event management framework for Mac OS X that prov
 * Built-in day/week navigation support via IBAction connections, with automatic event fetching from the data source object, too.
 * Built-in zooming capability, either via IBAction connections or via gestures.
 * Built-in event drag & drop support with optional delegate methods that allow customization of this behavior.
+* Built-in delegate methods to allow drawing of unavailable time ranges.
 
  <p align="center" >
- <img style="max-width:100%" src="http://www.aurumcode.com/medcode/ScheduleKit.png" alt="ScheduleKit" title="ScheduleKit">
+ <img style="max-width:100%" src="http://aurumcode.com/medcode/ScheduleKit.png" alt="ScheduleKit" title="ScheduleKit">
  </p>
 
 #Requirements
