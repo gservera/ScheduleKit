@@ -8,7 +8,6 @@
 
 #import "SCKGridView.h"
 #import "SCKViewPrivate.h"
-#import "NSView+SKCAdditions.h"
 #import "SCKEventView.h"
 #import "SCKDayPoint.h"
 #import "SCKEventManagerPrivate.h"

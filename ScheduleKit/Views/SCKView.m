@@ -25,7 +25,6 @@
  */
 
 #import "SCKView.h"
-#import "NSView+SKCAdditions.h"
 #import "SCKEventManagerPrivate.h"
 #import "SCKEventHolder.h"
 
@@ -116,7 +115,9 @@
 
 - (void)setColorMode:(SCKEventColorMode)colorMode {
     _colorMode = colorMode;
-    [_eventViews makeObjectsPerformSelector:@selector(markAsNeedingDisplay)];
+    for (SCKEventView *eventView in _eventViews) {
+        [eventView setNeedsDisplay:YES];
+    }
 }
 
 - (NSTimeInterval)absoluteTimeInterval {
@@ -130,7 +131,9 @@
         }
     }
     _selectedEventView = selectedEventView;
-    [_eventViews makeObjectsPerformSelector:@selector(markAsNeedingDisplay)];
+    for (SCKEventView *eventView in _eventViews) {
+        [eventView setNeedsDisplay:YES];
+    }
     if (selectedEventView) {
         if ([_eventManager.delegate respondsToSelector:@selector(eventManager:didSelectEvent:)]) {
             [_eventManager.delegate eventManager:_eventManager
