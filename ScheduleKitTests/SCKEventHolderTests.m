@@ -92,7 +92,7 @@
     _testEvent.scheduledDate = [NSDate dateWithTimeIntervalSinceReferenceDate:3600];
     XCTAssertEqualObjects(holder.cachedScheduleDate, [NSDate dateWithTimeIntervalSinceReferenceDate:5400],@"Cached err");
     [holder unlock]; //TODO: Find an efficient way to look up for changes after unlocking.
-    XCTAssertEqualObjects(holder.cachedScheduleDate, [NSDate dateWithTimeIntervalSinceReferenceDate:5400],@"Cached err");
+    XCTAssertEqualObjects(holder.cachedScheduleDate, [NSDate dateWithTimeIntervalSinceReferenceDate:3600],@"Cached err");
     _testEvent.scheduledDate = [NSDate dateWithTimeIntervalSinceReferenceDate:7200];
     XCTAssertEqualObjects(holder.cachedScheduleDate, [NSDate dateWithTimeIntervalSinceReferenceDate:7200],@"Cached err");
     [holder lock]; //Calling lock to prevent exceptions when deallocing. Usually done by the event manager.

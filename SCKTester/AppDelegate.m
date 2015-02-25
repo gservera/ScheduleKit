@@ -88,6 +88,8 @@
     
     [_dayEventArrayController addObserver:self forKeyPath:@"arrangedObjects.count" options:NSKeyValueObservingOptionNew context:nil];
     [_weekEventArrayController addObserver:self forKeyPath:@"arrangedObjects.count" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [_eventArray[5] performSelector:@selector(setScheduledDate:) withObject:[_eventArray[3] scheduledDate ] afterDelay:4];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

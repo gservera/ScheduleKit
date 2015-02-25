@@ -43,9 +43,25 @@
  *  added to a view hierarchy. Can't be nil. */
 - (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v NS_DESIGNATED_INITIALIZER;
 
+/** 
+ *  Configures this instance to ignore observed @c representedObject changes
+ *  until the @c -resumeObservingRepresentedObjectChanges method is called.
+ *  This method gets called before changes triggered by the @c owningView in
+ *  order to prevent observing of our own changes. Don't call this method 
+ *  yourself.
+ */
+- (void)stopObservingRepresentedObjectChanges;
 
 /**
- *  Stops observing changes in represented object. Called by SCKView
+ *  Configures this instance to resume tracking observed @c representedObject 
+ *  changes after a previous @c -stopObservingRepresentedObjectChanges call.
+ *  This method gets called after changes triggered by the @c owningView. 
+ *  Don't call this method yourself.
+ */
+- (void)resumeObservingRepresentedObjectChanges;
+
+/**
+ *  Begins delaying updates from represented object. Called by SCKView
  *  on every @c SCKEventHolder object at the beginning of a relayout or 
  *  drag to prevent conflict-related errors in case these properties
  *  change during the process. Also called by SCKEventManager before
@@ -54,12 +70,13 @@
 
 
 /**
- *  Resumes observing changes in represented object. Called by SCKView
+ *  Stops delaying updates from represented object. Called by SCKView
  *  on every @c SCKEventHolder item at the end of a relayout or drag
  *  to prevent conflict-related errors in case these properties change
  *  during the process. Don't call this method yourself. 
- *  @discussion TODO: Changes between the @c lock: and the @c unlock: 
- *  calls are not being processed by now. */
+ *  @discussion In the case any change was observed while the event
+ *  holder was locked, it finally will get applied when this method is
+ *  called.*/
 - (void)unlock;
 
 

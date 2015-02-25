@@ -194,7 +194,9 @@ static NSArray *__colors, *__strokeColors;
                 [_eventHolder recalculateRelativeValues];
                 [view triggerRelayoutForAllEventViews];
             } else {
+                [_eventHolder stopObservingRepresentedObjectChanges];
                 [_eventHolder setCachedDuration:_actionContext.oldDuration];
+                [_eventHolder resumeObservingRepresentedObjectChanges];
                 [view relayoutEventView:self animated:YES];
             }
             [view endDraggingEventView:self];
@@ -206,7 +208,9 @@ static NSArray *__colors, *__strokeColors;
                 changeAllowed = [view.eventManager.delegate eventManager:view.eventManager shouldChangeDateOfEvent:_eventHolder.representedObject fromValue:[_eventHolder.representedObject scheduledDate] toValue:scheduledDate];
             }
             if (changeAllowed) {
+                [_eventHolder stopObservingRepresentedObjectChanges];
                 [_eventHolder.representedObject setScheduledDate:scheduledDate];
+                [_eventHolder resumeObservingRepresentedObjectChanges];
                 [_eventHolder recalculateRelativeValues];
                 [view triggerRelayoutForAllEventViews];
             } else {

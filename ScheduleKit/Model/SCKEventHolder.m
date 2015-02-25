@@ -31,8 +31,6 @@
 
 /*  DISCUSSION:
  *  - We're not initializing @c _observing, @c _lockBalance, @c _ready or @c _locked (defaults to 0/false)
- *  - We're not calling @c -stopObservingRepresentedObject since SCKEventManager will call @c lock
- *    in case this holder was going to be removed from its pool.
  */
 
 @implementation SCKEventHolder {
@@ -44,6 +42,10 @@
     __weak id       _eventManager; // A convenience reference to the event manager.
     __weak SCKView* _rootView; // A convenience reference to owningView's superview.
     NSInteger       _lockBalance; // The number of times @c lock: has been called over @c unlock:
+    
+    BOOL            _shouldIgnoreChanges; // Set to YES when dragging to prevent observing our own changes.
+    BOOL            _changedWhileLocked; // Set to YES if we recieve changes while the event holder is locked.
+    NSMutableArray* _changesWhileLocked; // The array of changes observed while the object was locked.
 }
 
 - (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v {
@@ -67,7 +69,12 @@
     return self;
 }
 
-/** Stops observing @c representedObject properties. Called from @c lock: */
+/** We stop observing @c representedObject's properties at this point. */
+- (void)dealloc {
+    [self stopObservingRepresentedObject];
+}
+
+/** Stops observing @c representedObject properties. Called from @c dealloc: */
 - (void)stopObservingRepresentedObject {
     if (_representedObject != nil && _observing) {
         id obj = _representedObject;
@@ -79,7 +86,7 @@
     _observing = NO;
 }
 
-/** Begins or resumes observing @c representedObject properties. Called from @c unlock: and during initialization */
+/** Begins or resumes observing @c representedObject properties. Called during initialization */
 - (void)startObservingRepresentedObject {
     if (_representedObject != nil && !_observing) {
         id obj = _representedObject;
@@ -102,6 +109,17 @@
         (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsBefore];
         _previousConflicts = [NSSet setWithArray:conflictsBefore];
     } else { // Notification is not prior
+        if (_locked && !_shouldIgnoreChanges) {
+            _changedWhileLocked = YES;
+            if (!_changesWhileLocked) {
+                _changesWhileLocked = [[NSMutableArray alloc] init];
+            }
+            [_changesWhileLocked addObject:@{@"keyPath":keyPath,@"object":o,@"change":[change copy]}];
+            return;
+        } else if (_locked) { // Change was made by the event view, we'll ignore it.
+            return;
+        }
+        
         id theNewValue = change[NSKeyValueChangeNewKey];
         if ([keyPath isEqualToString:NSStringFromSelector(@selector(duration))]) {
             _cachedDuration = [theNewValue integerValue];
@@ -137,18 +155,32 @@
     }
 }
 
+- (void)stopObservingRepresentedObjectChanges {
+    _shouldIgnoreChanges = YES;
+}
+
+- (void)resumeObservingRepresentedObjectChanges {
+    _shouldIgnoreChanges = NO;
+}
+
 - (void)lock {
     _lockBalance++;
     NSAssert1(_lockBalance == 1, @"Overlocked (%ld times)",_lockBalance);
-    [self stopObservingRepresentedObject];
+    _changedWhileLocked = NO;
     _locked = YES;
 }
 
 - (void)unlock {
     _lockBalance--;
     NSAssert1(_lockBalance == 0, @"Overunlocked (+%ld times)",-_lockBalance);
-    [self startObservingRepresentedObject];
     _locked = NO;
+    if (_changesWhileLocked) {
+        [_changesWhileLocked sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"keyPath" ascending:NO]]];
+        for (NSDictionary *change in _changesWhileLocked) {
+            [self observeValueForKeyPath:change[@"keyPath"] ofObject:change[@"object"] change:change[@"change"] context:nil];
+        }
+    }
+    _changesWhileLocked = nil;
 }
 
 - (void)recalculateRelativeValues {

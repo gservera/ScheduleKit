@@ -71,6 +71,7 @@ static NSArray * __sorters = nil;
             for (SCKEventHolder *holder in [_managedContainers copy]) {
                 if (![events containsObject:holder.representedObject]) {
                     //Remove
+                    [holder stopObservingRepresentedObjectChanges];
                     [holder lock];
                     [_view removeEventView:holder.owningView];
                     [holder.owningView removeFromSuperview];
