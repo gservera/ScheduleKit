@@ -33,7 +33,7 @@
  *  - We're not initializing @c _observing, @c _lockBalance, @c _ready or @c _locked (defaults to 0/false)
  */
 
-@implementation SCKEventHolder {
+@implementation SCKEventHolder { 
     /// A set to track holders in conflict before a change in either @c representedObject 's @c scheduledDate or @c duration takes place, since that info won't be accessible afterwards. Set when a prior KVO notification for these properties is triggered and set back to @c nil after KVO parsing. @discussion We use NSSet instead of NSArray to prevent objects being included multiple times when combining with conflicts after the change.
     NSSet* _previousConflicts;
     
