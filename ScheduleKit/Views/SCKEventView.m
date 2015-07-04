@@ -64,7 +64,7 @@ static NSArray *__colors, *__strokeColors;
     NSColor *fillColor, *strokeColor;
     
     if (view.selectedEventView != nil && view.selectedEventView != self) {
-        // Si hi ha una vista seleccionada i no és aquesta, es colors seran grisos
+        // Set color to gray when another event is selected
         fillColor = [NSColor colorWithCalibratedWhite:0.85 alpha:1.0];
         strokeColor = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
     } else {
