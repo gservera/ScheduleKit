@@ -62,7 +62,12 @@
     
     NSArray *conflicts = nil;
     NSInteger idx = [[self eventManager] positionInConflictForEventHolder:eventView.eventHolder holdersInConflict:&conflicts];
-    newFrame.size.width = canvasRect.size.width / (CGFloat)[conflicts count];
+    if ([conflicts count] > 0) {
+        newFrame.size.width = canvasRect.size.width / (CGFloat)[conflicts count];
+    }
+    else {
+        newFrame.size.width = canvasRect.size.width;
+    }
     newFrame.origin.x = canvasRect.origin.x + (newFrame.size.width * (CGFloat)idx);
     
     if (!NSEqualRects(oldFrame, newFrame)) {

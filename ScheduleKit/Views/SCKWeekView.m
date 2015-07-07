@@ -112,7 +112,12 @@
     
     NSArray *conflicts = nil;
     NSInteger idx = [[self eventManager] positionInConflictForEventHolder:eventView.eventHolder holdersInConflict:&conflicts];
-    newFrame.size.width = dayWidth / (CGFloat)[conflicts count];
+    if ([conflicts count] > 0) {
+        newFrame.size.width = dayWidth / (CGFloat)[conflicts count];
+    }
+    else {
+        newFrame.size.width = dayWidth;
+    }
     newFrame.origin.x = canvasRect.origin.x + (CGFloat)day * dayWidth + (newFrame.size.width * (CGFloat)idx);
     
     if (!NSEqualRects(oldFrame, newFrame)) {

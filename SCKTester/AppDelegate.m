@@ -78,9 +78,9 @@
     
     NSDate *weekBeginning;
     [cal rangeOfUnit:NSCalendarUnitWeekOfYear startDate:&weekBeginning interval:nil forDate:[NSDate date]];
-    NSDate *weekEnging = [cal dateByAddingUnit:NSCalendarUnitWeekOfYear value:1 toDate:weekBeginning options:0];
+    NSDate *weekEnding = [cal dateByAddingUnit:NSCalendarUnitWeekOfYear value:1 toDate:weekBeginning options:0];
     _weekEventManager.view.startDate = weekBeginning;
-    _weekEventManager.view.endDate = weekEnging;
+    _weekEventManager.view.endDate = weekEnding;
     _weekEventManager.dataSource = self;
     _weekEventManager.delegate = self;
     [_weekEventManager reloadData];
