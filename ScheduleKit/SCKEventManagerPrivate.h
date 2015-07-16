@@ -10,6 +10,8 @@
 
 @interface SCKEventManager (Private)
 
+- (NSMutableArray*)asynchronousEventRequests;
 - (NSArray*)managedEventHolders;
+- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events;
 
 @end

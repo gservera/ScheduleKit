@@ -7,6 +7,7 @@
 //
 
 #import "SCKEvent.h"
+#import "SCKEventRequest.h"
 
 @class SCKEventManager, SCKEventHolder, SCKView;
 
@@ -15,6 +16,7 @@
 - (NSArray *)eventManager:(SCKEventManager *)eM
 requestsEventsBetweenDate:(NSDate*)sD
                   andDate:(NSDate*)eD;
+- (void)eventManager:(SCKEventManager *)eM didMakeEventRequest:(SCKEventRequest*)request;
 
 @end
 
@@ -42,6 +44,7 @@ shouldChangeDateOfEvent:(id <SCKEvent>)e
 @interface SCKEventManager : NSObject {
     NSMutableArray * _managedContainers;
     NSPointerArray * _lastRequest;
+    NSMutableArray * _asynchronousEventRequests;
 }
 
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e
@@ -49,6 +52,7 @@ shouldChangeDateOfEvent:(id <SCKEvent>)e
 
 - (void)reloadData;
 
+@property (nonatomic, assign) BOOL loadsEventsAsynchronously;
 @property (weak) id <SCKEventManagerDataSource> dataSource;
 @property (weak) id <SCKEventManagerDelegate> delegate;
 @property (weak) SCKView * view;

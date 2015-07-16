@@ -42,5 +42,6 @@ FOUNDATION_EXPORT const unsigned char ScheduleKitVersionString[];
 #import <ScheduleKit/SCKEventView.h>
 #import <ScheduleKit/SCKWeekView.h>
 #import <ScheduleKit/SCKDayView.h>
+#import <ScheduleKit/SCKEventRequest.h>
 
 extern NSString * const SCKDefaultsGridViewZoomLevelKey;

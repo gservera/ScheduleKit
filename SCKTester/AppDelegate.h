@@ -13,6 +13,7 @@
     NSArray * __users;
     BOOL _reloadingDayData;
     BOOL _reloadingWeekData;
+    SCKEventRequest *_asynchronousRequest;
 }
 
 - (IBAction)addEvent:(id)sender;

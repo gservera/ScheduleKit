@@ -29,6 +29,7 @@ static NSArray * __sorters = nil;
     self = [super init];
     if (self) {
         _managedContainers = [[NSMutableArray alloc] init];
+        _asynchronousEventRequests = [[NSMutableArray alloc] init];
         _lastRequest = [NSPointerArray weakObjectsPointerArray];
     }
     return self;
@@ -51,52 +52,76 @@ static NSArray * __sorters = nil;
 
 - (void)reloadData {
     if (_dataSource) {
-        if ([self.view relayoutInProgress]) {
-            NSLog(@"Waiting for relayout to terminate before reloading data");
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(1.0 * NSEC_PER_SEC)),dispatch_get_main_queue(),^{
-                [self reloadData];
-            });
-            return;
+        if (_loadsEventsAsynchronously) {
+            [_asynchronousEventRequests makeObjectsPerformSelector:@selector(cancel)];
+            SCKEventRequest *request = [[SCKEventRequest alloc] init];
+            request.eventManager = self;
+            request.startDate = _view.startDate;
+            request.endDate = _view.endDate;
+            // Not removing, cancel will remove previous
+            [_asynchronousEventRequests addObject:request];
+            [self.dataSource eventManager:self didMakeEventRequest:request];
+        } else {
+            if ([self.view relayoutInProgress]) {
+                NSLog(@"Waiting for relayout to terminate before reloading data");
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(1.0 * NSEC_PER_SEC)),dispatch_get_main_queue(),^{
+                    [self reloadData];
+                });
+                return;
+            }
+            NSArray *events = [_dataSource eventManager:self
+                              requestsEventsBetweenDate:_view.startDate
+                                                andDate:[_view.endDate dateByAddingTimeInterval:-1]];
+            [self reloadDataWithEvents:events];
         }
-        NSMutableArray *events = [[_dataSource eventManager:self
-                                  requestsEventsBetweenDate:_view.startDate
-                                                    andDate:[_view.endDate dateByAddingTimeInterval:-1]] mutableCopy];
-        if (![events isEqualToArray:_lastRequest.allObjects]) {
-            _lastRequest = nil;
-            _lastRequest = [NSPointerArray weakObjectsPointerArray];
-            for (id <SCKEvent> e in events) {
-                NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
-                [_lastRequest addPointer:(__bridge void *)(e)];
-            }
-            for (SCKEventHolder *holder in [_managedContainers copy]) {
-                if (![events containsObject:holder.representedObject]) {
-                    //Remove
-                    [holder stopObservingRepresentedObjectChanges];
-                    [holder lock];
-                    [_view removeEventView:holder.owningView];
-                    [holder.owningView removeFromSuperview];
-                    [_managedContainers removeObject:holder];
-                } else {
-                    [events removeObject:holder.representedObject];
-                }
-            }
-            for (id <SCKEvent> e in events) {
-                SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
-                [_view addSubview:aView];
-                [_view addEventView:aView];
-                SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
-                aView.eventHolder = aHolder;
-                [_managedContainers addObject:aHolder];
-            }
-            //TRIGGER RELAYOUT
-            [_view triggerRelayoutForAllEventViews];
+    }
+}
+
+- (void)reloadDataWithEvents:(NSArray*)eventArray {
+    NSMutableArray *events = [eventArray mutableCopy];
+    if (![events isEqualToArray:_lastRequest.allObjects]) {
+        _lastRequest = nil;
+        _lastRequest = [NSPointerArray weakObjectsPointerArray];
+        for (id <SCKEvent> e in events) {
+            NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
+            [_lastRequest addPointer:(__bridge void *)(e)];
         }
+        for (SCKEventHolder *holder in [_managedContainers copy]) {
+            if (![events containsObject:holder.representedObject]) {
+                //Remove
+                [holder stopObservingRepresentedObjectChanges];
+                [holder lock];
+                [_view removeEventView:holder.owningView];
+                [holder.owningView removeFromSuperview];
+                [_managedContainers removeObject:holder];
+            } else {
+                [events removeObject:holder.representedObject];
+            }
+        }
+        for (id <SCKEvent> e in events) {
+            SCKEventView *aView = [[SCKEventView alloc] initWithFrame:NSZeroRect];
+            [_view addSubview:aView];
+            [_view addEventView:aView];
+            SCKEventHolder *aHolder = [[SCKEventHolder alloc] initWithEvent:e owner:aView];
+            aView.eventHolder = aHolder;
+            [_managedContainers addObject:aHolder];
+        }
+        //TRIGGER RELAYOUT
+        [_view triggerRelayoutForAllEventViews];
     }
 }
 
 @end
 
 @implementation SCKEventManager (Private)
+
+- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events {
+    [self reloadDataWithEvents:events];
+}
+
+- (NSMutableArray*)asynchronousEventRequests {
+    return _asynchronousEventRequests;
+}
 
 - (NSArray*)managedEventHolders {
     return [_managedContainers copy];

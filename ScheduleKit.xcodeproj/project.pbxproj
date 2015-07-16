@@ -48,6 +48,8 @@
 		99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */; };
 		99E7D0D01A4B3C3500713F18 /* SCKEventHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0D11A4B3C3500713F18 /* SCKEventHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */; };
+		9AA8B8F81B58385600A96C1C /* SCKEventRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9AA8B8F91B58385600A96C1C /* SCKEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventHolder.h; sourceTree = "<group>"; };
 		99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolder.m; sourceTree = "<group>"; };
 		99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKEvent.h; sourceTree = "<group>"; };
+		9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventRequest.h; sourceTree = "<group>"; };
+		9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +184,8 @@
 		990206FB1A5058DD00912DF5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */,
+				9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */,
 				990206FC1A50590D00912DF5 /* SCKEventManager.h */,
 				995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */,
 				990206FD1A50590D00912DF5 /* SCKEventManager.m */,
@@ -350,6 +356,7 @@
 				990206FE1A50590D00912DF5 /* SCKEventManager.h in Headers */,
 				99E7D0D01A4B3C3500713F18 /* SCKEventHolder.h in Headers */,
 				9902071D1A55722B00912DF5 /* SCKTextField.h in Headers */,
+				9AA8B8F81B58385600A96C1C /* SCKEventRequest.h in Headers */,
 				99E7D0C01A4AF63F00713F18 /* SCKView.h in Headers */,
 				99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */,
 				99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */,
@@ -541,6 +548,7 @@
 				990207131A5457ED00912DF5 /* SCKWeekView.m in Sources */,
 				99E7D0D11A4B3C3500713F18 /* SCKEventHolder.m in Sources */,
 				9902071E1A55722B00912DF5 /* SCKTextField.m in Sources */,
+				9AA8B8F91B58385600A96C1C /* SCKEventRequest.m in Sources */,
 				9902070B1A5417B100912DF5 /* SCKDayPoint.m in Sources */,
 				99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */,
 				9902070F1A542DA300912DF5 /* SCKDayView.m in Sources */,
