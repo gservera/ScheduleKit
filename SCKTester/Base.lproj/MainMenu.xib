@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -24,6 +24,7 @@
                 <outlet property="tableView" destination="4QN-O4-izh" id="5NV-yG-yQ4"/>
                 <outlet property="weekEventArrayController" destination="mrc-qz-did" id="f4I-gJ-Wu4"/>
                 <outlet property="weekEventManager" destination="Alw-t4-dw3" id="4ZW-Uo-YSa"/>
+                <outlet property="weekViewHostingView" destination="9K4-2D-JaF" id="5e2-tQ-Zob"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -681,7 +682,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="93" y="178" width="1160" height="600"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="1160" height="600"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -726,6 +727,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView appearanceType="vibrantLight" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="70" viewBased="YES" id="4QN-O4-izh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="201" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -913,7 +915,7 @@
                                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="4fd-vU-fyo" customClass="SCKDayView">
+                                                                <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4fd-vU-fyo" customClass="SCKDayView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="251" height="567"/>
                                                                     <connections>
                                                                         <outlet property="eventManager" destination="fy9-p5-faF" id="A3L-si-iHP"/>
@@ -1035,7 +1037,7 @@
                                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <customView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="kyo-sV-bp4" customClass="SCKWeekView">
+                                                                <customView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kyo-sV-bp4" customClass="SCKWeekView">
                                                                     <rect key="frame" x="0.0" y="0.0" width="697" height="567"/>
                                                                     <connections>
                                                                         <outlet property="eventManager" destination="Alw-t4-dw3" id="B7x-yg-Bs5"/>
@@ -1249,14 +1251,14 @@
             <rect key="frame" x="0.0" y="0.0" width="234" height="256"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mcu-gG-pXq">
-                    <rect key="frame" x="18" y="141" width="198" height="25"/>
+                <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mcu-gG-pXq">
+                    <rect key="frame" x="18" y="141" width="198" height="27"/>
                     <sliderCell key="cell" state="on" alignment="left" maxValue="12" doubleValue="12" tickMarkPosition="below" numberOfTickMarks="12" allowsTickMarkValuesOnly="YES" sliderType="linear" id="CPe-a9-Tls"/>
                     <connections>
                         <binding destination="Voe-Tx-rLC" name="value" keyPath="self.dayStartHour" id="s7L-9w-9Er"/>
                     </connections>
                 </slider>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jE-dx-Bha">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jE-dx-Bha">
                     <rect key="frame" x="49" y="172" width="136" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Day start hour" drawsBackground="YES" id="mRh-Wl-tzQ">
                         <font key="font" metaFont="system"/>
@@ -1279,14 +1281,14 @@
                         </binding>
                     </connections>
                 </textField>
-                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2SG-jf-K6P">
-                    <rect key="frame" x="18" y="19" width="198" height="25"/>
+                <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2SG-jf-K6P">
+                    <rect key="frame" x="18" y="19" width="198" height="27"/>
                     <sliderCell key="cell" state="on" alignment="left" minValue="18" maxValue="23" doubleValue="18" tickMarkPosition="below" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="rog-EP-vPe"/>
                     <connections>
                         <binding destination="Voe-Tx-rLC" name="value" keyPath="self.dayEndHour" id="zjQ-pL-RZk"/>
                     </connections>
                 </slider>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y0I-Jr-iUZ">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y0I-Jr-iUZ">
                     <rect key="frame" x="58" y="50" width="118" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Day end hour" drawsBackground="YES" id="ZhZ-Ht-pae">
                         <font key="font" metaFont="system"/>
@@ -1294,7 +1296,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xIc-ed-zxG">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xIc-ed-zxG">
                     <rect key="frame" x="73" y="77" width="88" height="39"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="23:00" drawsBackground="YES" id="7TJ-5m-uvC">
                         <font key="font" metaFont="system" size="32"/>

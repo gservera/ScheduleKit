@@ -11,6 +11,7 @@
 #import "ScheduleKitDefinitions.h"
 #import "SCKEventView.h"
 #import "SCKViewPrivate.h"
+#import "SCKEventRequestPrivate.h"
 
 #define SCKKey(key) NSStringFromSelector(@selector(key))
 #define SCKSorter(key,asc) [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(key)) ascending:asc]
@@ -54,10 +55,7 @@ static NSArray * __sorters = nil;
     if (_dataSource) {
         if (_loadsEventsAsynchronously) {
             [_asynchronousEventRequests makeObjectsPerformSelector:@selector(cancel)];
-            SCKEventRequest *request = [[SCKEventRequest alloc] init];
-            request.eventManager = self;
-            request.startDate = _view.startDate;
-            request.endDate = _view.endDate;
+            SCKEventRequest *request = [[SCKEventRequest alloc] initWithEventManager:self startDate:_view.startDate endDate:_view.endDate];
             // Not removing, cancel will remove previous
             [_asynchronousEventRequests addObject:request];
             [self.dataSource eventManager:self didMakeEventRequest:request];

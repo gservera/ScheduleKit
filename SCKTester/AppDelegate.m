@@ -9,8 +9,11 @@
 #import "AppDelegate.h"
 #import "TestUser.h"
 #import "TestEvent.h"
+#import "EventLoadingView.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    EventLoadingView *_eventLoadingView;
+}
 
 - (instancetype)init {
     self = [super init];
@@ -185,8 +188,17 @@
 - (void)eventManager:(SCKEventManager *)eM didMakeEventRequest:(SCKEventRequest*)request {
     if (eM == _weekEventManager) {
         _asynchronousRequest = request;
+        if (!_eventLoadingView) {
+            _eventLoadingView = [[EventLoadingView alloc] initWithFrame:_weekViewHostingView.bounds];
+            
+        }
+        [_weekViewHostingView addSubview:_eventLoadingView];
+        
+        [_weekViewHostingView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-0-[_eventLoadingView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_eventLoadingView)]];
+        [_weekViewHostingView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_eventLoadingView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_eventLoadingView)]];
+        [_eventLoadingView setNeedsDisplay:YES];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            sleep(3);
+            sleep(2);
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"Providing week events asynchronously");
                 self->_reloadingWeekData = YES;
@@ -195,6 +207,7 @@
                 self->_reloadingWeekData = NO;
                 NSLog(@"WeekEventManager: %lu events",[self->_weekEventArrayController.arrangedObjects count]);
                 [_asynchronousRequest completeWithEvents:self->_weekEventArrayController.arrangedObjects];
+                [_eventLoadingView removeFromSuperview];
             });
         });
     }

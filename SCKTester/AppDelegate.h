@@ -31,6 +31,7 @@
 @property (weak) IBOutlet NSTableView * tableView;
 @property (weak) IBOutlet NSPopover * settingsPopover;
 @property (weak) IBOutlet NSPopover * calendarPopover;
+@property (weak) IBOutlet NSView *weekViewHostingView;
 
 @property (readonly) id <SCKEvent> selectedEvent;
 @property (strong) NSMutableArray * users;

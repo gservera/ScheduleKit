@@ -48,8 +48,10 @@
 		99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */; };
 		99E7D0D01A4B3C3500713F18 /* SCKEventHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0D11A4B3C3500713F18 /* SCKEventHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */; };
+		9A8E46711B585044002DB2DF /* EventLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E46701B585044002DB2DF /* EventLoadingView.m */; };
 		9AA8B8F81B58385600A96C1C /* SCKEventRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9AA8B8F91B58385600A96C1C /* SCKEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */; };
+		9AB3BA0E1B585AE0002C8709 /* SCKEventRequestPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,8 +145,11 @@
 		99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventHolder.h; sourceTree = "<group>"; };
 		99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolder.m; sourceTree = "<group>"; };
 		99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKEvent.h; sourceTree = "<group>"; };
-		9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventRequest.h; sourceTree = "<group>"; };
-		9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventRequest.m; sourceTree = "<group>"; };
+		9A8E466F1B585044002DB2DF /* EventLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventLoadingView.h; sourceTree = "<group>"; };
+		9A8E46701B585044002DB2DF /* EventLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventLoadingView.m; sourceTree = "<group>"; };
+		9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCKEventRequest.h; path = ../SCKEventRequest.h; sourceTree = "<group>"; };
+		9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCKEventRequest.m; path = ../SCKEventRequest.m; sourceTree = "<group>"; };
+		9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCKEventRequestPrivate.h; path = ScheduleKit/SCKEventRequestPrivate.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */,
+				9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */,
 				9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */,
 				990206FC1A50590D00912DF5 /* SCKEventManager.h */,
 				995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */,
@@ -205,6 +211,8 @@
 				995E938E1A65EEB100A3D2BF /* TestEvent.m */,
 				995E93901A65F29500A3D2BF /* WhiteView.h */,
 				995E93911A65F29500A3D2BF /* WhiteView.m */,
+				9A8E466F1B585044002DB2DF /* EventLoadingView.h */,
+				9A8E46701B585044002DB2DF /* EventLoadingView.m */,
 				995E93701A634C5100A3D2BF /* Images.xcassets */,
 				995E93721A634C5100A3D2BF /* MainMenu.xib */,
 				995E93691A634C5100A3D2BF /* Supporting Files */,
@@ -361,6 +369,7 @@
 				99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */,
 				99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */,
 				995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */,
+				9AB3BA0E1B585AE0002C8709 /* SCKEventRequestPrivate.h in Headers */,
 				9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,6 +536,7 @@
 			files = (
 				995E93921A65F29500A3D2BF /* WhiteView.m in Sources */,
 				995E938F1A65EEB100A3D2BF /* TestEvent.m in Sources */,
+				9A8E46711B585044002DB2DF /* EventLoadingView.m in Sources */,
 				995E936F1A634C5100A3D2BF /* main.m in Sources */,
 				995E938C1A634CB100A3D2BF /* TestUser.m in Sources */,
 				995E936D1A634C5100A3D2BF /* AppDelegate.m in Sources */,

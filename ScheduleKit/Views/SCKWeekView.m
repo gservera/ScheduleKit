@@ -174,5 +174,5 @@
     [self.eventManager reloadData];
 }
 
-
+@dynamic delegate;
 @end

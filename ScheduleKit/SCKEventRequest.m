@@ -7,9 +7,13 @@
 //
 
 #import "SCKEventRequest.h"
+#import "SCKEventRequestPrivate.h"
 #import "SCKEventManagerPrivate.h"
 
-@implementation SCKEventRequest
+@implementation SCKEventRequest {
+    BOOL _completed;
+    BOOL _canceled;
+}
 
 - (void)cancel {
     _canceled = YES;
@@ -20,6 +24,7 @@
     if (!_canceled && !_completed) {
         [self.eventManager reloadDataWithAsynchronouslyLoadedEvents:events];
         _completed = YES;
+        [_eventManager.asynchronousEventRequests removeObject:self];
     }
 }
 
@@ -37,6 +42,22 @@
 
 - (NSUInteger)hash {
     return _eventManager.hash ^ _startDate.hash ^ _endDate.hash;
+}
+
+@end
+
+@implementation SCKEventRequest (Private)
+
+- (instancetype)initWithEventManager:(SCKEventManager*)eM
+                           startDate:(NSDate*)sDate
+                             endDate:(NSDate*)eDate {
+    self = [super init];
+    if (self) {
+        _eventManager = eM;
+        _startDate = [sDate copy];
+        _endDate = [eDate copy];
+    }
+    return self;
 }
 
 @end
