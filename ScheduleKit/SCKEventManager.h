@@ -13,9 +13,7 @@
 
 @protocol SCKEventManagerDataSource <NSObject>
 
-- (NSArray *)eventManager:(SCKEventManager *)eM
-requestsEventsBetweenDate:(NSDate*)sD
-                  andDate:(NSDate*)eD;
+- (NSArray *)eventManager:(SCKEventManager *)eM requestsEventsBetweenDate:(NSDate*)sD andDate:(NSDate*)eD;
 - (void)eventManager:(SCKEventManager *)eM didMakeEventRequest:(SCKEventRequest*)request;
 
 @end
@@ -29,15 +27,9 @@ requestsEventsBetweenDate:(NSDate*)sD
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickEvent:(id <SCKEvent>)e;
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickBlankDate:(NSDate*)d;
 
-- (BOOL)eventManager:(SCKEventManager *)eM
-shouldChangeLengthOfEvent:(id <SCKEvent>)e
-           fromValue:(NSInteger)oV
-             toValue:(NSInteger)fV;
+- (BOOL)eventManager:(SCKEventManager *)eM shouldChangeLengthOfEvent:(id <SCKEvent>)e fromValue:(NSInteger)oV toValue:(NSInteger)fV;
 
-- (BOOL)eventManager:(SCKEventManager *)eM
-shouldChangeDateOfEvent:(id <SCKEvent>)e
-           fromValue:(NSDate*)oD
-             toValue:(NSDate*)fD;
+- (BOOL)eventManager:(SCKEventManager *)eM shouldChangeDateOfEvent:(id <SCKEvent>)e fromValue:(NSDate*)oD toValue:(NSDate*)fD;
 
 @end
 
@@ -47,13 +39,12 @@ shouldChangeDateOfEvent:(id <SCKEvent>)e
     NSMutableArray * _asynchronousEventRequests;
 }
 
-- (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e
-                            holdersInConflict:(NSArray**)conflictsPtr;
+- (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr;
 
 - (void)reloadData;
 
 @property (nonatomic, assign) BOOL loadsEventsAsynchronously;
-@property (weak) id <SCKEventManagerDataSource> dataSource;
-@property (weak) id <SCKEventManagerDelegate> delegate;
-@property (weak) SCKView * view;
+@property (nonatomic, weak) id <SCKEventManagerDataSource> dataSource;
+@property (nonatomic, weak) id <SCKEventManagerDelegate> delegate;
+@property (nonatomic, weak) SCKView * view;
 @end

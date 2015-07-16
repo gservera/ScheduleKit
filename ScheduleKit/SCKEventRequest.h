@@ -46,12 +46,12 @@
  *  @warning This method MUST be called from the main thread.
  *  @param events The asynchronously loaded events.
  */
-- (void)completeWithEvents:(nonnull NSArray*)events;
+- (void)completeWithEvents:(NSArray*)events;
 
 /** The SCKEventManager object that issued the request */
-@property (nonnull, readonly, weak) SCKEventManager *eventManager;
+@property (readonly, weak) SCKEventManager *eventManager;
 /** The requested start date parameter for the event fetch criteria */
-@property (nonnull, readonly, strong) NSDate *startDate;
+@property (readonly, strong) NSDate *startDate;
 /** The requested end date parameter for the event fetch criteria */
-@property (nonnull, readonly, strong) NSDate *endDate;
+@property (readonly, strong) NSDate *endDate;
 @end
