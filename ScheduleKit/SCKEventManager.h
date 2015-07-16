@@ -22,13 +22,10 @@
 @optional
 
 - (void)eventManager:(SCKEventManager*)eM didSelectEvent:(id <SCKEvent>)e;
-
 - (void)eventManagerDidClearSelection:(SCKEventManager*)eM;
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickEvent:(id <SCKEvent>)e;
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickBlankDate:(NSDate*)d;
-
 - (BOOL)eventManager:(SCKEventManager *)eM shouldChangeLengthOfEvent:(id <SCKEvent>)e fromValue:(NSInteger)oV toValue:(NSInteger)fV;
-
 - (BOOL)eventManager:(SCKEventManager *)eM shouldChangeDateOfEvent:(id <SCKEvent>)e fromValue:(NSDate*)oD toValue:(NSDate*)fD;
 
 @end

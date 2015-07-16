@@ -7,6 +7,7 @@ ScheduleKit is a new graphical event management framework for Mac OS X that prov
 * Automatic event management and layout via `SCKEventManager` using a data source pattern.
 * Built-in event conflict management (though there's a lot to be done here yet!)
 * Support for event objects' properties being changed at any time via key-value observing. This is great for event objects that are currently stored on a network database, provided that if an event changes on a remote computer, the grid automatically repositions it if needed.
+* Initial support for asynchronously loading events.
 * Built-in day/week navigation support via IBAction connections, with automatic event fetching from the data source object, too.
 * Built-in zooming capability, either via IBAction connections or via gestures.
 * Built-in event drag & drop support with optional delegate methods that allow customization of this behavior.

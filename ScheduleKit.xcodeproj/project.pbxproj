@@ -213,7 +213,6 @@
 				995E93911A65F29500A3D2BF /* WhiteView.m */,
 				9A8E466F1B585044002DB2DF /* EventLoadingView.h */,
 				9A8E46701B585044002DB2DF /* EventLoadingView.m */,
-				995E93701A634C5100A3D2BF /* Images.xcassets */,
 				995E93721A634C5100A3D2BF /* MainMenu.xib */,
 				995E93691A634C5100A3D2BF /* Supporting Files */,
 			);
@@ -223,6 +222,7 @@
 		995E93691A634C5100A3D2BF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				995E93701A634C5100A3D2BF /* Images.xcassets */,
 				995E936A1A634C5100A3D2BF /* Info.plist */,
 				995E936E1A634C5100A3D2BF /* main.m */,
 			);
