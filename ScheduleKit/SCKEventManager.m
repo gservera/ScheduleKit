@@ -18,7 +18,9 @@
 
 static NSArray * __sorters = nil;
 
-@implementation SCKEventManager
+@implementation SCKEventManager {
+    __weak SCKEventRequest *_completingRequest;
+}
 
 + (void)initialize {
     if (self == [SCKEventManager self]) {
@@ -34,6 +36,12 @@ static NSArray * __sorters = nil;
         _lastRequest = [NSPointerArray weakObjectsPointerArray];
     }
     return self;
+}
+
+- (void)reset {
+    [_managedContainers removeAllObjects];
+    _lastRequest = [NSPointerArray weakObjectsPointerArray];
+    [_asynchronousEventRequests removeAllObjects];
 }
 
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr {
@@ -55,7 +63,7 @@ static NSArray * __sorters = nil;
     if (_dataSource) {
         if (_loadsEventsAsynchronously) {
             [_asynchronousEventRequests makeObjectsPerformSelector:@selector(cancel)];
-            SCKEventRequest *request = [[SCKEventRequest alloc] initWithEventManager:self startDate:_view.startDate endDate:_view.endDate];
+            SCKEventRequest *request = [[SCKEventRequest alloc] initWithEventManager:self startDate:_view.startDate endDate:[_view.endDate dateByAddingTimeInterval:-1]];
             // Not removing, cancel will remove previous
             [_asynchronousEventRequests addObject:request];
             [self.dataSource eventManager:self didMakeEventRequest:request];
@@ -76,6 +84,11 @@ static NSArray * __sorters = nil;
 }
 
 - (void)reloadDataWithEvents:(NSArray*)eventArray {
+    if (_completingRequest) {
+        if (![_completingRequest.startDate isEqual:_view.startDate] || ![_completingRequest.endDate isEqual:[_view.endDate dateByAddingTimeInterval:-1]]) {
+            return;
+        }
+    }
     NSMutableArray *events = [eventArray mutableCopy];
     if (![events isEqualToArray:_lastRequest.allObjects]) {
         _lastRequest = nil;
@@ -113,8 +126,10 @@ static NSArray * __sorters = nil;
 
 @implementation SCKEventManager (Private)
 
-- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events {
+- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events request:(SCKEventRequest*)req {
+    _completingRequest = req;
     [self reloadDataWithEvents:events];
+    _completingRequest = nil;
 }
 
 - (NSMutableArray*)asynchronousEventRequests {

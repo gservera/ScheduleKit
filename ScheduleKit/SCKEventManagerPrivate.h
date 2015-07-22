@@ -7,11 +7,12 @@
 //
 
 #import "SCKEventManager.h"
+#import "SCKEventRequest.h"
 
 @interface SCKEventManager (Private)
 
 - (NSMutableArray*)asynchronousEventRequests;
 - (NSArray*)managedEventHolders;
-- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events;
+- (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events request:(SCKEventRequest*)req;
 
 @end

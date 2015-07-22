@@ -114,9 +114,11 @@
 }
 
 - (void)setColorMode:(SCKEventColorMode)colorMode {
-    _colorMode = colorMode;
-    for (SCKEventView *eventView in _eventViews) {
-        [eventView setNeedsDisplay:YES];
+    if (colorMode != _colorMode) {
+        _colorMode = colorMode;
+        for (SCKEventView *eventView in _eventViews) {
+            [eventView setNeedsDisplay:YES];
+        }
     }
 }
 

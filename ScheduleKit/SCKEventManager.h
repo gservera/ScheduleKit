@@ -13,6 +13,7 @@
 
 @protocol SCKEventManagerDataSource <NSObject>
 
+@optional
 - (NSArray *)eventManager:(SCKEventManager *)eM requestsEventsBetweenDate:(NSDate*)sD andDate:(NSDate*)eD;
 - (void)eventManager:(SCKEventManager *)eM didMakeEventRequest:(SCKEventRequest*)request;
 
@@ -39,6 +40,7 @@
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr;
 
 - (void)reloadData;
+- (void)reset;
 
 @property (nonatomic, assign) BOOL loadsEventsAsynchronously;
 @property (nonatomic, weak) id <SCKEventManagerDataSource> dataSource;

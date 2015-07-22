@@ -42,10 +42,16 @@ static NSArray *__colors, *__strokeColors;
 }
 
 + (NSColor*)colorForEventType:(SCKEventType)type {
+    if (type == SCKEventTypeSpecial) { //We need this since SCKEventTypeSpecial == NSUIntegerMax
+        return [__colors lastObject];
+    }
     return __colors[type];
 }
 
 + (NSColor*)strokeColorForEventType:(SCKEventType)type {
+    if (type == SCKEventTypeSpecial) { //We need this since SCKEventTypeSpecial == NSUIntegerMax
+        return [__strokeColors lastObject];
+    }
     return __strokeColors[type];
 }
 

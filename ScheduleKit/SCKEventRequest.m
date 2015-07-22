@@ -22,10 +22,14 @@
 
 - (void)completeWithEvents:(NSArray*)events {
     if (!_canceled && !_completed) {
-        [self.eventManager reloadDataWithAsynchronouslyLoadedEvents:events];
+        [self.eventManager reloadDataWithAsynchronouslyLoadedEvents:events request:self];
         _completed = YES;
         [_eventManager.asynchronousEventRequests removeObject:self];
     }
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ (Completed: %d, Canceled: %d)",[super description],_completed,_canceled];
 }
 
 #pragma mark - Equality
