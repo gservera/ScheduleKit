@@ -397,6 +397,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                 }
             }
         }
+        //eV.layoutDone = YES;
     }
 
 }

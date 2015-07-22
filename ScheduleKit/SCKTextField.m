@@ -79,4 +79,20 @@
     }
 }
 
+- (nonnull instancetype)initWithFrame:(NSRect)frameRect {
+    self = [super initWithFrame:frameRect];
+    if (self) {
+        [self setUpDefaultProperties];
+    }
+    return self;
+}
+
+- (void)setUpDefaultProperties {
+    self.drawsBackground = NO;
+    self.editable = NO;
+    self.bezeled = NO;
+    self.alignment = NSCenterTextAlignment;
+    self.font = [NSFont systemFontOfSize:12.0];
+}
+
 @end

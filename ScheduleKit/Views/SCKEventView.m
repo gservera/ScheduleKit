@@ -1,10 +1,28 @@
-//
-//  SCKEventView.m
-//  ScheduleKit
-//
-//  Created by Guillem on 24/12/14.
-//  Copyright (c) 2014 Guillem Servera. All rights reserved.
-//
+/*
+ *  SCKEventView.m
+ *  ScheduleKit
+ *
+ *  Created:    Guillem Servera on 24/12/2014.
+ *  Copyright:  © 2014-2015 Guillem Servera (http://github.com/gservera)
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
 
 #import "SCKEventView.h"
 #import "SCKGridView.h"
@@ -32,6 +50,7 @@ static NSColor *__specialEventStrokeColor;
 
 + (void)initialize {
     if (self == [SCKEventView self]) {
+        /// Modify these two arrays if you add more values to the `SCKEventType` enum.
         __colors = @[[NSColor colorWithCalibratedRed:0.60 green:0.90 blue:0.60 alpha:1.0],
                      [NSColor colorWithCalibratedRed:1.00 green:0.86 blue:0.29 alpha:1.0],
                      [NSColor colorWithCalibratedRed:0.66 green:0.82 blue:1.00 alpha:1.0]];
@@ -43,7 +62,7 @@ static NSColor *__specialEventStrokeColor;
     }
 }
 
-+ (NSColor*)colorForEventType:(SCKEventType)type {
++ (nonnull NSColor*)colorForEventType:(SCKEventType)type {
     return (type == SCKEventTypeSpecial)? __specialEventColor : __colors[type];
 }
 
@@ -234,11 +253,6 @@ static NSColor *__specialEventStrokeColor;
 
 - (void)viewDidMoveToWindow {
     if (self.superview != nil) {
-        _innerLabel.drawsBackground = NO;
-        _innerLabel.editable = NO;
-        _innerLabel.bezeled = NO;
-        _innerLabel.alignment = NSCenterTextAlignment;
-        _innerLabel.font = [NSFont systemFontOfSize:12.0];
         [self addSubview:_innerLabel];
         _innerLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [_innerLabel setContentCompressionResistancePriority:250 forOrientation:NSLayoutConstraintOrientationHorizontal];
