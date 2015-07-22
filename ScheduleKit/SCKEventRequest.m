@@ -52,14 +52,12 @@
 
 @implementation SCKEventRequest (Private)
 
-- (instancetype)initWithEventManager:(SCKEventManager*)eM
-                           startDate:(NSDate*)sDate
-                             endDate:(NSDate*)eDate {
+- (instancetype)initWithEventManager:(SCKEventManager*)eM startDate:(NSDate*)sD endDate:(NSDate*)eD {
     self = [super init];
     if (self) {
         _eventManager = eM;
-        _startDate = [sDate copy];
-        _endDate = [eDate copy];
+        _startDate = [sD copy];
+        _endDate = [eD copy];
     }
     return self;
 }

@@ -11,12 +11,13 @@
 
 @class SCKEventManager, SCKEventHolder, SCKView;
 
+/** The SCKEventManagerDataSource protocol includes two methods that can be used by an event
+  * manager to retrieve its contents from an auxiliary object. The method that will be invoked
+  * depends on the value of the `loadsEventsAsynchronously` property. */
 @protocol SCKEventManagerDataSource <NSObject>
-
 @optional
 - (NSArray *)eventManager:(SCKEventManager *)eM requestsEventsBetweenDate:(NSDate*)sD andDate:(NSDate*)eD;
 - (void)eventManager:(SCKEventManager *)eM didMakeEventRequest:(SCKEventRequest*)request;
-
 @end
 
 @protocol SCKEventManagerDelegate <NSObject>

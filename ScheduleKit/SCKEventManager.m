@@ -85,7 +85,8 @@ static NSArray * __sorters = nil;
 
 - (void)reloadDataWithEvents:(NSArray*)eventArray {
     if (_completingRequest) {
-        if (![_completingRequest.startDate isEqual:_view.startDate] || ![_completingRequest.endDate isEqual:[_view.endDate dateByAddingTimeInterval:-1]]) {
+        if ([_completingRequest isCanceled] || ![_completingRequest.startDate isEqual:_view.startDate] || ![_completingRequest.endDate isEqual:[_view.endDate dateByAddingTimeInterval:-1]]) {
+            NSLog(@"Skipping request");
             return;
         }
     }
@@ -127,6 +128,13 @@ static NSArray * __sorters = nil;
 @implementation SCKEventManager (Private)
 
 - (void)reloadDataWithAsynchronouslyLoadedEvents:(NSArray*)events request:(SCKEventRequest*)req {
+    if ([self.view relayoutInProgress]) {
+        NSLog(@"Waiting for relayout to terminate before reloading data");
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(1.0 * NSEC_PER_SEC)),dispatch_get_main_queue(),^{
+            [self reloadDataWithAsynchronouslyLoadedEvents:events request:req];
+        });
+        return;
+    }
     _completingRequest = req;
     [self reloadDataWithEvents:events];
     _completingRequest = nil;

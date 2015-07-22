@@ -64,12 +64,14 @@
  *  @warning This method MUST be called from the main thread.
  *  @param events The asynchronously loaded events.
  */
-- (void)completeWithEvents:(NSArray*)events;
+- (void)completeWithEvents:(nonnull NSArray*)events;
 
+/** Returns whether the request has been canceled */
+@property (readonly, assign, getter=isCanceled) BOOL canceled;
 /** The SCKEventManager object that issued the request */
-@property (readonly, weak) SCKEventManager *eventManager;
+@property (readonly, weak, nullable) SCKEventManager *eventManager;
 /** The requested start date parameter for the event fetch criteria */
-@property (readonly, strong) NSDate *startDate;
+@property (readonly, strong, nonnull) NSDate *startDate;
 /** The requested end date parameter for the event fetch criteria */
-@property (readonly, strong) NSDate *endDate;
+@property (readonly, strong, nonnull) NSDate *endDate;
 @end
