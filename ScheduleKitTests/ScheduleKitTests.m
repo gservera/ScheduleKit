@@ -46,6 +46,7 @@
     XCTAssertNotNil([SCKWeekView class], @"Target integrity tests failed");
     XCTAssertNotNil([SCKDayView class], @"Target integrity tests failed");
     XCTAssertNotNil([SCKEventManager class], @"Target integrity tests failed");
+    XCTAssertNotNil([SCKEventRequest class], @"Target integrity tests failed");
 }
 
 @end

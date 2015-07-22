@@ -326,6 +326,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
     }
 }
 
+//FIXME: Find a better algorythm. Some events still overlap after this
 - (void)redistributeOverlappingEvents {
     [_eventViews makeObjectsPerformSelector:@selector(prepareForRedistribution)];
     CGFloat dayWidth = NSWidth(self.contentRect)/(CGFloat)_dayCount;
@@ -366,6 +367,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 sV.frame = newFrame;
                                 moved = YES;
                                 //NSLog(@"Moved %@ from pos %lu to pos %lu",sV.eventHolder.cachedTitle,posInColumn,testPos);
+                                sV.layoutDone = YES;
                                 break;
                             }
                         }
@@ -390,6 +392,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
                                 newFrame.origin.x += newFrame.size.width;
                                 sV.frame = newFrame;
                                 //NSLog(@"Moved %@ from pos %lu to pos %lu",sV.eventHolder.cachedTitle,posInColumn,testPos);
+                                sV.layoutDone = YES;
                                 break;
                             }
                         }
