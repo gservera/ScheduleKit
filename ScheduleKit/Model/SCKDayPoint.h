@@ -34,7 +34,7 @@
  *  Convenience method that initializes an @c SCKDayPoint with all properties set to zero.
  *  @return The initialized object, autoreleased.
  */
-+ (instancetype)zeroPoint;
++ (nonnull instancetype)zeroPoint;
 
 /**
  *  Convenience initializer. Creates a new SCKDayPoint object with hour, minute and
@@ -42,7 +42,7 @@
  *  @param date The NSDate object from which to get h/m/s parameters. Must not be nil.
  *  @return The initialized SCKDayPoint.
  */
-- (instancetype)initWithDate:(NSDate*)date;
+- (nonnull instancetype)initWithDate:(nonnull NSDate*)date;
 
 /**
  *  Initializes a new SCKDayPoint object with hour, minute and second set to the
@@ -55,28 +55,28 @@
  *
  *  @return The initialized SCKDayPoint.
  */
-- (instancetype)initWithHour:(NSInteger)h minute:(NSInteger)m second:(NSInteger)s NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithHour:(NSInteger)h minute:(NSInteger)m second:(NSInteger)s NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Compares two SCKDayPoint objects.
  *  @param dayPoint The SCKDayPoint object to be compared to self.
  *  @return YES if self is earlier in time than @c p. NO instead.
  */
-- (BOOL)isEarlierThanDayPoint:(SCKDayPoint*)p;
+- (BOOL)isEarlierThanDayPoint:(nonnull SCKDayPoint*)p;
 
 /**
  *  Compares two SCKDayPoint objects.
  *  @param dayPoint The SCKDayPoint object to be compared to self.
  *  @return YES if self is later in time than @c p. NO instead.
  */
-- (BOOL)isLaterThanDayPoint:(SCKDayPoint*)p;
+- (BOOL)isLaterThanDayPoint:(nonnull SCKDayPoint*)p;
 
 /**
  *  Compares two SCKDayPoint objects.
  *  @param dayPoint The SCKDayPoint object to be compared to self.
  *  @return YES if dayOffsets are equal. NO instead.
  */
-- (BOOL)isEqualToDayPoint:(SCKDayPoint*)dayPoint;
+- (BOOL)isEqualToDayPoint:(nonnull SCKDayPoint*)dayPoint;
 
 @property (readonly) NSTimeInterval dayOffset; /**< Returns the total number of seconds */
 @property (assign) NSInteger hour;   /**< The day point's hour */

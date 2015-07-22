@@ -27,32 +27,28 @@ SCKActionContext SCKActionContextZero() {
 @implementation SCKEventView
 
 static NSArray *__colors, *__strokeColors;
+static NSColor *__specialEventColor;
+static NSColor *__specialEventStrokeColor;
 
 + (void)initialize {
     if (self == [SCKEventView self]) {
         __colors = @[[NSColor colorWithCalibratedRed:0.60 green:0.90 blue:0.60 alpha:1.0],
                      [NSColor colorWithCalibratedRed:1.00 green:0.86 blue:0.29 alpha:1.0],
-                     [NSColor colorWithCalibratedRed:0.66 green:0.82 blue:1.00 alpha:1.0],
-                     [NSColor colorWithCalibratedRed:1.00 green:0.40 blue:0.10 alpha:1.0]];
+                     [NSColor colorWithCalibratedRed:0.66 green:0.82 blue:1.00 alpha:1.0]];
         __strokeColors = @[[NSColor colorWithCalibratedRed:0.50 green:0.80 blue:0.50 alpha:1.0],
                            [NSColor colorWithCalibratedRed:0.90 green:0.76 blue:0.19 alpha:1.0],
-                           [NSColor colorWithCalibratedRed:0.56 green:0.72 blue:0.90 alpha:1.0],
-                           [NSColor colorWithCalibratedRed:0.90 green:0.30 blue:0.00 alpha:1.0]];
+                           [NSColor colorWithCalibratedRed:0.56 green:0.72 blue:0.90 alpha:1.0]];
+        __specialEventColor = [NSColor colorWithCalibratedRed:1.00 green:0.40 blue:0.10 alpha:1.0];
+        __specialEventStrokeColor = [NSColor colorWithCalibratedRed:0.9 green:0.3 blue:0.0 alpha:1.0];
     }
 }
 
 + (NSColor*)colorForEventType:(SCKEventType)type {
-    if (type == SCKEventTypeSpecial) { //We need this since SCKEventTypeSpecial == NSUIntegerMax
-        return [__colors lastObject];
-    }
-    return __colors[type];
+    return (type == SCKEventTypeSpecial)? __specialEventColor : __colors[type];
 }
 
 + (NSColor*)strokeColorForEventType:(SCKEventType)type {
-    if (type == SCKEventTypeSpecial) { //We need this since SCKEventTypeSpecial == NSUIntegerMax
-        return [__strokeColors lastObject];
-    }
-    return __strokeColors[type];
+    return (type == SCKEventTypeSpecial)? __specialEventStrokeColor : __strokeColors[type];
 }
 
 - (instancetype)initWithFrame:(NSRect)f {

@@ -40,6 +40,10 @@ static NSCalendar * __calendar;
     return [[self alloc] initWithHour:0 minute:0 second:0];
 }
 
+- (instancetype)init {
+    return [self initWithHour:0 minute:0 second:0];
+}
+
 - (instancetype)initWithDate:(NSDate*)date {
     NSParameterAssert(date != nil);
     NSCalendarUnit flags = NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond;

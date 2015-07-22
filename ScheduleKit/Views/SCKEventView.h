@@ -10,6 +10,7 @@
 #import "SCKTextField.h"
 
 @interface SCKEventView : NSView {
+@private
     SCKActionContext _actionContext;
 }
 

@@ -1,3 +1,4 @@
 language: objective-c
 xcode_project: ScheduleKit.xcodeproj
 xcode_scheme: ScheduleKit
+osx_image: xcode6.4

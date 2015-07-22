@@ -15,7 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "54"
             endingLineNumber = "54"
-            landmarkName = "-reloadData"
+            landmarkName = "-positionInConflictForEventHolder:holdersInConflict:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -137,7 +137,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
             endingLineNumber = "92"
-            landmarkName = "-reloadData"
+            landmarkName = "-reloadDataWithEvents:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
