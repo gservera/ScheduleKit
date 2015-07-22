@@ -34,6 +34,10 @@ NSString * const SCKBreakEndMinuteKey   = @"BreakEM";
 
 @implementation SCKUnavailableTimeRange
 
+- (instancetype)init {
+    return [self initWithWeekday:-1 startHour:0 startMinute:0 endHour:0 endMinute:0];
+}
+
 - (instancetype)initWithWeekday:(NSInteger)weekday
                       startHour:(NSInteger)startHour
                     startMinute:(NSInteger)startMinute
@@ -70,6 +74,10 @@ NSString * const SCKBreakEndMinuteKey   = @"BreakEM";
     [aCoder encodeInteger:_startMinute forKey:SCKBreakStartMinuteKey];
     [aCoder encodeInteger:_endHour     forKey:SCKBreakEndHourKey];
     [aCoder encodeInteger:_endMinute   forKey:SCKBreakEndMinuteKey];
+}
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 #pragma mark - Equalty testing

@@ -27,18 +27,18 @@
 @import Foundation;
 
 // NSCoding support keys:
-extern NSString * const SCKBreakWeekdayKey;
-extern NSString * const SCKBreakStartHourKey;
-extern NSString * const SCKBreakStartMinuteKey;
-extern NSString * const SCKBreakEndHourKey;
-extern NSString * const SCKBreakEndMinuteKey;
+extern __nonnull NSString * const SCKBreakWeekdayKey;
+extern __nonnull NSString * const SCKBreakStartHourKey;
+extern __nonnull NSString * const SCKBreakStartMinuteKey;
+extern __nonnull NSString * const SCKBreakEndHourKey;
+extern __nonnull NSString * const SCKBreakEndMinuteKey;
 
 /**
  This class can be used to represent (and to make persistent copies) a break or
  unavailable time range withing a day being represented by a subclass of @c
  SCKGridView. This class supports testing for equalty.
  */
-@interface SCKUnavailableTimeRange : NSObject <NSCoding>
+@interface SCKUnavailableTimeRange : NSObject <NSSecureCoding>
 
 /**
  *  Initializes a new @c SCKUnavailableTimeRange object representing a specified
@@ -52,11 +52,7 @@ extern NSString * const SCKBreakEndMinuteKey;
  *
  *  @return The initialized @c SCKUnavailableTimeRange
  */
-- (instancetype)initWithWeekday:(NSInteger)weekday
-                      startHour:(NSInteger)startHour
-                    startMinute:(NSInteger)startMinute
-                        endHour:(NSInteger)endHour
-                      endMinute:(NSInteger)endMinute NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithWeekday:(NSInteger)weekday startHour:(NSInteger)startHour startMinute:(NSInteger)startMinute endHour:(NSInteger)endHour endMinute:(NSInteger)endMinute NS_DESIGNATED_INITIALIZER;
 
 /**
  *  Compares two @c SCKUnavailableTimeRange objects
@@ -65,7 +61,7 @@ extern NSString * const SCKBreakEndMinuteKey;
  *
  *  @return YES if the ranges are equal. NO instead.
  */
-- (BOOL)isEqualToUnavailableTimeRange:(SCKUnavailableTimeRange *)range;
+- (BOOL)isEqualToUnavailableTimeRange:(nonnull SCKUnavailableTimeRange *)range;
 
 @property (assign) NSInteger weekday;     /**< Weekday index in @c SCKView*/
 @property (assign) NSInteger startHour;   /**< Break's start hour */

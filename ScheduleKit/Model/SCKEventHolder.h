@@ -41,7 +41,7 @@
  *  @param e The represented object. Can't be nil.
  *  @param v The owning view for this instance. Must have been already
  *  added to a view hierarchy. Can't be nil. */
-- (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithEvent:(nonnull id <SCKEvent>)e owner:(nonnull SCKEventView*)v NS_DESIGNATED_INITIALIZER;
 
 /** 
  *  Configures this instance to ignore observed @c representedObject changes
@@ -95,15 +95,15 @@
 /** Indicates wether cached relative values are valid so drawing is safe.*/
 @property (readonly, getter=isReady) BOOL ready;
 @property (readonly, getter=isLocked) BOOL locked;
-@property (readonly) id <SCKEvent> representedObject;
-@property (readonly, weak) SCKEventView *owningView;
+@property (readonly, nonnull) id <SCKEvent> representedObject;
+@property (readonly, weak, nullable) SCKEventView *owningView;
 
 // Cached values
 @property (assign) SCKRelativeTimeLocation cachedRelativeStart;
 @property (assign) SCKRelativeTimeLocation cachedRelativeEnd;
 @property (assign) SCKRelativeTimeLength cachedRelativeLength;
-@property (strong) NSColor *cachedUserLabelColor;
-@property (strong) NSString *cachedTitle;
-@property (strong) NSDate *cachedScheduleDate;
+@property (strong, nullable) NSColor *cachedUserLabelColor;
+@property (strong, nullable) NSString *cachedTitle;
+@property (strong, nullable) NSDate *cachedScheduleDate;
 @property (assign) NSInteger cachedDuration;
 @end

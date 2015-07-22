@@ -48,6 +48,12 @@
     NSMutableArray* _changesWhileLocked; // The array of changes observed while the object was locked.
 }
 
+- (instancetype)init {
+    NSLog(@"Invalid initializer -[SCKEventHolder init]. Use designated initializer instead.");
+    [self doesNotRecognizeSelector:_cmd];
+    return [self initWithEvent:(id)self owner:(id)self];
+}
+
 - (instancetype)initWithEvent:(id <SCKEvent>)e owner:(SCKEventView*)v {
     NSParameterAssert([e conformsToProtocol:@protocol(SCKEvent)]);
     NSParameterAssert([v isKindOfClass:[SCKEventView class]]);
