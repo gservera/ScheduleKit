@@ -7,15 +7,19 @@ ScheduleKit is a new graphical event management framework for Mac OS X that prov
 * Automatic event management and layout via `SCKEventManager` using a data source pattern.
 * Built-in event conflict management (though there's a lot to be done here yet!)
 * Support for event objects' properties being changed at any time via key-value observing. This is great for event objects that are currently stored on a network database, provided that if an event changes on a remote computer, the grid automatically repositions it if needed.
-* Initial support for asynchronously loading events.
+* Support for asynchronously loading events via the `SCKEventRequest` class.
 * Built-in day/week navigation support via IBAction connections, with automatic event fetching from the data source object, too.
 * Built-in zooming capability, either via IBAction connections or via gestures.
 * Built-in event drag & drop support with optional delegate methods that allow customization of this behavior.
 * Built-in delegate methods to allow drawing of unavailable time ranges.
 
  <p align="center" >
- <img style="max-width:100%" src="http://aurumcode.com/medcode/ScheduleKit.png" alt="ScheduleKit" title="ScheduleKit">
+ <img style="max-width:100%" src="https://gservera.com/cdn/sck/ScheduleKit.png" alt="ScheduleKit" title="ScheduleKit">
  </p>
+ 
+#Ideas for the future
+ 
+* Ability to create an event by clicking and dragging on a region of the view (thus, setting the corresponding start and end date values), as suggested by @ronnyek
 
 #Requirements
 
@@ -24,7 +28,7 @@ ScheduleKit is a new graphical event management framework for Mac OS X that prov
 
 #Mantainers
 
-* [Guillem Servera](htttp://github.com/gservera) ([@guiverane](http://twitter.com/guiverane))
+* [Guillem Servera](https://github.com/gservera) ([@guiverane](https://twitter.com/guiverane))
 
 #License
 
