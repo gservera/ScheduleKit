@@ -59,6 +59,14 @@ static NSArray * __sorters = nil;
     return [sortedEventsInConflict indexOfObject:e];
 }
 
+- (void)stopObservingEvent:(id <SCKEvent>)e {
+    for (SCKEventHolder *holder in _managedContainers) {
+        if (holder.representedObject == e) {
+            [holder stopObservingRepresentedObjectChanges];
+        }
+    }
+}
+
 - (void)reloadData {
     if (_dataSource) {
         if (_loadsEventsAsynchronously) {
@@ -95,11 +103,12 @@ static NSArray * __sorters = nil;
         _lastRequest = nil;
         _lastRequest = [NSPointerArray weakObjectsPointerArray];
         for (id <SCKEvent> e in events) {
-            NSAssert1(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate for new event: %@",e);
+            NSAssert5(!([[e scheduledDate] isLessThan:_view.startDate] || [[e scheduledDate] isGreaterThan:_view.endDate]), @"Invalid scheduledDate (%@) for new event: %@ (INFO: View %@ %@; Request: %@)",[e scheduledDate],e,_view.startDate,_view.endDate, _completingRequest);
             [_lastRequest addPointer:(__bridge void *)(e)];
         }
         for (SCKEventHolder *holder in [_managedContainers copy]) {
-            if (![events containsObject:holder.representedObject]) {
+            if (![events containsObject:holder.representedObject]
+                ||![[holder.representedObject scheduledDate] isEqual:[holder cachedScheduleDate]]) {
                 //Remove
                 [holder stopObservingRepresentedObjectChanges];
                 [holder lock];
@@ -120,6 +129,8 @@ static NSArray * __sorters = nil;
         }
         //TRIGGER RELAYOUT
         [_view triggerRelayoutForAllEventViews];
+    } else {
+        NSLog(@"Skipping, equal");
     }
 }
 

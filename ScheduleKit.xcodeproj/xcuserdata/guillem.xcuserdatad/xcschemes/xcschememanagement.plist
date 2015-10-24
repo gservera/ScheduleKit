@@ -7,7 +7,7 @@
 		<key>SCKTester.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>ScheduleKit.xcscheme_^#shared#^_</key>
 		<dict>
@@ -17,16 +17,6 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>990207221A55E00700912DF5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>990207311A55E00700912DF5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>995E93661A634C5100A3D2BF</key>
 		<dict>
 			<key>primary</key>

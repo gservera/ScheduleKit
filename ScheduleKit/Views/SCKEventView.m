@@ -122,6 +122,27 @@ static NSColor *__specialEventStrokeColor;
     self.layoutDone = NO;
 }
 
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    SCKEventManager *eM = [(SCKView*)self.superview eventManager];
+    id <SCKEventManagerDelegate> delegate = [eM delegate];
+    if ([delegate respondsToSelector:@selector(eventManager:menuForEvent:)]) {
+        return [delegate eventManager:eM menuForEvent:self.eventHolder.representedObject];
+    }
+    return nil;
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent {
+    if ([(SCKGridView*)self.superview selectedEventView] != self) {
+        [(SCKGridView*)self.superview setSelectedEventView:self];
+    }
+    [super rightMouseDown:theEvent];
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent {
+    [super rightMouseUp:theEvent];
+    self.needsDisplay = YES;
+}
+
 - (void)mouseDown:(NSEvent *)theEvent { // Reset context, select this view if needed and set doubleClick if needed.
     _actionContext = SCKActionContextZero();
     if ([(SCKGridView*)self.superview selectedEventView] != self) {

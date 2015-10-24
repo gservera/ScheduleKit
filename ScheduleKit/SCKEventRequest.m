@@ -29,7 +29,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ (Completed: %d, Canceled: %d)",[super description],_completed,_canceled];
+    return [NSString stringWithFormat:@"%@ (Completed: %d, Canceled: %d, Start: %@, End: %@)",[super description],_completed,_canceled,_startDate,_endDate];
 }
 
 #pragma mark - Equality

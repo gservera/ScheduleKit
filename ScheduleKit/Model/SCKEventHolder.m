@@ -111,9 +111,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)o change:(NSDictionary *)change context:(void *)cx {
     NSAssert(o == _representedObject,@"Recieved a KVO notification from an unexpected object");
     if (change[NSKeyValueChangeNotificationIsPriorKey] != nil) { // Track conflicts before value change (KVO-prior)
-        NSArray *conflictsBefore;
-        (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsBefore];
-        _previousConflicts = [NSSet setWithArray:conflictsBefore];
+        if (!_shouldIgnoreChanges) {
+            NSArray *conflictsBefore;
+            (void)[_eventManager positionInConflictForEventHolder:self holdersInConflict:&conflictsBefore];
+            _previousConflicts = [NSSet setWithArray:conflictsBefore];
+        }
     } else { // Notification is not prior
         if (_locked && !_shouldIgnoreChanges) {
             _changedWhileLocked = YES;
@@ -122,7 +124,7 @@
             }
             [_changesWhileLocked addObject:@{@"keyPath":keyPath,@"object":o,@"change":[change copy]}];
             return;
-        } else if (_locked) { // Change was made by the event view, we'll ignore it.
+        } else if (_locked || _shouldIgnoreChanges) { // Change was made by the event view, we'll ignore it.
             return;
         }
         

@@ -29,6 +29,7 @@
 - (void)eventManager:(SCKEventManager *)eM didDoubleClickBlankDate:(NSDate*)d;
 - (BOOL)eventManager:(SCKEventManager *)eM shouldChangeLengthOfEvent:(id <SCKEvent>)e fromValue:(NSInteger)oV toValue:(NSInteger)fV;
 - (BOOL)eventManager:(SCKEventManager *)eM shouldChangeDateOfEvent:(id <SCKEvent>)e fromValue:(NSDate*)oD toValue:(NSDate*)fD;
+- (NSMenu*)eventManager:(SCKEventManager *)eM menuForEvent:(id <SCKEvent>)e;
 
 @end
 
@@ -39,7 +40,7 @@
 }
 
 - (NSInteger)positionInConflictForEventHolder:(SCKEventHolder*)e holdersInConflict:(NSArray**)conflictsPtr;
-
+- (void)stopObservingEvent:(id <SCKEvent>)e;
 - (void)reloadData;
 - (void)reset;
 

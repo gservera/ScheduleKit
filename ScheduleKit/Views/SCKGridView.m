@@ -56,7 +56,8 @@ static NSDictionary * __subHourLabelAttrs = nil;
     _dayCount = 1;
     _hourCount = 1;
     _firstHour = 1;
-    _hourHeight = [[NSUserDefaults standardUserDefaults] doubleForKey:SCKDefaultsGridViewZoomLevelKey];
+    NSString *key = [SCKDefaultsGridViewZoomLevelKey stringByAppendingString:[NSString stringWithFormat:@".%@",NSStringFromClass(self.class)]];
+    _hourHeight = [[NSUserDefaults standardUserDefaults] doubleForKey:key];
     _minuteTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                     target:self
                                                   selector:@selector(minuteTimerFired:)
@@ -79,16 +80,19 @@ static NSDictionary * __subHourLabelAttrs = nil;
 - (void)setHourHeight:(CGFloat)hourHeight {
     if (_hourHeight != hourHeight) {
         _hourHeight = hourHeight;
+        NSString *key = [SCKDefaultsGridViewZoomLevelKey stringByAppendingString:[NSString stringWithFormat:@".%@",NSStringFromClass(self.class)]];
         [[NSUserDefaults standardUserDefaults] setDouble:hourHeight
-                                                  forKey:SCKDefaultsGridViewZoomLevelKey];
+                                                  forKey:key];
         [self invalidateIntrinsicContentSize];
     }
 }
 
 - (void)viewWillMoveToSuperview:(NSView *)newSuperview {
-    CGFloat minHHeight = (NSHeight(newSuperview.frame)-kDayLabelHeight)/(CGFloat)_hourCount;
-    if (_hourHeight < minHHeight) {
-        self.hourHeight = minHHeight;
+    if (newSuperview != nil) {
+        CGFloat minHHeight = (NSHeight(newSuperview.frame)-kDayLabelHeight)/(CGFloat)_hourCount;
+        if (_hourHeight < minHHeight) {
+            self.hourHeight = minHHeight;
+        }
     }
 }
 
@@ -194,7 +198,7 @@ static NSDictionary * __subHourLabelAttrs = nil;
 }
 
 - (void)drawUnavailableTimeRanges {
-    [[NSColor colorWithCalibratedWhite:0.975 alpha:1.0] set];
+    [[NSColor colorWithCalibratedRed:0.925 green:0.942 blue:0.953 alpha:1.000] set];
     for (SCKUnavailableTimeRange *range in _unavailableTimeRanges) {
         NSRectFill([self rectForUnavailableTimeRange:range]);
     }

@@ -16,19 +16,23 @@
 - (void)customInit {
     [super customInit];
     _dayCount = 1;
+    _firstHour = 0;
+    _hourCount = 23;
 }
 
 - (void)setStartDate:(NSDate *)startDate {
     [super setStartDate:startDate];
     _firstHour = [_calendar component:NSCalendarUnitHour fromDate:startDate];
     _hourCount = (NSInteger)[self absoluteTimeInterval]/3600.0;
-    self.hourHeight = NSHeight([self contentRect])/(CGFloat)_hourCount;
 }
 
 - (void)setEndDate:(NSDate *)endDate {
     [super setEndDate:endDate];
     _hourCount = (NSInteger)[self absoluteTimeInterval]/3600.0;
-    self.hourHeight = NSHeight([self contentRect])/(CGFloat)_hourCount;
+    CGFloat minHHeight = NSHeight([self contentRect])/(CGFloat)_hourCount;
+    if (self.hourHeight < minHHeight) {
+        self.hourHeight = minHHeight;
+    }
 }
 
 - (NSRect)rectForUnavailableTimeRange:(SCKUnavailableTimeRange *)rng {
