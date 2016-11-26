@@ -7,62 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		990206FE1A50590D00912DF5 /* SCKEventManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 990206FC1A50590D00912DF5 /* SCKEventManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		990206FF1A50590D00912DF5 /* SCKEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 990206FD1A50590D00912DF5 /* SCKEventManager.m */; };
-		990207021A535D0400912DF5 /* SCKGridView.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207001A535D0400912DF5 /* SCKGridView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		990207031A535D0400912DF5 /* SCKGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207011A535D0400912DF5 /* SCKGridView.m */; };
-		990207061A53692800912DF5 /* SCKUnavailableTimeRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207041A53692800912DF5 /* SCKUnavailableTimeRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		990207071A53692800912DF5 /* SCKUnavailableTimeRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207051A53692800912DF5 /* SCKUnavailableTimeRange.m */; };
-		9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207081A5417B100912DF5 /* SCKDayPoint.h */; };
-		9902070B1A5417B100912DF5 /* SCKDayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207091A5417B100912DF5 /* SCKDayPoint.m */; };
-		9902070E1A542DA300912DF5 /* SCKDayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9902070C1A542DA300912DF5 /* SCKDayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9902070F1A542DA300912DF5 /* SCKDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902070D1A542DA300912DF5 /* SCKDayView.m */; };
-		990207121A5457ED00912DF5 /* SCKWeekView.h in Headers */ = {isa = PBXBuildFile; fileRef = 990207101A5457ED00912DF5 /* SCKWeekView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		990207131A5457ED00912DF5 /* SCKWeekView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990207111A5457ED00912DF5 /* SCKWeekView.m */; };
-		9902071D1A55722B00912DF5 /* SCKTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 9902071B1A55722B00912DF5 /* SCKTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9902071E1A55722B00912DF5 /* SCKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9902071C1A55722B00912DF5 /* SCKTextField.m */; };
-		9902074B1A55E14A00912DF5 /* ScheduleKitDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0BD1A4AF54800713F18 /* ScheduleKitDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9902074C1A55E14F00912DF5 /* SCKEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		99101E531A6D090B00E435E6 /* ScheduleKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		995E936D1A634C5100A3D2BF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E936C1A634C5100A3D2BF /* AppDelegate.m */; };
-		995E936F1A634C5100A3D2BF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E936E1A634C5100A3D2BF /* main.m */; };
-		995E93711A634C5100A3D2BF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 995E93701A634C5100A3D2BF /* Images.xcassets */; };
-		995E93741A634C5100A3D2BF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 995E93721A634C5100A3D2BF /* MainMenu.xib */; };
-		995E93801A634C5200A3D2BF /* SCKTesterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E937F1A634C5200A3D2BF /* SCKTesterTests.m */; };
-		995E93891A634C7300A3D2BF /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
-		995E938C1A634CB100A3D2BF /* TestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E938B1A634CB100A3D2BF /* TestUser.m */; };
-		995E938F1A65EEB100A3D2BF /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E938E1A65EEB100A3D2BF /* TestEvent.m */; };
-		995E93921A65F29500A3D2BF /* WhiteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 995E93911A65F29500A3D2BF /* WhiteView.m */; };
-		995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		996BFFF01A97A0BE001E6470 /* SCKEventHolderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */; };
-		99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		996E96521DE984710056022E /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E96511DE984710056022E /* EditEventViewController.swift */; };
+		998228561DDA684B0088B82F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228551DDA684B0088B82F /* AppDelegate.m */; };
+		998228591DDA684B0088B82F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228581DDA684B0088B82F /* main.m */; };
+		9982285C1DDA684B0088B82F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9982285B1DDA684B0088B82F /* ViewController.m */; };
+		9982285E1DDA684B0088B82F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9982285D1DDA684B0088B82F /* Assets.xcassets */; };
+		998228611DDA684B0088B82F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9982285F1DDA684B0088B82F /* Main.storyboard */; };
+		998228661DDA686F0088B82F /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
+		998228681DDA687B0088B82F /* ScheduleKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9982601C1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */; };
+		9982601F1DDB3DAD00C46586 /* SCKEventManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */; };
+		998260211DDB74FE00C46586 /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998260201DDB74FE00C46586 /* WeekViewController.swift */; };
+		998260231DDB91AD00C46586 /* DayCalendarPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */; };
+		9997172A1DC3784A009BB046 /* SCKGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999717291DC3784A009BB046 /* SCKGridView.swift */; };
+		999950911D8EB56D00128669 /* SCKEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950901D8EB56D00128669 /* SCKEventRequest.swift */; };
+		999950951D8EB7CE00128669 /* SCKEventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950941D8EB7CE00128669 /* SCKEventHolder.swift */; };
+		999950971D8EE25A00128669 /* SCKEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950961D8EE25A00128669 /* SCKEventView.swift */; };
+		999950991D8F216600128669 /* SCKView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950981D8F216600128669 /* SCKView.swift */; };
+		99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B577DB1DC61A870010A6A5 /* SCKTextField.swift */; };
+		99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */; };
+		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
+		99BA3AC31DBF800E00A6FB33 /* ScheduleKitDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */; };
+		99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */; };
 		99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */; };
 		99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */; };
+		99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */; };
+		99CAFCD91DC9EAC7004502AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCD81DC9EAC7004502AA /* Assets.xcassets */; };
+		99CAFCDC1DC9EAC7004502AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCDA1DC9EAC7004502AA /* Main.storyboard */; };
+		99CAFCE21DC9EAE5004502AA /* TestUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCE11DC9EAE5004502AA /* TestUser.swift */; };
+		99CAFCE41DC9EAEE004502AA /* TestEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCE31DC9EAEE004502AA /* TestEvent.swift */; };
+		99CAFCE51DC9EB0E004502AA /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
+		99CAFCE61DC9EB0E004502AA /* ScheduleKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		99CAFCEB1DC9EFBC004502AA /* WhiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */; };
+		99CAFCED1DC9F067004502AA /* EventLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */; };
+		99CAFCEF1DC9F294004502AA /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEE1DC9F294004502AA /* TableViewController.swift */; };
+		99CAFCF11DC9F2A5004502AA /* EventEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF01DC9F2A5004502AA /* EventEngine.swift */; };
+		99CAFCF31DC9F97D004502AA /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF21DC9F97D004502AA /* DayViewController.swift */; };
+		99CAFCF51DCA039F004502AA /* SCKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF41DCA039F004502AA /* SCKViewController.swift */; };
 		99CDA4611A7066C200AFB505 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 99CDA4601A7066C200AFB505 /* LICENSE */; };
+		99D399571DDA6EF200498366 /* TestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D399561DDA6EF200498366 /* TestUser.m */; };
+		99D3995A1DDA705D00498366 /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D399591DDA705D00498366 /* TestEvent.m */; };
+		99D3995D1DDA74B000498366 /* EventEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D3995C1DDA74B000498366 /* EventEngine.m */; };
 		99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99E7D0AD1A4AF3B500713F18 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */; };
-		99E7D0C01A4AF63F00713F18 /* SCKView.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0BE1A4AF63F00713F18 /* SCKView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		99E7D0C11A4AF63F00713F18 /* SCKView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0BF1A4AF63F00713F18 /* SCKView.m */; };
-		99E7D0CB1A4B3B9B00713F18 /* SCKEventView.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */; };
-		99E7D0D01A4B3C3500713F18 /* SCKEventHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		99E7D0D11A4B3C3500713F18 /* SCKEventHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */; };
-		9A8E46711B585044002DB2DF /* EventLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A8E46701B585044002DB2DF /* EventLoadingView.m */; };
-		9AA8B8F81B58385600A96C1C /* SCKEventRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9AA8B8F91B58385600A96C1C /* SCKEventRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */; };
-		9AB3BA0E1B585AE0002C8709 /* SCKEventRequestPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		99F1FF8B1DC4E9F80055C3E4 /* SCKDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */; };
+		99F1FF8D1DC4F9DD0055C3E4 /* SCKWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		995E937A1A634C5200A3D2BF /* PBXContainerItemProxy */ = {
+		99067A901DDA6B4D00A4E728 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99E7D0981A4AF3B500713F18 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 995E93661A634C5100A3D2BF;
-			remoteInfo = SCKTester;
+			remoteGlobalIDString = 99E7D0A01A4AF3B500713F18;
+			remoteInfo = ScheduleKit;
 		};
-		995E93871A634C7000A3D2BF /* PBXContainerItemProxy */ = {
+		99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99E7D0981A4AF3B500713F18 /* Project object */;
 			proxyType = 1;
@@ -79,92 +81,104 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		99101E521A6D08FE00E435E6 /* CopyFiles */ = {
+		998228671DDA68710088B82F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				99101E531A6D090B00E435E6 /* ScheduleKit.framework in CopyFiles */,
+				998228681DDA687B0088B82F /* ScheduleKit.framework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99CAFCE91DC9EB0E004502AA /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99CAFCE61DC9EB0E004502AA /* ScheduleKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		990206FC1A50590D00912DF5 /* SCKEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCKEventManager.h; path = ScheduleKit/SCKEventManager.h; sourceTree = SOURCE_ROOT; };
-		990206FD1A50590D00912DF5 /* SCKEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCKEventManager.m; path = ScheduleKit/SCKEventManager.m; sourceTree = SOURCE_ROOT; };
-		990207001A535D0400912DF5 /* SCKGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKGridView.h; sourceTree = "<group>"; };
-		990207011A535D0400912DF5 /* SCKGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKGridView.m; sourceTree = "<group>"; };
-		990207041A53692800912DF5 /* SCKUnavailableTimeRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKUnavailableTimeRange.h; sourceTree = "<group>"; };
-		990207051A53692800912DF5 /* SCKUnavailableTimeRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRange.m; sourceTree = "<group>"; };
-		990207081A5417B100912DF5 /* SCKDayPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKDayPoint.h; sourceTree = "<group>"; };
-		990207091A5417B100912DF5 /* SCKDayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKDayPoint.m; sourceTree = "<group>"; };
-		9902070C1A542DA300912DF5 /* SCKDayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKDayView.h; sourceTree = "<group>"; };
-		9902070D1A542DA300912DF5 /* SCKDayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKDayView.m; sourceTree = "<group>"; };
-		990207101A5457ED00912DF5 /* SCKWeekView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKWeekView.h; sourceTree = "<group>"; };
-		990207111A5457ED00912DF5 /* SCKWeekView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKWeekView.m; sourceTree = "<group>"; };
-		9902071B1A55722B00912DF5 /* SCKTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKTextField.h; sourceTree = "<group>"; };
-		9902071C1A55722B00912DF5 /* SCKTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKTextField.m; sourceTree = "<group>"; };
-		995E93671A634C5100A3D2BF /* SCKTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SCKTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		995E936A1A634C5100A3D2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		995E936B1A634C5100A3D2BF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		995E936C1A634C5100A3D2BF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		995E936E1A634C5100A3D2BF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		995E93701A634C5100A3D2BF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		995E93731A634C5100A3D2BF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		995E93791A634C5100A3D2BF /* SCKTesterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SCKTesterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		995E937E1A634C5200A3D2BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		995E937F1A634C5200A3D2BF /* SCKTesterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCKTesterTests.m; sourceTree = "<group>"; };
-		995E938A1A634CB100A3D2BF /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
-		995E938B1A634CB100A3D2BF /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
-		995E938D1A65EEB100A3D2BF /* TestEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEvent.h; sourceTree = "<group>"; };
-		995E938E1A65EEB100A3D2BF /* TestEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEvent.m; sourceTree = "<group>"; };
-		995E93901A65F29500A3D2BF /* WhiteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiteView.h; sourceTree = "<group>"; };
-		995E93911A65F29500A3D2BF /* WhiteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiteView.m; sourceTree = "<group>"; };
-		995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCKEventManagerPrivate.h; path = ../SCKEventManagerPrivate.h; sourceTree = "<group>"; };
 		996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolderTests.m; sourceTree = "<group>"; };
 		996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKTestMockObjects.h; sourceTree = "<group>"; };
-		99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKViewPrivate.h; sourceTree = "<group>"; };
+		996E96511DE984710056022E /* EditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
+		998228521DDA684B0088B82F /* SCKExample-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		998228541DDA684B0088B82F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		998228551DDA684B0088B82F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		998228581DDA684B0088B82F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9982285A1DDA684B0088B82F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9982285B1DDA684B0088B82F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9982285D1DDA684B0088B82F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		998228601DDA684B0088B82F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		998228621DDA684B0088B82F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScheduleKit-ObjC.swift"; path = "Views/ScheduleKit-ObjC.swift"; sourceTree = "<group>"; };
+		9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventManaging.swift; sourceTree = "<group>"; };
+		998260201DDB74FE00C46586 /* WeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
+		998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayCalendarPopoverViewController.swift; sourceTree = "<group>"; };
+		999717291DC3784A009BB046 /* SCKGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKGridView.swift; sourceTree = "<group>"; };
+		999950901D8EB56D00128669 /* SCKEventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKEventRequest.swift; path = ScheduleKit/SCKEventRequest.swift; sourceTree = SOURCE_ROOT; };
+		999950941D8EB7CE00128669 /* SCKEventHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolder.swift; sourceTree = "<group>"; };
+		999950961D8EE25A00128669 /* SCKEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventView.swift; sourceTree = "<group>"; };
+		999950981D8F216600128669 /* SCKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKView.swift; sourceTree = "<group>"; };
+		99B577DB1DC61A870010A6A5 /* SCKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKTextField.swift; path = Views/SCKTextField.swift; sourceTree = "<group>"; };
+		99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEvent.swift; sourceTree = "<group>"; };
+		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
+		99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleKitDefinitions.swift; sourceTree = "<group>"; };
+		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
 		99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRangeTests.m; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		99C152DA1A82D94C00096C8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKDayPointTests.m; sourceTree = "<group>"; };
+		99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		99CAFCD81DC9EAC7004502AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		99CAFCDB1DC9EAC7004502AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		99CAFCDD1DC9EAC7004502AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		99CAFCE11DC9EAE5004502AA /* TestUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUser.swift; sourceTree = "<group>"; };
+		99CAFCE31DC9EAEE004502AA /* TestEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEvent.swift; sourceTree = "<group>"; };
+		99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteView.swift; sourceTree = "<group>"; };
+		99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventLoadingView.swift; sourceTree = "<group>"; };
+		99CAFCEE1DC9F294004502AA /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		99CAFCF01DC9F2A5004502AA /* EventEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEngine.swift; sourceTree = "<group>"; };
+		99CAFCF21DC9F97D004502AA /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
+		99CAFCF41DCA039F004502AA /* SCKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKViewController.swift; path = Views/SCKViewController.swift; sourceTree = "<group>"; };
 		99CDA4601A7066C200AFB505 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		99D399551DDA6EF200498366 /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
+		99D399561DDA6EF200498366 /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
+		99D399581DDA705D00498366 /* TestEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEvent.h; sourceTree = "<group>"; };
+		99D399591DDA705D00498366 /* TestEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEvent.m; sourceTree = "<group>"; };
+		99D3995B1DDA74B000498366 /* EventEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventEngine.h; sourceTree = "<group>"; };
+		99D3995C1DDA74B000498366 /* EventEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventEngine.m; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
 		99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0B21A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleKitTests.m; sourceTree = "<group>"; };
-		99E7D0BD1A4AF54800713F18 /* ScheduleKitDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKitDefinitions.h; sourceTree = "<group>"; };
-		99E7D0BE1A4AF63F00713F18 /* SCKView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKView.h; sourceTree = "<group>"; };
-		99E7D0BF1A4AF63F00713F18 /* SCKView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKView.m; sourceTree = "<group>"; };
-		99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventView.h; sourceTree = "<group>"; };
-		99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventView.m; sourceTree = "<group>"; };
-		99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCKEventHolder.h; sourceTree = "<group>"; };
-		99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolder.m; sourceTree = "<group>"; };
-		99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKEvent.h; sourceTree = "<group>"; };
-		9A8E466F1B585044002DB2DF /* EventLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventLoadingView.h; sourceTree = "<group>"; };
-		9A8E46701B585044002DB2DF /* EventLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventLoadingView.m; sourceTree = "<group>"; };
-		9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCKEventRequest.h; path = ../SCKEventRequest.h; sourceTree = "<group>"; };
-		9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCKEventRequest.m; path = ../SCKEventRequest.m; sourceTree = "<group>"; };
-		9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCKEventRequestPrivate.h; path = ScheduleKit/SCKEventRequestPrivate.h; sourceTree = SOURCE_ROOT; };
+		99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayView.swift; sourceTree = "<group>"; };
+		99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKWeekView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		995E93641A634C5100A3D2BF /* Frameworks */ = {
+		9982284F1DDA684B0088B82F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				995E93891A634C7300A3D2BF /* ScheduleKit.framework in Frameworks */,
+				998228661DDA686F0088B82F /* ScheduleKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		995E93761A634C5100A3D2BF /* Frameworks */ = {
+		99CAFCCF1DC9EAC7004502AA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CAFCE51DC9EB0E004502AA /* ScheduleKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,72 +200,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		990206FB1A5058DD00912DF5 /* Controller */ = {
+		998228531DDA684B0088B82F /* SCKExample-ObjC */ = {
 			isa = PBXGroup;
 			children = (
-				9AA8B8F61B58385600A96C1C /* SCKEventRequest.h */,
-				9AB3BA0D1B5859F6002C8709 /* SCKEventRequestPrivate.h */,
-				9AA8B8F71B58385600A96C1C /* SCKEventRequest.m */,
-				990206FC1A50590D00912DF5 /* SCKEventManager.h */,
-				995E93931A66FAC200A3D2BF /* SCKEventManagerPrivate.h */,
-				990206FD1A50590D00912DF5 /* SCKEventManager.m */,
+				99D399551DDA6EF200498366 /* TestUser.h */,
+				99D399561DDA6EF200498366 /* TestUser.m */,
+				99D399581DDA705D00498366 /* TestEvent.h */,
+				99D399591DDA705D00498366 /* TestEvent.m */,
+				99D3995B1DDA74B000498366 /* EventEngine.h */,
+				99D3995C1DDA74B000498366 /* EventEngine.m */,
+				998228541DDA684B0088B82F /* AppDelegate.h */,
+				998228551DDA684B0088B82F /* AppDelegate.m */,
+				9982285A1DDA684B0088B82F /* ViewController.h */,
+				9982285B1DDA684B0088B82F /* ViewController.m */,
+				9982285D1DDA684B0088B82F /* Assets.xcassets */,
+				9982285F1DDA684B0088B82F /* Main.storyboard */,
+				998228621DDA684B0088B82F /* Info.plist */,
+				998228571DDA684B0088B82F /* Supporting Files */,
 			);
-			name = Controller;
-			path = Views;
+			path = "SCKExample-ObjC";
 			sourceTree = "<group>";
 		};
-		995E93681A634C5100A3D2BF /* SCKTester */ = {
+		998228571DDA684B0088B82F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				995E936B1A634C5100A3D2BF /* AppDelegate.h */,
-				995E936C1A634C5100A3D2BF /* AppDelegate.m */,
-				995E938A1A634CB100A3D2BF /* TestUser.h */,
-				995E938B1A634CB100A3D2BF /* TestUser.m */,
-				995E938D1A65EEB100A3D2BF /* TestEvent.h */,
-				995E938E1A65EEB100A3D2BF /* TestEvent.m */,
-				995E93901A65F29500A3D2BF /* WhiteView.h */,
-				995E93911A65F29500A3D2BF /* WhiteView.m */,
-				9A8E466F1B585044002DB2DF /* EventLoadingView.h */,
-				9A8E46701B585044002DB2DF /* EventLoadingView.m */,
-				995E93721A634C5100A3D2BF /* MainMenu.xib */,
-				995E93691A634C5100A3D2BF /* Supporting Files */,
-			);
-			path = SCKTester;
-			sourceTree = "<group>";
-		};
-		995E93691A634C5100A3D2BF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				995E93701A634C5100A3D2BF /* Images.xcassets */,
-				995E936A1A634C5100A3D2BF /* Info.plist */,
-				995E936E1A634C5100A3D2BF /* main.m */,
+				998228581DDA684B0088B82F /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		995E937C1A634C5200A3D2BF /* SCKTesterTests */ = {
+		9982601D1DDAF0B300C46586 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				995E937E1A634C5200A3D2BF /* Info.plist */,
-				995E937F1A634C5200A3D2BF /* SCKTesterTests.m */,
+				9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */,
+				999950901D8EB56D00128669 /* SCKEventRequest.swift */,
+				99CAFCF41DCA039F004502AA /* SCKViewController.swift */,
 			);
-			path = SCKTesterTests;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		99A3740C1A7AF4CA00F0E2BB /* Schedule views */ = {
 			isa = PBXGroup;
 			children = (
-				99E7D0BE1A4AF63F00713F18 /* SCKView.h */,
-				99A3740A1A7969F200F0E2BB /* SCKViewPrivate.h */,
-				99E7D0BF1A4AF63F00713F18 /* SCKView.m */,
-				990207001A535D0400912DF5 /* SCKGridView.h */,
-				990207011A535D0400912DF5 /* SCKGridView.m */,
-				9902070C1A542DA300912DF5 /* SCKDayView.h */,
-				9902070D1A542DA300912DF5 /* SCKDayView.m */,
-				990207101A5457ED00912DF5 /* SCKWeekView.h */,
-				990207111A5457ED00912DF5 /* SCKWeekView.m */,
+				999950981D8F216600128669 /* SCKView.swift */,
+				999717291DC3784A009BB046 /* SCKGridView.swift */,
+				99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */,
+				99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */,
 			);
 			name = "Schedule views";
+			sourceTree = "<group>";
+		};
+		99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */ = {
+			isa = PBXGroup;
+			children = (
+				99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */,
+				99CAFCF01DC9F2A5004502AA /* EventEngine.swift */,
+				99CAFCEE1DC9F294004502AA /* TableViewController.swift */,
+				99CAFCE11DC9EAE5004502AA /* TestUser.swift */,
+				99CAFCE31DC9EAEE004502AA /* TestEvent.swift */,
+				99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */,
+				99CAFCF21DC9F97D004502AA /* DayViewController.swift */,
+				998260201DDB74FE00C46586 /* WeekViewController.swift */,
+				996E96511DE984710056022E /* EditEventViewController.swift */,
+				99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */,
+				998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */,
+				99CAFCD81DC9EAC7004502AA /* Assets.xcassets */,
+				99CAFCDA1DC9EAC7004502AA /* Main.storyboard */,
+				99CAFCDD1DC9EAC7004502AA /* Info.plist */,
+			);
+			path = "SCKExample-Swift";
 			sourceTree = "<group>";
 		};
 		99E7D0971A4AF3B500713F18 = {
@@ -262,8 +279,8 @@
 				99C152D91A82D4A000096C8E /* .travis.yml */,
 				99E7D0A31A4AF3B500713F18 /* ScheduleKit */,
 				99E7D0B01A4AF3B500713F18 /* ScheduleKitTests */,
-				995E93681A634C5100A3D2BF /* SCKTester */,
-				995E937C1A634C5200A3D2BF /* SCKTesterTests */,
+				99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */,
+				998228531DDA684B0088B82F /* SCKExample-ObjC */,
 				99E7D0A21A4AF3B500713F18 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -273,8 +290,8 @@
 			children = (
 				99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */,
 				99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */,
-				995E93671A634C5100A3D2BF /* SCKTester.app */,
-				995E93791A634C5100A3D2BF /* SCKTesterTests.xctest */,
+				99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */,
+				998228521DDA684B0088B82F /* SCKExample-ObjC.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -283,12 +300,13 @@
 			isa = PBXGroup;
 			children = (
 				99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */,
-				99E7D0BD1A4AF54800713F18 /* ScheduleKitDefinitions.h */,
-				99E7D0D21A4B3C5E00713F18 /* SCKEvent.h */,
+				9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */,
+				99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */,
+				99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */,
 				99E7D0C41A4B014900713F18 /* Categories and subclasses */,
 				99E7D0CD1A4B3C2400713F18 /* Model */,
+				9982601D1DDAF0B300C46586 /* Controllers */,
 				99E7D0C21A4AF64500713F18 /* Views */,
-				990206FB1A5058DD00912DF5 /* Controller */,
 				99E7D0A41A4AF3B500713F18 /* Supporting Files */,
 			);
 			path = ScheduleKit;
@@ -318,8 +336,7 @@
 		99E7D0C21A4AF64500713F18 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				99E7D0C91A4B3B9B00713F18 /* SCKEventView.h */,
-				99E7D0CA1A4B3B9B00713F18 /* SCKEventView.m */,
+				999950961D8EE25A00128669 /* SCKEventView.swift */,
 				99A3740C1A7AF4CA00F0E2BB /* Schedule views */,
 			);
 			path = Views;
@@ -328,8 +345,7 @@
 		99E7D0C41A4B014900713F18 /* Categories and subclasses */ = {
 			isa = PBXGroup;
 			children = (
-				9902071B1A55722B00912DF5 /* SCKTextField.h */,
-				9902071C1A55722B00912DF5 /* SCKTextField.m */,
+				99B577DB1DC61A870010A6A5 /* SCKTextField.swift */,
 			);
 			name = "Categories and subclasses";
 			sourceTree = "<group>";
@@ -337,12 +353,9 @@
 		99E7D0CD1A4B3C2400713F18 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				990207081A5417B100912DF5 /* SCKDayPoint.h */,
-				990207091A5417B100912DF5 /* SCKDayPoint.m */,
-				99E7D0CE1A4B3C3500713F18 /* SCKEventHolder.h */,
-				99E7D0CF1A4B3C3500713F18 /* SCKEventHolder.m */,
-				990207041A53692800912DF5 /* SCKUnavailableTimeRange.h */,
-				990207051A53692800912DF5 /* SCKUnavailableTimeRange.m */,
+				99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */,
+				99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */,
+				999950941D8EB7CE00128669 /* SCKEventHolder.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -354,65 +367,50 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9902070E1A542DA300912DF5 /* SCKDayView.h in Headers */,
-				990207121A5457ED00912DF5 /* SCKWeekView.h in Headers */,
-				9902074B1A55E14A00912DF5 /* ScheduleKitDefinitions.h in Headers */,
-				9902074C1A55E14F00912DF5 /* SCKEvent.h in Headers */,
-				990207061A53692800912DF5 /* SCKUnavailableTimeRange.h in Headers */,
-				990207021A535D0400912DF5 /* SCKGridView.h in Headers */,
-				99E7D0CB1A4B3B9B00713F18 /* SCKEventView.h in Headers */,
-				990206FE1A50590D00912DF5 /* SCKEventManager.h in Headers */,
-				99E7D0D01A4B3C3500713F18 /* SCKEventHolder.h in Headers */,
-				9902071D1A55722B00912DF5 /* SCKTextField.h in Headers */,
-				9AA8B8F81B58385600A96C1C /* SCKEventRequest.h in Headers */,
-				99E7D0C01A4AF63F00713F18 /* SCKView.h in Headers */,
 				99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */,
-				99A3740B1A7AF41D00F0E2BB /* SCKViewPrivate.h in Headers */,
-				995E93941A66FAE200A3D2BF /* SCKEventManagerPrivate.h in Headers */,
-				9AB3BA0E1B585AE0002C8709 /* SCKEventRequestPrivate.h in Headers */,
-				9902070A1A5417B100912DF5 /* SCKDayPoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		995E93661A634C5100A3D2BF /* SCKTester */ = {
+		998228511DDA684B0088B82F /* SCKExample-ObjC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 995E93851A634C5200A3D2BF /* Build configuration list for PBXNativeTarget "SCKTester" */;
+			buildConfigurationList = 998228631DDA684B0088B82F /* Build configuration list for PBXNativeTarget "SCKExample-ObjC" */;
 			buildPhases = (
-				995E93631A634C5100A3D2BF /* Sources */,
-				995E93641A634C5100A3D2BF /* Frameworks */,
-				995E93651A634C5100A3D2BF /* Resources */,
-				99101E521A6D08FE00E435E6 /* CopyFiles */,
+				9982284E1DDA684B0088B82F /* Sources */,
+				9982284F1DDA684B0088B82F /* Frameworks */,
+				998228501DDA684B0088B82F /* Resources */,
+				998228671DDA68710088B82F /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				995E93881A634C7000A3D2BF /* PBXTargetDependency */,
+				99067A911DDA6B4D00A4E728 /* PBXTargetDependency */,
 			);
-			name = SCKTester;
-			productName = SCKTester;
-			productReference = 995E93671A634C5100A3D2BF /* SCKTester.app */;
+			name = "SCKExample-ObjC";
+			productName = "SCKExample-ObjC";
+			productReference = 998228521DDA684B0088B82F /* SCKExample-ObjC.app */;
 			productType = "com.apple.product-type.application";
 		};
-		995E93781A634C5100A3D2BF /* SCKTesterTests */ = {
+		99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 995E93861A634C5200A3D2BF /* Build configuration list for PBXNativeTarget "SCKTesterTests" */;
+			buildConfigurationList = 99CAFCDE1DC9EAC7004502AA /* Build configuration list for PBXNativeTarget "SCKExample-Swift" */;
 			buildPhases = (
-				995E93751A634C5100A3D2BF /* Sources */,
-				995E93761A634C5100A3D2BF /* Frameworks */,
-				995E93771A634C5100A3D2BF /* Resources */,
+				99CAFCCE1DC9EAC7004502AA /* Sources */,
+				99CAFCCF1DC9EAC7004502AA /* Frameworks */,
+				99CAFCD01DC9EAC7004502AA /* Resources */,
+				99CAFCE91DC9EB0E004502AA /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				995E937B1A634C5200A3D2BF /* PBXTargetDependency */,
+				99CAFCE81DC9EB0E004502AA /* PBXTargetDependency */,
 			);
-			name = SCKTesterTests;
-			productName = SCKTesterTests;
-			productReference = 995E93791A634C5100A3D2BF /* SCKTesterTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
+			name = "SCKExample-Swift";
+			productName = "SCKExample-Swift";
+			productReference = 99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */;
+			productType = "com.apple.product-type.application";
 		};
 		99E7D0A01A4AF3B500713F18 /* ScheduleKit */ = {
 			isa = PBXNativeTarget;
@@ -456,18 +454,24 @@
 		99E7D0981A4AF3B500713F18 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Guillem Servera";
 				TargetAttributes = {
-					995E93661A634C5100A3D2BF = {
-						CreatedOnToolsVersion = 6.1.1;
+					998228511DDA684B0088B82F = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = Q6R76RZ9Z8;
+						ProvisioningStyle = Automatic;
 					};
-					995E93781A634C5100A3D2BF = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 995E93661A634C5100A3D2BF;
+					99CAFCD11DC9EAC7004502AA = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = Q6R76RZ9Z8;
+						ProvisioningStyle = Automatic;
 					};
 					99E7D0A01A4AF3B500713F18 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = Q6R76RZ9Z8;
+						LastSwiftMigration = 0800;
 					};
 					99E7D0AB1A4AF3B500713F18 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -489,26 +493,28 @@
 			targets = (
 				99E7D0A01A4AF3B500713F18 /* ScheduleKit */,
 				99E7D0AB1A4AF3B500713F18 /* ScheduleKitTests */,
-				995E93661A634C5100A3D2BF /* SCKTester */,
-				995E93781A634C5100A3D2BF /* SCKTesterTests */,
+				99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */,
+				998228511DDA684B0088B82F /* SCKExample-ObjC */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		995E93651A634C5100A3D2BF /* Resources */ = {
+		998228501DDA684B0088B82F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				995E93711A634C5100A3D2BF /* Images.xcassets in Resources */,
-				995E93741A634C5100A3D2BF /* MainMenu.xib in Resources */,
+				9982285E1DDA684B0088B82F /* Assets.xcassets in Resources */,
+				998228611DDA684B0088B82F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		995E93771A634C5100A3D2BF /* Resources */ = {
+		99CAFCD01DC9EAC7004502AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99CAFCD91DC9EAC7004502AA /* Assets.xcassets in Resources */,
+				99CAFCDC1DC9EAC7004502AA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,24 +536,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		995E93631A634C5100A3D2BF /* Sources */ = {
+		9982284E1DDA684B0088B82F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				995E93921A65F29500A3D2BF /* WhiteView.m in Sources */,
-				995E938F1A65EEB100A3D2BF /* TestEvent.m in Sources */,
-				9A8E46711B585044002DB2DF /* EventLoadingView.m in Sources */,
-				995E936F1A634C5100A3D2BF /* main.m in Sources */,
-				995E938C1A634CB100A3D2BF /* TestUser.m in Sources */,
-				995E936D1A634C5100A3D2BF /* AppDelegate.m in Sources */,
+				99D3995D1DDA74B000498366 /* EventEngine.m in Sources */,
+				99D399571DDA6EF200498366 /* TestUser.m in Sources */,
+				9982285C1DDA684B0088B82F /* ViewController.m in Sources */,
+				998228591DDA684B0088B82F /* main.m in Sources */,
+				998228561DDA684B0088B82F /* AppDelegate.m in Sources */,
+				99D3995A1DDA705D00498366 /* TestEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		995E93751A634C5100A3D2BF /* Sources */ = {
+		99CAFCCE1DC9EAC7004502AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				995E93801A634C5200A3D2BF /* SCKTesterTests.m in Sources */,
+				998260211DDB74FE00C46586 /* WeekViewController.swift in Sources */,
+				99CAFCED1DC9F067004502AA /* EventLoadingView.swift in Sources */,
+				99CAFCEF1DC9F294004502AA /* TableViewController.swift in Sources */,
+				996E96521DE984710056022E /* EditEventViewController.swift in Sources */,
+				99CAFCE41DC9EAEE004502AA /* TestEvent.swift in Sources */,
+				99CAFCF11DC9F2A5004502AA /* EventEngine.swift in Sources */,
+				99CAFCEB1DC9EFBC004502AA /* WhiteView.swift in Sources */,
+				99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */,
+				99CAFCE21DC9EAE5004502AA /* TestUser.swift in Sources */,
+				99CAFCF31DC9F97D004502AA /* DayViewController.swift in Sources */,
+				998260231DDB91AD00C46586 /* DayCalendarPopoverViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,17 +571,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				990207131A5457ED00912DF5 /* SCKWeekView.m in Sources */,
-				99E7D0D11A4B3C3500713F18 /* SCKEventHolder.m in Sources */,
-				9902071E1A55722B00912DF5 /* SCKTextField.m in Sources */,
-				9AA8B8F91B58385600A96C1C /* SCKEventRequest.m in Sources */,
-				9902070B1A5417B100912DF5 /* SCKDayPoint.m in Sources */,
-				99E7D0CC1A4B3B9B00713F18 /* SCKEventView.m in Sources */,
-				9902070F1A542DA300912DF5 /* SCKDayView.m in Sources */,
-				990207071A53692800912DF5 /* SCKUnavailableTimeRange.m in Sources */,
-				99E7D0C11A4AF63F00713F18 /* SCKView.m in Sources */,
-				990207031A535D0400912DF5 /* SCKGridView.m in Sources */,
-				990206FF1A50590D00912DF5 /* SCKEventManager.m in Sources */,
+				99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */,
+				99F1FF8B1DC4E9F80055C3E4 /* SCKDayView.swift in Sources */,
+				99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */,
+				99F1FF8D1DC4F9DD0055C3E4 /* SCKWeekView.swift in Sources */,
+				9982601F1DDB3DAD00C46586 /* SCKEventManaging.swift in Sources */,
+				9997172A1DC3784A009BB046 /* SCKGridView.swift in Sources */,
+				999950971D8EE25A00128669 /* SCKEventView.swift in Sources */,
+				99BA3AC31DBF800E00A6FB33 /* ScheduleKitDefinitions.swift in Sources */,
+				999950991D8F216600128669 /* SCKView.swift in Sources */,
+				999950951D8EB7CE00128669 /* SCKEventHolder.swift in Sources */,
+				999950911D8EB56D00128669 /* SCKEventRequest.swift in Sources */,
+				99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */,
+				9982601C1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift in Sources */,
+				99CAFCF51DCA039F004502AA /* SCKViewController.swift in Sources */,
+				99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,15 +603,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		995E937B1A634C5200A3D2BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 995E93661A634C5100A3D2BF /* SCKTester */;
-			targetProxy = 995E937A1A634C5200A3D2BF /* PBXContainerItemProxy */;
-		};
-		995E93881A634C7000A3D2BF /* PBXTargetDependency */ = {
+		99067A911DDA6B4D00A4E728 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
-			targetProxy = 995E93871A634C7000A3D2BF /* PBXContainerItemProxy */;
+			targetProxy = 99067A901DDA6B4D00A4E728 /* PBXContainerItemProxy */;
+		};
+		99CAFCE81DC9EB0E004502AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
+			targetProxy = 99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */;
 		};
 		99E7D0AF1A4AF3B500713F18 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -601,84 +621,104 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		995E93721A634C5100A3D2BF /* MainMenu.xib */ = {
+		9982285F1DDA684B0088B82F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				995E93731A634C5100A3D2BF /* Base */,
+				998228601DDA684B0088B82F /* Base */,
 			);
-			name = MainMenu.xib;
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		99CAFCDA1DC9EAC7004502AA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				99CAFCDB1DC9EAC7004502AA /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		995E93811A634C5200A3D2BF /* Debug */ = {
+		998228641DDA684B0088B82F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SCKTester/Info.plist;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = "SCKExample-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.SCKTester;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		995E93821A634C5200A3D2BF /* Release */ = {
+		998228651DDA684B0088B82F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = SCKTester/Info.plist;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = "SCKExample-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.SCKTester;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
-		995E93831A634C5200A3D2BF /* Debug */ = {
+		99CAFCDF1DC9EAC7004502AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-					"$(PROJECT_DIR)/SCKTesterTests",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = SCKTesterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.guillemservera.$(PRODUCT_NAME:rfc1034identifier)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = "SCKExample-Swift/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SCKTester.app/Contents/MacOS/SCKTester";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		995E93841A634C5200A3D2BF /* Release */ = {
+		99CAFCE01DC9EAC7004502AA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-					"$(PROJECT_DIR)/SCKTesterTests",
-				);
-				INFOPLIST_FILE = SCKTesterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.guillemservera.$(PRODUCT_NAME:rfc1034identifier)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = "SCKExample-Swift/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SCKTester.app/Contents/MacOS/SCKTester";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -695,8 +735,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -705,6 +747,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -717,7 +760,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -739,8 +782,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
@@ -749,15 +794,17 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -766,8 +813,12 @@
 		99E7D0B81A4AF3B500713F18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -778,14 +829,20 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		99E7D0B91A4AF3B500713F18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -797,12 +854,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		99E7D0BB1A4AF3B500713F18 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -822,6 +881,7 @@
 		99E7D0BC1A4AF3B500713F18 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -837,20 +897,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		995E93851A634C5200A3D2BF /* Build configuration list for PBXNativeTarget "SCKTester" */ = {
+		998228631DDA684B0088B82F /* Build configuration list for PBXNativeTarget "SCKExample-ObjC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				995E93811A634C5200A3D2BF /* Debug */,
-				995E93821A634C5200A3D2BF /* Release */,
+				998228641DDA684B0088B82F /* Debug */,
+				998228651DDA684B0088B82F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		995E93861A634C5200A3D2BF /* Build configuration list for PBXNativeTarget "SCKTesterTests" */ = {
+		99CAFCDE1DC9EAC7004502AA /* Build configuration list for PBXNativeTarget "SCKExample-Swift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				995E93831A634C5200A3D2BF /* Debug */,
-				995E93841A634C5200A3D2BF /* Release */,
+				99CAFCDF1DC9EAC7004502AA /* Debug */,
+				99CAFCE01DC9EAC7004502AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -24,24 +24,11 @@
  *  THE SOFTWARE.
  */
 
+@import Foundation;
 
-@import Cocoa;
 
 //! Project version number for ScheduleKit.
 FOUNDATION_EXPORT double ScheduleKitVersionNumber;
 
 //! Project version string for ScheduleKit.
 FOUNDATION_EXPORT const unsigned char ScheduleKitVersionString[];
-
-#import <ScheduleKit/ScheduleKitDefinitions.h>
-#import <ScheduleKit/SCKEvent.h>
-#import <ScheduleKit/SCKEventHolder.h>
-#import <ScheduleKit/SCKUnavailableTimeRange.h>
-#import <ScheduleKit/SCKTextField.h>
-#import <ScheduleKit/SCKEventManager.h>
-#import <ScheduleKit/SCKEventView.h>
-#import <ScheduleKit/SCKWeekView.h>
-#import <ScheduleKit/SCKDayView.h>
-#import <ScheduleKit/SCKEventRequest.h>
-
-extern NSString * const SCKDefaultsGridViewZoomLevelKey;
