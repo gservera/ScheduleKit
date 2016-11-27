@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         self.name = name;
-        _labelColor = color;
+        _eventColor = color;
     }
     return self;
 }

@@ -15,5 +15,5 @@
                                color:(nonnull NSColor*)color;
 
 @property (nonnull, strong) NSString * name;
-@property (nonatomic, readonly, strong) NSColor * _Nonnull labelColor;
+@property (nonatomic, readonly, strong) NSColor * _Nonnull eventColor;
 @end

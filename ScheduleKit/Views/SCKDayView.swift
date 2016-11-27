@@ -64,14 +64,14 @@ public class SCKDayView: SCKGridView {
         if contentRect.contains(point) {
             return Double((point.y - canvas.minY) / canvas.height)
         }
-        return Double(SCKRelativeTimeLocationNotFound)
+        return SCKRelativeTimeLocationInvalid
     }
     
     override func rectForUnavailableTimeRange(_ rng: SCKUnavailableTimeRange) -> CGRect {
         let canvas = contentRect
         let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: startDate)!
         let sOffset = calculateRelativeTimeLocation(for: sDate)
-        guard sOffset != Double(SCKRelativeTimeLocationNotFound) else {
+        guard sOffset != SCKRelativeTimeLocationInvalid else {
             return CGRect.zero
         }
         let eDate = sharedCalendar.date(bySettingHour: rng.endHour, minute: rng.endMinute, second: 0, of: startDate)!
@@ -79,7 +79,7 @@ public class SCKDayView: SCKGridView {
         var yOrigin: CGFloat, yLength: CGFloat
         
         yOrigin = canvas.minY + CGFloat(sOffset) * canvas.height
-        if eOffset != Double(SCKRelativeTimeLocationNotFound) {
+        if eOffset != SCKRelativeTimeLocationInvalid {
             yLength = CGFloat(eOffset-sOffset) * canvas.height
         } else {
             yLength = frame.maxY - yOrigin
@@ -99,10 +99,10 @@ public class SCKDayView: SCKGridView {
             let oldFrame = eventView.frame
             
             var newFrame = CGRect.zero
-            newFrame.origin.y = canvas.minY + canvas.height * CGFloat(eventView.eventHolder.cachedRelativeStart)
-            newFrame.size.height = canvas.height * CGFloat(eventView.eventHolder.cachedRelativeLength)
+            newFrame.origin.y = canvas.minY + canvas.height * CGFloat(eventView.eventHolder.relativeStart)
+            newFrame.size.height = canvas.height * CGFloat(eventView.eventHolder.relativeLength)
             newFrame.size.width = canvas.width / CGFloat(eventView.eventHolder.conflictCount)
-            newFrame.origin.x = canvas.minX + newFrame.width * CGFloat(eventView.eventHolder.conflictIndex - 1)
+            newFrame.origin.x = canvas.minX + newFrame.width * CGFloat(eventView.eventHolder.conflictIndex)
             
             if oldFrame != newFrame {
                 eventView.frame = newFrame

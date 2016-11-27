@@ -19,7 +19,6 @@ class EditEventViewController: NSViewController {
     }
     
     @IBAction func usePopUpChanged(_ sender: NSPopUpButton) {
-        let currentUser = event.user
         let targetUser = EventEngine.shared.users[sender.indexOfSelectedItem]
         event.willChangeValue(forKey: "user")
         event.user = targetUser

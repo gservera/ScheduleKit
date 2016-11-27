@@ -24,148 +24,223 @@
  *  THE SOFTWARE.
  */
 
-import Foundation
+import Cocoa
 
-let SCKRelativeTimeLocationNotFound = NSNotFound
-
-public typealias SCKRelativeLength = Double
-
-struct SCKEventChangeHolder {
-    let keyPath: String
-    let object: SCKEvent
-    let change: [NSKeyValueChangeKey:Any?]
-}
-
-/// Instances of this class work in conjunction with an `SCKEventView` and represent
-/// an object conforming to the `SCKEvent` protocol.
+/// Instances of this class work in conjunction with an `SCKEventView` and 
+/// represent an object conforming to the `SCKEvent` protocol. These objects are
+/// automatically created by the `SCKViewController` reloadData methods.
 internal final class SCKEventHolder: NSObject {
     
-    internal var uuid = UUID()
-
-    /** Indicates wether cached relative values are valid so drawing is safe.*/
+    /// Initializes a new instance representing a given event object associated
+    /// with a concrete `SCKEventView`, managed by the same controller. Returns
+    /// `nil` when the represented object's scheduled date or duration cannot
+    /// be represented in the controller's schedule view date bounds.
+    /// - Parameters:
+    ///   - event: The represented object.
+    ///   - view: The event view for this instance. Must have been added to a 
+    ///           view hierarchy at this point.
+    ///   - controller: The `SCKViewController` instance managing this holder.
+    ///
+    init?(event: SCKEvent, view: SCKEventView, controller c: SCKViewController) {
+        representedObject = event
+        
+        cachedDuration = event.duration
+        cachedScheduledDate = event.scheduledDate
+        cachedTitle = event.title
+        cachedUser = event.user
+        
+        eventView = view
+        scheduleView = view.superview as? SCKView
+        controller = c
+        
+        super.init()
+        
+        recalculateRelativeValues()
+        
+        guard isReady else {
+            return nil
+        }
+        
+        let obj = representedObject as AnyObject
+        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), options: [.new,.prior], context: nil)
+        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.duration), options: [.new,.prior], context: nil)
+        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.title), options: [.new], context: nil)
+        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.user), options: [.new], context: nil)
+    }
+    
+    deinit {
+        // We stop observing represented object changes at this point.
+        let o = representedObject as AnyObject
+        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), context: nil)
+        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.duration), context: nil)
+        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.title), context: nil)
+        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.user), context: nil)
+    }
+    
+    
+    //MARK: - Object state
+    
+    /// The event object backed by this event holder.
+    let representedObject: SCKEvent
+    
+    /// A reference to the `SCKEventView` associated with this event holder.
+    private(set) weak var eventView: SCKEventView?
+    
+    /// A reference the `SCKView` displaying the event.
+    private weak var scheduleView: SCKView?
+    
+    /// A convenience reference to the controller that created this holder.
+    private weak var controller: SCKViewController?
+    
+    
+    // MARK: Cached properties
+    
+    // These properties ensure the integrity of the layout process by keeping
+    // their values until the layout process has ended, even if a change from 
+    // represented object is observed.
+    
+    /// A local copy of the represented object's duration. It is automatically
+    /// uppdated when observed changes from the represented object are processed.
+    internal var cachedDuration: Int
+    
+    /// A local copy of the represented object's date. It is automatically
+    /// uppdated when observed changes from the represented object are processed.
+    internal var cachedScheduledDate: Date
+    
+    /// A local copy of the represented object's title. It is automatically
+    /// uppdated when observed changes from the represented object are processed.
+    internal var cachedTitle: String
+    
+    /// A local copy of the represented object's user. It is automatically
+    /// uppdated when observed changes from the represented object are processed.
+    /// - Note: We observe the user instead of her color directly to make sure
+    ///         the user changes trigger a notification.
+    internal weak var cachedUser: SCKUser?
+    
+    
+    // MARK: Relative properties
+    
+    /// The relative start time of the event in the `scheduleView` date bounds.
+    internal var relativeStart = SCKRelativeTimeLocationInvalid
+    
+    /// The relative end time of the event in the `scheduleView` date bounds.
+    internal var relativeEnd = SCKRelativeTimeLocationInvalid
+    
+    /// The relative duration of the event in the `scheduleView` date bounds.
+    internal var relativeLength = SCKRelativeTimeLengthInvalid
+    
+    /// Indicates whether relative values are valid or not, thus if layout is safe.
     private(set) var isReady: Bool = false
-    private(set) var isLocked: Bool = false
-    private(set) var representedObject: SCKEvent
-    private(set) weak var owningView: SCKEventView?
     
-    // Cached values
-    public internal(set) var cachedRelativeStart: SCKRelativeTimeLocation = 0.0
-    public internal(set) var cachedRelativeEnd: SCKRelativeTimeLocation = 0.0
-    public internal(set) var cachedRelativeLength: SCKRelativeLength = 0
-    public internal(set) var cachedUserLabelColor: ColorClass?
-    public internal(set) var cachedTitle: String
-    public internal(set) var cachedScheduledDate: Date
-    public internal(set) var cachedDuration: Int
     
-    /// A set to track holders in conflict before a change in either @c representedObject 's @c scheduledDate or @c duration takes place, since that info won't be accessible afterwards. Set when a prior KVO notification for these properties is triggered and set back to @c nil after KVO parsing. @discussion We use NSSet instead of NSArray to prevent objects being included multiple times when combining with conflicts after the change.
+    /// Invalidates the holder's cached properties and recalculates them by
+    /// comparin the values from the represented object's `duration` and
+    /// `scheduledDate` properties and the schedule view date bounds.
+    /// This method might be invoked automatically:
+    /// - When the `SCKEventHolder` object is initialized.
+    /// - Whenever `scheduledDate` and/or `duration` change if unlocked.
+    /// - When the schedule view ends a dragging operation.
+    /// - On already existing event holders during a reload data phase (such as
+    ///   changing the day count in a week view).
+    ///
+    /// - Note: This method is not called automatically when the schedule view
+    ///         date bounds change, since the respective reloadData method is
+    ///         called instead.
+    internal func recalculateRelativeValues() {
+        // If view is not set, then do nothing.
+        guard let rootView = scheduleView else { return }
+        // Invalidate state.
+        isReady = false
+        relativeStart = SCKRelativeTimeLocationInvalid
+        relativeEnd = SCKRelativeTimeLocationInvalid
+        relativeLength = 0
+        // Calculate new start
+        relativeStart = rootView.calculateRelativeTimeLocation(for: cachedScheduledDate)
+        if relativeStart != SCKRelativeTimeLocationInvalid {
+            if cachedDuration > 0 {
+                let inSeconds = SCKRelativeTimeLength(cachedDuration * 60)
+                let endDate = cachedScheduledDate.addingTimeInterval(inSeconds)
+                relativeEnd = rootView.calculateRelativeTimeLocation(for: endDate)
+                if relativeEnd == SCKRelativeTimeLocationInvalid {
+                    relativeEnd = 1.0;
+                }
+                relativeLength = relativeEnd - relativeStart
+                isReady = true
+            }
+        }
+    }
+    
+    
+    // MARK: - Conflict tracking
+    
+    /// The number of events in conflict with this. Includes self, so min is 1.
+    internal var conflictCount: Int = 1
+
+    /// The position of this event among the events in conflict (zero based).
+    internal var conflictIndex: Int = 0
+    
+    /// When observing represented object changes, the events in conflict whith
+    /// this one before the actual change takes place.
     private var previousConflicts: Set<SCKEventHolder> = []
     
-    /// Indicates wether we're observing changes in represented object or not.
-    private var isObserving: Bool = false
     
-    /// A weak reference to @c representedObject's user (to safely parse labelColor changes)
-    private(set) weak var cachedUser: SCKUser?
+    // MARK: - Change observing
     
-    /// A convenience reference to the event manager.
-    private weak var owner: SCKViewController?
+    /// A wrapper around a deferred change from the `representedObject`.
+    private struct DelayedChange {
+        /// The changed key path.
+        let keyPath: String
+        /// The observed change dictionary.
+        let change: [NSKeyValueChangeKey:Any?]
+    }
     
-    /// A convenience reference to owningView's superview.
-    private weak var rootView: SCKView?
-    
-    /// The number of times @c lock: has been called over @c unlock:
-    private var lockBalance = 0
-    
-    /// Set to YES when dragging to prevent observing our own changes.
+    /// Set to `true` when observed changes observed from `representedObject`
+    /// should be ignored (either when the schedule view itself is making the 
+    /// change or when the represented object is not valid anymore).
     private var shouldIgnoreChanges: Bool = false
     
-    /// Set to YES if we recieve changes while the event holder is locked.
-    private var changedWhileLocked: Bool = false
-    
-    /// The array of changes observed while the object was locked.
-    private var changesWhileLocked: [SCKEventChangeHolder]?
-    
-    
-    public var conflictIndex: Int = 1
-    public var conflictCount: Int = 1
-    
-    
-    
-    /**
-     *  SCKEventHolder designated initializer. Sets up a new instance
-     *  representing any object conforming to the @c SCKEvent protocol
-     *  for the specified @c SCKEventView.
-     *
-     *  @param e The represented object. Can't be nil.
-     *  @param v The owning view for this instance. Must have been already
-     *  added to a view hierarchy. Can't be nil. */
-    init(event: SCKEvent, view: SCKEventView, controller: SCKViewController) {
-        cachedUser = event.user
-        cachedUserLabelColor = event.user.labelColor
-        cachedTitle = event.title
-        cachedScheduledDate = event.scheduledDate
-        cachedDuration = event.duration
-        owningView = view
-        rootView = view.superview as? SCKView
-        self.owner = controller
-        representedObject = event
-        super.init()
-        recalculateRelativeValues()
-        assert(isReady, "Should be ready")
-        startObservingRepresentedObject()
+    /// Begins ignoring changes observed from `representedObject`. This method is
+    /// called by the event view when commiting a dragging operation to avoid
+    /// observing its own changes. It's also called before deallocation when the
+    /// controller discards it during a reload data phase.
+    internal func stopObservingRepresentedObjectChanges() {
+        shouldIgnoreChanges = true
     }
     
-    /** We stop observing @c representedObject's properties at this point. */
-    deinit {
-        stopObservingRepresentedObjectChanges()
-    }
-    
-    /** Stops observing @c representedObject properties. Called from @c dealloc: */
-    internal func stopObservingRepresentedObject() {
-        if isObserving {
-            let obj = representedObject as AnyObject
-            obj.removeObserver(self, forKeyPath: #keyPath(SCKEvent.scheduledDate))
-            obj.removeObserver(self, forKeyPath: #keyPath(SCKEvent.duration))
-            obj.removeObserver(self, forKeyPath: #keyPath(SCKEvent.title))
-            obj.removeObserver(self, forKeyPath: #keyPath(SCKEvent.user))
-            isObserving = false
-        }
-    }
-    
-    /** Begins or resumes observing @c representedObject properties. Called during initialization */
-    internal func startObservingRepresentedObject() {
-        if !isObserving {
-            let obj = representedObject as AnyObject
-            obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), options: [.new,.prior], context: nil)
-            obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.duration), options: [.new,.prior], context: nil)
-            obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.title), options: [.new], context: nil)
-            obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.user), options: [.new], context: nil)
-            isObserving = true
-        }
+    /// Stops ignoring changes observed from `representedObject`. This method is
+    /// called by the event view after commiting a dragging operation.
+    internal func resumeObservingRepresentedObjectChanges() {
+        shouldIgnoreChanges = false
     }
     
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change c: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard let o = object as? SCKEvent, let change = c, let keyPath = keyPath, let rootView = self.rootView else {
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change c: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        // Safety assertions
+        guard !shouldIgnoreChanges else {
             return
         }
-        assert(o === representedObject, "Recieved a KVO notification from an unexpected object")
-        if change[NSKeyValueChangeKey.notificationIsPriorKey] != nil {
+        guard let o = object as? SCKEvent, let change = c,
+            let keyPath = keyPath, let eventView = eventView,
+            let rootView = scheduleView, let controller = controller else {
+            return
+        }
+        assert(o === representedObject, "Unexpected KVO notification.")
+        
+        
+        if change[.notificationIsPriorKey] != nil {
             // Track conflicts before value change (KVO-prior)
-            guard !shouldIgnoreChanges else {
-                return
-            }
-            let conflictsBefore = owner?.resolvedConflicts(for: self)
-            previousConflicts = Set(conflictsBefore ?? [])
-        } else { //Notification is not prior
-            if isLocked && !shouldIgnoreChanges {
-                changedWhileLocked = true
-                if changesWhileLocked == nil {
-                    changesWhileLocked = []
-                }
-                changesWhileLocked?.append(SCKEventChangeHolder(keyPath: keyPath, object: o, change: change))
-                return
-            } else if isLocked && shouldIgnoreChanges {
-                // Change was made by the event view, we'll ignore it.
+            previousConflicts = Set(controller.resolvedConflicts(for: self))
+        }
+        
+        else {
+            //Notification is not prior. We'll cache it if frozen.
+            guard !isFrozen else {
+                let cachedChange = DelayedChange(keyPath: keyPath, change: change)
+                changesWhileFrozen.append(cachedChange)
                 return
             }
             
@@ -174,125 +249,93 @@ internal final class SCKEventHolder: NSObject {
                 let newDuration = (change[.newKey] as! NSNumber).intValue
                 cachedDuration = newDuration
                 recalculateRelativeValues()
-                let conflictsNow = owner?.resolvedConflicts(for: self)
-                let updatingHolders = previousConflicts.union(Set(conflictsNow ?? []))
-                let updatingViews = updatingHolders.map {$0.owningView!}
+                let conflictsNow = Set(controller.resolvedConflicts(for: self))
+                let updatingHolders = previousConflicts.union(conflictsNow)
+                let updatingViews = updatingHolders.map {$0.eventView!}
                 rootView.invalidateFrames(for: updatingViews)
             case #keyPath(SCKEvent.scheduledDate):
                 let newDate = change[.newKey] as! Date
                 cachedScheduledDate = newDate
+                recalculateRelativeValues()
                 if newDate < rootView.startDate || newDate > rootView.endDate {
-                    owner?.reloadData()
+                    // Holder is now invalid, reload data will get rid of it.
+                    controller._internalReloadData()
                 } else {
-                    recalculateRelativeValues()
-                    let conflictsNow = owner?.resolvedConflicts(for: self)
-                    let updatingHolders = previousConflicts.union(Set(conflictsNow ?? []))
-                    let updatingViews = updatingHolders.map {$0.owningView!}
+                    let conflictsNow = Set(controller.resolvedConflicts(for: self))
+                    let updatingHolders = previousConflicts.union(conflictsNow)
+                    let updatingViews = updatingHolders.map {$0.eventView!}
                     rootView.invalidateFrames(for: updatingViews)
                 }
             case #keyPath(SCKEvent.title):
-                cachedTitle = (change[.newKey] as? String) ?? ""
-                owningView?.innerLabel.stringValue = cachedTitle 
+                cachedTitle = change[.newKey] as? String ?? ""
+                eventView.innerLabel.stringValue = cachedTitle
             case #keyPath(SCKEvent.user):
                 if let newUser = change[.newKey] as? SCKUser {
-                    if cachedUser != nil && cachedUser! !== newUser {
+                    if let oldUser = cachedUser, oldUser === newUser,
+                           rootView.colorMode == .byEventOwner {
+                        if newUser.eventColor != eventView.backgroundColor {
+                            eventView.needsDisplay = true
+                        }
+                    } else {
                         cachedUser = newUser
-                        cachedUserLabelColor = newUser.labelColor
-                        owningView?.needsDisplay = true
+                        eventView.needsDisplay = true
                     }
                 }
-            default:
-                return
+            default: break
             }
-            
         }
     }
     
+    // MARK: - State freezing
     
-    /**
-     *  Configures this instance to ignore observed @c representedObject changes
-     *  until the @c -resumeObservingRepresentedObjectChanges method is called.
-     *  This method gets called before changes triggered by the @c owningView in
-     *  order to prevent observing of our own changes. Don't call this method
-     *  yourself.
-     */
-    public func stopObservingRepresentedObjectChanges() {
-        shouldIgnoreChanges = true
-    }
+    /// Indicates whether the event holder is frozen or not. When an instance is
+    /// frozen, it works as a snapshot of the instance's state when it was frozen,
+    /// so its cached values don't get updated when the corresponding properties
+    /// in the represented object change.
+    ///
+    /// Nevertheless, changes in represented object are still observed in frozen
+    /// objects, with the difference that they're not parsed until the
+    /// `unfreeze()` method is called.
+    ///
+    /// This is particularly useful and so invoked automatically during layout,
+    /// where cached values should remain the same during the whole process.
+    private(set) var isFrozen: Bool = false
     
-    /**
-     *  Configures this instance to resume tracking observed @c representedObject
-     *  changes after a previous @c -stopObservingRepresentedObjectChanges call.
-     *  This method gets called after changes triggered by the @c owningView.
-     *  Don't call this method yourself.
-     */
-    public func resumeObservingRepresentedObjectChanges() {
-        shouldIgnoreChanges = false
-    }
     
-    /**
-     *  Begins delaying updates from represented object. Called by SCKView
-     *  on every @c SCKEventHolder object at the beginning of a relayout or
-     *  drag to prevent conflict-related errors in case these properties
-     *  change during the process. Also called by SCKEventManager before
-     *  invalidating an instance. Don't call this method yourself. */
-    func lock() {
-        lockBalance += 1
-        assert(lockBalance == 1, "Overlocked (\(lockBalance) times)")
-        changedWhileLocked = false
-        isLocked = true
-    }
+    /// The changes observed while the object was frozen.
+    private var changesWhileFrozen: [DelayedChange] = []
     
-    /**
-     *  Stops delaying updates from represented object. Called by SCKView
-     *  on every @c SCKEventHolder item at the end of a relayout or drag
-     *  to prevent conflict-related errors in case these properties change
-     *  during the process. Don't call this method yourself.
-     *  @discussion In the case any change was observed while the event
-     *  holder was locked, it finally will get applied when this method is
-     *  called.*/
-    func unlock() {
-        lockBalance -= 1
-        assert(lockBalance == 0, "Overlocked (\(lockBalance) times)")
-        isLocked = false
-        if let changes = changesWhileLocked {
-            for change in changes {
-                observeValue(forKeyPath: change.keyPath, of: change.object, change: change.change, context: nil)
-            }
-            changesWhileLocked = nil
-        }
-    }
     
-    /**
-     *  Recalculates @c cachedRelativeStart, @c cachedRelativeEnd and @c
-     *  cachedRelativeLength according to the values set for properties
-     *  @c duration and @c scheduledDate, based on the owning view limits
-     *  (@c startDate and @c endDate). This  is called automatically:
-     *  - Immediatly after initialization.
-     *  - Whenever @c scheduledDate and/or @c duration change if unlocked.
-     *  - When the owning view ends either content or duration dragging.
-     *  - NOT when owningView's @c startDate or @endDate change, because
-     *    SCKEventManager's @c reloadData gets called instead. */
-    public func recalculateRelativeValues() {
-        guard let rootView = rootView else {
+    /// Snapshots the holder's relative properties and begins caching subsequent
+    /// changes observed from the represented object until `unfreeze()` is called.
+    /// Called by the schedule view during relayout and dragging operations to
+    /// preserve data integrity.
+    internal func freeze() {
+        guard !isFrozen else {
+            print("Warning: Called freeze() on an already frozen holder.")
             return
         }
-        isReady = false
-        cachedRelativeStart = Double(NSNotFound)
-        cachedRelativeEnd = Double(NSNotFound)
-        cachedRelativeLength = 0
-        cachedRelativeStart = rootView.calculateRelativeTimeLocation(for: cachedScheduledDate)
-        if cachedRelativeStart != Double(NSNotFound) {
-            if cachedDuration > 0 {
-                let inSeconds = cachedDuration * 60
-                let endDate = cachedScheduledDate.addingTimeInterval(Double(inSeconds))
-                cachedRelativeEnd = rootView.calculateRelativeTimeLocation(for: endDate)
-                if cachedRelativeEnd == Double(NSNotFound) {
-                    cachedRelativeEnd = 1.0;
-                }
-                cachedRelativeLength = cachedRelativeEnd - cachedRelativeStart
-                isReady = true
-            }
-        }
+        isFrozen = true
     }
+    
+    
+    /// Stops caching changes observed from the represented object and processes
+    /// any pending changes cached while the object was frozen. Called by the 
+    /// schedule view during relayout and dragging operations to preserve data 
+    /// integrity.
+    internal func unfreeze() {
+        guard isFrozen else {
+            print("Warning: Called unfreeze() on an already unfrozen holder.")
+            return
+        }
+        isFrozen = false
+        
+        // Process pending changes
+        for c in changesWhileFrozen {
+            observeValue(forKeyPath: c.keyPath, of: representedObject,
+                         change: c.change, context: nil)
+        }
+        changesWhileFrozen = []
+    }
+    
 }

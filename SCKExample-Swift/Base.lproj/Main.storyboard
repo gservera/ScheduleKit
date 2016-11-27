@@ -1204,8 +1204,8 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="2B4-EQ-Iis" name="textColor" keyPath="objectValue.user.labelColor" id="V1q-RG-B3t"/>
                                                                         <binding destination="2B4-EQ-Iis" name="value" keyPath="objectValue.user.name" id="3Le-Ct-0PC"/>
+                                                                        <binding destination="2B4-EQ-Iis" name="textColor" keyPath="objectValue.user.eventColor" id="AnG-WO-CRo"/>
                                                                     </connections>
                                                                 </textField>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v81-f7-B6L">

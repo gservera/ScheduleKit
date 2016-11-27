@@ -8,8 +8,11 @@
 
 import Cocoa
 
+
+
 @objc public protocol SCKGridViewDelegate: class {
-    @objc optional func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange]
+    @objc(unavailableTimeRangesForGridView:) optional func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange]
+    @objc(colorForEventKind:inGridView:) optional func color(for eventKindValue: Int, in gridView: SCKGridView) -> NSColor
 }
 
 
@@ -77,12 +80,12 @@ public class SCKGridView: SCKView {
                 continue
             }
             let dayLabel = commonLabel()
-            dayLabel.textColor = ColorClass.darkGray
+            dayLabel.textColor = NSColor.darkGray
             dayLabel.font = NSFont.systemFont(ofSize: 14.0)
             dayLabels.append(dayLabel)
             
             let monthLabel = commonLabel()
-            monthLabel.textColor = ColorClass.lightGray
+            monthLabel.textColor = NSColor.lightGray
             monthLabel.font = NSFont.systemFont(ofSize: 12.0)
             monthLabel.isHidden = true
             monthLabels.append(monthLabel)
@@ -133,14 +136,14 @@ public class SCKGridView: SCKView {
             }
             let hourLabel = commonLabel()
             hourLabel.stringValue = "\(hour):00"
-            hourLabel.textColor = ColorClass.darkGray
+            hourLabel.textColor = NSColor.darkGray
             hourLabel.font = NSFont.systemFont(ofSize: 11.0)
             hourLabel.sizeToFit()
             hourLabels[hour] = hourLabel
             
             let halfHourLabel = commonLabel()
             halfHourLabel.stringValue = "\(hour):30  -"
-            halfHourLabel.textColor = ColorClass.lightGray
+            halfHourLabel.textColor = NSColor.lightGray
             halfHourLabel.font = NSFont.systemFont(ofSize: 10.0)
             halfHourLabel.sizeToFit()
             halfHourLabel.isHidden = true
@@ -150,7 +153,7 @@ public class SCKGridView: SCKView {
                 if min != 30 {
                 let quarterLabel = commonLabel()
                 quarterLabel.stringValue = "\(firstHour+hour):\(min)  -"
-                quarterLabel.textColor = ColorClass.lightGray
+                quarterLabel.textColor = NSColor.lightGray
                 quarterLabel.font = NSFont.systemFont(ofSize: 10.0)
                 quarterLabel.sizeToFit()
                 quarterLabel.isHidden = true
@@ -162,7 +165,7 @@ public class SCKGridView: SCKView {
                 if min != 30 {
                 let tenMinuteLabel = commonLabel()
                 tenMinuteLabel.stringValue = "\(firstHour+hour):\(min)  -"
-                tenMinuteLabel.textColor = ColorClass.lightGray
+                tenMinuteLabel.textColor = NSColor.lightGray
                 tenMinuteLabel.font = NSFont.systemFont(ofSize: 10.0)
                 tenMinuteLabel.sizeToFit()
                 tenMinuteLabel.isHidden = true
@@ -273,7 +276,7 @@ public class SCKGridView: SCKView {
     
     private func drawHourDelimiters() {
         let canvas = contentRect
-        ColorClass(deviceWhite: 0.95, alpha: 1.0).set()
+        NSColor(deviceWhite: 0.95, alpha: 1.0).set()
         for hour in 0..<hourCount {
             let r = CGRect(x: canvas.minX-8.0,
                            y: canvas.minY + CGFloat(hour) * hourHeight - 0.4,
@@ -287,7 +290,7 @@ public class SCKGridView: SCKView {
         let canvas = CGRect(x: kHourLabelWidth, y: kDayLabelHeight,
                             width: frame.width - kHourLabelWidth, height: frame.height - kDayLabelHeight)
         let dayWidth = canvas.width / CGFloat(dayCount)
-        ColorClass(deviceWhite: 0.95, alpha: 1.0).set()
+        NSColor(deviceWhite: 0.95, alpha: 1.0).set()
         for day in 0..<dayCount {
             let r = CGRect(x: canvas.minX + CGFloat(day) * dayWidth,
                            y: canvas.minY,
@@ -298,7 +301,7 @@ public class SCKGridView: SCKView {
     }
     
     private func drawUnavailableTimeRanges() {
-        ColorClass(red: 0.925, green: 0.942, blue: 0.953, alpha: 1.0).set()
+        NSColor(red: 0.925, green: 0.942, blue: 0.953, alpha: 1.0).set()
         for range in unavailableTimeRanges {
             NSRectFill(rectForUnavailableTimeRange(range))
         }
@@ -311,7 +314,7 @@ public class SCKGridView: SCKView {
         let elapsedMinutes = Double(components.hour!-firstHour) * 60.0 + Double(components.minute!)
         let yOrigin = canvas.minY + canvas.height * CGFloat(elapsedMinutes / minuteCount)
         
-        ColorClass.red.setFill()
+        NSColor.red.setFill()
         NSRectFill(CGRect(x: canvas.minX, y: yOrigin-0.25, width: canvas.width, height: 0.5))
         let circle = NSBezierPath(ovalIn: CGRect(x: canvas.minX-2.0, y: yOrigin-2.0, width: 4.0, height: 4.0))
         circle.fill()
@@ -321,11 +324,11 @@ public class SCKGridView: SCKView {
         guard let dV = eventViewBeingDragged else {return}
         
         if colorMode == .byEventKind {
-            SCKEventView.colors[dV.eventHolder.representedObject.eventType].setFill()
-        } else if let cachedUserColor = dV.eventHolder.cachedUserLabelColor {
+            delegate?.color?(for: dV.eventHolder.representedObject.eventKind, in: self).setFill()
+        } else if let cachedUserColor = dV.eventHolder.cachedUser?.eventColor {
             cachedUserColor.setFill()
         } else {
-            ColorClass.darkGray.setFill()
+            NSColor.darkGray.setFill()
         }
     
         func fill(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
@@ -347,7 +350,7 @@ public class SCKGridView: SCKView {
         let dayWidth = canvas.width / CGFloat(dayCount)
         let offsetPerDay = 1.0/Double(dayCount)
         let startOffset = relativeTimeLocation(for: CGPoint(x: dragFrame.midX, y: dragFrame.minY))
-        if startOffset != Double(SCKRelativeTimeLocationNotFound) {
+        if startOffset != SCKRelativeTimeLocationInvalid {
             fill(canvas.minX+dayWidth*CGFloat(trunc(startOffset/offsetPerDay)),
                  canvas.minY,
                  dayWidth,
@@ -361,7 +364,7 @@ public class SCKGridView: SCKView {
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
             
             let attrs = [
-                NSForegroundColorAttributeName: ColorClass.darkGray,
+                NSForegroundColorAttributeName: NSColor.darkGray,
                 NSFontAttributeName: NSFont.systemFont(ofSize: 14.0)
             ]
             
@@ -538,7 +541,7 @@ public class SCKGridView: SCKView {
         let idx = conflicts.index(where: { (tested) -> Bool in
             return (tested === eventView.eventHolder)
         }) ?? 0
-        eventView.eventHolder.conflictIndex = idx + 1
+        eventView.eventHolder.conflictIndex = idx 
         super.invalidateFrame(for: eventView)
     }
     

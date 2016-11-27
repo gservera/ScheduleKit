@@ -511,11 +511,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "275"
-            endingLineNumber = "275"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "drawHourDelimiters()"
             landmarkType = "7">
          </BreakpointContent>
@@ -527,11 +527,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
             landmarkName = "layout()"
             landmarkType = "7">
          </BreakpointContent>
@@ -543,11 +543,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "viewDidMoveToWindow()"
             landmarkType = "7">
          </BreakpointContent>
@@ -559,11 +559,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "500429663.902655"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "SCKGridView"
             landmarkType = "3">
          </BreakpointContent>
@@ -575,11 +575,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "383"
-            endingLineNumber = "383"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -591,13 +591,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Model/SCKEventHolder.swift"
-            timestampString = "500845105.255682"
+            timestampString = "501950242.314714"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
-            landmarkName = "recalculateRelativeValues()"
-            landmarkType = "7">
+            startingLineNumber = "295"
+            endingLineNumber = "295">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -607,11 +605,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKView.swift"
-            timestampString = "500929510.411358"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "calculateRelativeTimeLocation(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -623,11 +621,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKEventView.swift"
-            timestampString = "501840922.219462"
+            timestampString = "501950495.068365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "viewDidMoveToWindow()"
             landmarkType = "7">
          </BreakpointContent>
@@ -639,11 +637,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKEventView.swift"
-            timestampString = "501840466.252005"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "SCKEventView"
             landmarkType = "3">
          </BreakpointContent>
@@ -655,61 +653,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKTextField.swift"
-            timestampString = "499797430.853749"
+            timestampString = "501871088.011895"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "drawingRect(forBounds:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ScheduleKit/Model/SCKEventHolder.swift"
-            timestampString = "500845105.255682"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "observeValue(forKeyPath:of:change:context:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ScheduleKit.SCKEventHolder.observeValue (forKeyPath : Swift.Optional&lt;Swift.String&gt;, of : Swift.Optional&lt;Any&gt;, change : Swift.Optional&lt;Swift.Dictionary&lt;__C.NSKeyValueChangeKey, Any&gt;&gt;, context : Swift.Optional&lt;Swift.UnsafeMutableRawPointer&gt;) -&gt; ()"
-                  moduleName = "ScheduleKit"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKit/Model/SCKEventHolder.swift"
-                  timestampString = "501847717.86781"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "103">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "ScheduleKit.SCKEventHolder.observeValue (forKeyPath : Swift.Optional&lt;Swift.String&gt;, of : Swift.Optional&lt;Any&gt;, change : Swift.Optional&lt;Swift.Dictionary&lt;__C.NSKeyValueChangeKey, Any&gt;&gt;, context : Swift.Optional&lt;Swift.UnsafeMutableRawPointer&gt;) -&gt; ()"
-                  moduleName = "ScheduleKit"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKit/Model/SCKEventHolder.swift"
-                  timestampString = "501847717.869685"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "481">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -863,11 +813,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
+            startingLineNumber = "507"
+            endingLineNumber = "507"
             landmarkName = "viewWillMove(toSuperview:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -879,11 +829,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "499"
-            endingLineNumber = "499"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
             landmarkName = "viewWillMove(toSuperview:)"
             landmarkType = "7">
             <Locations>
@@ -927,11 +877,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "500"
-            endingLineNumber = "500"
+            startingLineNumber = "503"
+            endingLineNumber = "503"
             landmarkName = "viewWillMove(toSuperview:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -943,11 +893,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790118.850185"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "504"
+            endingLineNumber = "504"
             landmarkName = "viewWillMove(toSuperview:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -991,11 +941,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKWeekView.swift"
-            timestampString = "501790601.460129"
+            timestampString = "501942548.524966"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "readDefaultsFromDelegate()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1007,11 +957,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790454.35377"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
             landmarkName = "layout()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1023,11 +973,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "501790487.675835"
+            timestampString = "501851087.683151"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "409"
+            endingLineNumber = "409"
             landmarkName = "layout()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1039,11 +989,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/EditEventViewController.swift"
-            timestampString = "501845957.578511"
+            timestampString = "501859122.047565"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
             landmarkName = "usePopUpChanged(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1061,22 +1011,6 @@
             startingLineNumber = "47"
             endingLineNumber = "47"
             landmarkName = "changeColorMode(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ScheduleKit/Model/SCKEventHolder.swift"
-            timestampString = "501847871.610479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
-            landmarkName = "observeValue(forKeyPath:of:change:context:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1158,6 +1092,54 @@
             endingLineNumber = "48"
             landmarkName = "observeValue(forKeyPath:of:change:context:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScheduleKit/Views/SCKWeekView.swift"
+            timestampString = "501942263.847699"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "readDefaultsFromDelegate()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScheduleKit.SCKWeekView.readDefaultsFromDelegate () -&gt; ()"
+                  moduleName = "ScheduleKit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKit/Views/SCKWeekView.swift"
+                  timestampString = "501942549.224288"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "825">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScheduleKit.SCKWeekView.readDefaultsFromDelegate () -&gt; ()"
+                  moduleName = "ScheduleKit"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKit/Views/SCKWeekView.swift"
+                  timestampString = "501942549.226143"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "1321">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

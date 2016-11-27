@@ -9,10 +9,10 @@
 import Cocoa
 
 @objc public protocol SCKWeekViewDelegate: SCKGridViewDelegate {
-    func dayStartHour(for weekView: SCKWeekView) -> Int
-    func dayEndHour(for weekView: SCKWeekView) -> Int
+    @objc(dayStartHourForWeekView:) func dayStartHour(for weekView: SCKWeekView) -> Int
+    @objc(dayEndHourForWeekView:) func dayEndHour(for weekView: SCKWeekView) -> Int
     
-    @objc optional func dayCount(for weekView: SCKWeekView) -> Int
+    @objc(dayCountForWeekView:) optional func dayCount(for weekView: SCKWeekView) -> Int
 }
 
 public class SCKWeekView: SCKGridView {
@@ -94,6 +94,8 @@ public class SCKWeekView: SCKGridView {
                 for holder in controller.eventHolders {
                     holder.recalculateRelativeValues()  
                 }
+                // Invalidate would lead to crash on asynchronous events (holders not ready)
+                return
             }
         }
         invalidateFrameForAllEventViews()
@@ -105,14 +107,14 @@ public class SCKWeekView: SCKGridView {
         let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: startDate)!
         let sOffset = calculateRelativeTimeLocation(for: sDate)
         
-        if sOffset != Double(SCKRelativeTimeLocationNotFound) {
+        if sOffset != SCKRelativeTimeLocationInvalid {
             let endSeconds = rng.endMinute * 60 + rng.endHour * 3600
             let startSeconds = rng.startMinute * 60 + rng.startHour * 3600
             let eDate = sDate.addingTimeInterval(Double(endSeconds - startSeconds))
             let eOffset = calculateRelativeTimeLocation(for: eDate)
             let yOrigin = yFor(hour: rng.startHour, minute: rng.startMinute)
             var yLength: CGFloat
-            if eOffset != Double(SCKRelativeTimeLocationNotFound) {
+            if eOffset != SCKRelativeTimeLocationInvalid {
                 yLength = yFor(hour: rng.endHour, minute: rng.endMinute) - yOrigin
             } else {
                 yLength = frame.maxY - yOrigin
@@ -136,7 +138,7 @@ public class SCKWeekView: SCKGridView {
             let minuteOffset = offsetPerMin * Double(minute)
             return dayOffset + offsetPerHour * Double(firstHour) + minuteOffset
         }
-        return Double(SCKRelativeTimeLocationNotFound)
+        return SCKRelativeTimeLocationInvalid
     }
     
     
@@ -152,10 +154,14 @@ public class SCKWeekView: SCKGridView {
         
         for eventView in (subviews.filter{$0 is SCKEventView} as! [SCKEventView]) {
             
+            guard eventView.eventHolder.isReady else {
+                continue
+            }
+            
             let oldFrame = eventView.frame
             
-            let startOffset = eventView.eventHolder.cachedRelativeStart
-            assert(startOffset != Double(SCKRelativeTimeLocationNotFound), "Expected relative start to be set for: \(eventView.eventHolder)")
+            let startOffset = eventView.eventHolder.relativeStart
+            assert(startOffset != SCKRelativeTimeLocationInvalid, "Expected relative start to be set for: \(eventView.eventHolder)")
             let day = Int(trunc(startOffset/offsetPerDay))
             
             let date = eventView.eventHolder.cachedScheduledDate
@@ -166,7 +172,7 @@ public class SCKWeekView: SCKGridView {
             newFrame.origin.y = yFor(hour: sPoint.hour, minute: sPoint.minute)
             newFrame.size.height = yFor(hour: ePoint.hour, minute: ePoint.minute)-newFrame.minY
             newFrame.size.width = dayWidth / CGFloat(eventView.eventHolder.conflictCount)
-            newFrame.origin.x = canvas.minX + CGFloat(day) * dayWidth + newFrame.width * CGFloat(eventView.eventHolder.conflictIndex - 1)
+            newFrame.origin.x = canvas.minX + CGFloat(day) * dayWidth + newFrame.width * CGFloat(eventView.eventHolder.conflictIndex)
             
             if oldFrame != newFrame {
                 eventView.frame = newFrame

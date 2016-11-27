@@ -54,22 +54,7 @@ struct SCKActionContext {
  *   and conditional modification of the represented object's duration and/or
  *   scheduledDate.
  */
-public final class SCKEventView: ViewBaseClass {
-    
-    /// Modify these two arrays if you add more values to the `SCKEventType` enum.
-    static let colors: [ColorClass] = [
-        ColorClass(red: 0.60, green: 0.90, blue: 0.60, alpha: 1.0),
-        ColorClass(red: 1.00, green: 0.86, blue: 0.29, alpha: 1.0),
-        ColorClass(red: 0.66, green: 0.82, blue: 1.00, alpha: 1.0)
-    ]
-    static let strokeColors: [ColorClass] = [
-        ColorClass(red: 0.50, green: 0.80, blue: 0.50, alpha: 1.0),
-        ColorClass(red: 0.90, green: 0.76, blue: 0.19, alpha: 1.0),
-        ColorClass(red: 0.56, green: 0.72, blue: 0.90, alpha: 1.0)
-    ]
-    static let specialEventColor = ColorClass(red: 1.0, green: 0.4, blue: 0.1, alpha: 1.0)
-    static let specialEventStrokeColor = ColorClass(red: 0.9, green: 0.3, blue: 0.0, alpha: 1.0)
-    
+public final class SCKEventView: NSView {
     
     private var draggingStatus: SCKDraggingStatus = .idle
     
@@ -84,40 +69,17 @@ public final class SCKEventView: ViewBaseClass {
     }
     
     /** The view's inner label */
-    var innerLabel: SCKTextField
+    var innerLabel: SCKTextField = {
+        let label = SCKTextField(frame: .zero)
+        label.setContentCompressionResistancePriority(249, for: .horizontal)
+        label.setContentCompressionResistancePriority(249, for: .vertical)
+        label.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        return label
+    }()
     
+    private var kindColor: NSColor! = nil
     
-    /** Called from @c -drawRect when superview's @c colorMode is set to
-     * `SCKEventColorModeByEventType`. Returns a different fill color for each
-     * value defined in the `SCKEventType` enum.
-     *
-     * @param type The type for which to return a fill color
-     * @return The fill color for events of type `type`.
-     */
-    public func color(forEventType type: SCKEventKind) -> ColorClass {
-        return type == .transitory ? SCKEventView.specialEventColor : SCKEventView.colors[type.rawValue]
-    }
-    
-    /** Called from @c -drawRect when superview's @c colorMode is set to
-     * `SCKEventColorModeByEventType`. Returns a different stroke color for each
-     * value defined in the `SCKEventType` enum.
-     *
-     * @param type The type for which to return a stroke color
-     * @return The stroke color for events of type `type`.
-     */
-    public func strokeColor(forEventType type: SCKEventKind) -> ColorClass {
-        return type == .transitory ? SCKEventView.specialEventStrokeColor : SCKEventView.strokeColors[type.rawValue]
-    }
-    
-    
-    override init(frame frameRect: CGRect) {
-        innerLabel = SCKTextField(frame: CGRect(origin: CGPoint.zero, size: frameRect.size))
-        super.init(frame: frameRect)
-    }
-    
-    required public init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    internal private(set) var backgroundColor: NSColor! = nil
     
     public override func draw(_ dirtyRect: CGRect) {
         guard let view = superview as? SCKGridView else {
@@ -125,22 +87,24 @@ public final class SCKEventView: ViewBaseClass {
         }
         
         
-        var fillColor: ColorClass, strokeColor: ColorClass
+        var fillColor: NSColor, strokeColor: NSColor
         
         if view.selectedEventView != nil && view.selectedEventView != self {
             // Set color to gray when another event is selected
-            fillColor = ColorClass(white: 0.85, alpha: 1.0)
-            strokeColor = ColorClass(white: 0.75, alpha: 1.0)
+            fillColor = NSColor(white: 0.85, alpha: 1.0)
+            strokeColor = NSColor(white: 0.75, alpha: 1.0)
         } else {
             switch view.colorMode {
             case .byEventKind:
-                let type = eventHolder.representedObject.eventType
-                fillColor = SCKEventView.colors[type]
-                strokeColor = SCKEventView.strokeColors[type]
+                let type = eventHolder.representedObject.eventKind
+                if kindColor == nil {
+                    kindColor = view.delegate?.color?(for: type, in: view) ?? NSColor.darkGray
+                }
+                fillColor = kindColor
             case .byEventOwner:
-                fillColor = eventHolder.cachedUserLabelColor ?? ColorClass(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+                fillColor = eventHolder.cachedUser?.eventColor ?? NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
                 let red = fillColor.redComponent, green = fillColor.greenComponent, blue = fillColor.blueComponent
-                strokeColor = ColorClass(red: red-0.1, green:green-0.1, blue:blue-0.1, alpha:1.0)
+                strokeColor = NSColor(red: red-0.1, green:green-0.1, blue:blue-0.1, alpha:1.0)
             }
         }
         if view.selectedEventView != nil && view.selectedEventView == self, case .draggingContent = action.status {
@@ -149,15 +113,12 @@ public final class SCKEventView: ViewBaseClass {
         
         
         if inLiveResize {
-            strokeColor.set()
-            NSRectFill(CGRect(origin: CGPoint.zero, size: frame.size))
-            let inset: CGFloat = view.selectedEventView == self ? 3.0 : 0.65
             fillColor.set()
-            NSRectFill(CGRect(origin: CGPoint.zero, size: frame.size).insetBy(dx: inset, dy: inset))
+            NSRectFill(CGRect(origin: CGPoint.zero, size: frame.size))
         } else {
             fillColor.setFill()
-            strokeColor.setStroke()
-            let path = SCKBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
+            fillColor.setStroke()
+            let path = NSBezierPath(roundedRect: bounds, xRadius: 2.0, yRadius: 2.0)
             if view.contentRect.origin.y > view.convert(frame.origin, from: self).y || view.contentRect.maxY < frame.maxY {
                 fillColor.withAlphaComponent(0.2).setFill()
                 var lineDash: [CGFloat] = [2.0, 1.0]
@@ -232,8 +193,8 @@ public final class SCKEventView: ViewBaseClass {
             parseDurationDrag(with: event)
         default:
             if case SCKDraggingStatus.idle = action.status {
-                action.oldRelativeStart = eventHolder.cachedRelativeStart
-                action.newRelativeStart = eventHolder.cachedRelativeStart
+                action.oldRelativeStart = eventHolder.relativeStart
+                action.newRelativeStart = eventHolder.relativeStart
                 action.status = .draggingContent
                 action.oldDate = eventHolder.cachedScheduledDate.timeIntervalSinceReferenceDate
                 action.internalDelta = convert(event.locationInWindow, from: nil).y
@@ -262,11 +223,11 @@ public final class SCKEventView: ViewBaseClass {
                     eventHolder.cachedDuration = newDuration
                     let inSeconds = newDuration * 60
                     let endDate = eventHolder.cachedScheduledDate.addingTimeInterval(Double(inSeconds))
-                    var cachedRelativeEnd = gridView.calculateRelativeTimeLocation(for: endDate)
-                    if cachedRelativeEnd == Double(NSNotFound) {
-                        cachedRelativeEnd = 1.0;
+                    var relativeEnd = gridView.calculateRelativeTimeLocation(for: endDate)
+                    if relativeEnd == Double(NSNotFound) {
+                        relativeEnd = 1.0;
                     }
-                    eventHolder.cachedRelativeLength = cachedRelativeEnd - eventHolder.cachedRelativeStart
+                    eventHolder.relativeLength = relativeEnd - eventHolder.relativeStart
                     gridView.invalidateFrame(for: self)
                 } else {
                     newDuration = 5
@@ -287,17 +248,17 @@ public final class SCKEventView: ViewBaseClass {
         tPoint.y -= action.internalDelta
         
         var newStartLoc = gridView.relativeTimeLocation(for: tPoint)
-        if newStartLoc == Double(SCKRelativeTimeLocationNotFound) && tPoint.y < gridView.frame.midY {
+        if newStartLoc == SCKRelativeTimeLocationInvalid && tPoint.y < gridView.frame.midY {
             //May be too close to an edge, check if too low
             tPoint.y = gridView.contentRect.minY
             newStartLoc = gridView.relativeTimeLocation(for: tPoint)
         }
-        if newStartLoc != Double(SCKRelativeTimeLocationNotFound)  {
+        if newStartLoc != SCKRelativeTimeLocationInvalid  {
             tPoint.y += frame.height
             let newEndLoc = gridView.relativeTimeLocation(for: tPoint)
-            if newEndLoc != Double(SCKRelativeTimeLocationNotFound) {
-                eventHolder.cachedRelativeStart = newStartLoc
-                eventHolder.cachedRelativeEnd = newEndLoc
+            if newEndLoc != SCKRelativeTimeLocationInvalid {
+                eventHolder.relativeStart = newStartLoc
+                eventHolder.relativeEnd = newEndLoc
                 eventHolder.cachedScheduledDate = gridView.calculateDate(for: newStartLoc)!
                 action.newRelativeStart = newStartLoc
             }
@@ -321,13 +282,13 @@ public final class SCKEventView: ViewBaseClass {
             }
             
             if shouldContinue {
+                eventHolder.stopObservingRepresentedObjectChanges()
                 eventHolder.representedObject.duration = new
+                eventHolder.resumeObservingRepresentedObjectChanges()
                 eventHolder.recalculateRelativeValues()
                 gridView.invalidateFrameForAllEventViews()
             } else {
-                eventHolder.stopObservingRepresentedObjectChanges()
                 eventHolder.cachedDuration = old
-                eventHolder.resumeObservingRepresentedObjectChanges()
                 gridView.invalidateFrame(for: self)
             }
             gridView.endDraggingEventView(self)
@@ -365,14 +326,8 @@ public final class SCKEventView: ViewBaseClass {
     
     public override func viewDidMoveToWindow() {
         if superview != nil {
-            innerLabel.translatesAutoresizingMaskIntoConstraints = false
+            innerLabel.frame = CGRect(origin: .zero, size: frame.size)
             addSubview(innerLabel)
-            innerLabel.setContentCompressionResistancePriority(249, for: .horizontal)
-            innerLabel.setContentCompressionResistancePriority(249, for: .vertical)
-            innerLabel.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            innerLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-            innerLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
-            innerLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         }
     }
     

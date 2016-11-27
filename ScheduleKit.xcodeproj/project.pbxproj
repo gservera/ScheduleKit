@@ -16,7 +16,7 @@
 		998228611DDA684B0088B82F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9982285F1DDA684B0088B82F /* Main.storyboard */; };
 		998228661DDA686F0088B82F /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		998228681DDA687B0088B82F /* ScheduleKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9982601C1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */; };
+		9982601C1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */; };
 		9982601F1DDB3DAD00C46586 /* SCKEventManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */; };
 		998260211DDB74FE00C46586 /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998260201DDB74FE00C46586 /* WeekViewController.swift */; };
 		998260231DDB91AD00C46586 /* DayCalendarPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */; };
@@ -28,7 +28,7 @@
 		99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B577DB1DC61A870010A6A5 /* SCKTextField.swift */; };
 		99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */; };
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
-		99BA3AC31DBF800E00A6FB33 /* ScheduleKitDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */; };
+		99BA3AC31DBF800E00A6FB33 /* BaseDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */; };
 		99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */; };
 		99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */; };
 		99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */; };
@@ -105,7 +105,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKEventHolderTests.m; sourceTree = "<group>"; };
+		996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SCKEventHolderTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKTestMockObjects.h; sourceTree = "<group>"; };
 		996E96511DE984710056022E /* EditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
 		998228521DDA684B0088B82F /* SCKExample-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,19 +117,19 @@
 		9982285D1DDA684B0088B82F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		998228601DDA684B0088B82F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		998228621DDA684B0088B82F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ScheduleKit-ObjC.swift"; path = "Views/ScheduleKit-ObjC.swift"; sourceTree = "<group>"; };
+		9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "_ScheduleKit-ObjC.swift"; path = "Views/_ScheduleKit-ObjC.swift"; sourceTree = "<group>"; };
 		9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventManaging.swift; sourceTree = "<group>"; };
 		998260201DDB74FE00C46586 /* WeekViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 		998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayCalendarPopoverViewController.swift; sourceTree = "<group>"; };
 		999717291DC3784A009BB046 /* SCKGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKGridView.swift; sourceTree = "<group>"; };
 		999950901D8EB56D00128669 /* SCKEventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKEventRequest.swift; path = ScheduleKit/SCKEventRequest.swift; sourceTree = SOURCE_ROOT; };
-		999950941D8EB7CE00128669 /* SCKEventHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolder.swift; sourceTree = "<group>"; };
-		999950961D8EE25A00128669 /* SCKEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventView.swift; sourceTree = "<group>"; };
+		999950941D8EB7CE00128669 /* SCKEventHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventHolder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		999950961D8EE25A00128669 /* SCKEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		999950981D8F216600128669 /* SCKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKView.swift; sourceTree = "<group>"; };
 		99B577DB1DC61A870010A6A5 /* SCKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKTextField.swift; path = Views/SCKTextField.swift; sourceTree = "<group>"; };
 		99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEvent.swift; sourceTree = "<group>"; };
 		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
-		99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleKitDefinitions.swift; sourceTree = "<group>"; };
+		99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDefinitions.swift; sourceTree = "<group>"; };
 		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
 		99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRangeTests.m; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 		99CAFCEE1DC9F294004502AA /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		99CAFCF01DC9F2A5004502AA /* EventEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEngine.swift; sourceTree = "<group>"; };
 		99CAFCF21DC9F97D004502AA /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
-		99CAFCF41DCA039F004502AA /* SCKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKViewController.swift; path = Views/SCKViewController.swift; sourceTree = "<group>"; };
+		99CAFCF41DCA039F004502AA /* SCKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SCKViewController.swift; path = Views/SCKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99CDA4601A7066C200AFB505 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		99D399551DDA6EF200498366 /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
 		99D399561DDA6EF200498366 /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
@@ -161,8 +161,8 @@
 		99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0B21A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleKitTests.m; sourceTree = "<group>"; };
-		99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayView.swift; sourceTree = "<group>"; };
-		99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKWeekView.swift; sourceTree = "<group>"; };
+		99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKDayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKWeekView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,9 +300,9 @@
 			isa = PBXGroup;
 			children = (
 				99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */,
-				9982601B1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift */,
+				99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */,
 				99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */,
-				99BA3AC21DBF800E00A6FB33 /* ScheduleKitDefinitions.swift */,
+				9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */,
 				99E7D0C41A4B014900713F18 /* Categories and subclasses */,
 				99E7D0CD1A4B3C2400713F18 /* Model */,
 				9982601D1DDAF0B300C46586 /* Controllers */,
@@ -578,12 +578,12 @@
 				9982601F1DDB3DAD00C46586 /* SCKEventManaging.swift in Sources */,
 				9997172A1DC3784A009BB046 /* SCKGridView.swift in Sources */,
 				999950971D8EE25A00128669 /* SCKEventView.swift in Sources */,
-				99BA3AC31DBF800E00A6FB33 /* ScheduleKitDefinitions.swift in Sources */,
+				99BA3AC31DBF800E00A6FB33 /* BaseDefinitions.swift in Sources */,
 				999950991D8F216600128669 /* SCKView.swift in Sources */,
 				999950951D8EB7CE00128669 /* SCKEventHolder.swift in Sources */,
 				999950911D8EB56D00128669 /* SCKEventRequest.swift in Sources */,
 				99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */,
-				9982601C1DDA7D8B00C46586 /* ScheduleKit-ObjC.swift in Sources */,
+				9982601C1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift in Sources */,
 				99CAFCF51DCA039F004502AA /* SCKViewController.swift in Sources */,
 				99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */,
 			);

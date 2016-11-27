@@ -9,16 +9,40 @@
 import Cocoa
 import ScheduleKit
 
-final class TestEvent: NSObject, SCKEvent {
+/** A set of values used to distinguish between different event types.
+ *  Actual values are related to different events on the medical field, since this
+ *  framework was first intended to be used with medical apps, but feel free to include
+ *  any other event types you need (try to keep the default and special values though). */
+public enum EventKind: Int {
+    case generic  /**< A generic type of event. */
     
-    var eventType: Int
+    case visit
+    case surgery
+    
+    //Feel free to add any event types you need here.
+    case transitory = -1 /**< A special event type for transitory events */
+    
+    var color: NSColor {
+        switch self {
+        case .generic: return NSColor(red: 0.60, green: 0.90, blue: 0.60, alpha: 1.0)
+        case .visit: return NSColor(red: 1.00, green: 0.86, blue: 0.29, alpha: 1.0)
+        case .surgery: return NSColor(red: 0.66, green: 0.82, blue: 1.00, alpha: 1.0)
+        case .transitory: return NSColor(red: 1.0, green: 0.4, blue: 0.1, alpha: 1.0)
+            
+        }
+    }
+}
+
+@objc final class TestEvent: NSObject, SCKEvent {
+    
+    var eventKind: Int
     @objc var user: SCKUser
     var title: String
     var duration: Int
     var scheduledDate: Date
     
-    init(kind: SCKEventKind, user: TestUser, title: String, duration: Int, date: Date) {
-        eventType = kind.rawValue
+    init(kind: EventKind, user: TestUser, title: String, duration: Int, date: Date) {
+        eventKind = kind.rawValue
         self.user = user
         self.title = title
         self.duration = duration

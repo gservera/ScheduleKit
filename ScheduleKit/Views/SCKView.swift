@@ -39,7 +39,11 @@ import Cocoa
  * - Drag and drop feedback methods for SCKEventView class.
  * - Common event view (un)locking and relayout workflow.
  */
-@objc public class SCKView: ViewBaseClass {
+@objc public class SCKView: NSView {
+    
+    
+    
+    
     /** This property is set to YES when a relayout has been triggered and back to NO when the
      process finishes. Mind that relayout methods are invoked quite often. */
     private(set) var isRelayoutInProgress: Bool = false
@@ -132,7 +136,7 @@ import Cocoa
     }
     
     public override func draw(_ dirtyRect: NSRect) {
-        ColorClass.white.setFill()
+        NSColor.white.setFill()
         NSRectFill(dirtyRect)
     }
     
@@ -195,7 +199,7 @@ import Cocoa
     func calculateRelativeTimeLocation(for date: Date) -> Double {
         let timeRef = date.timeIntervalSinceReferenceDate
         guard timeRef >= absoluteStartTimeRef && timeRef <= absoluteEndTimeRef else {
-            return Double(SCKRelativeTimeLocationNotFound)
+            return SCKRelativeTimeLocationInvalid
         }
         return (timeRef - absoluteStartTimeRef) / absoluteTimeInterval
     }
@@ -211,7 +215,7 @@ import Cocoa
      *  SCKRelativeTimeLocationNotFound if @c location falls out of the content rect.
      */
     func relativeTimeLocation(for point: CGPoint) -> Double {
-        return Double(SCKRelativeTimeLocationNotFound)
+        return SCKRelativeTimeLocationInvalid
     }
     
     //MARK: - Event view layout
@@ -247,7 +251,7 @@ import Cocoa
         beginRelayout()
         
         for holder in allHolders {
-            holder.lock()
+            holder.freeze()
         }
         
         //TODO: Combine animations
@@ -256,7 +260,7 @@ import Cocoa
         }
         
         for holder in allHolders {
-            holder.unlock()
+            holder.unfreeze()
         }
         
         endRelayout()
@@ -314,7 +318,7 @@ import Cocoa
         subviews.remove(at: subviews.index(of: eventView)!)
         otherEventViews = subviews
         eventViewBeingDragged = eventView
-        eventView.eventHolder.lock()
+        eventView.eventHolder.freeze()
     }
     
     /**
@@ -345,7 +349,7 @@ import Cocoa
         guard let dragged = eventViewBeingDragged else {
             return
         }
-        dragged.eventHolder.unlock()
+        dragged.eventHolder.unfreeze()
         otherEventViews = []
         eventViewBeingDragged = nil
         invalidateFrameForAllEventViews()

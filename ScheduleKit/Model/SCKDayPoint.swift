@@ -37,7 +37,7 @@ public struct SCKDayPoint {
     
     /// Returns a `SCKDayPoint` object with all properties set to zero.
     static var zero: SCKDayPoint {
-        return SCKDayPoint(hour: 0, minute: 0, second: 0)
+        return self.init(hour: 0, minute: 0, second: 0)
     }
     
     /// Convenience initializer. Creates a new SCKDayPoint object with hour, minute and

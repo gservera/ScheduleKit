@@ -10,21 +10,34 @@ import Cocoa
 
 @objc(SCKEventManaging) public protocol SCKObjCEventManaging: NSObjectProtocol {
     
-    @objc optional func events(from startDate: Date, to endDate: Date, for controller: SCKViewController) -> [SCKEvent]
+    @objc optional func events(from startDate: Date,
+                               to endDate: Date,
+                               for controller: SCKViewController) -> [SCKEvent]
     
-    @objc optional func scheduleController(_ controller: SCKViewController, didMakeEventRequest request: SCKEventRequest)
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           didMakeEventRequest request: SCKEventRequest)
     
-    @objc optional func scheduleController(_ controller: SCKViewController, didSelectEvent event: SCKEvent)
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           didSelectEvent event: SCKEvent)
     @objc optional func scheduleControllerDidClearSelection(_ controller: SCKViewController)
     
-    @objc optional func scheduleController(_ controller: SCKViewController, didDoubleClickBlankDate date: Date)
-    @objc optional func scheduleController(_ controller: SCKViewController, didDoubleClickEvent event: SCKEvent)
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           didDoubleClickBlankDate date: Date)
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           didDoubleClickEvent event: SCKEvent)
     
     
-    @objc optional func scheduleController(_ controller: SCKViewController, shouldChangeDurationOfEvent event: SCKEvent, from oldValue: Int, to newValue: Int) -> Bool
-    @objc optional func scheduleController(_ controller: SCKViewController, shouldChangeDateOfEvent event: SCKEvent, from oldValue: Date, to newValue: Date) -> Bool
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           shouldChangeDurationOfEvent event: SCKEvent,
+                                           from oldValue: Int,
+                                           to newValue: Int) -> Bool
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           shouldChangeDateOfEvent event: SCKEvent,
+                                           from oldValue: Date,
+                                           to newValue: Date) -> Bool
     
-    @objc optional func scheduleController(_ controller: SCKViewController, menuForEvent event: SCKEvent) -> NSMenu?
+    @objc optional func scheduleController(_ controller: SCKViewController,
+                                           menuForEvent event: SCKEvent) -> NSMenu?
     
 }
 
