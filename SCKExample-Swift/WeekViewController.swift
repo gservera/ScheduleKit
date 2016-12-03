@@ -151,7 +151,7 @@ extension WeekViewController: SCKWeekViewDelegate {
         return c
     }
     
-    func color(for eventKindValue: Int, in gridView: SCKGridView) -> NSColor {
+    func color(for eventKindValue: Int, in gridView: SCKView) -> NSColor {
         if let kind = EventKind(rawValue: eventKindValue) {
             return kind.color
         }

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		996BFFF01A97A0BE001E6470 /* SCKEventHolderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */; };
+		992C11111DEB54B300E156D0 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
+		992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */; };
+		992C111A1DEB591D00E156D0 /* TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C11191DEB591D00E156D0 /* TestController.xib */; };
 		996E96521DE984710056022E /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E96511DE984710056022E /* EditEventViewController.swift */; };
 		998228561DDA684B0088B82F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228551DDA684B0088B82F /* AppDelegate.m */; };
 		998228591DDA684B0088B82F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228581DDA684B0088B82F /* main.m */; };
@@ -30,8 +32,6 @@
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
 		99BA3AC31DBF800E00A6FB33 /* BaseDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */; };
 		99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */; };
-		99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */; };
-		99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */; };
 		99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */; };
 		99CAFCD91DC9EAC7004502AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCD81DC9EAC7004502AA /* Assets.xcassets */; };
 		99CAFCDC1DC9EAC7004502AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCDA1DC9EAC7004502AA /* Main.storyboard */; };
@@ -50,8 +50,6 @@
 		99D3995A1DDA705D00498366 /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D399591DDA705D00498366 /* TestEvent.m */; };
 		99D3995D1DDA74B000498366 /* EventEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D3995C1DDA74B000498366 /* EventEngine.m */; };
 		99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		99E7D0AD1A4AF3B500713F18 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
-		99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */; };
 		99F1FF8B1DC4E9F80055C3E4 /* SCKDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */; };
 		99F1FF8D1DC4F9DD0055C3E4 /* SCKWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */; };
 /* End PBXBuildFile section */
@@ -64,14 +62,14 @@
 			remoteGlobalIDString = 99E7D0A01A4AF3B500713F18;
 			remoteInfo = ScheduleKit;
 		};
-		99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */ = {
+		992C11121DEB54B300E156D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99E7D0981A4AF3B500713F18 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 99E7D0A01A4AF3B500713F18;
 			remoteInfo = ScheduleKit;
 		};
-		99E7D0AE1A4AF3B500713F18 /* PBXContainerItemProxy */ = {
+		99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 99E7D0981A4AF3B500713F18 /* Project object */;
 			proxyType = 1;
@@ -105,8 +103,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SCKEventHolderTests.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCKTestMockObjects.h; sourceTree = "<group>"; };
+		992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		992C11101DEB54B300E156D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolderTests.swift; sourceTree = "<group>"; };
+		992C11191DEB591D00E156D0 /* TestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestController.xib; sourceTree = "<group>"; };
 		996E96511DE984710056022E /* EditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
 		998228521DDA684B0088B82F /* SCKExample-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		998228541DDA684B0088B82F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -131,10 +131,8 @@
 		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
 		99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDefinitions.swift; sourceTree = "<group>"; };
 		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
-		99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKUnavailableTimeRangeTests.m; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		99C152DA1A82D94C00096C8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKDayPointTests.m; sourceTree = "<group>"; };
 		99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99CAFCD81DC9EAC7004502AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -158,14 +156,19 @@
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
-		99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		99E7D0B21A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleKitTests.m; sourceTree = "<group>"; };
 		99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKDayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKWeekView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		992C11091DEB54B200E156D0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				992C11111DEB54B300E156D0 /* ScheduleKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9982284F1DDA684B0088B82F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,17 +192,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99E7D0A91A4AF3B500713F18 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				99E7D0AD1A4AF3B500713F18 /* ScheduleKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		992C110D1DEB54B300E156D0 /* ScheduleKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */,
+				992C11191DEB591D00E156D0 /* TestController.xib */,
+				992C11101DEB54B300E156D0 /* Info.plist */,
+			);
+			path = ScheduleKitTests;
+			sourceTree = "<group>";
+		};
 		998228531DDA684B0088B82F /* SCKExample-ObjC */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,7 +283,7 @@
 				99CDA4601A7066C200AFB505 /* LICENSE */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
 				99E7D0A31A4AF3B500713F18 /* ScheduleKit */,
-				99E7D0B01A4AF3B500713F18 /* ScheduleKitTests */,
+				992C110D1DEB54B300E156D0 /* ScheduleKitTests */,
 				99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */,
 				998228531DDA684B0088B82F /* SCKExample-ObjC */,
 				99E7D0A21A4AF3B500713F18 /* Products */,
@@ -289,9 +294,9 @@
 			isa = PBXGroup;
 			children = (
 				99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */,
-				99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */,
 				99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */,
 				998228521DDA684B0088B82F /* SCKExample-ObjC.app */,
+				992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -305,8 +310,8 @@
 				9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */,
 				99E7D0C41A4B014900713F18 /* Categories and subclasses */,
 				99E7D0CD1A4B3C2400713F18 /* Model */,
-				9982601D1DDAF0B300C46586 /* Controllers */,
 				99E7D0C21A4AF64500713F18 /* Views */,
+				9982601D1DDAF0B300C46586 /* Controllers */,
 				99E7D0A41A4AF3B500713F18 /* Supporting Files */,
 			);
 			path = ScheduleKit;
@@ -318,19 +323,6 @@
 				99E7D0A51A4AF3B500713F18 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		99E7D0B01A4AF3B500713F18 /* ScheduleKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				99E7D0B21A4AF3B500713F18 /* Info.plist */,
-				996BFFF11A97A227001E6470 /* SCKTestMockObjects.h */,
-				99E7D0B31A4AF3B500713F18 /* ScheduleKitTests.m */,
-				99C152DB1A8394DA00096C8E /* SCKDayPointTests.m */,
-				996BFFEF1A97A0BE001E6470 /* SCKEventHolderTests.m */,
-				99C152D51A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m */,
-			);
-			path = ScheduleKitTests;
 			sourceTree = "<group>";
 		};
 		99E7D0C21A4AF64500713F18 /* Views */ = {
@@ -374,6 +366,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		992C110B1DEB54B200E156D0 /* ScheduleKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 992C11141DEB54B300E156D0 /* Build configuration list for PBXNativeTarget "ScheduleKitTests" */;
+			buildPhases = (
+				992C11081DEB54B200E156D0 /* Sources */,
+				992C11091DEB54B200E156D0 /* Frameworks */,
+				992C110A1DEB54B200E156D0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				992C11131DEB54B300E156D0 /* PBXTargetDependency */,
+			);
+			name = ScheduleKitTests;
+			productName = ScheduleKitTests;
+			productReference = 992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		998228511DDA684B0088B82F /* SCKExample-ObjC */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 998228631DDA684B0088B82F /* Build configuration list for PBXNativeTarget "SCKExample-ObjC" */;
@@ -430,24 +440,6 @@
 			productReference = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		99E7D0AB1A4AF3B500713F18 /* ScheduleKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 99E7D0BA1A4AF3B500713F18 /* Build configuration list for PBXNativeTarget "ScheduleKitTests" */;
-			buildPhases = (
-				99E7D0A81A4AF3B500713F18 /* Sources */,
-				99E7D0A91A4AF3B500713F18 /* Frameworks */,
-				99E7D0AA1A4AF3B500713F18 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				99E7D0AF1A4AF3B500713F18 /* PBXTargetDependency */,
-			);
-			name = ScheduleKitTests;
-			productName = ScheduleKitTests;
-			productReference = 99E7D0AC1A4AF3B500713F18 /* ScheduleKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -458,6 +450,11 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Guillem Servera";
 				TargetAttributes = {
+					992C110B1DEB54B200E156D0 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = Q6R76RZ9Z8;
+						ProvisioningStyle = Automatic;
+					};
 					998228511DDA684B0088B82F = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
@@ -472,9 +469,6 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
 						LastSwiftMigration = 0800;
-					};
-					99E7D0AB1A4AF3B500713F18 = {
-						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
 			};
@@ -492,7 +486,7 @@
 			projectRoot = "";
 			targets = (
 				99E7D0A01A4AF3B500713F18 /* ScheduleKit */,
-				99E7D0AB1A4AF3B500713F18 /* ScheduleKitTests */,
+				992C110B1DEB54B200E156D0 /* ScheduleKitTests */,
 				99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */,
 				998228511DDA684B0088B82F /* SCKExample-ObjC */,
 			);
@@ -500,6 +494,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		992C110A1DEB54B200E156D0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				992C111A1DEB591D00E156D0 /* TestController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		998228501DDA684B0088B82F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -526,16 +528,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99E7D0AA1A4AF3B500713F18 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		992C11081DEB54B200E156D0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9982284E1DDA684B0088B82F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -589,17 +592,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		99E7D0A81A4AF3B500713F18 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				996BFFF01A97A0BE001E6470 /* SCKEventHolderTests.m in Sources */,
-				99C152DC1A8394DA00096C8E /* SCKDayPointTests.m in Sources */,
-				99E7D0B41A4AF3B500713F18 /* ScheduleKitTests.m in Sources */,
-				99C152D61A82B04C00096C8E /* SCKUnavailableTimeRangeTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -608,15 +600,15 @@
 			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
 			targetProxy = 99067A901DDA6B4D00A4E728 /* PBXContainerItemProxy */;
 		};
+		992C11131DEB54B300E156D0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
+			targetProxy = 992C11121DEB54B300E156D0 /* PBXContainerItemProxy */;
+		};
 		99CAFCE81DC9EB0E004502AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
 			targetProxy = 99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */;
-		};
-		99E7D0AF1A4AF3B500713F18 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
-			targetProxy = 99E7D0AE1A4AF3B500713F18 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -640,6 +632,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		992C11151DEB54B300E156D0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		992C11161DEB54B300E156D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		998228641DDA684B0088B82F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -826,6 +858,7 @@
 				INFOPLIST_FILE = ScheduleKit/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -851,6 +884,7 @@
 				INFOPLIST_FILE = ScheduleKit/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -858,45 +892,18 @@
 			};
 			name = Release;
 		};
-		99E7D0BB1A4AF3B500713F18 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.guillemservera.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		99E7D0BC1A4AF3B500713F18 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.guillemservera.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		992C11141DEB54B300E156D0 /* Build configuration list for PBXNativeTarget "ScheduleKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				992C11151DEB54B300E156D0 /* Debug */,
+				992C11161DEB54B300E156D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		998228631DDA684B0088B82F /* Build configuration list for PBXNativeTarget "SCKExample-ObjC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -929,15 +936,6 @@
 			buildConfigurations = (
 				99E7D0B81A4AF3B500713F18 /* Debug */,
 				99E7D0B91A4AF3B500713F18 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		99E7D0BA1A4AF3B500713F18 /* Build configuration list for PBXNativeTarget "ScheduleKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				99E7D0BB1A4AF3B500713F18 /* Debug */,
-				99E7D0BC1A4AF3B500713F18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

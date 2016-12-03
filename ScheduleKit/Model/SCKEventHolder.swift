@@ -66,16 +66,21 @@ internal final class SCKEventHolder: NSObject {
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.duration), options: [.new,.prior], context: nil)
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.title), options: [.new], context: nil)
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.user), options: [.new], context: nil)
+        _observersRegistered = true
     }
     
     deinit {
         // We stop observing represented object changes at this point.
-        let o = representedObject as AnyObject
-        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), context: nil)
-        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.duration), context: nil)
-        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.title), context: nil)
-        o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.user), context: nil)
+        if _observersRegistered {
+            let o = representedObject as AnyObject
+            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), context: nil)
+            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.duration), context: nil)
+            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.title), context: nil)
+            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.user), context: nil)
+        }
     }
+    
+    private var _observersRegistered = false
     
     
     //MARK: - Object state
@@ -274,11 +279,15 @@ internal final class SCKEventHolder: NSObject {
                     if let oldUser = cachedUser, oldUser === newUser,
                            rootView.colorMode == .byEventOwner {
                         if newUser.eventColor != eventView.backgroundColor {
+                            eventView.backgroundColor = newUser.eventColor
                             eventView.needsDisplay = true
                         }
                     } else {
                         cachedUser = newUser
-                        eventView.needsDisplay = true
+                        if rootView.colorMode == .byEventOwner {
+                            eventView.backgroundColor = newUser.eventColor
+                            eventView.needsDisplay = true
+                        }
                     }
                 }
             default: break

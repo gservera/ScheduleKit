@@ -10,9 +10,8 @@ import Cocoa
 
 
 
-@objc public protocol SCKGridViewDelegate: class {
+@objc public protocol SCKGridViewDelegate: SCKViewDelegate {
     @objc(unavailableTimeRangesForGridView:) optional func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange]
-    @objc(colorForEventKind:inGridView:) optional func color(for eventKindValue: Int, in gridView: SCKGridView) -> NSColor
 }
 
 
@@ -27,7 +26,7 @@ public class SCKGridView: SCKView {
     
     private static let zoomLevelKey = "MEKZoom"
     
-    public weak var delegate: SCKGridViewDelegate? {
+    override public weak var delegate: SCKViewDelegate? {
         didSet {
             readDefaultsFromDelegate()
         }
@@ -53,7 +52,7 @@ public class SCKGridView: SCKView {
         }
     }
     
-    var contentRect: CGRect {
+    override var contentRect: CGRect {
         return CGRect(x: kHourLabelWidth, y: kDayLabelHeight + 20.0,
                       width: frame.width - kHourLabelWidth, height: frame.height - kDayLabelHeight - 20.0)
     }
@@ -242,7 +241,7 @@ public class SCKGridView: SCKView {
     }
     
     func readDefaultsFromDelegate() {
-        unavailableTimeRanges = delegate?.unavailableTimeRanges?(for: self) ?? []
+        unavailableTimeRanges = (delegate as? SCKGridViewDelegate)?.unavailableTimeRanges?(for: self) ?? []
         needsDisplay = true
     }
     

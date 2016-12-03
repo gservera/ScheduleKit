@@ -26,45 +26,67 @@
 
 import Cocoa
 
+/// An object conforming to the `SCKViewDelegate` protocol must implement a
+/// method required to set a color schedule view events.
+@objc public protocol SCKViewDelegate {
+    @objc (colorForEventKind:inScheduleView:)
+    optional func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
+}
 
-/** SCKView is an abstract NSView subclass which implements common functionality for any
- * subclasses that display a collection of @c SCKEventView subviews provided by the
- * delegate of an associated @c SCKEventManager object. This base class provides:
- * - Basic date scope management via @c startDate, @c endDate and @c absoluteTimeInterval.
- * - Functional conversion between @c NSDate and @c SCKRelativeTimeLocation values, and
- *   also the @c relativeTimeLocationForPoint: which subclasses should override.
- * - Ability to get/set the coloring policy used to draw subviews' background.
- * - Basic event selection and deselection handling.
- * - Handling of double click on an empty space.
- * - Drag and drop feedback methods for SCKEventView class.
- * - Common event view (un)locking and relayout workflow.
- */
+
+
+/// An abstract NSView subclass that implements the basic functionality to manage
+/// a set of event views provided by an `SCKViewController` object. This class
+/// provides basic handling of the displayed date interval and methods to convert
+/// between these date values and view coordinates.
+///
+/// In addition, `SCKView` provides the default (and required) implementation for
+/// event coloring, selection and deselection, handling double clicks on empty
+/// dates and drag & drop.
+
 @objc public class SCKView: NSView {
     
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setUp()
+    }
+    
+    override public init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setUp()
+    }
+    
+    /// This method is intended to provide a common initialization point for all 
+    /// instances, regardless of whether they have been initialized using
+    /// `init(frame:)` or `init(coder:)`. Default implementation does nothing.
+    func setUp() { }
     
     
+    // MARK: - Date handling
     
-    /** This property is set to YES when a relayout has been triggered and back to NO when the
-     process finishes. Mind that relayout methods are invoked quite often. */
-    private(set) var isRelayoutInProgress: Bool = false
+    public var dateInterval: DateInterval = DateInterval() {
+        didSet { needsDisplay = true }
+    }
     
-    /** Returns the number of seconds between @c startDate and @c endDate. */
+    /// The lowest displayed date.
+    public private(set) var startDate: Date = Date() {
+        didSet { absoluteStartTimeRef = startDate.timeIntervalSinceReferenceDate }
+    }
+    
+    /// The highest display date.
+    public private(set) var endDate: Date = Date() {
+        didSet { absoluteEndTimeRef = endDate.timeIntervalSinceReferenceDate }
+    }
+    
+    /// The lowest displayed date as a time interval since reference date.
+    private(set) var absoluteStartTimeRef: Double = 0.0
+    
+    /// The highest displayed date as a time interval since reference date.
+    private(set) var absoluteEndTimeRef: Double = 0.0
+    
+    /// The total number of seconds displayed.
     var absoluteTimeInterval: TimeInterval {
         return absoluteEndTimeRef - absoluteStartTimeRef
-    }
-    
-    /** The minimum date being repesented. Setter sets view as needing display. Call super. */
-    public internal(set) var startDate: Date = Date() {
-        didSet {
-            absoluteStartTimeRef = startDate.timeIntervalSinceReferenceDate
-        }
-    }
-    
-    /** The maximum date being repesented. Setter sets view as needing display. Call super. */
-    public internal(set) var endDate: Date = Date() {
-        didSet {
-            absoluteEndTimeRef = endDate.timeIntervalSinceReferenceDate
-        }
     }
     
     //Must call reloadData after
@@ -74,11 +96,21 @@ import Cocoa
         needsDisplay = true
     }
     
+    // MARK: -
+    
+    /// The schedule view's delegate.
+    public weak var delegate: SCKViewDelegate?
+    
+
+    
+    
+    
     /** The style used by subviews to draw their background. @see ScheduleKitDefinitions.h */
     @objc public var colorMode: SCKEventColorMode = .byEventKind {
         didSet {
             if colorMode != oldValue {
                 for eventView in eventViews {
+                    eventView.backgroundColor = nil
                     eventView.needsDisplay = true
                 }
             }
@@ -102,38 +134,19 @@ import Cocoa
     }
     
     @IBOutlet public weak var controller: SCKViewController!
+    /** This property is set to YES when a relayout has been triggered and back to NO when the
+     process finishes. Mind that relayout methods are invoked quite often. */
+    private(set) var isRelayoutInProgress: Bool = false
     
     
-    /**< Absolute value for @c startDate */
-    private(set) var absoluteStartTimeRef: Double = 0.0
-    /**< Absolute value for @c endDate */
-    private(set) var absoluteEndTimeRef: Double = 0.0
     /**< SCKEventView subviews */
     private var eventViews: [SCKEventView] = []
     /**< When dragging, the subview being dragged */
     internal weak var eventViewBeingDragged: SCKEventView?
-    /**< When dragging, SCKEventView(s) NOT being dragged */
-    private var otherEventViews: [SCKEventView]?
     
-    required public init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setUp()
-    }
     
-    override public init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        setUp()
-    }
-    
-    func setUp() {
-        
-    }
     
     //FIXME: Notification observer
-    
-    class func keyPathsForValuesAffectingAbsoluteTimeInterval() -> NSSet {
-        return NSSet(objects: #keyPath(SCKView.startDate),#keyPath(SCKView.endDate))
-    }
     
     public override func draw(_ dirtyRect: NSRect) {
         NSColor.white.setFill()
@@ -161,7 +174,9 @@ import Cocoa
     public override var isOpaque: Bool { return true }
     
     
-    
+    var contentRect: CGRect {
+        return CGRect(origin: .zero, size: frame.size)
+    }
     
     
     
@@ -218,7 +233,107 @@ import Cocoa
         return SCKRelativeTimeLocationInvalid
     }
     
+    
+    //MARK: - Subview management
+    
+    /**
+     *  Adds an SCKEventView to the array of subviews managed by this
+     *  instance. This method is typically called from the event manager.
+     *  @param eventView The view to be added. Must already be a subview of self.
+     */
+    internal func addEventView(_ eventView: SCKEventView) {
+        eventViews.append(eventView)
+    }
+    
+    /**
+     *  Removes an SCKEventView from the array of subviews managed by
+     *  this instance. This method is typically called from the event manager.
+     *  @param eventView The view to be removed.
+     *  @discussion @c -removeFromSuperview should also be called on @c eventView.
+     */
+    
+    internal func removeEventView(_ eventView: SCKEventView) {
+        eventViews.remove(at: eventViews.index(of: eventView)!)
+    }
+    
+    //MARK: - Drag & drop support
+    
+    /**
+     *  Called from an @c SCKEventView subview when a drag action begins.
+     *  This method sets @c _eventViewBeingDragged and @c _otherEventViews,
+     *  and also calls @c -lock on the event view's event holder.
+     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
+     *  handled here (and not during successive relayout processes) in order to avoid
+     *  inconsistencies between the drag & drop action and changes that could be
+     *  observed while the @c SCKEventView is being dragged.
+     *  @param eV The @c SCKEventView being dragged.
+     */
+    internal func beginDraggingEventView(_ eventView: SCKEventView) {
+        var subviews = eventViews
+        subviews.remove(at: subviews.index(of: eventView)!)
+        eventViewBeingDragged = eventView
+        eventView.eventHolder.freeze()
+    }
+    
+    /**
+     *  Called from an @c SCKEventView subview when a drag action moves.
+     *  This method sets this view as needing display (to make dragging guides appear)
+     *  and triggers a relayout for other event views (since conflicts may have changed).
+     *  @param eV The @c SCKEventView being dragged.
+     */
+    internal func continueDraggingEventView(_ eventView: SCKEventView) {
+        invalidateFrames(for: eventViews)
+        layoutSubtreeIfNeeded()
+        needsDisplay = true
+    }
+    
+    /**
+     *  Called from an @c SCKEventView subview when a drag action ends.
+     *  This method clears @c _eventViewBeingDragged and @c _otherEventViews,
+     *  calls @c -unlock on the event view's event holder, triggers a final relayout
+     *  and finally sets this view as needing display (to clear dragging guides).
+     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
+     *  handled here (and not during successive relayout processes) in order to avoid
+     *  inconsistencies between the drag & drop action and changes that could be
+     *  observed while the @c SCKEventView is being dragged.
+     *  @param eV The @c SCKEventView being dragged.
+     */
+    internal func endDraggingEventView(_ eventView: SCKEventView) {
+        //FIXME: Needed eventViewBeingDragged having this param?
+        guard let dragged = eventViewBeingDragged else {
+            return
+        }
+        dragged.eventHolder.unfreeze()
+        eventViewBeingDragged = nil
+        invalidateFrameForAllEventViews()
+        needsDisplay = true
+    }
+    
     //MARK: - Event view layout
+    
+    /**
+     *  This method is called when a relayout is triggered. You may override it to
+     *  perform additional tasks before the actual relayout process takes place. In
+     *  that case, you must call super.
+     */
+    private func beginRelayout() {
+        isRelayoutInProgress = true
+    }
+    
+    /**
+     *  SCKView subclasses override this method to implement positioning (updating
+     *  frame) of their SCKEventView subviews when a relayout process is triggered.
+     *  The ultimate objective of this method is to calculate a new frame for a
+     *  concrete subview based on the properties of its holder. Conflict calculations
+     *  should also be performed here. Default implementation does nothing.
+     *
+     *  @param eventView The event view whose frame needs to be updated.
+     *  @param animation YES if change should be animated, NO instead.
+     */
+    func invalidateFrame(for eventView: SCKEventView) {
+        // Default implementation does nothing
+        needsLayout = true
+    }
     
     /**
      *  This methods performs a series of operations in order to relayout an array of
@@ -267,7 +382,7 @@ import Cocoa
     }
     
     /**
-     *  Calls @c triggerRelayoutForEventViews:animated: passing all event views and NO as 
+     *  Calls @c triggerRelayoutForEventViews:animated: passing all event views and NO as
      *  parameters.
      */
     func invalidateFrameForAllEventViews() {
@@ -276,110 +391,6 @@ import Cocoa
         invalidateFrames(for: eventViews)
         animator().layoutSubtreeIfNeeded()
         NSAnimationContext.endGrouping()
-    }
-
-    
-    ///MARK: - Subview management
-    
-    /**
-     *  Adds an SCKEventView to the array of subviews managed by this
-     *  instance. This method is typically called from the event manager.
-     *  @param eventView The view to be added. Must already be a subview of self.
-     */
-    internal func addEventView(_ eventView: SCKEventView) {
-        eventViews.append(eventView)
-    }
-    
-    /**
-     *  Removes an SCKEventView from the array of subviews managed by
-     *  this instance. This method is typically called from the event manager.
-     *  @param eventView The view to be removed.
-     *  @discussion @c -removeFromSuperview should also be called on @c eventView.
-     */
-    
-    internal func removeEventView(_ eventView: SCKEventView) {
-        eventViews.remove(at: eventViews.index(of: eventView)!)
-    }
-    
-    //MARK: - Drag & drop support
-    
-    /**
-     *  Called from an @c SCKEventView subview when a drag action begins.
-     *  This method sets @c _eventViewBeingDragged and @c _otherEventViews,
-     *  and also calls @c -lock on the event view's event holder.
-     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
-     *  handled here (and not during successive relayout processes) in order to avoid
-     *  inconsistencies between the drag & drop action and changes that could be
-     *  observed while the @c SCKEventView is being dragged.
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func beginDraggingEventView(_ eventView: SCKEventView) {
-        var subviews = eventViews
-        subviews.remove(at: subviews.index(of: eventView)!)
-        otherEventViews = subviews
-        eventViewBeingDragged = eventView
-        eventView.eventHolder.freeze()
-    }
-    
-    /**
-     *  Called from an @c SCKEventView subview when a drag action moves.
-     *  This method sets this view as needing display (to make dragging guides appear)
-     *  and triggers a relayout for other event views (since conflicts may have changed).
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func continueDraggingEventView(_ eventView: SCKEventView) {
-        invalidateFrames(for: otherEventViews!)
-        layoutSubtreeIfNeeded()
-        needsDisplay = true
-    }
-    
-    /**
-     *  Called from an @c SCKEventView subview when a drag action ends.
-     *  This method clears @c _eventViewBeingDragged and @c _otherEventViews,
-     *  calls @c -unlock on the event view's event holder, triggers a final relayout
-     *  and finally sets this view as needing display (to clear dragging guides).
-     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
-     *  handled here (and not during successive relayout processes) in order to avoid
-     *  inconsistencies between the drag & drop action and changes that could be
-     *  observed while the @c SCKEventView is being dragged.
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func endDraggingEventView(_ eventView: SCKEventView) {
-        //FIXME: Needed eventViewBeingDragged having this param?
-        guard let dragged = eventViewBeingDragged else {
-            return
-        }
-        dragged.eventHolder.unfreeze()
-        otherEventViews = []
-        eventViewBeingDragged = nil
-        invalidateFrameForAllEventViews()
-        needsDisplay = true
-    }
-    
-    //MARK: - Event view layout
-    
-    /**
-     *  This method is called when a relayout is triggered. You may override it to
-     *  perform additional tasks before the actual relayout process takes place. In
-     *  that case, you must call super.
-     */
-    private func beginRelayout() {
-        isRelayoutInProgress = true
-    }
-    
-    /**
-     *  SCKView subclasses override this method to implement positioning (updating
-     *  frame) of their SCKEventView subviews when a relayout process is triggered.
-     *  The ultimate objective of this method is to calculate a new frame for a
-     *  concrete subview based on the properties of its holder. Conflict calculations
-     *  should also be performed here. Default implementation does nothing.
-     *
-     *  @param eventView The event view whose frame needs to be updated.
-     *  @param animation YES if change should be animated, NO instead.
-     */
-    func invalidateFrame(for eventView: SCKEventView) {
-        // Default implementation does nothing
-        needsLayout = true
     }
     
     /**

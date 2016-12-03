@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "99E7D0AB1A4AF3B500713F18"
+               BlueprintIdentifier = "992C110B1DEB54B200E156D0"
                BuildableName = "ScheduleKitTests.xctest"
                BlueprintName = "ScheduleKitTests"
                ReferencedContainer = "container:ScheduleKit.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "99E7D0AB1A4AF3B500713F18"
+               BlueprintIdentifier = "992C110B1DEB54B200E156D0"
                BuildableName = "ScheduleKitTests.xctest"
                BlueprintName = "ScheduleKitTests"
                ReferencedContainer = "container:ScheduleKit.xcodeproj">
