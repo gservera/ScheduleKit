@@ -46,7 +46,7 @@
 		99CAFCF11DC9F2A5004502AA /* EventEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF01DC9F2A5004502AA /* EventEngine.swift */; };
 		99CAFCF31DC9F97D004502AA /* DayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF21DC9F97D004502AA /* DayViewController.swift */; };
 		99CAFCF51DCA039F004502AA /* SCKViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF41DCA039F004502AA /* SCKViewController.swift */; };
-		99CDA4611A7066C200AFB505 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 99CDA4601A7066C200AFB505 /* LICENSE */; };
+		99CDA4611A7066C200AFB505 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 99CDA4601A7066C200AFB505 /* LICENSE.md */; };
 		99D399571DDA6EF200498366 /* TestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D399561DDA6EF200498366 /* TestUser.m */; };
 		99D3995A1DDA705D00498366 /* TestEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D399591DDA705D00498366 /* TestEvent.m */; };
 		99D3995D1DDA74B000498366 /* EventEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 99D3995C1DDA74B000498366 /* EventEngine.m */; };
@@ -148,13 +148,14 @@
 		99CAFCF01DC9F2A5004502AA /* EventEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEngine.swift; sourceTree = "<group>"; };
 		99CAFCF21DC9F97D004502AA /* DayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayViewController.swift; sourceTree = "<group>"; };
 		99CAFCF41DCA039F004502AA /* SCKViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		99CDA4601A7066C200AFB505 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		99CDA4601A7066C200AFB505 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		99D399551DDA6EF200498366 /* TestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUser.h; sourceTree = "<group>"; };
 		99D399561DDA6EF200498366 /* TestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUser.m; sourceTree = "<group>"; };
 		99D399581DDA705D00498366 /* TestEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestEvent.h; sourceTree = "<group>"; };
 		99D399591DDA705D00498366 /* TestEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEvent.m; sourceTree = "<group>"; };
 		99D3995B1DDA74B000498366 /* EventEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventEngine.h; sourceTree = "<group>"; };
 		99D3995C1DDA74B000498366 /* EventEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventEngine.m; sourceTree = "<group>"; };
+		99D50B421DF7731B00A729B4 /* cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = cartfile; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
@@ -282,9 +283,10 @@
 		99E7D0971A4AF3B500713F18 = {
 			isa = PBXGroup;
 			children = (
-				99C152DA1A82D94C00096C8E /* README.md */,
-				99CDA4601A7066C200AFB505 /* LICENSE */,
+				99D50B421DF7731B00A729B4 /* cartfile */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
+				99C152DA1A82D94C00096C8E /* README.md */,
+				99CDA4601A7066C200AFB505 /* LICENSE.md */,
 				99E7D0A31A4AF3B500713F18 /* ScheduleKit */,
 				992C110D1DEB54B300E156D0 /* ScheduleKitTests */,
 				99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */,
@@ -527,7 +529,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99CDA4611A7066C200AFB505 /* LICENSE in Resources */,
+				99CDA4611A7066C200AFB505 /* LICENSE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -168,6 +168,7 @@ import AppKit
         }
         _requestInit = SCKEventRequest.init(controller:dateInterval:)
         _internalReloadData()
+        _eventManagerIsConcrete = false
         _hasLoadedEventsAtLeastOnce = true
     }
     
@@ -191,6 +192,7 @@ import AppKit
         }
         _requestInit = SCKConcreteEventRequest<T>.init(controller:dateInterval:)
         _internalReloadData()
+        _eventManagerIsConcrete = true
         _hasLoadedEventsAtLeastOnce = true
     }
     
