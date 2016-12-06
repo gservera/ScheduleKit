@@ -26,11 +26,41 @@
 
 import Cocoa
 
+/// The date interval mode for a SCKViewController.
+///
+/// - day: The controller works with a single day date interval.
+/// - week: The controller works with a week date interval.
 public enum SCKViewControllerMode {
     case day
     case week
 }
 
+/// A NSViewController subclass that sets up a schedule view embedded in a scroll
+/// view and displays a set of events within a day or a week time interval. The
+/// SCKViewController implements all the event processing and conflict handling
+/// logic. It also manages the zooming and the day/week offsetting for you.
+///
+/// To provide events to a SCKViewController, just make an object or a subclass
+/// conform to `SCKEventManaging` or `SCKConcreteEventManaging` and set the 
+/// `eventManager`property. Finally, call a suitable reload data method to execute 
+/// the first event fetch.
+/// 
+/// If you use Swift, you may choose between implementing `SCKEventManaging` or
+/// working in concrete mode by conforming to a `SCKConcreteEventManaging` and 
+/// declaring an event type. Use the concrete mode when working with a single
+/// event class to benefit from Swift's type safety and work with better-typed
+/// methods in your event manager implementation. If you do so, you must also use
+/// the `reloadData(ofConcreteType:)` method to begin new event fetches. If you
+/// work with multiple event classes, you'll have to use `SCKEventManaging` and
+/// call `reloadData()` to load new events instead.
+///
+/// Events are fetched synchronously by default, but asynchronous event fetching
+/// is also available by setting the `loadsEventsAsynchronously` property to true
+/// and implementing the proper event manager methods.
+///
+/// - Note: `SCKConcreteEventManaging` is not available in Objective-C. In
+///         addition, the event manager must be set via `-setObjCDelegate:`.
+///
 @objc open class SCKViewController: NSViewController {
     
     // MARK: - UI setup

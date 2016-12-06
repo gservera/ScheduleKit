@@ -196,7 +196,7 @@ internal final class SCKEventHolder: NSObject {
         /// The changed key path.
         let keyPath: String
         /// The observed change dictionary.
-        let change: [NSKeyValueChangeKey:Any?]
+        let change: [NSKeyValueChangeKey:Any]?
     }
     
     /// Set to `true` when observed changes observed from `representedObject`
