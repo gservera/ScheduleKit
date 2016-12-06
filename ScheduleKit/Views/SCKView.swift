@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2016 Guillem Servera (http://github.com/gservera)
+ *  Copyright:  © 2014-2016 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,20 @@ import Cocoa
 /// An object conforming to the `SCKViewDelegate` protocol must implement a
 /// method required to set a color schedule view events.
 @objc public protocol SCKViewDelegate {
+    
+    /// Implemented by a schedule view's delegate to provide different background
+    /// colors for the different event types when the view's color mode is set to
+    /// `.byEventKind`.
+    ///
+    /// - Parameters:
+    ///   - eventKindValue: The event kind for which to return a color.
+    ///   - scheduleView: The schedule view asking for the color.
+    /// - Returns: The color that will be used as the corresponding event view's
+    ///            background.
     @objc (colorForEventKind:inScheduleView:)
-    optional func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
+    optional
+    func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
 }
-
 
 
 /// An abstract NSView subclass that implements the basic functionality to manage
@@ -43,7 +53,9 @@ import Cocoa
 /// In addition, `SCKView` provides the default (and required) implementation for
 /// event coloring, selection and deselection, handling double clicks on empty
 /// dates and drag & drop.
-
+///
+/// - Note: Do not instantiate this class directly.
+///
 @objc public class SCKView: NSView {
     
     required public init?(coder: NSCoder) {
@@ -61,51 +73,243 @@ import Cocoa
     /// `init(frame:)` or `init(coder:)`. Default implementation does nothing.
     func setUp() { }
     
-    
-    // MARK: - Date handling
-    
-    public var dateInterval: DateInterval = DateInterval() {
-        didSet { needsDisplay = true }
-    }
-    
-    /// The lowest displayed date.
-    public private(set) var startDate: Date = Date() {
-        didSet { absoluteStartTimeRef = startDate.timeIntervalSinceReferenceDate }
-    }
-    
-    /// The highest display date.
-    public private(set) var endDate: Date = Date() {
-        didSet { absoluteEndTimeRef = endDate.timeIntervalSinceReferenceDate }
-    }
-    
-    /// The lowest displayed date as a time interval since reference date.
-    private(set) var absoluteStartTimeRef: Double = 0.0
-    
-    /// The highest displayed date as a time interval since reference date.
-    private(set) var absoluteEndTimeRef: Double = 0.0
-    
-    /// The total number of seconds displayed.
-    var absoluteTimeInterval: TimeInterval {
-        return absoluteEndTimeRef - absoluteStartTimeRef
-    }
-    
-    //Must call reloadData after
-    @objc public func setDateBounds(lower sD: Date, upper eD: Date) {
-        startDate = sD
-        endDate = eD
-        needsDisplay = true
-    }
-    
-    // MARK: -
+    /// The controller managing this view.
+    @IBOutlet public weak var controller: SCKViewController!
     
     /// The schedule view's delegate.
     public weak var delegate: SCKViewDelegate?
     
+    
+    //MARK: - NSView overrides
+    
+    public override var isFlipped: Bool {
+        return true
+    }
+    
+    public override var isOpaque: Bool {
+        return true
+    }
+    
+    public override func draw(_ dirtyRect: NSRect) {
+        NSColor.white.setFill()
+        NSRectFill(dirtyRect)
+    }
+    
+    
+    // MARK: - Date handling
+    
+    /// The displayed date interval. Setting this value marks the view as needing
+    /// display. You should call a reload data method on the controller object to
+    /// provide matching events after calling this method.
+    public var dateInterval: DateInterval = DateInterval() {
+        didSet { needsDisplay = true }
+    }
 
     
+    // MARK: - Date transforms
+    
+    /// Calculates a date by transforming a relative time point in the schedule
+    /// view's date interval.
+    ///
+    /// - Parameter relativeTimeLocation: A valid relative time location.
+    /// - Note: Seconds are rounded to the next minute.
+    /// - Returns: The calculated date or `nil` if `relativeTimeLocation` is not
+    ///            a value compressed between 0.0 and 1.0.
+    final func calculateDate(for relativeTimeLocation: SCKRelativeTimeLocation) -> Date? {
+        guard relativeTimeLocation >= 0.0 && relativeTimeLocation <= 1.0 else {
+            return nil
+        }
+        let start = dateInterval.start.timeIntervalSinceReferenceDate
+        let length = dateInterval.duration * relativeTimeLocation
+        var numberOfSeconds = Int(trunc(start + length))
+        // Round to next minute
+        while numberOfSeconds % 60 > 0 {
+            numberOfSeconds += 1
+        }
+        return Date(timeIntervalSinceReferenceDate: TimeInterval(numberOfSeconds))
+    }
     
     
-    /** The style used by subviews to draw their background. @see ScheduleKitDefinitions.h */
+    /// Calculates the relative time location for a given date.
+    ///
+    /// - Parameter date: A date contained in the schedule view's date interval.
+    /// - Returns: A value between 0.0 and 1.0 representing the relative position
+    ///            of `date` in the schedule view's date interval; or 
+    ///            `SCKRelativeTimeLocationInvalid` if `date` is not contained in
+    ///            that interval.
+    final func calculateRelativeTimeLocation(for date: Date) -> SCKRelativeTimeLocation {
+        guard dateInterval.contains(date) else {
+            return SCKRelativeTimeLocationInvalid
+        }
+        let dateRef = date.timeIntervalSinceReferenceDate
+        let startDateRef = dateInterval.start.timeIntervalSinceReferenceDate
+        return (dateRef - startDateRef) / dateInterval.duration
+    }
+    
+    
+    /// Calculates the relative time location in the view's date interval for a
+    /// given point in the view's coordinate system. The default implementation
+    /// returns `SCKRelativeTimeLocationInvalid`. Subclasses must override this
+    /// method in order to be able to transform screen points into date values.
+    ///
+    /// - Parameter point: The point for which to perform the calculation.
+    /// - Returns: A value between 0.0 and 1.0 representing the relative time
+    ///            location for the given point, or `SCKRelativeTimeLocationInvalid`
+    ///            in case `point` falls out of the view's content rect.
+    func relativeTimeLocation(for point: CGPoint) -> SCKRelativeTimeLocation {
+        return SCKRelativeTimeLocationInvalid
+    }
+    
+    
+    //MARK: - Subview management
+    
+    /// An array containing all the event views displayed in this view.
+    private(set) var eventViews: [SCKEventView] = []
+    
+    
+    /// Registers a recently created `SCKEventView` with this instance. This
+    /// method is called from the controller after adding the view as a subview
+    /// of this schedule view. You should not call this method directly.
+    ///
+    /// - Parameter eventView: The event view to be added.
+    internal final func addEventView(_ eventView: SCKEventView) {
+        eventViews.append(eventView)
+    }
+    
+    
+    /// Removes an `SCKEventView` from the array of subviews managed by this
+    /// instance. This method is called from the controller before removing the
+    /// view from its superview. You should not call this method directly.
+    ///
+    /// - Parameter eventView: The event view to be removed. Must have been added
+    ///                        previously via `addEventView(_:)`.
+    internal final func removeEventView(_ eventView: SCKEventView) {
+        guard let index = eventViews.index(of: eventView) else {
+            Swift.print("Warning: Attempting to remove an unregistered event view")
+            return
+        }
+        eventViews.remove(at: index)
+    }
+    
+    
+    //MARK: - Event view layout
+    
+    /// The portion of the view used to display events. Defaults to the full view
+    /// frame. Subclasses override this property if they display additional items
+    /// such as day or hour labels alongside the event views.
+    public var contentRect: CGRect {
+        return CGRect(origin: .zero, size: frame.size)
+    }
+    
+    
+    /// Indicates whether an event layout invalidation has been triggered by
+    /// invoking the `invalidateFrames(for:)` method. Turns back to `false` when
+    /// the invalidation process completes.
+    private(set) var isInvalidatingLayout: Bool = false
+    
+    
+    /// Override this method to perform additional tasks before the layout
+    /// invalidation takes place. If you do so, don't forget to call super.
+    public func beginLayoutInvalidation() {
+        isInvalidatingLayout = true
+    }
+    
+    
+    /// Override this method to perform additional tasks after the layout
+    /// invalidation has finished. If you do so, don't forget to call super.
+    public func endLayoutInvalidation() {
+        isInvalidatingLayout = false
+    }
+    
+    
+    /// Subclasses may override this method to perform additional calculations
+    /// required to compute the event view's frame when the `layout()` method is 
+    /// called. An example of these calculations include conflict management. The
+    /// default implementation does nothing.
+    ///
+    /// - Parameter eventView: The event view whose frame will be updated soon.
+    /// - Note: Since the event view's frame will be eventually calculated in the
+    ///         `layout()` method, you must avoid changing its frame in this one.
+    func invalidateLayout(for eventView: SCKEventView) { }
+    
+    
+    /// Triggers a series of operations that determine the frame of an array of
+    /// `SCKEventView`s according to their event holder's properties and to other
+    /// events which could be potentially in conflict with them. Eventually, the
+    /// schedule view is marked as needing layout in order to perform the actual
+    /// subview positioning and sizing.
+    ///
+    /// These opertations include freezing all subviews' event holder to guarantee
+    /// that their data remains consistent during the whole process even if their
+    /// represented object properties change.
+    ///
+    /// - Parameters:
+    ///   - eventViews: The array of event views to be laid out.
+    ///   - animated: Pass true to perform an animated subview layout.
+    ///
+    public final func invalidateLayout(for eventViews: [SCKEventView], animated: Bool = false) {
+        guard !isInvalidatingLayout else {
+            Swift.print("Warning: Invalidation already triggered")
+            return
+        }
+        
+        // 1. Prepare to invalidate (subclass customization point)
+        beginLayoutInvalidation()
+        
+        // 2. Freeze event holders
+        var holdersToFreeze = controller.eventHolders
+        // Exclude event view being dragged (already frozen)
+        if let draggedView = eventViewBeingDragged {
+            if let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
+                holdersToFreeze.remove(at: idx)
+            }
+        }
+        
+        for holder in holdersToFreeze {
+            holder.freeze()
+        }
+        
+        // 3. Perform invalidation
+        for eventView in eventViews {
+            invalidateLayout(for: eventView)
+        }
+        
+        // 4. Unfreeze event holders
+        for holder in holdersToFreeze {
+            holder.unfreeze()
+        }
+        
+        // 5. Mark as needing layout
+        needsLayout = true
+        
+        // 6. Animate if requested
+        if animated {
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 0.3
+                context.allowsImplicitAnimation = true
+                self.layoutSubtreeIfNeeded()
+            }, completionHandler: nil)
+        }
+        
+        // 7. Finish (subclass customization point)
+        endLayoutInvalidation()
+    }
+    
+    
+    /// A convenience method to trigger layout invalidation for all event views.
+    ///
+    /// - Parameter animated: Pass true to perform an animated subview layout.
+    public final func invalidateLayoutForAllEventViews(animated: Bool = false) {
+        invalidateLayout(for: eventViews, animated: animated)
+    }
+    
+    
+    // MARK: - Event coloring
+    
+    // TODO: Move color handling here
+    
+    /// The color style used to draw the different event views. Setting this
+    /// value to a different style marks event views as needing display.
     @objc public var colorMode: SCKEventColorMode = .byEventKind {
         didSet {
             if colorMode != oldValue {
@@ -117,7 +321,15 @@ import Cocoa
         }
     }
     
-    weak var selectedEventView: SCKEventView? {
+    
+    // MARK: - Event selection
+    
+    /// The currently selected event view or `nil` if none. Setting this value may
+    /// trigger the `scheduleControllerDidClearSelection(_:)` and/or the
+    /// `scheduleController(_:didSelectEvent:)` methods on the controller`s event
+    /// manager when appropiate. In addition, it marks all event views as needing
+    /// display in order to make them reflect the current selection.
+    public weak var selectedEventView: SCKEventView? {
         willSet {
             if selectedEventView != nil && newValue == nil {
                 controller.eventManager?.scheduleControllerDidClearSelection(controller)
@@ -127,33 +339,15 @@ import Cocoa
             for eventView in eventViews {
                 eventView.needsDisplay = true
             }
-            if selectedEventView != nil {
-                controller.eventManager?.scheduleController(controller, didSelectEvent: selectedEventView!.eventHolder.representedObject)
+            if let s = selectedEventView, let eM = controller.eventManager {
+                //Event view has already checked if `s` was the same as old value.
+                let theEvent = s.eventHolder.representedObject
+                eM.scheduleController(controller, didSelectEvent: theEvent)
             }
         }
     }
     
-    @IBOutlet public weak var controller: SCKViewController!
-    /** This property is set to YES when a relayout has been triggered and back to NO when the
-     process finishes. Mind that relayout methods are invoked quite often. */
-    private(set) var isRelayoutInProgress: Bool = false
     
-    
-    /**< SCKEventView subviews */
-    private var eventViews: [SCKEventView] = []
-    /**< When dragging, the subview being dragged */
-    internal weak var eventViewBeingDragged: SCKEventView?
-    
-    
-    
-    //FIXME: Notification observer
-    
-    public override func draw(_ dirtyRect: NSRect) {
-        NSColor.white.setFill()
-        NSRectFill(dirtyRect)
-    }
-    
-
     public override func mouseDown(with event: NSEvent) {
         // Called when user clicks on an empty space.
         // Deselect selected event view if any
@@ -162,244 +356,55 @@ import Cocoa
         if event.clickCount == 2 {
             let loc = convert(event.locationInWindow, from: nil)
             let offset = relativeTimeLocation(for: loc)
-            if offset != Double(NSNotFound) {
+            if offset != SCKRelativeTimeLocationInvalid, let eM = controller.eventManager {
                 let blankDate = calculateDate(for: offset)!
-                controller.eventManager?.scheduleController(controller, didDoubleClickBlankDate: blankDate)
+                eM.scheduleController(controller, didDoubleClickBlankDate: blankDate)
             }
         }
     }
-
     
-    public override var isFlipped: Bool { return true }
-    public override var isOpaque: Bool { return true }
-    
-    
-    var contentRect: CGRect {
-        return CGRect(origin: .zero, size: frame.size)
-    }
-    
-    
-    
-    
-    
-    /**
-     *  Calculates the date represented by a specific relative time location between @c
-     *  startDate and @c endDate. Note that seconds are rounded so they'll be zero.
-     *  @param offset The relative time location. Should be a value between 0.0 and 1.0.
-     *  @return The calculated NSDate object or nil if @c offset is not valid.
-     */
-    func calculateDate(for relativeTimeLocation: Double) -> Date? {
-        guard relativeTimeLocation >= 0.0 && relativeTimeLocation <= 1.0 else {
-            return nil
-        }
-        var numberOfSeconds = Int(trunc(absoluteStartTimeRef + relativeTimeLocation * absoluteTimeInterval))
-        // Round to next minute
-        while numberOfSeconds % 60 > 0 {
-            numberOfSeconds += 1
-        }
-        return Date(timeIntervalSinceReferenceDate: TimeInterval(numberOfSeconds))
-    
-    }
-    
-    
-    /**
-     *  Calculates the relative time location between @c startDate and @c endDate for a given
-     *  NSDate object.
-     *
-     *  @param date The date from which to perform the calculation. Should not be nil.
-     *  @return A double value between 0.0 and 1.0 representing the relative position of @c
-     *  date between @c startDate and @c endDate; or @c SCKRelativeTimeLocationNotFound if @c
-     *  date is before @c startDate or after @c endDate.
-     */
-    func calculateRelativeTimeLocation(for date: Date) -> Double {
-        let timeRef = date.timeIntervalSinceReferenceDate
-        guard timeRef >= absoluteStartTimeRef && timeRef <= absoluteEndTimeRef else {
-            return SCKRelativeTimeLocationInvalid
-        }
-        return (timeRef - absoluteStartTimeRef) / absoluteTimeInterval
-    }
-    
-    /**
-     *  Calculates the relative time location between @c startDate and @c for a given point
-     *  inside the view coordinates. Default implementation always returns
-     *  SCKRelativeLocationNotFound, consider overriding this method in subclasses.
-     *
-     *  @param location The NSPoint for which to perform the calculation.
-     *  @return In subclasses, a double value between 0.0 and 1.0 representing the relative
-     *  position of @c location between @c startDate and @c endDate; or @c
-     *  SCKRelativeTimeLocationNotFound if @c location falls out of the content rect.
-     */
-    func relativeTimeLocation(for point: CGPoint) -> Double {
-        return SCKRelativeTimeLocationInvalid
-    }
-    
-    
-    //MARK: - Subview management
-    
-    /**
-     *  Adds an SCKEventView to the array of subviews managed by this
-     *  instance. This method is typically called from the event manager.
-     *  @param eventView The view to be added. Must already be a subview of self.
-     */
-    internal func addEventView(_ eventView: SCKEventView) {
-        eventViews.append(eventView)
-    }
-    
-    /**
-     *  Removes an SCKEventView from the array of subviews managed by
-     *  this instance. This method is typically called from the event manager.
-     *  @param eventView The view to be removed.
-     *  @discussion @c -removeFromSuperview should also be called on @c eventView.
-     */
-    
-    internal func removeEventView(_ eventView: SCKEventView) {
-        eventViews.remove(at: eventViews.index(of: eventView)!)
-    }
     
     //MARK: - Drag & drop support
     
-    /**
-     *  Called from an @c SCKEventView subview when a drag action begins.
-     *  This method sets @c _eventViewBeingDragged and @c _otherEventViews,
-     *  and also calls @c -lock on the event view's event holder.
-     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
-     *  handled here (and not during successive relayout processes) in order to avoid
-     *  inconsistencies between the drag & drop action and changes that could be
-     *  observed while the @c SCKEventView is being dragged.
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func beginDraggingEventView(_ eventView: SCKEventView) {
-        var subviews = eventViews
-        subviews.remove(at: subviews.index(of: eventView)!)
+    /// When dragging, the subview being dragged.
+    internal weak var eventViewBeingDragged: SCKEventView?
+    
+    
+    /// Called by an `SCKEventView` when a drag operation begins. This method
+    /// sets the `eventViewBeingDragged` property and freezes the event view's
+    /// holder to guarantee that its data remains consistent during the whole 
+    /// process even if the represented object properties change.
+    ///
+    /// - Parameter eventView: The event view being dragged.
+    internal final func beginDragging(eventView: SCKEventView) {
         eventViewBeingDragged = eventView
         eventView.eventHolder.freeze()
     }
     
-    /**
-     *  Called from an @c SCKEventView subview when a drag action moves.
-     *  This method sets this view as needing display (to make dragging guides appear)
-     *  and triggers a relayout for other event views (since conflicts may have changed).
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func continueDraggingEventView(_ eventView: SCKEventView) {
-        invalidateFrames(for: eventViews)
+    
+    /// Called by an `SCKEventView` every time that `mouseDragged(_:)` is called.
+    /// Performs a layout invalidation to handle new conflicts, applies layout and 
+    /// marks the schedule view as needing display.
+    internal final func continueDragging() {
+        invalidateLayoutForAllEventViews()
         layoutSubtreeIfNeeded()
         needsDisplay = true
     }
     
-    /**
-     *  Called from an @c SCKEventView subview when a drag action ends.
-     *  This method clears @c _eventViewBeingDragged and @c _otherEventViews,
-     *  calls @c -unlock on the event view's event holder, triggers a final relayout
-     *  and finally sets this view as needing display (to clear dragging guides).
-     *  @discussion Locking and unlocking for SCKEventView subviews being dragged are
-     *  handled here (and not during successive relayout processes) in order to avoid
-     *  inconsistencies between the drag & drop action and changes that could be
-     *  observed while the @c SCKEventView is being dragged.
-     *  @param eV The @c SCKEventView being dragged.
-     */
-    internal func endDraggingEventView(_ eventView: SCKEventView) {
-        //FIXME: Needed eventViewBeingDragged having this param?
-        guard let dragged = eventViewBeingDragged else {
+    
+    /// Called by an `SCKEventView` when a drag operation ends. This method sets
+    /// the `eventViewBeingDragged` property to nil, unfreezes the draged view's
+    /// event holder and triggers a final layout invalidation and drawing for this
+    /// instance.
+    internal final func endDragging() {
+        guard let draggedEventView = eventViewBeingDragged else {
+            Swift.print("Called endDragging() without an event view being dragged")
             return
         }
-        dragged.eventHolder.unfreeze()
+        draggedEventView.eventHolder.unfreeze()
         eventViewBeingDragged = nil
-        invalidateFrameForAllEventViews()
+        invalidateLayoutForAllEventViews(animated: true)
         needsDisplay = true
-    }
-    
-    //MARK: - Event view layout
-    
-    /**
-     *  This method is called when a relayout is triggered. You may override it to
-     *  perform additional tasks before the actual relayout process takes place. In
-     *  that case, you must call super.
-     */
-    private func beginRelayout() {
-        isRelayoutInProgress = true
-    }
-    
-    /**
-     *  SCKView subclasses override this method to implement positioning (updating
-     *  frame) of their SCKEventView subviews when a relayout process is triggered.
-     *  The ultimate objective of this method is to calculate a new frame for a
-     *  concrete subview based on the properties of its holder. Conflict calculations
-     *  should also be performed here. Default implementation does nothing.
-     *
-     *  @param eventView The event view whose frame needs to be updated.
-     *  @param animation YES if change should be animated, NO instead.
-     */
-    func invalidateFrame(for eventView: SCKEventView) {
-        // Default implementation does nothing
-        needsLayout = true
-    }
-    
-    /**
-     *  This methods performs a series of operations in order to relayout an array of
-     *  SCKEventView objects according to their date, duration and other events in conflict.
-     *  The full process implies locking all subviews' event holder (as to prevent changes
-     *  on their properties while conflict calculations take place), calling
-     *  @c relayoutEventView:animated: for each SCKEventView in @c eventViews and finally
-     *  unlocking the previously locked event holders.
-     *
-     *  @discussion When an event view is being dragged, its event holder does not get locked
-     *  or unlocked.
-     *  @discussion Don't override this method. See @c beginRelayout and @c endRelayout instead.
-     *
-     *  @param eventViews The array of SCKEventView objects to be redrawn.
-     *  @param animation  Pass YES if you want relayout to have animation. Pass no instead.
-     */
-    func invalidateFrames(for eventViews: [SCKEventView]) {
-        guard !isRelayoutInProgress else {
-            Swift.print("Warning: Invalidation already triggered")
-            return
-        }
-        var allHolders = controller.eventHolders
-        if eventViewBeingDragged != nil {
-            let idx = allHolders.index(where: { (tested) -> Bool in
-                return (tested === eventViewBeingDragged!.eventHolder!)
-            })!
-            allHolders.remove(at: idx)
-        }
-        
-        beginRelayout()
-        
-        for holder in allHolders {
-            holder.freeze()
-        }
-        
-        //TODO: Combine animations
-        for eventView in eventViews {
-            invalidateFrame(for: eventView)
-        }
-        
-        for holder in allHolders {
-            holder.unfreeze()
-        }
-        
-        endRelayout()
-    }
-    
-    /**
-     *  Calls @c triggerRelayoutForEventViews:animated: passing all event views and NO as
-     *  parameters.
-     */
-    func invalidateFrameForAllEventViews() {
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current().duration = 1.0
-        invalidateFrames(for: eventViews)
-        animator().layoutSubtreeIfNeeded()
-        NSAnimationContext.endGrouping()
-    }
-    
-    /**
-     *  This method is called when a relayout finishes. You may override it to
-     *  perform additional tasks after the actual relayout process takes place. In
-     *  that case, you must call super.
-     */
-    func endRelayout() {
-        isRelayoutInProgress = false
     }
     
 }

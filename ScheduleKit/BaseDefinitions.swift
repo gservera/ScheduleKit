@@ -62,3 +62,13 @@ internal let SCKRelativeTimeLengthInvalid = SCKRelativeTimeLocation.leastNormalM
     case byEventKind
     case byEventOwner
 }
+
+extension Calendar {
+    func dateInterval(_ interval: DateInterval,
+                      offsetBy value: Int,
+                      _ unit: Calendar.Component) -> DateInterval {
+        let start = date(byAdding: unit, value: value, to: interval.start)
+        let end = date(byAdding: unit, value: value, to: interval.end)
+        return DateInterval(start: start!, end: end!)
+    }
+}

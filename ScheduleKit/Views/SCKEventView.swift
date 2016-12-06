@@ -170,7 +170,7 @@ public final class SCKEventView: NSView {
         case .idle where NSCursor.current() == NSCursor.resizeUpDown():
             draggingStatus = .draggingDuration(oldValue: eventHolder.cachedDuration,
                                               lastValue: eventHolder.cachedDuration)
-            scheduleView.beginDraggingEventView(self)
+            scheduleView.beginDragging(eventView: self)
             fallthrough
         // User continued dragging (and fallthrough)
         case .draggingDuration(_, _):
@@ -181,12 +181,12 @@ public final class SCKEventView: NSView {
                 draggingStatus = .draggingContent(oldStart: eventHolder.relativeStart,
                                                   newStart: eventHolder.relativeStart,
                                                   innerDelta: convert(event.locationInWindow, from: nil).y)
-                scheduleView.beginDraggingEventView(self)
+                scheduleView.beginDragging(eventView: self)
             }
             // User continued dragging (and fallthrough)
             parseContentDrag(with: event)
         }
-        scheduleView.continueDraggingEventView(self)
+        scheduleView.continueDragging()
     }
     
     private func parseDurationDrag(with event: NSEvent) {
@@ -208,7 +208,7 @@ public final class SCKEventView: NSView {
                         relativeEnd = 1.0;
                     }
                     eventHolder.relativeLength = relativeEnd - eventHolder.relativeStart
-                    scheduleView.invalidateFrame(for: self)
+                    scheduleView.invalidateLayout(for: self)
                 } else {
                     newDuration = 5
                 }
@@ -267,7 +267,7 @@ public final class SCKEventView: NSView {
                 flushUncommitedDraggingOperation()
             }
             
-            scheduleView.endDraggingEventView(self)
+            scheduleView.endDragging()
             
         case .draggingContent(let oldStart, let newStart, _):
             if let scheduledDate = scheduleView.calculateDate(for: newStart) {
@@ -285,7 +285,7 @@ public final class SCKEventView: NSView {
                     flushUncommitedDraggingOperation()
                 }
             }
-            scheduleView.endDraggingEventView(self)
+            scheduleView.endDragging()
             
         case .idle where event.clickCount == 2:
             scheduleView.controller.eventManager?.scheduleController(scheduleView.controller, didDoubleClickEvent: eventHolder.representedObject)
@@ -301,12 +301,12 @@ public final class SCKEventView: NSView {
         eventHolder.resumeObservingRepresentedObjectChanges()
         eventHolder.recalculateRelativeValues()
         // FIXME: needed? will be called from endDraggingEventView
-        scheduleView.invalidateFrameForAllEventViews()
+        scheduleView.invalidateLayoutForAllEventViews()
     }
     
     private func flushUncommitedDraggingOperation() {
         eventHolder.recalculateRelativeValues()
-        scheduleView.invalidateFrame(for: self)
+        scheduleView.invalidateLayout(for: self)
     }
     
     // MARK: Right mouse events

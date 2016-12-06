@@ -257,19 +257,19 @@ internal final class SCKEventHolder: NSObject {
                 let conflictsNow = Set(controller.resolvedConflicts(for: self))
                 let updatingHolders = previousConflicts.union(conflictsNow)
                 let updatingViews = updatingHolders.map {$0.eventView!}
-                rootView.invalidateFrames(for: updatingViews)
+                rootView.invalidateLayout(for: updatingViews)
             case #keyPath(SCKEvent.scheduledDate):
                 let newDate = change[.newKey] as! Date
                 cachedScheduledDate = newDate
                 recalculateRelativeValues()
-                if newDate < rootView.startDate || newDate > rootView.endDate {
+                if !rootView.dateInterval.contains(newDate) {
                     // Holder is now invalid, reload data will get rid of it.
                     controller._internalReloadData()
                 } else {
                     let conflictsNow = Set(controller.resolvedConflicts(for: self))
                     let updatingHolders = previousConflicts.union(conflictsNow)
                     let updatingViews = updatingHolders.map {$0.eventView!}
-                    rootView.invalidateFrames(for: updatingViews)
+                    rootView.invalidateLayout(for: updatingViews, animated: true)
                 }
             case #keyPath(SCKEvent.title):
                 cachedTitle = change[.newKey] as? String ?? ""

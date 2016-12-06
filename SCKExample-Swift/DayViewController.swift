@@ -35,11 +35,12 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
         super.viewWillAppear()
         
         let calendar = Calendar.current
-        let dayBeginning = calendar.date(bySettingHour: 7, minute: 0, second: 0, of: Date())!
-        let dayEnding = calendar.date(bySettingHour: 18, minute: 0, second: 0, of: Date())!
-        scheduleView.setDateBounds(lower: dayBeginning, upper: dayEnding)
+        let dayBeginning = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let dayEnding = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
+        scheduleView.delegate = self
+        scheduleView.dateInterval = DateInterval(start: dayBeginning, end: dayEnding)
         reloadData(ofConcreteType: TestEvent.self)
-        scheduleView.needsDisplay = true
+        scheduleView.colorMode = .byEventOwner
     }
     
     private var lastCount = 0
@@ -113,6 +114,16 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
         alert.addButton(withTitle: "Save changes")
         alert.addButton(withTitle: "Discard")
         return alert.runModal() == NSAlertFirstButtonReturn
+    }
+}
+
+extension DayViewController: SCKGridViewDelegate {
+    func dayStartHour(for gridView: SCKGridView) -> Int {
+        return 7
+    }
+    
+    func dayEndHour(for gridView: SCKGridView) -> Int {
+        return 19
     }
 }
 

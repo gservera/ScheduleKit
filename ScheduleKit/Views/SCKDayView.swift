@@ -1,113 +1,77 @@
-//
-//  SCKDayView.swift
-//  ScheduleKit
-//
-//  Created by Guillem Servera Negre on 29/10/16.
-//  Copyright © 2016 Guillem Servera. All rights reserved.
-//
+/*
+ *  SCKDayView.swift
+ *  ScheduleKit
+ *
+ *  Created:    Guillem Servera on 29/10/2016.
+ *  Copyright:  © 2016 Guillem Servera (https://github.com/gservera)
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
 
 import Cocoa
 
-public class SCKDayView: SCKGridView {
+/// An grid-style schedule view that displays events in a single day date
+/// interval. Use it by creating a new `SCKViewController` object and setting its
+/// `mode` property to `SCKViewControllerMode.day`. Then, configure the view with
+/// a date interval from the start of a day (00:00:00) to its last second 
+/// (23:59:59).
+///
+/// Optionally, you may set the `delegate` property and implement its methods to
+/// change the displayed hour range (which defaults to the whole day).
+///
+public final class SCKDayView: SCKGridView {
 
-    @IBAction func decreaseDayOffset(sender: Any) {
-        let sD = sharedCalendar.date(byAdding: .day, value: -1, to: startDate)!
-        let eD = sharedCalendar.date(byAdding: .day, value: -1, to: endDate)!
-        setDateBounds(lower: sD, upper: eD)
+    // MARK: - Day offset actions
+    
+    /// Displays the previous day and asks the controller to fetch any matching
+    /// events.
+    ///
+    /// - Parameter sender: The UI control that initiated this action.
+    @IBAction func decreaseDayOffset(_ sender: Any) {
+        let c = sharedCalendar
+        dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .day)
         controller._internalReloadData()
     }
+
     
-    @IBAction func increaseDayOffset(sender: Any) {
-        let sD = sharedCalendar.date(byAdding: .day, value: 1, to: startDate)!
-        let eD = sharedCalendar.date(byAdding: .day, value: 1, to: endDate)!
-        setDateBounds(lower: sD, upper: eD)
+    /// Displays the next day and asks the controller to fetch any matching
+    /// events.
+    ///
+    /// - Parameter sender: The UI control that initiated this action.
+    @IBAction func increaseDayOffset(_ sender: Any) {
+        let c = sharedCalendar
+        dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .day)
         controller._internalReloadData()
     }
+
     
-    @IBAction public func resetDayOffset(sender: Any) {
-        let startHour = sharedCalendar.component(.hour, from: startDate)
-        let endHour = sharedCalendar.component(.hour, from: endDate)
-        
-        let sD = sharedCalendar.date(bySettingHour: startHour, minute: 0, second: 0, of: Date())!
-        if endHour < startHour {
-            let next = sharedCalendar.date(byAdding: .day, value: 1, to: Date())!
-            let eD = sharedCalendar.date(bySettingHour: endHour, minute: 0, second: 0, of: next)!
-            setDateBounds(lower: sD, upper: eD)
-        } else {
-            let eD = sharedCalendar.date(bySettingHour: endHour, minute: 0, second: 0, of: Date())!
-            setDateBounds(lower: sD, upper: eD)
+    /// Displays the default date interval (today) and asks the controller to
+    /// fetch matching events.
+    ///
+    /// - Parameter sender: The UI control that initiated this action.
+    @IBAction public func resetDayOffset(_ sender: Any) {
+        let c = sharedCalendar
+        guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
+            else {
+            fatalError("Could not calculate the start date for current day.")
         }
+        dateInterval = DateInterval(start: sD, duration: dateInterval.duration)
         controller._internalReloadData()
     }
-    
-    //MARK: - Overrides
-    
-    override func setUp() {
-        super.setUp()
-        dayCount = 1
-        firstHour = 0
-        hourCount = 23
-    }
-    
-    public override func setDateBounds(lower sD: Date, upper eD: Date) {
-        super.setDateBounds(lower: sD, upper: eD)
-        firstHour = sharedCalendar.component(.hour, from: startDate)
-        hourCount = Int(trunc(absoluteTimeInterval/3600.0))
-        let minHourHeight = contentRect.height / CGFloat(hourCount)
-        if hourHeight < minHourHeight {
-            hourHeight = minHourHeight
-        }
-    }
-    
-    override func relativeTimeLocation(for point: CGPoint) -> Double {
-        let canvas = contentRect
-        if contentRect.contains(point) {
-            return Double((point.y - canvas.minY) / canvas.height)
-        }
-        return SCKRelativeTimeLocationInvalid
-    }
-    
-    override func rectForUnavailableTimeRange(_ rng: SCKUnavailableTimeRange) -> CGRect {
-        let canvas = contentRect
-        let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: startDate)!
-        let sOffset = calculateRelativeTimeLocation(for: sDate)
-        guard sOffset != SCKRelativeTimeLocationInvalid else {
-            return CGRect.zero
-        }
-        let eDate = sharedCalendar.date(bySettingHour: rng.endHour, minute: rng.endMinute, second: 0, of: startDate)!
-        let eOffset = calculateRelativeTimeLocation(for: eDate)
-        var yOrigin: CGFloat, yLength: CGFloat
-        
-        yOrigin = canvas.minY + CGFloat(sOffset) * canvas.height
-        if eOffset != SCKRelativeTimeLocationInvalid {
-            yLength = CGFloat(eOffset-sOffset) * canvas.height
-        } else {
-            yLength = frame.maxY - yOrigin
-        }
-        
-        return CGRect(x: canvas.minX, y: yOrigin, width: canvas.width, height: yLength)
-    }
-    
-    
-    public override func layout() {
-        super.layout()
-        
-        let canvas = contentRect
-        
-        for eventView in (subviews.filter{$0 is SCKEventView} as! [SCKEventView]) {
-            
-            let oldFrame = eventView.frame
-            
-            var newFrame = CGRect.zero
-            newFrame.origin.y = canvas.minY + canvas.height * CGFloat(eventView.eventHolder.relativeStart)
-            newFrame.size.height = canvas.height * CGFloat(eventView.eventHolder.relativeLength)
-            newFrame.size.width = canvas.width / CGFloat(eventView.eventHolder.conflictCount)
-            newFrame.origin.x = canvas.minX + newFrame.width * CGFloat(eventView.eventHolder.conflictIndex)
-            
-            if oldFrame != newFrame {
-                eventView.frame = newFrame
-            }
-        }
-    }
-    
 }

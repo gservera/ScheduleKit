@@ -41,18 +41,14 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
         super.viewWillAppear()
         mode = .week
         let calendar = Calendar.current
-        let dayBeginning = calendar.date(bySettingHour: 7, minute: 0, second: 0, of: Date())!
-        let dayEnding = calendar.date(bySettingHour: 18, minute: 0, second: 0, of: Date())!
-        scheduleView.setDateBounds(lower: dayBeginning, upper: dayEnding)
-        reloadData(ofConcreteType: TestEvent.self)
-        scheduleView.needsDisplay = true
         
         let weekBeginning = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear,.weekOfYear], from: Date()))!
         let weekEnding = calendar.date(byAdding: .weekOfYear, value: 1, to: weekBeginning)!
         
-        scheduleView.setDateBounds(lower: weekBeginning, upper: weekEnding)
+        scheduleView.dateInterval = DateInterval(start: weekBeginning, end: weekEnding)
         reloadData(ofConcreteType: TestEvent.self)
         (scheduleView as! SCKWeekView).delegate = self
+        scheduleView.needsDisplay = true
     }
     
     private var lastCount = 0
@@ -118,7 +114,7 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
     }
 }
 
-extension WeekViewController: SCKWeekViewDelegate {
+extension WeekViewController: SCKGridViewDelegate {
     
     func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange] {
         return [
@@ -132,26 +128,15 @@ extension WeekViewController: SCKWeekViewDelegate {
         ]
     }
     
-    func dayStartHour(for weekView: SCKWeekView) -> Int {
+    func dayStartHour(for gridView: SCKGridView) -> Int {
         return dayStartHour
     }
     
-    func dayEndHour(for weekView: SCKWeekView) -> Int {
+    func dayEndHour(for gridView: SCKGridView) -> Int {
         return dayEndHour
     }
     
-    func dayCount(for weekView: SCKWeekView) -> Int {
-        var c = 5
-        if showsSaturdays {
-            c += 1
-            if showsSundays {
-                c += 1
-            }
-        }
-        return c
-    }
-    
-    func color(for eventKindValue: Int, in gridView: SCKView) -> NSColor {
+    func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor {
         if let kind = EventKind(rawValue: eventKindValue) {
             return kind.color
         }
