@@ -46,7 +46,7 @@ public struct SCKDayPoint {
     /// - parameter date: The Date object from which to get h/m/s parameters.
     ///
     /// - returns: The initialized SCKDayPoint.
-    init(date: Date) {
+    public init(date: Date) {
         let components = sharedCalendar.dateComponents([.hour, .minute, .second], from: date)
         self.init(hour: components.hour!, minute: components.minute!, second: components.second!)
     }
@@ -60,7 +60,7 @@ public struct SCKDayPoint {
     /// - parameter second: The point's second. If less than 0 or greater than 60 it gets passed to minute.
     ///
     /// - returns: The initialized SCKDayPoint.
-    init(hour: Int, minute: Int, second: Int) {
+    public init(hour: Int, minute: Int, second: Int) {
         var _hour = hour, _minute = minute, _second = second
         while (_second >= 60) {
             _second -= 60; _minute += 1;

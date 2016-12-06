@@ -17,7 +17,7 @@
 
 + (nonnull NSArray<TestEvent*>*)sampleEventsForUsers:(nonnull NSArray<TestUser*>*)users;
 
-@property (nonatomic, readonly) NSInteger eventType;
+@property (nonatomic, readonly) NSInteger eventKind;
 @property (nonatomic, readonly, strong) id <SCKUser> _Nonnull user;
 @property (nonatomic, readonly, copy) NSString * _Nonnull title;
 @property (nonatomic) NSInteger duration;

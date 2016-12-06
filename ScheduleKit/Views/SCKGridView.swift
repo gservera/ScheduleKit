@@ -31,18 +31,18 @@ import Cocoa
 /// addition to other methods defined in `SCKViewDelegate`.
 @objc public protocol SCKGridViewDelegate: SCKViewDelegate {
     
-    /// <#Description#>
+    /// Implement this method to specify the first displayed hour. Defaults to 0.
     ///
-    /// - Parameter gridView: <#gridView description#>
-    /// - Returns: <#return value description#>
+    /// - Parameter gridView: The grid view asking for a start hour.
+    /// - Returns: An hour value from 0 to 24.
     @objc(dayStartHourForGridView:)
     func dayStartHour(for gridView: SCKGridView) -> Int
     
 
-    /// <#Description#>
+    /// Implement this method to specify the last displayed hour. Defaults to 24.
     ///
-    /// - Parameter gridView: <#gridView description#>
-    /// - Returns: <#return value description#>
+    /// - Parameter gridView: The grid view asking for a start hour.
+    /// - Returns: An hour value from 0 to 24, where 0 is parsed as 24.
     @objc(dayEndHourForGridView:)
     func dayEndHour(for gridView: SCKGridView) -> Int
     
@@ -116,7 +116,7 @@ public class SCKGridView: SCKView {
     private var dayStartPoint = SCKDayPoint.zero
     
     /// A view representign the day end hour.
-    private var dayEndPoint = SCKDayPoint(hour: 23, minute: 59, second: 59)
+    private var dayEndPoint = SCKDayPoint(hour: 24, minute: 0, second: 0)
     
     /// Called when the `dayStartPoint` and `dayEndPoint` change during
     /// initialisation or when their values are read from the delegate. Sets the
@@ -276,6 +276,7 @@ public class SCKGridView: SCKView {
         
         // 2. Add visible hours' labels as subviews. Remove others if installed.
         for (hour, label) in hourLabels {
+            guard hour < 100 else {continue}
             let shouldBeInstalled = (hour >= firstHour && hour < firstHour + hourCount)
             if label.superview != nil && !shouldBeInstalled {
                 label.removeFromSuperview()
@@ -518,8 +519,8 @@ public class SCKGridView: SCKView {
             needsDisplay = true
         }
         let start = delegate.dayStartHour(for: self)
-        let end = delegate.dayEndHour(for: self)
-        
+        var end = delegate.dayEndHour(for: self)
+        if end == 0 { end = 24 }
         dayStartPoint = SCKDayPoint(hour: start, minute: 0, second: 0)
         dayEndPoint = SCKDayPoint(hour: end, minute: 0, second: 0)
         updateHourParameters()

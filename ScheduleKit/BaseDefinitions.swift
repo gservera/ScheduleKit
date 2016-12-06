@@ -55,11 +55,12 @@ internal let SCKRelativeTimeLengthInvalid = SCKRelativeTimeLocation.leastNormalM
 
 
 /// Possible color styles for drawing event view backgrounds.
-///
-/// - byEventKind:  Colors events according to their event kind.
-/// - byEventOwner: Colors events according to their user's event color.
 @objc public enum SCKEventColorMode: Int {
+    
+    /// Colors events according to their event kind.
     case byEventKind
+    
+    /// Colors events according to their user's event color.
     case byEventOwner
 }
 

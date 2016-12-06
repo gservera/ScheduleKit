@@ -13,7 +13,7 @@
 - (nonnull instancetype)initWithKind:(NSInteger)kind user:(nonnull TestUser*)user title:(nonnull NSString*)title duration:(NSInteger)duration date:(nonnull NSDate*)date {
     self = [super init];
     if (self) {
-        _eventType = kind;
+        _eventKind = kind;
         _user = user;
         _title = title;
         _duration = duration;

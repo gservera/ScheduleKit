@@ -82,11 +82,11 @@ import Cocoa
     
     //MARK: - NSView overrides
     
-    public override var isFlipped: Bool {
+    override open var isFlipped: Bool {
         return true
     }
     
-    public override var isOpaque: Bool {
+    override open var isOpaque: Bool {
         return true
     }
     

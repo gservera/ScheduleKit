@@ -9,7 +9,7 @@
 @import Cocoa;
 @import ScheduleKit;
 
-@interface ViewController : NSViewController <SCKEventManaging>
+@interface ViewController : NSViewController <SCKEventManaging, SCKGridViewDelegate>
 
 
 @property (nonatomic, strong) IBOutlet SCKViewController * scheduleController;

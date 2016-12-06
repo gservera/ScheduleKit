@@ -1,4 +1,10 @@
 language: objective-c
+osx_image: xcode8
 xcode_project: ScheduleKit.xcodeproj
 xcode_scheme: ScheduleKit
-osx_image: xcode6.4
+xcode_sdk: macosx
+before_install:
+- carthage update --platform macOS
+script: set -o pipefail && xcodebuild -project $TRAVIS_XCODE_PROJECT -scheme $TRAVIS_XCODE_SCHEME -sdk $TRAVIS_XCODE_SDK build test | xcpretty
+after_success:
+- bash <(curl -s https://codecov.io/bash) -J 'ScheduleKit'
