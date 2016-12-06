@@ -10,8 +10,7 @@ import Cocoa
 
 @objc(SCKEventManaging) public protocol SCKObjCEventManaging: NSObjectProtocol {
     
-    @objc optional func events(from startDate: Date,
-                               to endDate: Date,
+    @objc optional func events(in dateInterval: DateInterval,
                                for controller: SCKViewController) -> [SCKEvent]
     
     @objc optional func scheduleController(_ controller: SCKViewController,
@@ -51,8 +50,8 @@ public extension SCKViewController {
             delegate = object
         }
         
-        func events(from startDate: Date, to endDate: Date, for controller: SCKViewController) -> [SCKEvent] {
-            return delegate?.events?(from: startDate, to: endDate, for: controller) ?? []
+        func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent] {
+            return delegate?.events?(in: dateInterval, for: controller) ?? []
         }
         
         func scheduleController(_ c: SCKViewController, didMakeEventRequest request: SCKEventRequest) {

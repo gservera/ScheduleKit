@@ -57,6 +57,9 @@ import Foundation
     /// The requested ending date parameter for the event fetch criteria.
     @objc public private(set) var endDate: Date
     
+    /// The request date interval.
+    @objc public private(set) var dateInterval: DateInterval
+    
     /// An internal flat to track completion.
     fileprivate var isCompleted: Bool = false
     
@@ -70,10 +73,11 @@ import Foundation
     ///   - c: The controller object that creates the request.
     ///   - sD: The starting date that must be used in the event fetching.
     ///   - eD: The ending date that must be used in the event fetching.
-    internal init(controller c: SCKViewController, startDate sD: Date, endDate eD: Date) {
+    internal init(controller c: SCKViewController, dateInterval: DateInterval) {
         controller = c
-        startDate = sD
-        endDate = eD
+        self.dateInterval = dateInterval
+        startDate = dateInterval.start
+        endDate = dateInterval.end
         super.init()
     }
 

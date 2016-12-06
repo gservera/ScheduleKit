@@ -697,7 +697,7 @@ public class SCKGridView: SCKView {
     
     /// Increases the hour height property if less than the maximum value.
     /// Marks the view as needing display.
-    @IBAction func increaseZoomFactor(_ sender: Any) {
+    func increaseZoomFactor() {
         if hourHeight < Constants.HourLabelArea.maxHeightPerHour {
             hourHeight += 8.0
             needsDisplay = true
@@ -706,7 +706,7 @@ public class SCKGridView: SCKView {
     
     /// Decreases the hour height property if greater than the minimum value.
     /// Marks the view as needing display.
-    @IBAction func decreaseZoomFactor(_ sender: Any) {
+    func decreaseZoomFactor() {
         let targetHeight = hourHeight - 8.0
         processNewHourHeight(targetHeight)
     }

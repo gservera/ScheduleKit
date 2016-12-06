@@ -20,6 +20,11 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
     let eventLoadingView = EventLoadingView(frame: .zero)
     
     @IBOutlet var arrayController: NSArrayController!
+
+    override func loadView() {
+        mode = .week
+        super.loadView()
+    }
     
     override func viewDidLoad() {
         arrayController.content = EventEngine.shared.events
@@ -39,7 +44,6 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        mode = .week
         let calendar = Calendar.current
         
         let weekBeginning = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear,.weekOfYear], from: Date()))!

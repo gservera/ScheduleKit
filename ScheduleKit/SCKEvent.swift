@@ -68,3 +68,4 @@ import Cocoa
     @objc var user: SCKUser { get }
 
 }
+

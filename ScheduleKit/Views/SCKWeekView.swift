@@ -42,8 +42,7 @@ public final class SCKWeekView: SCKGridView {
     /// Displays the previous week and asks the controller to fetch any matching
     /// events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction func decreaseWeekOffset(_ sender: Any) {
+    func decreaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
         controller._internalReloadData()
@@ -53,8 +52,7 @@ public final class SCKWeekView: SCKGridView {
     /// Displays the next week and asks the controller to fetch any matching 
     /// events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction func increaseWeekOffset(_ sender: Any) {
+    func increaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
         controller._internalReloadData()
@@ -64,8 +62,7 @@ public final class SCKWeekView: SCKGridView {
     /// Displays the default date interval (this week) and asks the controller to
     /// reload matching events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction public func resetWeekOffset(_ sender: Any) {
+    func resetWeekOffset(_ sender: Any) {
         let units: Set<Calendar.Component> = [.weekOfYear, .yearForWeekOfYear]
         let weekComponents = sharedCalendar.dateComponents(units, from: Date())
         guard let start = sharedCalendar.date(from: weekComponents) else {

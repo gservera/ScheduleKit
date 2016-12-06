@@ -19,8 +19,8 @@ class DayCalendarPopoverViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.dateValue = dayView.dateInterval.start
-        todayButton.target = dayView
-        todayButton.action = #selector(SCKDayView.resetDayOffset(_:))
+        todayButton.target = dayView.controller
+        todayButton.action = #selector(SCKViewController.resetOffset(_:))
     }
     
     @IBAction func datePickerValueChanged(_ sender: NSDatePicker) {

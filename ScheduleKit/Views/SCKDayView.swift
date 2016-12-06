@@ -42,8 +42,7 @@ public final class SCKDayView: SCKGridView {
     /// Displays the previous day and asks the controller to fetch any matching
     /// events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction func decreaseDayOffset(_ sender: Any) {
+    func decreaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .day)
         controller._internalReloadData()
@@ -53,8 +52,7 @@ public final class SCKDayView: SCKGridView {
     /// Displays the next day and asks the controller to fetch any matching
     /// events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction func increaseDayOffset(_ sender: Any) {
+    func increaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .day)
         controller._internalReloadData()
@@ -64,8 +62,7 @@ public final class SCKDayView: SCKGridView {
     /// Displays the default date interval (today) and asks the controller to
     /// fetch matching events.
     ///
-    /// - Parameter sender: The UI control that initiated this action.
-    @IBAction public func resetDayOffset(_ sender: Any) {
+    func resetDayOffset(_ sender: Any) {
         let c = sharedCalendar
         guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
             else {

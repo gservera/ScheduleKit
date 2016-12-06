@@ -10,6 +10,7 @@
 		992C11111DEB54B300E156D0 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */; };
 		992C111A1DEB591D00E156D0 /* TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C11191DEB591D00E156D0 /* TestController.xib */; };
+		996020CB1DF7075400BDD901 /* SCKConcreteEventManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */; };
 		996E96521DE984710056022E /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E96511DE984710056022E /* EditEventViewController.swift */; };
 		998228561DDA684B0088B82F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228551DDA684B0088B82F /* AppDelegate.m */; };
 		998228591DDA684B0088B82F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228581DDA684B0088B82F /* main.m */; };
@@ -107,6 +108,7 @@
 		992C11101DEB54B300E156D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolderTests.swift; sourceTree = "<group>"; };
 		992C11191DEB591D00E156D0 /* TestController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestController.xib; sourceTree = "<group>"; };
+		996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKConcreteEventManaging.swift; sourceTree = "<group>"; };
 		996E96511DE984710056022E /* EditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
 		998228521DDA684B0088B82F /* SCKExample-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		998228541DDA684B0088B82F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				9982601E1DDB3DAD00C46586 /* SCKEventManaging.swift */,
+				996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */,
 				999950901D8EB56D00128669 /* SCKEventRequest.swift */,
 				99CAFCF41DCA039F004502AA /* SCKViewController.swift */,
 			);
@@ -575,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */,
+				996020CB1DF7075400BDD901 /* SCKConcreteEventManaging.swift in Sources */,
 				99F1FF8B1DC4E9F80055C3E4 /* SCKDayView.swift in Sources */,
 				99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */,
 				99F1FF8D1DC4F9DD0055C3E4 /* SCKWeekView.swift in Sources */,

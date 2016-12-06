@@ -64,9 +64,9 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
     
     //MARK: - SCKConcreteEventManaging
     
-    func concreteEvents(from startDate: Date, to endDate: Date, for controller: SCKViewController) -> [TestEvent] {
+    func concreteEvents(in dateInterval: DateInterval, for controller: SCKViewController) -> [TestEvent] {
         isReloadingData = true
-        arrayController.filterPredicate = NSPredicate(format: "scheduledDate BETWEEN %@", [startDate,endDate])
+        arrayController.filterPredicate = NSPredicate(format: "scheduledDate BETWEEN %@", [dateInterval.start,dateInterval.end])
         arrayController.rearrangeObjects()
         let events = arrayController.arrangedObjects as! [TestEvent]
         isReloadingData = false
