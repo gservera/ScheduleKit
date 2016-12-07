@@ -67,7 +67,7 @@ final class SCKEventHolderTests: XCTestCase {
         scheduleView = controller.scheduleView!
         let sD = Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date())!
         let eD = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
-        scheduleView.setDateBounds(lower: sD, upper: eD)
+        scheduleView.dateInterval = DateInterval(start: sD, end: eD)
         eventView = SCKEventView(frame: .zero)
         validTestEvent = SCKEventMock()
         invalidTestEvent = SCKEventMock()
