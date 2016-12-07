@@ -69,7 +69,7 @@ override func viewWillAppear() {
     reloadData(ofConcreteType: MyEventType.self)
 }
 
-let allEvents: [MyEvent] = [/* Some cool events */]
+let allEvents: [MyEventType] = [/* Some cool events */]
 
 func concreteEvents(in dateInterval: DateInterval, 
                     for controller: SCKViewController) -> [MyEventType] {
@@ -135,9 +135,10 @@ ScheduleKit is written Swift but you can use it in your Objective-C targets taki
     [_scheduleController.scheduleView setDelegate:self];
     [self addChildViewController:_scheduleController];
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *dayBeginning = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
-    NSDate *dayEnding = [calendar dateBySettingHour:23 minute:59 second:59 ofDate:[NSDate date] options:0];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDate *today = [NSDate date];
+    NSDate *dayBeginning = [cal dateBySettingHour:0 minute:0 second:0 ofDate:today options:0];
+    NSDate *dayEnding = [cal dateBySettingHour:23 minute:59 second:59 ofDate:today options:0];
     NSDateInterval *interval = [[NSDateInterval alloc] initWithStartDate:dayBeginning endDate:dayEnding];
     [_scheduleController.scheduleView setDateInterval:interval];
 
