@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991901C31DF80BD800C57622 /* SCKDayViewTests.swift */; };
+		991901C61DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991901C51DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift */; };
 		992C11111DEB54B300E156D0 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
-		992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */; };
 		992C111A1DEB591D00E156D0 /* TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C11191DEB591D00E156D0 /* TestController.xib */; };
 		996020CB1DF7075400BDD901 /* SCKConcreteEventManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */; };
 		996E96521DE984710056022E /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E96511DE984710056022E /* EditEventViewController.swift */; };
@@ -106,6 +106,7 @@
 
 /* Begin PBXFileReference section */
 		991901C31DF80BD800C57622 /* SCKDayViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayViewTests.swift; sourceTree = "<group>"; };
+		991901C51DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRangesTests.swift; sourceTree = "<group>"; };
 		992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		992C11101DEB54B300E156D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolderTests.swift; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */,
+				991901C51DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift */,
 				991901C31DF80BD800C57622 /* SCKDayViewTests.swift */,
 				992C11191DEB591D00E156D0 /* TestController.xib */,
 				992C11101DEB54B300E156D0 /* Info.plist */,
@@ -543,8 +545,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */,
 				991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */,
+				991901C61DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

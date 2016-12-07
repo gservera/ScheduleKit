@@ -62,7 +62,8 @@ final class SCKEventHolderTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        controller = SCKViewController(nibName: "TestController", bundle: Bundle(for: SCKEventHolderTests.self))
+        let bundle = Bundle(for: SCKEventHolderTests.self)
+        controller = SCKViewController(nibName: "TestController", bundle: bundle)
         _ = controller.view
         scheduleView = controller.scheduleView!
         let sD = Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date())!
