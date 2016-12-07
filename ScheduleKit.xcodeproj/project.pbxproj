@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991901C31DF80BD800C57622 /* SCKDayViewTests.swift */; };
 		992C11111DEB54B300E156D0 /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */; };
 		992C111A1DEB591D00E156D0 /* TestController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992C11191DEB591D00E156D0 /* TestController.xib */; };
@@ -104,6 +105,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		991901C31DF80BD800C57622 /* SCKDayViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayViewTests.swift; sourceTree = "<group>"; };
 		992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		992C11101DEB54B300E156D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventHolderTests.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */,
+				991901C31DF80BD800C57622 /* SCKDayViewTests.swift */,
 				992C11191DEB591D00E156D0 /* TestController.xib */,
 				992C11101DEB54B300E156D0 /* Info.plist */,
 			);
@@ -312,7 +315,6 @@
 				99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */,
 				99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */,
 				99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */,
-				9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */,
 				99E7D0C41A4B014900713F18 /* Categories and subclasses */,
 				99E7D0CD1A4B3C2400713F18 /* Model */,
 				99E7D0C21A4AF64500713F18 /* Views */,
@@ -325,6 +327,7 @@
 		99E7D0A41A4AF3B500713F18 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9982601B1DDA7D8B00C46586 /* _ScheduleKit-ObjC.swift */,
 				99E7D0A51A4AF3B500713F18 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -541,6 +544,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				992C11181DEB54DF00E156D0 /* SCKEventHolderTests.swift in Sources */,
+				991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,6 +645,7 @@
 		992C11151DEB54B300E156D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
@@ -662,6 +667,7 @@
 		992C11161DEB54B300E156D0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
