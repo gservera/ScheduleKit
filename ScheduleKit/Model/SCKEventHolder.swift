@@ -65,18 +65,17 @@ internal final class SCKEventHolder: NSObject {
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), options: [.new,.prior], context: nil)
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.duration), options: [.new,.prior], context: nil)
         obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.title), options: [.new], context: nil)
-        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.user), options: [.new], context: nil)
+        obj.addObserver(self, forKeyPath: #keyPath(SCKEvent.user.eventColor), options: [.new], context: nil)
         _observersRegistered = true
     }
     
-    deinit {
-        // We stop observing represented object changes at this point.
+    deinit { // We stop observing represented object changes at this point.
         if _observersRegistered {
             let o = representedObject as AnyObject
             o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.scheduledDate), context: nil)
             o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.duration), context: nil)
             o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.title), context: nil)
-            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.user), context: nil)
+            o.removeObserver?(self, forKeyPath: #keyPath(SCKEvent.user.eventColor), context: nil)
         }
     }
     
@@ -85,7 +84,7 @@ internal final class SCKEventHolder: NSObject {
     
     //MARK: - Object state
     
-    /// The event object backed by this event holder.
+    /// The event object backed by this event holder. Cannot be changed.
     let representedObject: SCKEvent
     
     /// A reference to the `SCKEventView` associated with this event holder.
@@ -231,9 +230,9 @@ internal final class SCKEventHolder: NSObject {
         guard let o = object as? SCKEvent, let change = c,
             let keyPath = keyPath, let eventView = eventView,
             let rootView = scheduleView, let controller = controller else {
+            print("Warning: Received unexpected KVO notification")
             return
         }
-        assert(o === representedObject, "Unexpected KVO notification.")
         
         
         if change[.notificationIsPriorKey] != nil {
@@ -271,23 +270,22 @@ internal final class SCKEventHolder: NSObject {
                     let updatingViews = updatingHolders.map {$0.eventView!}
                     rootView.invalidateLayout(for: updatingViews, animated: true)
                 }
-            case #keyPath(SCKEvent.title):
-                cachedTitle = change[.newKey] as? String ?? ""
+            case #keyPath(SCKEvent.title) where change[.newKey] is String:
+                cachedTitle = change[.newKey] as! String
                 eventView.innerLabel.stringValue = cachedTitle
-            case #keyPath(SCKEvent.user):
-                if let newUser = change[.newKey] as? SCKUser {
-                    if let oldUser = cachedUser, oldUser === newUser,
-                           rootView.colorMode == .byEventOwner {
-                        if newUser.eventColor != eventView.backgroundColor {
-                            eventView.backgroundColor = newUser.eventColor
-                            eventView.needsDisplay = true
-                        }
-                    } else {
-                        cachedUser = newUser
-                        if rootView.colorMode == .byEventOwner {
-                            eventView.backgroundColor = newUser.eventColor
-                            eventView.needsDisplay = true
-                        }
+            case #keyPath(SCKEvent.user.eventColor):
+                let newUser = o.user
+                if let oldUser = cachedUser, oldUser === newUser,
+                    rootView.colorMode == .byEventOwner {
+                    if newUser.eventColor != eventView.backgroundColor {
+                        eventView.backgroundColor = newUser.eventColor
+                        eventView.needsDisplay = true
+                    }
+                } else {
+                    cachedUser = newUser
+                    if rootView.colorMode == .byEventOwner {
+                        eventView.backgroundColor = newUser.eventColor
+                        eventView.needsDisplay = true
                     }
                 }
             default: break

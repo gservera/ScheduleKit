@@ -128,6 +128,7 @@ ScheduleKit is written Swift but you can use it in your Objective-C targets taki
 * The `SCKConcreteEventManaging` protocol uses Swift generics and is not available.
 
 ```objc
+
 - (void)viewWillAppear {
     [super viewWillAppear];
     
@@ -137,13 +138,15 @@ ScheduleKit is written Swift but you can use it in your Objective-C targets taki
     
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDate *today = [NSDate date];
-    NSDate *dayBeginning = [cal dateBySettingHour:0 minute:0 second:0 ofDate:today options:0];
-    NSDate *dayEnding = [cal dateBySettingHour:23 minute:59 second:59 ofDate:today options:0];
-    NSDateInterval *interval = [[NSDateInterval alloc] initWithStartDate:dayBeginning endDate:dayEnding];
+    NSDate *dayStart = [cal dateBySettingHour:0 minute:0 second:0 ofDate:today options:0];
+    NSDate *dayEnd = [cal dateBySettingHour:23 minute:59 second:59 ofDate:today options:0];
+    NSDateInterval *interval = [[NSDateInterval alloc] initWithStartDate:dayStart endDate:dayEnd];
     [_scheduleController.scheduleView setDateInterval:interval];
 
     [_scheduleController reloadData];
 }
+
+@property (strong) IBOutlet SCKViewController * scheduleController;
 ```
 
 ## Installation with Carthage
@@ -171,7 +174,7 @@ Run `carthage update` on your project's directory to build the framework and dra
 
 ## Requirements
 
-* **Xcode**: 8.0 or greater.
+* **Xcode**: 8.1 or greater.
 * **Deployment target**: macOS 10.12
 
 ## Unit Tests

@@ -28,9 +28,8 @@ import XCTest
 @testable import ScheduleKit
 
 class SCKUserMock: NSObject, SCKUser {
-    var eventColor: NSColor {
-        return NSColor.orange
-    }
+    var eventColor: NSColor = NSColor.orange
+
 }
 
 class SCKEventMock: NSObject, SCKEvent {
@@ -44,17 +43,43 @@ class SCKEventMock: NSObject, SCKEvent {
     @objc var scheduledDate = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
     
     
-    @objc var title: String {
-        return "Mock"
+    @objc var title: String = "Mock"
+    
+    @objc var user: SCKUser = SCKUserMock()
+    
+}
+
+private class _ControllerMock: SCKViewController {
+    
+    var layoutInvalidationPromise: XCTestExpectation?
+    var reloadDataPromise: XCTestExpectation?
+    
+    var priorCalled = false
+    
+    fileprivate override func resolvedConflicts(for holder: SCKEventHolder) -> [SCKEventHolder] {
+        if !priorCalled {
+            priorCalled = true
+            return [holder]
+        }
+        if reloadDataPromise != nil {
+            XCTFail("Relayout should not have been called")
+        }
+        layoutInvalidationPromise?.fulfill()
+        layoutInvalidationPromise = nil
+        return [holder]
     }
     
-    @objc let user: SCKUser = SCKUserMock()
-    
+    fileprivate override func _internalReloadData() {
+        if layoutInvalidationPromise != nil {
+            XCTFail("Reload data should not have been called")
+        }
+        reloadDataPromise?.fulfill()
+    }
 }
 
 final class SCKEventHolderTests: XCTestCase {
     
-    var controller: SCKViewController!
+    private var controller: _ControllerMock!
     var scheduleView: SCKView!
     var eventView: SCKEventView!
     var validTestEvent: SCKEventMock!
@@ -63,16 +88,16 @@ final class SCKEventHolderTests: XCTestCase {
     override func setUp() {
         super.setUp()
         let bundle = Bundle(for: SCKEventHolderTests.self)
-        controller = SCKViewController(nibName: "TestController", bundle: bundle)
+        controller = _ControllerMock(nibName: "TestController", bundle: bundle)
         _ = controller.view
         scheduleView = controller.scheduleView!
-        let sD = Calendar.current.date(bySettingHour: 10, minute: 0, second: 0, of: Date())!
-        let eD = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
+        let sD = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let eD = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
         scheduleView.dateInterval = DateInterval(start: sD, end: eD)
         eventView = SCKEventView(frame: .zero)
         validTestEvent = SCKEventMock()
         invalidTestEvent = SCKEventMock()
-        invalidTestEvent.scheduledDate = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: Date())!
+        invalidTestEvent.scheduledDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!.addingTimeInterval(-1)
     }
     
     override func tearDown() {
@@ -83,16 +108,179 @@ final class SCKEventHolderTests: XCTestCase {
     func testInitialization() {
         scheduleView.addSubview(eventView)
         scheduleView.addEventView(eventView)
-        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)
+        var holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)
         XCTAssertNotNil(holder,"Should have been initialized")
         
         XCTAssertEqual(holder!.representedObject as? SCKEventMock, validTestEvent, "Error")
         XCTAssertTrue(holder!.isReady, "Should be ready")
         
-        
         let holder2 = SCKEventHolder(event: invalidTestEvent, view: eventView, controller: controller)
         XCTAssertNil(holder2,"Should have failed")
+        holder = nil
+        
+        let borderlineEvent = SCKEventMock()
+        borderlineEvent.scheduledDate = Calendar.current.date(bySettingHour: 23, minute: 55, second: 0, of: Date())!
+        let holder3 = SCKEventHolder(event: borderlineEvent, view: eventView, controller: controller)
+        XCTAssertNotNil(holder3,"Should have been initialized")
+        
+        XCTAssertEqual(holder3!.relativeEnd, 1.0)
+        XCTAssertTrue(holder3!.isReady, "Should be ready")
     }
     
+    func testCachedProperties() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        XCTAssertEqual(holder.cachedDuration, validTestEvent.duration)
+        XCTAssertEqual(holder.cachedScheduledDate, validTestEvent.scheduledDate)
+        XCTAssertEqual(holder.cachedTitle, validTestEvent.title)
+        XCTAssertTrue(holder.cachedUser! === validTestEvent.user)
+        
+        let borderlineEvent = SCKEventMock()
+        borderlineEvent.scheduledDate = Calendar.current.date(bySettingHour: 23, minute: 55, second: 0, of: Date())!
+        let holder3 = SCKEventHolder(event: borderlineEvent, view: eventView, controller: controller)
+        XCTAssertEqual(holder3!.relativeEnd, 1.0)
+        XCTAssertTrue(holder3!.isReady, "Should be ready")
+    }
+    
+    func testRecalculateRelativeValuesWithNoScheduleView() {
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)
+        XCTAssertNil(holder,"Should fail initialization (no schedule view)")
+    }
+    
+    // MARK: - Test change observing
+    
+    func testObservationMisuse() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        holder.observeValue(forKeyPath: nil, of: nil, change: nil, context: nil)
+    }
+    
+    func testDurationObserving() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        controller.layoutInvalidationPromise = expectation(description: "Layout")
+        XCTAssertEqual(holder.cachedDuration, 15)
+        validTestEvent.setValue(30, forKey: "duration")
+        XCTAssertEqual(holder.cachedDuration, 30)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testDateObservingChangeToValidDate() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        controller.layoutInvalidationPromise = expectation(description: "Layout")
+        let newDate = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
+        XCTAssertEqual(holder.cachedScheduledDate, validTestEvent.scheduledDate)
+        validTestEvent.setValue(newDate, forKey: "scheduledDate")
+        XCTAssertEqual(holder.cachedScheduledDate, newDate)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testDateObservingChangeToInvalidDate() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        controller.reloadDataPromise = expectation(description: "Reload")
+        let newDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!.addingTimeInterval(-1)
+        XCTAssertEqual(holder.cachedScheduledDate, validTestEvent.scheduledDate)
+        validTestEvent.setValue(newDate, forKey: "scheduledDate")
+        XCTAssertEqual(holder.cachedScheduledDate, newDate)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func testTitleObserving() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        XCTAssertEqual(holder.cachedTitle, "Mock")
+        validTestEvent.setValue("Other", forKey: "title")
+        XCTAssertEqual(holder.cachedTitle, "Other")
+    }
+    
+    func testUserEventColorObserving() {
+        scheduleView.colorMode = .byEventOwner
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        XCTAssertTrue(holder.cachedUser === validTestEvent.user)
+        let user2 = SCKUserMock()
+        user2.eventColor = NSColor.blue
+        validTestEvent.setValue(user2, forKey: "user")
+        XCTAssertTrue(holder.cachedUser === user2)
+        XCTAssertEqual(eventView.backgroundColor, NSColor.blue)
+    }
+    
+    func testUserEventColorObserving2() {
+        scheduleView.colorMode = .byEventOwner
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        XCTAssertTrue(holder.cachedUser === validTestEvent.user)
+        (validTestEvent.user as! SCKUserMock).setValue(NSColor.blue, forKey: "eventColor")
+        XCTAssertEqual(eventView.backgroundColor, NSColor.blue)
+    }
+    
+    // MARK: Stop observing and resume observing
+    
+    func testStopAndResumeObserving() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        
+        XCTAssertEqual(holder.cachedDuration, 15)
+        validTestEvent.setValue(30, forKey: "duration")
+        XCTAssertEqual(holder.cachedDuration, 30)
+        
+        holder.stopObservingRepresentedObjectChanges()
+        validTestEvent.setValue(45, forKey: "duration")
+        XCTAssertEqual(holder.cachedDuration, 30)
+        
+        holder.resumeObservingRepresentedObjectChanges()
+        XCTAssertEqual(holder.cachedDuration, 30)
+        validTestEvent.setValue(60, forKey: "duration")
+        XCTAssertEqual(holder.cachedDuration, 60)
+    }
+    
+    // MARK: Freezing and unfreezing
+    
+    func testHolderFreezing() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        
+        XCTAssertEqual(holder.cachedDuration, 15)
+        holder.freeze()
+        validTestEvent.setValue(30, forKey: "duration")
+        XCTAssertEqual(holder.cachedDuration, 15)
+        holder.unfreeze()
+        XCTAssertEqual(holder.cachedDuration, 30)
+    }
+    
+    func testDoubleFreezingForCoveragePurposes() {
+        scheduleView.addSubview(eventView)
+        scheduleView.addEventView(eventView)
+        let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
+        eventView.eventHolder = holder
+        XCTAssertFalse(holder.isFrozen)
+        holder.freeze()
+        holder.freeze()
+        XCTAssertTrue(holder.isFrozen)
+        holder.unfreeze()
+        holder.unfreeze()
+        XCTAssertFalse(holder.isFrozen)
+    }
 
 }
