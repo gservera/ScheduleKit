@@ -15,6 +15,7 @@
 		993F7FD41DFAB63F009201DA /* SCKWeekViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993F7FD31DFAB63F009201DA /* SCKWeekViewTests.swift */; };
 		993F7FD61DFABCAC009201DA /* SCKObjCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 993F7FD51DFABCAC009201DA /* SCKObjCTests.m */; };
 		996020CB1DF7075400BDD901 /* SCKConcreteEventManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */; };
+		99680BEE1DFC937600C3033E /* SCKDayPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99680BED1DFC937600C3033E /* SCKDayPointTests.swift */; };
 		996E96521DE984710056022E /* EditEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996E96511DE984710056022E /* EditEventViewController.swift */; };
 		998228561DDA684B0088B82F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228551DDA684B0088B82F /* AppDelegate.m */; };
 		998228591DDA684B0088B82F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 998228581DDA684B0088B82F /* main.m */; };
@@ -117,6 +118,7 @@
 		993F7FD31DFAB63F009201DA /* SCKWeekViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKWeekViewTests.swift; sourceTree = "<group>"; };
 		993F7FD51DFABCAC009201DA /* SCKObjCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCKObjCTests.m; sourceTree = "<group>"; };
 		996020CA1DF7075400BDD901 /* SCKConcreteEventManaging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKConcreteEventManaging.swift; sourceTree = "<group>"; };
+		99680BED1DFC937600C3033E /* SCKDayPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPointTests.swift; sourceTree = "<group>"; };
 		996E96511DE984710056022E /* EditEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditEventViewController.swift; sourceTree = "<group>"; };
 		998228521DDA684B0088B82F /* SCKExample-ObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-ObjC.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		998228541DDA684B0088B82F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				991901C31DF80BD800C57622 /* SCKDayViewTests.swift */,
 				993F7FD31DFAB63F009201DA /* SCKWeekViewTests.swift */,
 				993F7FD51DFABCAC009201DA /* SCKObjCTests.m */,
+				99680BED1DFC937600C3033E /* SCKDayPointTests.swift */,
 				992C11191DEB591D00E156D0 /* TestController.xib */,
 				992C11101DEB54B300E156D0 /* Info.plist */,
 			);
@@ -558,6 +561,7 @@
 				991901C71DF81D0D00C57622 /* SCKEventHolderTests.swift in Sources */,
 				991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */,
 				991901C61DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift in Sources */,
+				99680BEE1DFC937600C3033E /* SCKDayPointTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -68,11 +68,17 @@ public struct SCKDayPoint {
         while (_second <= -60) {
             _second += 60; _minute -= 1;
         }
+        if _second < 0 {
+            _second = 60 + _second; _minute -= 1
+        }
         while (_minute >= 60) {
             _minute -= 60; _hour += 1;
         }
         while (_minute <= -60) {
             _minute += 60; _hour -= 1;
+        }
+        if _minute < 0 {
+            _minute = 60 + _minute; _hour -= 1
         }
         self.hour = _hour
         self.minute = _minute
