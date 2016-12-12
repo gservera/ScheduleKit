@@ -156,7 +156,7 @@ public protocol SCKEventManaging: class {
     
 }
 
-extension SCKEventManaging {
+public extension SCKEventManaging {
     
     func events(in dateInterval: DateInterval,
                 for controller: SCKViewController) -> [SCKEvent] {
