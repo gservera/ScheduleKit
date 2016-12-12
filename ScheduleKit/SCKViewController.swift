@@ -61,7 +61,7 @@ import AppKit
 /// - Note: `SCKConcreteEventManaging` is not available in Objective-C. In
 ///         addition, the event manager must be set via `-setObjCDelegate:`.
 ///
-@objc open class SCKViewController: NSViewController {
+@objc open class SCKViewController: NSViewController, AsynchronousRequestParsing {
     
     // MARK: - UI setup
     
@@ -93,7 +93,7 @@ import AppKit
     /// Installs a new schedule view as the scroll view's document view, according
     /// to the value set in `mode`.
     private func setUpScheduleView() {
-        let f = CGRect(origin: CGPoint.zero, size: scrollView.frame.size)
+        let f = CGRect(origin: CGPoint.zero, size: scrollView.contentSize)
         let sView = (mode == .day) ? SCKDayView(frame: f) : SCKWeekView(frame: f)
         scrollView.documentView?.removeFromSuperview()
         scheduleView = nil
@@ -206,7 +206,7 @@ import AppKit
     
     
     /// A set to track all the event requests initiated by this controller.
-    internal var asynchronousRequests: Set<SCKEventRequest> = []
+    public var asynchronousRequests: Set<SCKEventRequest> = []
     
     /// Parses the data from a completed asynchronous event request. Called by
     /// `SCKEventRequest` or `SCKConcreteEventRequest<T>` objects when matching
@@ -217,7 +217,7 @@ import AppKit
     /// - Parameters:
     ///   - asynchronouslyLoadedEvents: The fetched events.
     ///   - request: The event request that was completed.
-    internal final func parseData(in asynchronouslyLoadedEvents: [SCKEvent],
+    public final func parseData(in asynchronouslyLoadedEvents: [SCKEvent],
                                   from request: SCKEventRequest) {
         guard scheduleView != nil && !scheduleView.isInvalidatingLayout else {
             NSLog("Waiting for relayout to terminate before reloading data")
@@ -236,7 +236,7 @@ import AppKit
     
     // The closure that should be used to create asynchronous event requests. It
     // depens on whether we're working in the concrete type mode or not.
-    private var _requestInit = SCKEventRequest.init(controller:dateInterval:)
+    private(set) var _requestInit = SCKEventRequest.init(controller:dateInterval:)
     
     
     

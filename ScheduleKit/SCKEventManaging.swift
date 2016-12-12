@@ -156,4 +156,46 @@ public protocol SCKEventManaging: class {
     
 }
 
+extension SCKEventManaging {
+    
+    func events(in dateInterval: DateInterval,
+                for controller: SCKViewController) -> [SCKEvent] {
+        return []
+    }
+    
+    func scheduleController(_ controller: SCKViewController,
+                            didMakeEventRequest request: SCKEventRequest) { }
+    
+
+    func scheduleController(_ controller: SCKViewController,
+                            didSelectEvent event: SCKEvent) {}
+    
+    func scheduleControllerDidClearSelection(_ controller: SCKViewController) {}
+
+    
+    func scheduleController(_ controller: SCKViewController,
+                            didDoubleClickBlankDate date: Date) {}
+    
+    
+    func scheduleController(_ controller: SCKViewController,
+                            didDoubleClickEvent event: SCKEvent) {}
+    
+
+    func scheduleController(_ controller: SCKViewController,
+                            shouldChangeDurationOfEvent event: SCKEvent,
+                            from oldValue: Int, to newValue: Int) -> Bool {
+        return true
+    }
+    
+    func scheduleController(_ controller: SCKViewController,
+                            shouldChangeDateOfEvent event: SCKEvent,
+                            from oldValue: Date, to newValue: Date) -> Bool {
+        return true
+    }
+
+    func scheduleController(_ controller: SCKViewController,
+                            menuForEvent event: SCKEvent) -> NSMenu? {
+        return nil
+    }
+}
 

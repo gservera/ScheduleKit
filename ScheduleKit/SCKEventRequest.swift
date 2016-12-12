@@ -26,6 +26,11 @@
 
 import Foundation
 
+internal protocol AsynchronousRequestParsing: class {
+    var asynchronousRequests: Set<SCKEventRequest> { get set }
+    func parseData(in eventArray: [SCKEvent], from request: SCKEventRequest) -> Void
+}
+
 
 /// The `SCKEventRequest` class represents a wrapper type used by an
 /// `SCKViewController` object to encapsulate relevant info and to handle
@@ -48,8 +53,8 @@ import Foundation
     /// Returns whether the request has been canceled.
     @objc public private(set) var isCanceled: Bool = false
     
-    /// The `SCKViewController` object that issued the request.
-    @objc public private(set) weak var controller: SCKViewController?
+    /// The object that issued the request.
+    internal private(set) weak var controller: AsynchronousRequestParsing?
     
     /// The requested starting date parameter for the event fetch criteria.
     @objc public private(set) var startDate: Date
@@ -73,7 +78,7 @@ import Foundation
     ///   - c: The controller object that creates the request.
     ///   - sD: The starting date that must be used in the event fetching.
     ///   - eD: The ending date that must be used in the event fetching.
-    internal init(controller c: SCKViewController, dateInterval: DateInterval) {
+    internal init(controller c: AsynchronousRequestParsing, dateInterval: DateInterval) {
         controller = c
         self.dateInterval = dateInterval
         startDate = dateInterval.start

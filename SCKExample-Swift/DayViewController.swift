@@ -33,7 +33,6 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        
         let calendar = Calendar.current
         let dayBeginning = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
         let dayEnding = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!

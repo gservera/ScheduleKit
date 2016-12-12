@@ -17,7 +17,7 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sharedCalendar = Calendar.current
         super.tearDown()
     }
 
@@ -74,4 +74,44 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
         _ = Set<SCKUnavailableTimeRange>([unavailable, diffWeekday])
     }
 
+    func testMatchingNoWeekday() {
+        let unavailable = SCKUnavailableTimeRange(weekday: -1, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)
+        
+        let calendar = Calendar.current
+        var weekComps = calendar.dateComponents([.weekOfYear,.yearForWeekOfYear], from: Date())
+        let weekStart = calendar.date(from: weekComps)!
+        weekComps.weekOfYear = weekComps.weekOfYear! + 1
+        let weekEnd = calendar.date(from: weekComps)!.addingTimeInterval(-1)
+        
+        let interval = DateInterval(start: weekStart, end: weekEnd)
+        
+        let matches = unavailable.matchingOccurrences(in: interval)
+        
+        XCTAssertTrue(matches.count == 7)
+    }
+    
+    func testMatchingWithWeekday() {
+        // Testing with weekday 2 in grid view, which is wednesday in Spain
+        let unavailable = SCKUnavailableTimeRange(weekday: 2, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)
+        
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.firstWeekday = 2 //Testing with pre-defined first day = Monday.
+        sharedCalendar = calendar
+        
+        
+        var dec2016Start = DateComponents()
+        dec2016Start.day = 1; dec2016Start.month = 12; dec2016Start.year = 2016;
+        var dec2016End = DateComponents()
+        dec2016End.day = 31; dec2016End.month = 12; dec2016End.year = 2016;
+        
+        let monthStart = calendar.date(from: dec2016Start)!
+        let monthEnd = calendar.date(from: dec2016End)!
+        
+        let interval = DateInterval(start: monthStart, end: monthEnd)
+        
+        let matches = unavailable.matchingOccurrences(in: interval)
+        
+        XCTAssertTrue(matches.count == 4)
+    }
+    
 }

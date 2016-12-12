@@ -42,7 +42,10 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
     /// Initializes a new `SCKUnavailableTimeRange` object representing a concrete
     /// time range within a day.
     ///
-    /// - parameter weekday:     A weekday index for `SCKWeekView` or -1 for `SCKDayView`. Default is -1.
+    /// - parameter weekday:     A weekday index for `SCKWeekView` or -1 for 
+    ///                          `SCKDayView`. Default is -1. Values are 0 based
+    ///                          with 0 meaning the first displayed weekday (may
+    ///                          very depending on the user's locale).
     /// - parameter startHour:   The time range's starting hour. Default is 0.
     /// - parameter startMinute: The time range's starting minute. Default is 0.
     /// - parameter endHour:     The time range's ending hour. Default is 0.
@@ -55,6 +58,45 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         self.startMinute = startMinute
         self.endHour = endHour
         self.endMinute = endMinute
+    }
+    
+    private var length: TimeInterval {
+        let end = endHour * 3600 + endMinute * 60
+        let start = startHour * 3600 + startMinute * 60
+        return TimeInterval(end - start)
+    }
+    
+    // MARK: Date interval transforming
+    
+    /// Calculates all the date intervals that match the unavailable time range in
+    /// a greater date interval.
+    ///
+    /// - Parameter dateInterval: The testing boundaries.
+    /// - Returns: An array of date intervals matching the defined range.
+    public func matchingOccurrences(in dateInterval: DateInterval) -> [DateInterval] {
+        var intervals: [DateInterval] = []
+        
+        var unavailableRangeComponents = DateComponents()
+        unavailableRangeComponents.hour = startHour
+        unavailableRangeComponents.minute = startMinute
+        if weekday != -1 {
+            var convertedWeekday = weekday + sharedCalendar.firstWeekday + 7
+            if convertedWeekday > 7 {
+                convertedWeekday -= 7
+            }
+            unavailableRangeComponents.weekday = convertedWeekday
+        }
+        let length = self.length
+        sharedCalendar.enumerateDates(startingAfter: dateInterval.start,
+                                      matching: unavailableRangeComponents,
+                                      matchingPolicy: .nextTime) { date, _, stop in
+            guard let date = date, date < dateInterval.end else {
+                stop = true
+                return
+            }
+            intervals.append(DateInterval(start: date, duration: length))
+        }
+        return intervals
     }
     
     // MARK: - Equatable and hashable
