@@ -405,6 +405,8 @@ public class SCKGridView: SCKView {
     public override func layout() {
         super.layout()
         
+        guard dayCount > 0 else { return } // View is not ready
+        
         let canvas = contentRect
         
         // Layout day labels
@@ -459,7 +461,6 @@ public class SCKGridView: SCKView {
         
         // Layout events
         
-        assert(dayCount > 0, "Day count must be greater than zero. Found \(dayCount) instead.")
         let offsetPerDay = 1.0/Double(dayCount)
         for eventView in (subviews.filter{$0 is SCKEventView} as! [SCKEventView]) {
             guard eventView.eventHolder.isReady else {
