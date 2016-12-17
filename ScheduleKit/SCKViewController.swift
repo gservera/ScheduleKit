@@ -392,7 +392,7 @@ import AppKit
     /// Displays the previous day or week and performs a new event fetch.
     ///
     /// - Parameter sender: The UI control that initiated the action.
-    @IBAction public func decreaseOffset(_ sender: AnyObject) {
+    @IBAction public func decreaseOffset(_ sender: Any) {
         switch mode {
         case .day:  (scheduleView as? SCKDayView)?.decreaseDayOffset(sender)
         case .week: (scheduleView as? SCKWeekView)?.decreaseWeekOffset(sender)
@@ -403,7 +403,7 @@ import AppKit
     /// Displays the next day or week and performs a new event fetch.
     ///
     /// - Parameter sender: The UI control that initiated the action.
-    @IBAction public func increaseOffset(_ sender: AnyObject) {
+    @IBAction public func increaseOffset(_ sender: Any) {
         switch mode {
         case .day:  (scheduleView as? SCKDayView)?.increaseDayOffset(sender)
         case .week: (scheduleView as? SCKWeekView)?.increaseWeekOffset(sender)
@@ -415,7 +415,7 @@ import AppKit
     /// event fetch.
     ///
     /// - Parameter sender: The UI control that initiated the action.
-    @IBAction public func resetOffset(_ sender: AnyObject) {
+    @IBAction public func resetOffset(_ sender: Any) {
         switch mode {
         case .day:  (scheduleView as? SCKDayView)?.resetDayOffset(sender)
         case .week: (scheduleView as? SCKWeekView)?.resetWeekOffset(sender)
@@ -426,7 +426,7 @@ import AppKit
     /// Decreases the schedule view's hour height.
     ///
     /// - Parameter sender: The UI control that initiated the action.
-    @IBAction public func decreaseZoomFactor(_ sender: AnyObject) {
+    @IBAction public func decreaseZoomFactor(_ sender: Any) {
         (scheduleView as? SCKGridView)?.decreaseZoomFactor()
     }
     
@@ -434,7 +434,7 @@ import AppKit
     /// Increases the schedule view's hour height.
     ///
     /// - Parameter sender: The UI control that initiated the action.
-    @IBAction public func increaseZoomFactor(_ sender: AnyObject) {
+    @IBAction public func increaseZoomFactor(_ sender: Any) {
         (scheduleView as? SCKGridView)?.increaseZoomFactor()
     }
     
