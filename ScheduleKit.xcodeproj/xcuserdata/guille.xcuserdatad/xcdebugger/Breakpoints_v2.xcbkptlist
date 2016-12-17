@@ -909,11 +909,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/SCKFreeTimeFinder.swift"
-            timestampString = "503248288.956255"
+            timestampString = "503708178.319274"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "evaluateAvailability(among:user:duration:interval:)"
             landmarkType = "7">
          </BreakpointContent>
