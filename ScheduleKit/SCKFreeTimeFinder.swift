@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class SCKFreeTimeFinder: AsynchronousRequestParsing {
+public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
     
     private let isAsynchronous: Bool
     private let _requestInit: (AsynchronousRequestParsing,DateInterval) -> SCKEventRequest

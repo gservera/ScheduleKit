@@ -305,6 +305,10 @@ public class SCKGridView: SCKView {
     /// mentioned property changes.
     private func updateHourLabelsVisibility() {
         for (key, value) in hourLabels {
+            guard eventViewBeingDragged == nil else {
+                value.isHidden = true
+                continue
+            }
             switch key {
             case 300..<324: // Half hour labels
                 value.isHidden = (hourHeight < 40.0)
@@ -317,6 +321,7 @@ public class SCKGridView: SCKView {
             case 500..<524: // Ten minute labels
                 value.isHidden = (hourHeight < 120.0)
             default:
+                value.isHidden = false
                 break
             }
         }
@@ -377,6 +382,16 @@ public class SCKGridView: SCKView {
             return (tested === eventView.eventHolder)
         }) ?? 0
         eventView.eventHolder.conflictIndex = idx
+    }
+    
+    override func prepareForDragging() {
+        updateHourLabelsVisibility()
+        super.prepareForDragging()
+    }
+    
+    override func restoreAfterDragging() {
+        updateHourLabelsVisibility()
+        super.restoreAfterDragging()
     }
     
     // MARK: - NSView overrides
@@ -676,15 +691,17 @@ public class SCKGridView: SCKView {
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
             let attrs = [
                 NSForegroundColorAttributeName: NSColor.darkGray,
-                NSFontAttributeName: NSFont.systemFont(ofSize: 14.0)
+                NSFontAttributeName: NSFont.systemFont(ofSize: 12.0)
             ]
-            let labelHeight = sLabelText.size(withAttributes: attrs).height
-            let sLabelRect = CGRect(x: 0.0, y: dragFrame.minY-labelHeight/2.0, width: canvas.minX-12.0, height: labelHeight)
-            let eLabelRect = CGRect(x: 0.0, y: dragFrame.maxY-labelHeight/2.0, width: canvas.minX-12.0, height: labelHeight)
+            let sLabelSize = sLabelText.size(withAttributes: attrs)
+            let eLabelSize = eLabelText.size(withAttributes: attrs)
+            let sLabelRect = CGRect(x: Constants.HourLabelArea.width/2.0-sLabelSize.width/2.0, y: dragFrame.minY-sLabelSize.height/2.0, width: sLabelSize.width, height: sLabelSize.height)
+            let eLabelRect = CGRect(x: Constants.HourLabelArea.width/2.0-eLabelSize.width/2.0, y: dragFrame.maxY-eLabelSize.height/2.0, width: eLabelSize.width, height: eLabelSize.height)
             sLabelText.draw(in: sLabelRect, withAttributes: attrs)
             eLabelText.draw(in: eLabelRect, withAttributes: attrs)
             let durationText = "\(dV.eventHolder.cachedDuration) min"
-            let durationRect = CGRect(x: 0.0, y: dragFrame.midY-labelHeight/2.0, width: canvas.minX-12, height: labelHeight)
+            let dLabelSize = durationText.size(withAttributes: attrs)
+            let durationRect = CGRect(x: Constants.HourLabelArea.width/2.0-dLabelSize.width/2.0, y: dragFrame.midY-dLabelSize.height/2.0, width: dLabelSize.width, height: dLabelSize.height)
             durationText.draw(in: durationRect, withAttributes: attrs)
         }
     }

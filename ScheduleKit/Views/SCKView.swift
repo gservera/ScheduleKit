@@ -369,6 +369,9 @@ import Cocoa
     /// When dragging, the subview being dragged.
     internal weak var eventViewBeingDragged: SCKEventView?
     
+    internal func prepareForDragging() {
+        
+    }
     
     /// Called by an `SCKEventView` when a drag operation begins. This method
     /// sets the `eventViewBeingDragged` property and freezes the event view's
@@ -379,6 +382,7 @@ import Cocoa
     internal final func beginDragging(eventView: SCKEventView) {
         eventViewBeingDragged = eventView
         eventView.eventHolder.freeze()
+        prepareForDragging()
     }
     
     
@@ -404,7 +408,12 @@ import Cocoa
         draggedEventView.eventHolder.unfreeze()
         eventViewBeingDragged = nil
         invalidateLayoutForAllEventViews(animated: true)
+        restoreAfterDragging()
         needsDisplay = true
+    }
+    
+    internal func restoreAfterDragging() {
+        
     }
     
 }
