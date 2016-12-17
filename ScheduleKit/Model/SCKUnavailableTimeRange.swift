@@ -87,7 +87,7 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         unavailableRangeComponents.minute = startMinute
         if weekday != -1 {
             var convertedWeekday = weekday + sharedCalendar.firstWeekday + 7
-            if convertedWeekday > 7 {
+            while convertedWeekday > 7 {
                 convertedWeekday -= 7
             }
             unavailableRangeComponents.weekday = convertedWeekday
