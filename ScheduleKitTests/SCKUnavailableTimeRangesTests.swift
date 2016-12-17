@@ -22,7 +22,7 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     }
 
     func testInitialization() {
-        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
+        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
         XCTAssertEqual(unavailable.weekday, 3)
         XCTAssertEqual(unavailable.startHour, 1)
         XCTAssertEqual(unavailable.startMinute, 2)
@@ -33,7 +33,7 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     }
     
     func testArchiving() {
-        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
+        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
         
         let data = NSKeyedArchiver.archivedData(withRootObject: unavailable)
         
@@ -47,9 +47,9 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     }
     
     func testEqualty() {
-        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
+        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
         let equal = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
-        let diffWeekday = SCKUnavailableTimeRange(weekday: 9, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
+        let diffWeekday = SCKUnavailableTimeRange(weekday: 9, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
         let diffSH = SCKUnavailableTimeRange(weekday: 3, startHour: 9, startMinute: 2, endHour: 5, endMinute: 6)
         let diffSM = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 9, endHour: 5, endMinute: 6)
         let diffEH = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 9, endMinute: 6)
@@ -66,16 +66,16 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     }
 
     func testHashability() {
-        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
-        let equal = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
-        let diffWeekday = SCKUnavailableTimeRange(weekday: 9, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)
+        let unavailable = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
+        let equal = SCKUnavailableTimeRange(weekday: 3, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
+        let diffWeekday = SCKUnavailableTimeRange(weekday: 9, startHour: 1, startMinute: 2, endHour: 5, endMinute: 6)!
         XCTAssertEqual(unavailable.hashValue, equal.hashValue)
         XCTAssertNotEqual(unavailable.hashValue, diffWeekday.hashValue)
         _ = Set<SCKUnavailableTimeRange>([unavailable, diffWeekday])
     }
 
     func testMatchingNoWeekday() {
-        let unavailable = SCKUnavailableTimeRange(weekday: -1, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)
+        let unavailable = SCKUnavailableTimeRange(weekday: -1, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)!
         
         let calendar = Calendar.current
         var weekComps = calendar.dateComponents([.weekOfYear,.yearForWeekOfYear], from: Date())
@@ -92,7 +92,7 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
     
     func testMatchingWithWeekday() {
         // Testing with weekday 2 in grid view, which is wednesday in Spain
-        let unavailable = SCKUnavailableTimeRange(weekday: 2, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)
+        let unavailable = SCKUnavailableTimeRange(weekday: 2, startHour: 10, startMinute: 30, endHour: 12, endMinute: 30)!
         
         var calendar = Calendar(identifier: .gregorian)
         calendar.firstWeekday = 2 //Testing with pre-defined first day = Monday.
