@@ -93,12 +93,14 @@ import AppKit
     /// Installs a new schedule view as the scroll view's document view, according
     /// to the value set in `mode`.
     private func setUpScheduleView() {
+        let oldDelegate = scheduleView?.delegate
         let f = CGRect(origin: CGPoint.zero, size: scrollView.contentSize)
         let sView = (mode == .day) ? SCKDayView(frame: f) : SCKWeekView(frame: f)
         scrollView.documentView?.removeFromSuperview()
         scheduleView = nil
         scheduleView = sView
         sView.controller = self
+        sView.delegate = oldDelegate
         sView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.documentView = scheduleView
         let p = sView.superview!

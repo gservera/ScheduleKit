@@ -142,13 +142,13 @@ extension WeekViewController: SCKGridViewDelegate {
     
     func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange] {
         return [
-            SCKUnavailableTimeRange(weekday: 0, startHour: 13, startMinute: 0, endHour: 15, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 1, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 2, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 3, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 4, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 5, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
-            SCKUnavailableTimeRange(weekday: 6, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0),
+            SCKUnavailableTimeRange(weekday: 0, startHour: 13, startMinute: 0, endHour: 15, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 1, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 2, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 3, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 4, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 5, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+            SCKUnavailableTimeRange(weekday: 6, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
         ]
     }
     
