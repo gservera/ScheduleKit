@@ -93,7 +93,8 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
             unavailableRangeComponents.weekday = convertedWeekday
         }
         let length = self.length
-        sharedCalendar.enumerateDates(startingAfter: dateInterval.start,
+        let safetyOffset = dateInterval.start.addingTimeInterval(-length+1)
+        sharedCalendar.enumerateDates(startingAfter: safetyOffset,
                                       matching: unavailableRangeComponents,
                                       matchingPolicy: .nextTime) { date, _, stop in
             guard let date = date, date < dateInterval.end else {
