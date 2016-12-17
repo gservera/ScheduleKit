@@ -63,11 +63,11 @@ public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
         asynchronousDuration = d
         
         // Truncate date to seconds
-        var timeRef = date.timeIntervalSinceReferenceDate
-        while timeRef.truncatingRemainder(dividingBy: 60.0) > 0 {
-            timeRef -= 1.0
+        var seconds = Int(trunc(date.timeIntervalSinceReferenceDate))
+        while seconds % 60 > 0 {
+            seconds -= 1
         }
-        let cleanDate = Date(timeIntervalSinceReferenceDate: trunc(timeRef))
+        let cleanDate = Date(timeIntervalSinceReferenceDate: TimeInterval(seconds))
         
         let searchInterval = DateInterval(start: cleanDate, duration: TimeInterval(batchSize * 24 * 3600))
         let request = _requestInit(self, searchInterval)
