@@ -17,7 +17,7 @@ public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
     let unavailableRanges: [SCKUnavailableTimeRange]
     private weak var controller: SCKViewController!
     
-    init(controller: SCKViewController, excluding unavailable: [SCKUnavailableTimeRange]) {
+    public init(controller: SCKViewController, excluding unavailable: [SCKUnavailableTimeRange]) {
         dataSource = controller.eventManager!
         isAsynchronous = controller.loadsEventsAsynchronously
         _requestInit = controller._requestInit
@@ -25,9 +25,9 @@ public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
         self.controller = controller
     }
     
-    var batchSize: Int = 7
+    public var batchSize: Int = 7
     
-    func firstAvailableDate(forEventWithDuration d: Int,
+    public func firstAvailableDate(forEventWithDuration d: Int,
                             user: SCKUser?,
                             from date: Date = Date()) -> Date {
         var foundDate: Date?
@@ -50,7 +50,7 @@ public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
     private var asynchronousCallback: ((Date) -> Void)?
     private var asynchronousDuration: Int = 0
     
-    func findFirstAvailableDate(forEventWithDuration d: Int,
+    public func findFirstAvailableDate(forEventWithDuration d: Int,
                                 user: SCKUser?,
                                 from date: Date = Date(),
                                 callback: @escaping (Date) -> Void) {
