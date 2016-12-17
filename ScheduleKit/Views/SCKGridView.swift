@@ -110,7 +110,7 @@ public class SCKGridView: SCKView {
     }
     
     /// The number of days displayed. Updated by changing `dateInterval`.
-    private(set) var dayCount: Int = 1
+    private(set) var dayCount: Int = 0
     
     /// A value representing the day start hour.
     private var dayStartPoint = SCKDayPoint.zero
