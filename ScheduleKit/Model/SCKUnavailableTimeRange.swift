@@ -32,15 +32,15 @@ import Foundation
 /// protocols.
 public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
 
-    fileprivate(set) var weekday: Int
-    fileprivate(set) var startHour: Int
-    fileprivate(set) var startMinute: Int
-    fileprivate(set) var endHour: Int
-    fileprivate(set) var endMinute: Int
+    public fileprivate(set) var weekday: Int
+    public fileprivate(set) var startHour: Int
+    public fileprivate(set) var startMinute: Int
+    public fileprivate(set) var endHour: Int
+    public fileprivate(set) var endMinute: Int
     
     
     /// Initializes a new `SCKUnavailableTimeRange` object representing a concrete
-    /// time range within a day.
+    /// time range within a day. Fails for ranges with negative duration.
     ///
     /// - parameter weekday:     A weekday index for `SCKWeekView` or -1 for 
     ///                          `SCKDayView`. Default is -1. Values are 0 based
@@ -52,7 +52,13 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
     /// - parameter endMinute:   The time range's ending minute. Default is 0.
     ///
     /// - returns: The initialized `SCKUnavailableTimeRange` struct.
-    public init(weekday: Int = -1, startHour: Int = 0, startMinute: Int = 0, endHour: Int = 0, endMinute: Int = 0) {
+    public init?(weekday: Int = -1, startHour: Int = 0, startMinute: Int = 0, endHour: Int = 0, endMinute: Int = 0) {
+        let end = endHour * 3600 + endMinute * 60
+        let start = startHour * 3600 + startMinute * 60
+        guard TimeInterval(end - start) > 0 else {
+            return nil
+        }
+        
         self.weekday = weekday
         self.startHour = startHour
         self.startMinute = startMinute

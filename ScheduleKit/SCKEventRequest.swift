@@ -107,7 +107,7 @@ internal protocol AsynchronousRequestParsing: class {
     /// - Parameter events: The asynchronously loaded events.
     /// - Warning: This method **must** be called from the main thread.
     ///
-    @objc public func complete(with events: [SCKEvent]) {
+    @objc(completeWithEvents:) public func complete(with events: [SCKEvent]) {
         guard Thread.isMainThread else {
             print("Warning: Background call to SCKEventRequest.complete(with:) will be ignored.")
             return
