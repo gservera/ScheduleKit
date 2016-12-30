@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
+@objc public final class SCKFreeTimeFinder: NSObject, AsynchronousRequestParsing {
     
     private let isAsynchronous: Bool
     private let _requestInit: (AsynchronousRequestParsing,DateInterval) -> SCKEventRequest
@@ -23,6 +23,7 @@ public final class SCKFreeTimeFinder: AsynchronousRequestParsing {
         _requestInit = controller._requestInit
         unavailableRanges = unavailable
         self.controller = controller
+        super.init()
     }
     
     public var batchSize: Int = 7
