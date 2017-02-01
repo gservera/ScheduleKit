@@ -98,11 +98,26 @@ import Cocoa
     
     // MARK: - Date handling
     
+    public private(set) var startDate: Date = Date()
+    public private(set) var endDate: Date = Date()
+    public private(set) var duration: TimeInterval = 0
+    
     /// The displayed date interval. Setting this value marks the view as needing
     /// display. You should call a reload data method on the controller object to
     /// provide matching events after calling this method.
-    public var dateInterval: DateInterval = DateInterval() {
-        didSet { needsDisplay = true }
+    @available(OSX 10.12, *)
+    public var dateInterval: DateInterval {
+        get { return DateInterval(start: startDate, end: endDate) }
+        set { startDate = newValue.start; endDate = newValue.end; duration = newValue.duration; didChangeDateInterval() }
+    }
+    
+    @available(OSX, deprecated: 10.12, message: "Use dateInterval property instead")
+    public func setDateIntervalWithDates(from start: Date, to end: Date) {
+        startDate = start; endDate = end; duration = end.timeIntervalSince(start); didChangeDateInterval()
+    }
+    
+    internal func didChangeDateInterval() {
+        needsDisplay = true
     }
 
     
@@ -119,8 +134,8 @@ import Cocoa
         guard relativeTimeLocation >= 0.0 && relativeTimeLocation <= 1.0 else {
             return nil
         }
-        let start = dateInterval.start.timeIntervalSinceReferenceDate
-        let length = dateInterval.duration * relativeTimeLocation
+        let start = startDate.timeIntervalSinceReferenceDate
+        let length = duration * relativeTimeLocation
         var numberOfSeconds = Int(trunc(start + length))
         // Round to next minute
         while numberOfSeconds % 60 > 0 {
@@ -138,12 +153,12 @@ import Cocoa
     ///            `SCKRelativeTimeLocationInvalid` if `date` is not contained in
     ///            that interval.
     final func calculateRelativeTimeLocation(for date: Date) -> SCKRelativeTimeLocation {
-        guard dateInterval.contains(date) else {
+        guard startDate <= date && date <= endDate else {
             return SCKRelativeTimeLocationInvalid
         }
         let dateRef = date.timeIntervalSinceReferenceDate
-        let startDateRef = dateInterval.start.timeIntervalSinceReferenceDate
-        return (dateRef - startDateRef) / dateInterval.duration
+        let startDateRef = startDate.timeIntervalSinceReferenceDate
+        return (dateRef - startDateRef) / duration
     }
     
     

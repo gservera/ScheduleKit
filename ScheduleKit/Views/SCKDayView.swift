@@ -44,7 +44,13 @@ public final class SCKDayView: SCKGridView {
     ///
     func decreaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .day)
+        if #available(OSX 10.12, *) {
+            dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .day)
+        } else {
+            let base = _DateInterval(start: startDate, end: endDate)
+            let offset = c.dateInterval(base, offsetBy: -1, .day)
+            setDateIntervalWithDates(from: offset.start, to: offset.end)
+        }
         controller._internalReloadData()
     }
 
@@ -54,7 +60,13 @@ public final class SCKDayView: SCKGridView {
     ///
     func increaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .day)
+        if #available(OSX 10.12, *) {
+            dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .day)
+        } else {
+            let base = _DateInterval(start: startDate, end: endDate)
+            let offset = c.dateInterval(base, offsetBy: 1, .day)
+            setDateIntervalWithDates(from: offset.start, to: offset.end)
+        }
         controller._internalReloadData()
     }
 
@@ -68,7 +80,12 @@ public final class SCKDayView: SCKGridView {
             else {
             fatalError("Could not calculate the start date for current day.")
         }
-        dateInterval = DateInterval(start: sD, duration: dateInterval.duration)
+        if #available(OSX 10.12, *) {
+            dateInterval = DateInterval(start: sD, duration: dateInterval.duration)
+        } else {
+            let offset = _DateInterval(start: sD, duration: duration)
+            setDateIntervalWithDates(from: sD, to: offset.end)
+        }
         controller._internalReloadData()
     }
 }

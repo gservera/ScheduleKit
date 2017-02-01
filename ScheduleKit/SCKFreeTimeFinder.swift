@@ -8,10 +8,11 @@
 
 import Foundation
 
+@available(OSX 10.12, *)
 @objc public final class SCKFreeTimeFinder: NSObject, AsynchronousRequestParsing {
     
     private let isAsynchronous: Bool
-    private let _requestInit: (AsynchronousRequestParsing,DateInterval) -> SCKEventRequest
+    private let _requestInit: (AsynchronousRequestParsing,Date,Date) -> SCKEventRequest
     var isCanceled = false
     let dataSource: SCKEventManaging
     let unavailableRanges: [SCKUnavailableTimeRange]
@@ -71,7 +72,7 @@ import Foundation
         let cleanDate = Date(timeIntervalSinceReferenceDate: TimeInterval(seconds))
         
         let searchInterval = DateInterval(start: cleanDate, duration: TimeInterval(batchSize * 24 * 3600))
-        let request = _requestInit(self, searchInterval)
+        let request = _requestInit(self, cleanDate, searchInterval.end)
         asynchronousRequests.insert(request)
         dataSource.scheduleController(controller, didMakeEventRequest: request)
         print("Making free time event request")
@@ -100,7 +101,7 @@ import Foundation
         } else {
             let nextStart = request.dateInterval.end
             let nextInterval = DateInterval(start: nextStart, duration: TimeInterval(batchSize * 24 * 3600))
-            let nextRequest = _requestInit(self, nextInterval)
+            let nextRequest = _requestInit(self, nextStart, nextInterval.end)
             asynchronousRequests.insert(nextRequest)
             dataSource.scheduleController(controller, didMakeEventRequest: nextRequest)
             print("Sending another event request")

@@ -261,7 +261,8 @@ internal final class SCKEventHolder: NSObject {
                 let newDate = change[.newKey] as! Date
                 cachedScheduledDate = newDate
                 recalculateRelativeValues()
-                if !rootView.dateInterval.contains(newDate) {
+                if !(newDate >= rootView.startDate && newDate < rootView.endDate) {
+                    // TODO: Use !rootView.dateInterval.contains(newDate) on 10.12
                     // Holder is now invalid, reload data will get rid of it.
                     controller._internalReloadData()
                 } else {

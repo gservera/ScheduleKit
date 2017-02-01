@@ -88,7 +88,7 @@ public class SCKGridView: SCKView {
         updateHourParameters()
     }
 
-    
+
     override public weak var delegate: SCKViewDelegate? {
         didSet {
             readDefaultsFromDelegate()
@@ -97,16 +97,17 @@ public class SCKGridView: SCKView {
     
     // MARK: - Date handling additions
     
-    public override var dateInterval: DateInterval {
-        // Set up day count and day labels
-        didSet {
-            let sD = dateInterval.start
-            let eD = dateInterval.end.addingTimeInterval(1)
-            dayCount = sharedCalendar.dateComponents([.day], from: sD, to: eD).day!
-            configureDayLabels()
-            
-            _ = self.minuteTimer
-        }
+    override func didChangeDateInterval() {
+        super.didChangeDateInterval()
+        //let sD = dateInterval.start
+        //let eD = dateInterval.end.addingTimeInterval(1)
+        let sD = startDate
+        let eD = endDate.addingTimeInterval(1)
+        dayCount = sharedCalendar.dateComponents([.day], from: sD, to: eD).day!
+        configureDayLabels()
+        
+        _ = self.minuteTimer
+
     }
     
     /// The number of days displayed. Updated by changing `dateInterval`.
@@ -225,7 +226,7 @@ public class SCKGridView: SCKView {
                     dayLabelingView.addSubview(dayLabel)
                     dayLabelingView.addSubview(monthLabels[day])
                 }
-                let date = sharedCalendar.date(byAdding: .day, value: day, to: dateInterval.start)!
+                let date = sharedCalendar.date(byAdding: .day, value: day, to: startDate)!
                 let text = dayLabelsDateFormatter.string(from: date).uppercased()
                 dayLabel.stringValue = text
                 dayLabel.sizeToFit()
@@ -336,7 +337,7 @@ public class SCKGridView: SCKView {
             let offsetPerDay = 1.0 / Double(dayCount)
             let day = Int(trunc((point.x-canvas.minX)/dayWidth))
             let dayOffset = offsetPerDay * Double(day)
-            let offsetPerMin = calculateRelativeTimeLocation(for: dateInterval.start.addingTimeInterval(60))
+            let offsetPerMin = calculateRelativeTimeLocation(for: startDate.addingTimeInterval(60))
             let offsetPerHour = 60.0 * offsetPerMin
             let totalMinutes = 60.0 * CGFloat(hourCount)
             let minute = totalMinutes * (point.y - canvas.minY) / canvas.height
@@ -567,7 +568,7 @@ public class SCKGridView: SCKView {
     func rectForUnavailableTimeRange(_ rng: SCKUnavailableTimeRange) -> CGRect {
         let canvas = contentRect
         let dayWidth: CGFloat = canvas.width / CGFloat(dayCount)
-        let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: dateInterval.start)!
+        let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: startDate)!
         let sOffset = calculateRelativeTimeLocation(for: sDate)
         
         if sOffset != SCKRelativeTimeLocationInvalid {

@@ -168,7 +168,7 @@ import AppKit
                   "concrete mode. Use `reloadData(ofConcreteType:)` instead.")
             return
         }
-        _requestInit = SCKEventRequest.init(controller:dateInterval:)
+        _requestInit = SCKEventRequest.init(controller:from:to:)
         _internalReloadData()
         _eventManagerIsConcrete = false
         _hasLoadedEventsAtLeastOnce = true
@@ -192,7 +192,7 @@ import AppKit
                   "in the default mode. Use `reloadData()` instead.")
             return
         }
-        _requestInit = SCKConcreteEventRequest<T>.init(controller:dateInterval:)
+        _requestInit = SCKConcreteEventRequest<T>.init(controller:from:to:)
         _internalReloadData()
         _eventManagerIsConcrete = true
         _hasLoadedEventsAtLeastOnce = true
@@ -228,7 +228,7 @@ import AppKit
             }
             return
         }
-        guard !request.isCanceled && request.dateInterval == scheduleView.dateInterval else {
+        guard !request.isCanceled && request.startDate == scheduleView.startDate && request.endDate == scheduleView.endDate else {
             NSLog("Skipping request")
             return
         }
@@ -238,9 +238,7 @@ import AppKit
     
     // The closure that should be used to create asynchronous event requests. It
     // depens on whether we're working in the concrete type mode or not.
-    private(set) var _requestInit = SCKEventRequest.init(controller:dateInterval:)
-    
-    
+    private(set) var _requestInit = SCKEventRequest.init(controller:from:to:)
     
     
     // MARK: - Internal event parsing
@@ -252,7 +250,7 @@ import AppKit
     internal func _internalReloadData() {
         guard scheduleView != nil else { return }
         if loadsEventsAsynchronously {
-            let request = _requestInit(self, scheduleView.dateInterval)
+            let request = _requestInit(self, scheduleView.startDate, scheduleView.endDate)
             _asyncReloadData(request: request )
         } else {
             _syncReloadData()
@@ -278,8 +276,15 @@ import AppKit
             }
             return
         }
-        if let events = eventManager?.events(in: scheduleView.dateInterval, for: self) {
-            parseEvents(events)
+        if #available(OSX 10.12, *) {
+            if let events = eventManager?.events(in: scheduleView.dateInterval, for: self) {
+                parseEvents(events)
+            }
+        } else {
+            let interval = _DateInterval(start: scheduleView.startDate, end: scheduleView.endDate)
+            if let events = eventManager?.events(inLegacy: interval, for: self) {
+                parseEvents(events)
+            }
         }
     }
     
@@ -310,7 +315,9 @@ import AppKit
         // Update last fetch
         _lastFetch = NSPointerArray.weakObjects()
         for e in events {
-            assert(scheduleView.dateInterval.contains(e.scheduledDate), "Invalid scheduledDate (\(e.scheduledDate)) for new event: \(e) in schedule view with date interval \(scheduleView.dateInterval); Asynchronous: \(loadsEventsAsynchronously)")
+            if #available(OSX 10.12, *) {
+                assert(scheduleView.dateInterval.contains(e.scheduledDate), "Invalid scheduledDate (\(e.scheduledDate)) for new event: \(e) in schedule view with date interval \(scheduleView.dateInterval); Asynchronous: \(loadsEventsAsynchronously)")
+            }
             _lastFetch.addPointer(Unmanaged.passUnretained(e).toOpaque())
         }
         

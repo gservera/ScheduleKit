@@ -49,7 +49,21 @@ public protocol SCKEventManaging: class {
     ///   - controller: The SCKViewController requesting events.
     /// - Returns: An array of events compatible with the passed date interval to
     ///            be displayed in the controller's schedule view.
+    @available(OSX 10.12, *)
     func events(in dateInterval: DateInterval,
+                for controller: SCKViewController) -> [SCKEvent]
+    
+    
+    /// This method is required when providing events to a SCKViewController
+    /// synchronously.
+    ///
+    /// - Parameters:
+    ///   - dateInterval: The date interval being displayed.
+    ///   - controller: The SCKViewController requesting events.
+    /// - Returns: An array of events compatible with the passed date interval to
+    ///            be displayed in the controller's schedule view.
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    func events(inLegacy dateInterval: _DateInterval,
                 for controller: SCKViewController) -> [SCKEvent]
     
     
@@ -158,7 +172,14 @@ public protocol SCKEventManaging: class {
 
 public extension SCKEventManaging {
     
+    @available(OSX 10.12, *)
     func events(in dateInterval: DateInterval,
+                for controller: SCKViewController) -> [SCKEvent] {
+        return []
+    }
+    
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    func events(inLegacy dateInterval: _DateInterval,
                 for controller: SCKViewController) -> [SCKEvent] {
         return []
     }

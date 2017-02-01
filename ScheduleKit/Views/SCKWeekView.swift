@@ -44,7 +44,13 @@ public final class SCKWeekView: SCKGridView {
     ///
     func decreaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
+        if #available(OSX 10.12, *) {
+            dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
+        } else {
+            let base = _DateInterval(start: startDate, end: endDate)
+            let offset = c.dateInterval(base, offsetBy: -1, .weekOfYear)
+            setDateIntervalWithDates(from: offset.start, to: offset.end)
+        }
         controller._internalReloadData()
     }
     
@@ -54,7 +60,13 @@ public final class SCKWeekView: SCKGridView {
     ///
     func increaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
+        if #available(OSX 10.12, *) {
+            dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
+        } else {
+            let base = _DateInterval(start: startDate, end: endDate)
+            let offset = c.dateInterval(base, offsetBy: 1, .weekOfYear)
+            setDateIntervalWithDates(from: offset.start, to: offset.end)
+        }
         controller._internalReloadData()
     }
     
@@ -68,7 +80,12 @@ public final class SCKWeekView: SCKGridView {
         guard let start = sharedCalendar.date(from: weekComponents) else {
             fatalError("Could not calculate the start date for current week.")
         }
-        dateInterval = DateInterval(start: start, duration: dateInterval.duration)
+        if #available(OSX 10.12, *) {
+            dateInterval = DateInterval(start: start, duration: dateInterval.duration)
+        } else {
+            setDateIntervalWithDates(from: start,
+                                     to: start.addingTimeInterval(self.duration))
+        }
         controller._internalReloadData()
     }
 }

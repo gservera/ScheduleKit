@@ -45,8 +45,8 @@ internal protocol AsynchronousRequestParsing: class {
 /// appropiate events asynchronously and, eventually, passing them back to
 /// the request on the main queue via the `complete(with:)` method.
 
+
 @objc public class SCKEventRequest: NSObject  {
-    
     
     //MARK: Variables
     
@@ -63,7 +63,10 @@ internal protocol AsynchronousRequestParsing: class {
     @objc public private(set) var endDate: Date
     
     /// The request date interval.
-    @objc public private(set) var dateInterval: DateInterval
+    @available(OSX 10.12, *)
+    @objc public var dateInterval: DateInterval {
+        return DateInterval(start: startDate, end: endDate)
+    }
     
     /// An internal flat to track completion.
     fileprivate var isCompleted: Bool = false
@@ -76,13 +79,24 @@ internal protocol AsynchronousRequestParsing: class {
     ///
     /// - Parameters:
     ///   - c: The controller object that creates the request.
+    ///   - dateInterval: The date interval that must be used in the event fetching.
+    @available(OSX 10.12, *)
+    convenience internal init(controller c: AsynchronousRequestParsing, dateInterval: DateInterval) {
+        self.init(controller: c, from: dateInterval.start, to: dateInterval.end)
+    }
+    
+    
+    /// Called from the `SCKViewController` objects to initialize a new `SCKEventRequest`
+    /// based on the effective date criteria.
+    ///
+    /// - Parameters:
+    ///   - c: The controller object that creates the request.
     ///   - sD: The starting date that must be used in the event fetching.
     ///   - eD: The ending date that must be used in the event fetching.
-    internal init(controller c: AsynchronousRequestParsing, dateInterval: DateInterval) {
+    internal init(controller c: AsynchronousRequestParsing, from sD: Date, to eD: Date) {
         controller = c
-        self.dateInterval = dateInterval
-        startDate = dateInterval.start
-        endDate = dateInterval.end
+        startDate = sD
+        endDate = eD
         super.init()
     }
 

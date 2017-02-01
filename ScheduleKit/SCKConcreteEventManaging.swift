@@ -47,7 +47,21 @@ public protocol SCKConcreteEventManaging: SCKEventManaging {
     ///   - controller: The SCKViewController requesting events.
     /// - Returns: An array of events compatible with the passed date interval to
     ///            be displayed in the controller's schedule view.
+    @available(OSX 10.12, *)
     func concreteEvents(in dateInterval: DateInterval,
+                        for controller: SCKViewController) -> [EventType]
+    
+    
+    /// This method is required when providing events to a SCKViewController
+    /// synchronously.
+    ///
+    /// - Parameters:
+    ///   - dateInterval: The date interval being displayed.
+    ///   - controller: The SCKViewController requesting events.
+    /// - Returns: An array of events compatible with the passed date interval to
+    ///            be displayed in the controller's schedule view.
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    func concreteEvents(inLegacy dateInterval: _DateInterval,
                         for controller: SCKViewController) -> [EventType]
     
     
@@ -148,7 +162,14 @@ public extension SCKConcreteEventManaging where EventType: SCKEvent  {
     
     // SCKConcreteEventManaging's SCKEventManaging implementation.
     
+    @available(OSX 10.12, *)
     public func events(in dateInterval: DateInterval,
+                       for controller: SCKViewController) -> [SCKEvent] {
+        return concreteEvents(in: dateInterval, for: controller)
+    }
+    
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    public func events(in dateInterval: _DateInterval,
                        for controller: SCKViewController) -> [SCKEvent] {
         return concreteEvents(in: dateInterval, for: controller)
     }
@@ -193,7 +214,14 @@ public extension SCKConcreteEventManaging where EventType: SCKEvent  {
     // MARK: - SCKConcreteEventManaging default implementations
     // We provide default implementations to make them optional
     
+    @available(OSX 10.12, *)
     public func concreteEvents(in dateInterval: DateInterval,
+                               for controller: SCKViewController) -> [EventType] {
+        return []
+    }
+    
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    public func concreteEvents(in dateInterval: _DateInterval,
                                for controller: SCKViewController) -> [EventType] {
         return []
     }

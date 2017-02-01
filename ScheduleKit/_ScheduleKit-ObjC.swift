@@ -10,8 +10,13 @@ import Cocoa
 
 @objc(SCKEventManaging) public protocol SCKObjCEventManaging: NSObjectProtocol {
     
+    @available(OSX 10.12, *)
     @objc optional func events(in dateInterval: DateInterval,
                                for controller: SCKViewController) -> [SCKEvent]
+    
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    @objc optional func events(inLegacy dateInterval: _DateInterval,
+                for controller: SCKViewController) -> [SCKEvent]
     
     @objc optional func scheduleController(_ controller: SCKViewController,
                                            didMakeEventRequest request: SCKEventRequest)
@@ -50,10 +55,17 @@ extension SCKViewController {
             delegate = object
         }
         
+        @available(OSX 10.12, *)
         func events(in dateInterval: DateInterval,
                     for controller: SCKViewController) -> [SCKEvent] {
             return delegate?.events?(in: dateInterval, for: controller) ?? []
         }
+        
+        func events(inLegacy dateInterval: _DateInterval,
+                    for controller: SCKViewController) -> [SCKEvent] {
+            return delegate?.events?(inLegacy: dateInterval, for: controller) ?? []
+        }
+        
         
         func scheduleController(_ c: SCKViewController,
                                 didMakeEventRequest request: SCKEventRequest) {

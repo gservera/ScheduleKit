@@ -65,11 +65,40 @@ internal let SCKRelativeTimeLengthInvalid = SCKRelativeTimeLocation.leastNormalM
 }
 
 extension Calendar {
+    @available(OSX 10.12, *)
     func dateInterval(_ interval: DateInterval,
                       offsetBy value: Int,
                       _ unit: Calendar.Component) -> DateInterval {
         let start = date(byAdding: unit, value: value, to: interval.start)
         let end = date(byAdding: unit, value: value, to: interval.end)
         return DateInterval(start: start!, end: end!)
+    }
+    
+    func dateInterval(_ interval: _DateInterval,
+                      offsetBy value: Int,
+                      _ unit: Calendar.Component) -> _DateInterval {
+        let start = date(byAdding: unit, value: value, to: interval.start)
+        let end = date(byAdding: unit, value: value, to: interval.end)
+        return _DateInterval(start: start!, end: end!)
+    }
+}
+
+@objc public class _DateInterval: NSObject {
+    public let start: Date
+    public let end: Date
+    public var duration: TimeInterval {
+        return end.timeIntervalSince(start)
+    }
+    
+    init(start: Date, end: Date) {
+        self.start = start
+        self.end = end
+        super.init()
+    }
+    
+    init(start: Date, duration: TimeInterval) {
+        self.start = start
+        self.end = start.addingTimeInterval(duration)
+        super.init()
     }
 }

@@ -79,6 +79,7 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
     ///
     /// - Parameter dateInterval: The testing boundaries.
     /// - Returns: An array of date intervals matching the defined range.
+    @available(OSX 10.12, *)
     public func matchingOccurrences(in dateInterval: DateInterval) -> [DateInterval] {
         var intervals: [DateInterval] = []
         
@@ -97,11 +98,46 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         sharedCalendar.enumerateDates(startingAfter: safetyOffset,
                                       matching: unavailableRangeComponents,
                                       matchingPolicy: .nextTime) { date, _, stop in
-            guard let date = date, date < dateInterval.end else {
-                stop = true
-                return
+                                        guard let date = date, date < dateInterval.end else {
+                                            stop = true
+                                            return
+                                        }
+                                        intervals.append(DateInterval(start: date, duration: length))
+        }
+        return intervals
+    }
+    
+    
+    /// Calculates all the date intervals that match the unavailable time range in
+    /// a greater date interval.
+    ///
+    /// - Parameter startDate: The testing start date.
+    /// - Parameter endDate: The testing end date.
+    /// - Returns: An array of date intervals matching the defined range.
+    @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
+    public func matchingOccurrences(between startDate: Date, and endDate: Date) -> [_DateInterval] {
+        var intervals: [_DateInterval] = []
+        
+        var unavailableRangeComponents = DateComponents()
+        unavailableRangeComponents.hour = startHour
+        unavailableRangeComponents.minute = startMinute
+        if weekday != -1 {
+            var convertedWeekday = weekday + sharedCalendar.firstWeekday + 7
+            while convertedWeekday > 7 {
+                convertedWeekday -= 7
             }
-            intervals.append(DateInterval(start: date, duration: length))
+            unavailableRangeComponents.weekday = convertedWeekday
+        }
+        let length = self.length
+        let safetyOffset = startDate.addingTimeInterval(-length+1)
+        sharedCalendar.enumerateDates(startingAfter: safetyOffset,
+                                      matching: unavailableRangeComponents,
+                                      matchingPolicy: .nextTime) { date, _, stop in
+                                        guard let date = date, date < endDate else {
+                                            stop = true
+                                            return
+                                        }
+                                        intervals.append(_DateInterval(start: date, duration: length))
         }
         return intervals
     }
