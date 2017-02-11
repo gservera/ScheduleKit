@@ -154,6 +154,7 @@ public class SCKGridView: SCKView {
             if hourHeight != oldValue && superview != nil {
                 let key = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
                 UserDefaults.standard.set(hourHeight, forKey: key)
+                Swift.print("Saved user zoom: \(hourHeight) to: \(key)")
                 invalidateIntrinsicContentSize()
             }
             updateHourLabelsVisibility()
@@ -517,6 +518,8 @@ public class SCKGridView: SCKView {
         // Restore zoom if possible
         let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
         hourHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
+        
+        Swift.print("Read user zoom: \(hourHeight) from: \(zoomKey)")
         let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
