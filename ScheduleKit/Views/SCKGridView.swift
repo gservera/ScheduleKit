@@ -723,6 +723,7 @@ public class SCKGridView: SCKView {
         if hourHeight < Constants.HourLabelArea.maxHeightPerHour {
             hourHeight += 8.0
             needsDisplay = true
+            needsLayout = true
         }
     }
     
@@ -747,6 +748,7 @@ public class SCKGridView: SCKView {
         guard targetHeight < Constants.HourLabelArea.maxHeightPerHour else {
             hourHeight = Constants.HourLabelArea.maxHeightPerHour
             needsDisplay = true
+            needsLayout = true
             return
         }
         let minimumContentHeight = superview!.frame.height - Constants.paddingTop
@@ -756,5 +758,6 @@ public class SCKGridView: SCKView {
             hourHeight = minimumContentHeight / CGFloat(hourCount)
         }
         needsDisplay = true
+        needsLayout = true
     }
 }
