@@ -151,7 +151,7 @@ public class SCKGridView: SCKView {
     // FIXME: Min here? Max here?
     internal var hourHeight: CGFloat = 0.0 {
         didSet {
-            if hourHeight != oldValue && superview != nil {
+            if hourHeight != oldValue && window != nil {
                 let key = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
                 UserDefaults.standard.set(hourHeight, forKey: key)
                 Swift.print("Saved user zoom: \(hourHeight) to: \(key)")
