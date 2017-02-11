@@ -218,6 +218,20 @@ public class SCKGridView: SCKView {
         
         // 2. Add visible days' labels as subviews. Remove others if installed.
         // In addition, change label string values to the correct ones.
+        
+        //El capitan fix
+        if dayLabelingView.superview == nil, let parent = superview?.superview {
+            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
+            dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
+            dayLabelingView.layer?.opacity = 0.95
+            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
+        }
+        //
+        
         for (day, dayLabel) in dayLabels.enumerated() {
             if dayLabel.superview != nil && day >= dayCount {
                 dayLabel.removeFromSuperview()
@@ -497,6 +511,7 @@ public class SCKGridView: SCKView {
         let contentHeight = CGFloat(hourCount) * hourHeight
         if contentHeight < visibleHeight && hourCount > 0 {
             hourHeight = visibleHeight / CGFloat(hourCount)
+            needsLayout = true //Triggers layout on el capitan
         }
     }
     
@@ -504,7 +519,7 @@ public class SCKGridView: SCKView {
         // Insert day labeling view
         guard let superview = newSuperview else { return }
         let height = Constants.DayLabelArea.height
-        if let parent = newSuperview?.superview as? NSScrollView {
+        if let parent = newSuperview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
