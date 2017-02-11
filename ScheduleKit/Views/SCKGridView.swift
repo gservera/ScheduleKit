@@ -126,7 +126,7 @@ public class SCKGridView: SCKView {
     private func updateHourParameters() {
         firstHour = dayStartPoint.hour
         hourCount = dayEndPoint.hour - dayStartPoint.hour
-        let minHourHeight = contentRect.height / CGFloat(hourCount)
+        let minHourHeight = (intrinsicContentSize.height - Constants.paddingTop) / CGFloat(hourCount)
         if hourHeight < minHourHeight {
             hourHeight = minHourHeight
         }
