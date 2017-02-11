@@ -719,7 +719,7 @@
 				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
 				INFOPLIST_FILE = "SCKExample-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -738,7 +738,7 @@
 				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
 				INFOPLIST_FILE = "SCKExample-ObjC/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

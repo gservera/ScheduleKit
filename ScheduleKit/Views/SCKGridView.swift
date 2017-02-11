@@ -404,9 +404,9 @@ public class SCKGridView: SCKView {
     }
     
     public override func layout() {
-        super.layout()
         
-        guard dayCount > 0 else { return } // View is not ready
+        
+        guard dayCount > 0 else { super.layout(); return } // View is not ready
         
         let canvas = contentRect
         
@@ -484,6 +484,8 @@ public class SCKGridView: SCKView {
                 eventView.frame = newFrame
             }
         }
+        
+        super.layout()
     }
     
     public override func resize(withOldSuperviewSize oldSize: NSSize) {

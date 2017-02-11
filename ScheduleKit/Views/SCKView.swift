@@ -118,6 +118,7 @@ import Cocoa
     
     internal func didChangeDateInterval() {
         needsDisplay = true
+        
     }
 
     

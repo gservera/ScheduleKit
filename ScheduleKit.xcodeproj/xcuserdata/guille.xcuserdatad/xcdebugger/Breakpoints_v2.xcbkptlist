@@ -525,11 +525,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKView.swift"
-            timestampString = "507644952.096283"
+            timestampString = "508543271.364806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "SCKView"
             landmarkType = "3">
          </BreakpointContent>
