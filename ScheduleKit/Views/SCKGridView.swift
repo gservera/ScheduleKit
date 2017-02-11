@@ -151,7 +151,7 @@ public class SCKGridView: SCKView {
     // FIXME: Min here? Max here?
     internal var hourHeight: CGFloat = 0.0 {
         didSet {
-            if hourHeight != oldValue {
+            if hourHeight != oldValue && superview != nil {
                 let key = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
                 UserDefaults.standard.set(hourHeight, forKey: key)
                 invalidateIntrinsicContentSize()
@@ -515,7 +515,7 @@ public class SCKGridView: SCKView {
         }
         
         // Restore zoom if possible
-        let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(String(describing:type(of:self)))"
+        let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
         hourHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
         let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
