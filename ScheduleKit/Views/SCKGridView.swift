@@ -150,7 +150,7 @@ public class SCKGridView: SCKView {
     // FIXME: Min here? Max here?
     internal var hourHeight: CGFloat = 0.0 {
         didSet {
-            if hourHeight != oldValue {
+            if hourHeight != oldValue && superview != nil {
                 let key = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
                 UserDefaults.standard.set(hourHeight, forKey: key)
                 invalidateIntrinsicContentSize()
