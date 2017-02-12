@@ -506,6 +506,11 @@ public class SCKGridView: SCKView {
             hourHeight = visibleHeight / CGFloat(hourCount)
             needsLayout = true //Triggers layout on el capitan
         }
+        
+        // El Capitan Fix
+        if dayLabelingView.frame.size.width != frame.size.width {
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: Constants.DayLabelArea.height)
+        }
     }
     
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
