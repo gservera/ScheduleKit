@@ -509,6 +509,7 @@ public class SCKGridView: SCKView {
         let height = Constants.DayLabelArea.height
         if let parent = newSuperview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: parent.frame.size.width, height: Constants.DayLabelArea.height)
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
@@ -534,7 +535,8 @@ public class SCKGridView: SCKView {
     public override func viewDidMoveToWindow() {
         //El capitan fix
         if let parent = superview?.superview {
-            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: Constants.DayLabelArea.height)
+            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: parent.frame.size.width, height: Constants.DayLabelArea.height)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
             dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
@@ -542,8 +544,6 @@ public class SCKGridView: SCKView {
             dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
             parent.needsLayout = true
-            NSLog("WParent: \(parent)")
-            NSLog("C: \(parent.constraints)")
             configureDayLabels()
         }
     }
