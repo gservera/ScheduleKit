@@ -219,19 +219,6 @@ public class SCKGridView: SCKView {
         // 2. Add visible days' labels as subviews. Remove others if installed.
         // In addition, change label string values to the correct ones.
         
-        //El capitan fix
-        if dayLabelingView.superview == nil, let parent = superview?.superview {
-            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
-            parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
-            dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
-            dayLabelingView.layer?.opacity = 0.95
-            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
-        }
-        //
-        
         for (day, dayLabel) in dayLabels.enumerated() {
             if dayLabel.superview != nil && day >= dayCount {
                 dayLabel.removeFromSuperview()
@@ -539,6 +526,21 @@ public class SCKGridView: SCKView {
         let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
+        }
+    }
+    
+    public override func viewDidMoveToWindow() {
+        //El capitan fix
+        if dayLabelingView.superview == nil, let parent = superview?.superview {
+            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
+            dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
+            dayLabelingView.layer?.opacity = 0.95
+            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
+            configureDayLabels()
         }
     }
     
