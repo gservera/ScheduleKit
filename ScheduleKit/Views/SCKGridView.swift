@@ -411,6 +411,11 @@ public class SCKGridView: SCKView {
         
         guard dayCount > 0 else { super.layout(); return } // View is not ready
         
+        // El Capitan Fix
+        if dayLabelingView.frame.size.width != frame.size.width {
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: Constants.DayLabelArea.height)
+        }
+        
         let canvas = contentRect
         
         // Layout day labels
@@ -508,14 +513,14 @@ public class SCKGridView: SCKView {
         guard let superview = newSuperview else { return }
         let height = Constants.DayLabelArea.height
         if let parent = newSuperview?.superview {
-            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            dayLabelingView.autoresizingMask = [.viewWidthSizable,.viewMinYMargin]
             dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: parent.frame.size.width, height: Constants.DayLabelArea.height)
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
-            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            //dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+            //dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+            //dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: height).isActive = true
             parent.needsLayout = true
             NSLog("SParent: \(parent)")
@@ -535,13 +540,13 @@ public class SCKGridView: SCKView {
     public override func viewDidMoveToWindow() {
         //El capitan fix
         if let parent = superview?.superview {
-            dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: parent.frame.size.width, height: Constants.DayLabelArea.height)
+            dayLabelingView.autoresizingMask = [.viewWidthSizable,.viewMinYMargin]
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
-            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
+            //dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
+            //dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
+            //dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
             parent.needsLayout = true
             configureDayLabels()
