@@ -247,8 +247,6 @@ public class SCKGridView: SCKView {
         
         // 3. Set needs layout
         needsLayout = true
-        dayLabelingView.superview?.needsLayout = true
-        dayLabelingView.needsLayout = true
     }
     
     // MARK: Hour labels
@@ -518,6 +516,8 @@ public class SCKGridView: SCKView {
             dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
             dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: height).isActive = true
+            parent.needsLayout = true
+            NSLog("SParent: \(parent)")
         }
         
         // Restore zoom if possible
@@ -543,6 +543,8 @@ public class SCKGridView: SCKView {
             dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
             dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: Constants.DayLabelArea.height).isActive = true
+            parent.needsLayout = true
+            NSLog("WParent: \(parent)")
             configureDayLabels()
         }
     }
