@@ -154,7 +154,7 @@ public class SCKGridView: SCKView {
             if hourHeight != oldValue && window != nil {
                 let key = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
                 UserDefaults.standard.set(hourHeight, forKey: key)
-                Swift.print("Saved user zoom: \(hourHeight) to: \(key)")
+                //Swift.print("Saved user zoom: \(hourHeight) to: \(key)")
                 invalidateIntrinsicContentSize()
             }
             updateHourLabelsVisibility()
