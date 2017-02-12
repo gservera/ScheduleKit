@@ -341,7 +341,7 @@ public class SCKGridView: SCKView {
                 break
             }
         }
-        Swift.print("\(dayLabelingView.window), FRAME: \(dayLabelingView.frame)")
+        NSLog("\(dayLabelingView.window), FRAME: \(dayLabelingView.frame)")
     }
     
     // MARK: - Date transform additions
