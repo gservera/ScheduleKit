@@ -328,7 +328,7 @@ public class SCKGridView: SCKView {
                 break
             }
         }
-        NSLog("\(dayLabelingView.window), FRAME: \(dayLabelingView.frame)")
+        //NSLog("\(dayLabelingView.window), FRAME: \(dayLabelingView.frame)")
     }
     
     // MARK: - Date transform additions
@@ -528,14 +528,14 @@ public class SCKGridView: SCKView {
             //dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
             dayLabelingView.heightAnchor.constraint(equalToConstant: height).isActive = true
             parent.needsLayout = true
-            NSLog("SParent: \(parent)")
+            //NSLog("SParent: \(parent)")
         }
         
         // Restore zoom if possible
         let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(type(of:self))"
         hourHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
         
-        Swift.print("Read user zoom: \(hourHeight) from: \(zoomKey)")
+        //Swift.print("Read user zoom: \(hourHeight) from: \(zoomKey)")
         let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
