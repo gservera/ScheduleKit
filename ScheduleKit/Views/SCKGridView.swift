@@ -247,6 +247,8 @@ public class SCKGridView: SCKView {
         
         // 3. Set needs layout
         needsLayout = true
+        dayLabelingView.superview?.needsLayout = true
+        dayLabelingView.needsLayout = true
     }
     
     // MARK: Hour labels
@@ -533,6 +535,7 @@ public class SCKGridView: SCKView {
         //El capitan fix
         if dayLabelingView.superview == nil, let parent = superview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: Constants.DayLabelArea.height)
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
