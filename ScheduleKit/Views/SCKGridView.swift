@@ -508,6 +508,14 @@ public class SCKGridView: SCKView {
         }
         
         // El Capitan Fix
+        if dayLabelingView.frame.size.width != superview!.frame.size.width {
+            dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: superview!.frame.size.width, height: Constants.DayLabelArea.height)
+        }
+    }
+    
+    public override func viewDidEndLiveResize() {
+        // El Capitan Fix
+        super.viewDidEndLiveResize()
         if dayLabelingView.frame.size.width != frame.size.width {
             dayLabelingView.frame = CGRect(x: 0.0, y: 0.0, width: frame.size.width, height: Constants.DayLabelArea.height)
         }
