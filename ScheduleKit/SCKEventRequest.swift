@@ -72,7 +72,8 @@ internal protocol AsynchronousRequestParsing: class {
     //MARK: Methods
     
     /// Called from the `SCKViewController` objects to initialize a new `SCKEventRequest`
-    /// based on the effective date criteria.
+    /// based on the effective date criteria. This method does not insert the 
+    /// created request in the controller's `asynchronousRequests` set.
     ///
     /// - Parameters:
     ///   - c: The controller object that creates the request.
@@ -123,7 +124,7 @@ internal protocol AsynchronousRequestParsing: class {
     
     public override var debugDescription: String {
         var base = String(describing: type(of:self))
-        base += " (" + (isCompleted ? "Completed |" : "In progress | ")
+        base += " (" + (isCompleted ? "Completed | " : "In progress | ")
         base += "Start: \(startDate) | End: \(endDate))"
         return base
     }

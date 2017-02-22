@@ -60,6 +60,7 @@
 		99E7D0A71A4AF3B500713F18 /* ScheduleKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99F1FF8B1DC4E9F80055C3E4 /* SCKDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */; };
 		99F1FF8D1DC4F9DD0055C3E4 /* SCKWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */; };
+		99F4DDEC1E5DAF9F00D7A161 /* SCKEventRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F4DDEB1E5DAF9F00D7A161 /* SCKEventRequestTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
 		99F1FF8A1DC4E9F80055C3E4 /* SCKDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKDayView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		99F1FF8C1DC4F9DD0055C3E4 /* SCKWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKWeekView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		99F4DDEB1E5DAF9F00D7A161 /* SCKEventRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEventRequestTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				992C11171DEB54DF00E156D0 /* SCKEventHolderTests.swift */,
+				99F4DDEB1E5DAF9F00D7A161 /* SCKEventRequestTests.swift */,
 				991901C51DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift */,
 				991901C31DF80BD800C57622 /* SCKDayViewTests.swift */,
 				993F7FD31DFAB63F009201DA /* SCKWeekViewTests.swift */,
@@ -566,6 +569,7 @@
 				993F7FD41DFAB63F009201DA /* SCKWeekViewTests.swift in Sources */,
 				993F7FD61DFABCAC009201DA /* SCKObjCTests.m in Sources */,
 				991901C71DF81D0D00C57622 /* SCKEventHolderTests.swift in Sources */,
+				99F4DDEC1E5DAF9F00D7A161 /* SCKEventRequestTests.swift in Sources */,
 				991901C41DF80BD800C57622 /* SCKDayViewTests.swift in Sources */,
 				991901C61DF8184F00C57622 /* SCKUnavailableTimeRangesTests.swift in Sources */,
 				99680BEE1DFC937600C3033E /* SCKDayPointTests.swift in Sources */,

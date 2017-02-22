@@ -589,11 +589,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/SCKEventRequest.swift"
-            timestampString = "500923967.5722"
+            timestampString = "509457135.472728"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "SCKEventRequest"
             landmarkType = "3">
          </BreakpointContent>
@@ -916,6 +916,54 @@
             endingLineNumber = "134"
             landmarkName = "evaluateAvailability(among:user:duration:interval:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScheduleKitTests/SCKEventRequestTests.swift"
+            timestampString = "509457682.256931"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "testSynchronousStandardRequest()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScheduleKitTests.SCKEventRequestTests.testSynchronousStandardRequest () -&gt; ()"
+                  moduleName = "ScheduleKitTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKitTests/SCKEventRequestTests.swift"
+                  timestampString = "509457685.707006"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "1082">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ScheduleKitTests.SCKEventRequestTests.(testSynchronousStandardRequest () -&gt; ()).(implicit closure #1)"
+                  moduleName = "ScheduleKitTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/guille/Developer/MedProject/ScheduleKit/ScheduleKitTests/SCKEventRequestTests.swift"
+                  timestampString = "509457685.710668"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
