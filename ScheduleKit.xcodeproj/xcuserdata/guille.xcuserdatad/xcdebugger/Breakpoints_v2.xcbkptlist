@@ -1010,8 +1010,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "523"
             endingLineNumber = "523"
-            landmarkName = "SCKGridView"
-            landmarkType = "3">
+            landmarkName = "viewDidEndLiveResize()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
