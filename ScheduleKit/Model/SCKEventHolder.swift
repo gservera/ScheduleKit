@@ -218,7 +218,7 @@ internal final class SCKEventHolder: NSObject {
     }
     
     
-    override func observeValue(forKeyPath keyPath: String?,
+    override func observeValue(forKeyPath k: String?,
                                of object: Any?,
                                change c: [NSKeyValueChangeKey : Any]?,
                                context: UnsafeMutableRawPointer?) {
@@ -228,10 +228,10 @@ internal final class SCKEventHolder: NSObject {
             return
         }
         guard let o = object as? SCKEvent, let change = c,
-            let keyPath = keyPath, let eventView = eventView,
+            let keyPath = k, let eventView = eventView,
             let rootView = scheduleView, let controller = controller else {
-            print("Warning: Received unexpected KVO notification")
-            return
+                print("Warning: Received unexpected KVO notification. Object: \(object), eventView: \(self.eventView), keyPath: \(k), change: \(c)")
+                return
         }
         
         
