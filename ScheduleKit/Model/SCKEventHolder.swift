@@ -251,6 +251,7 @@ internal final class SCKEventHolder: NSObject {
             switch keyPath {
             case #keyPath(SCKEvent.duration):
                 let newDuration = (change[.newKey] as! NSNumber).intValue
+                guard newDuration != cachedDuration else {return}
                 cachedDuration = newDuration
                 recalculateRelativeValues()
                 let conflictsNow = Set(controller.resolvedConflicts(for: self))
@@ -259,6 +260,7 @@ internal final class SCKEventHolder: NSObject {
                 rootView.invalidateLayout(for: updatingViews)
             case #keyPath(SCKEvent.scheduledDate):
                 let newDate = change[.newKey] as! Date
+                guard cachedScheduledDate != newDate else {return}
                 cachedScheduledDate = newDate
                 recalculateRelativeValues()
                 if !(newDate >= rootView.startDate && newDate < rootView.endDate) {
@@ -272,7 +274,9 @@ internal final class SCKEventHolder: NSObject {
                     rootView.invalidateLayout(for: updatingViews, animated: true)
                 }
             case #keyPath(SCKEvent.title) where change[.newKey] is String:
-                cachedTitle = change[.newKey] as! String
+                let changed = change[.newKey] as! String
+                guard changed != cachedTitle else {return}
+                cachedTitle = changed
                 eventView.innerLabel.stringValue = cachedTitle
             case #keyPath(SCKEvent.user.eventColor):
                 let newUser = o.user

@@ -451,11 +451,12 @@ public class SCKGridView: SCKView {
         // Layout hour labels
         for (i, label) in hourLabels {
             let size = label.frame.size
+            var newLabelFrame = CGRect.zero
             switch i {
             case 0..<24: // Hour label
                 let o = CGPoint(x: marginLeft - size.width - 8.0,
                                 y: canvas.minY + CGFloat(i - firstHour) * hourHeight - 7.0)
-                label.frame = CGRect(origin: o, size: size)
+                newLabelFrame = CGRect(origin: o, size: size)
             default:
                 // Get the hour
                 var hour = i; while hour >= 50 { hour -= 50 }
@@ -464,7 +465,10 @@ public class SCKGridView: SCKView {
                 let hourOffset = canvas.minY + CGFloat(hour - firstHour) * hourHeight
                 let o = CGPoint(x: marginLeft - size.width + 4.0,
                                 y: hourOffset + hourHeight * minute/60.0 - 7.0)
-                label.frame = CGRect(origin: o, size: size)
+                newLabelFrame = CGRect(origin: o, size: size)
+            }
+            if label.frame != newLabelFrame {
+                label.frame = newLabelFrame
             }
         }
         

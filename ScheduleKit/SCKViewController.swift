@@ -354,7 +354,6 @@ import AppKit
             }
             
         }
-        
         // Invalidate the view's layout.
         scheduleView.invalidateLayoutForAllEventViews(animated: false)
     }

@@ -14,6 +14,16 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
     
     typealias EventType = TestEvent
     
+    let unavailableRanges = [
+        SCKUnavailableTimeRange(weekday: 0, startHour: 13, startMinute: 0, endHour: 15, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 1, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 2, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 3, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 4, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 5, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
+        SCKUnavailableTimeRange(weekday: 6, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!
+    ]
+    
     var isReloadingData = false
     var activeRequest: SCKConcreteEventRequest<TestEvent>?
     
@@ -50,7 +60,7 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
         let weekEnding = calendar.date(byAdding: .weekOfYear, value: 1, to: weekBeginning)!
         
         scheduleView.dateInterval = DateInterval(start: weekBeginning, end: weekEnding)
-        reloadData(ofConcreteType: TestEvent.self)
+        //reloadData(ofConcreteType: TestEvent.self)
         (scheduleView as! SCKWeekView).delegate = self
         scheduleView.needsDisplay = true
     }
@@ -141,15 +151,7 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
 extension WeekViewController: SCKGridViewDelegate {
     
     func unavailableTimeRanges(for gridView: SCKGridView) -> [SCKUnavailableTimeRange] {
-        return [
-            SCKUnavailableTimeRange(weekday: 0, startHour: 13, startMinute: 0, endHour: 15, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 1, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 2, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 3, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 4, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 5, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-            SCKUnavailableTimeRange(weekday: 6, startHour: 19, startMinute: 0, endHour: 20, endMinute: 0)!,
-        ]
+        return unavailableRanges
     }
     
     func dayStartHour(for gridView: SCKGridView) -> Int {
