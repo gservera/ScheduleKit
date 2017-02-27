@@ -230,7 +230,7 @@ internal final class SCKEventHolder: NSObject {
         guard let o = object as? SCKEvent, let change = c,
             let keyPath = k, let eventView = eventView,
             let rootView = scheduleView, let controller = controller else {
-                print("Warning: Received unexpected KVO notification. Object: \(object), eventView: \(self.eventView), keyPath: \(k), change: \(c)")
+                print("Warning: Received unexpected KVO notification. Object: \(object), eventView: \(self.eventView), keyPath: \(k), change: \(c), scheduleView: \(scheduleView), controller: \(self.controller)")
                 return
         }
         
