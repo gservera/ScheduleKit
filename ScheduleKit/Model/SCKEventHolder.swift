@@ -230,8 +230,8 @@ internal final class SCKEventHolder: NSObject {
         guard let o = object as? SCKEvent, let change = c,
             let keyPath = k, let eventView = eventView,
             let rootView = scheduleView, let controller = controller else {
-            print("Warning: Received unexpected KVO notification. Object: \(object), eventView: \(self.eventView), keyPath: \(k), change: \(c)")
-            return
+                print("Warning: Received unexpected KVO notification. Object: \(object), eventView: \(self.eventView), keyPath: \(k), change: \(c), scheduleView: \(scheduleView), controller: \(self.controller)")
+                return
         }
         
         
@@ -251,6 +251,7 @@ internal final class SCKEventHolder: NSObject {
             switch keyPath {
             case #keyPath(SCKEvent.duration):
                 let newDuration = (change[.newKey] as! NSNumber).intValue
+                guard newDuration != cachedDuration else {return}
                 cachedDuration = newDuration
                 recalculateRelativeValues()
                 let conflictsNow = Set(controller.resolvedConflicts(for: self))
@@ -259,6 +260,7 @@ internal final class SCKEventHolder: NSObject {
                 rootView.invalidateLayout(for: updatingViews)
             case #keyPath(SCKEvent.scheduledDate):
                 let newDate = change[.newKey] as! Date
+                guard cachedScheduledDate != newDate else {return}
                 cachedScheduledDate = newDate
                 recalculateRelativeValues()
                 if !rootView.dateInterval.contains(newDate) {
@@ -271,7 +273,9 @@ internal final class SCKEventHolder: NSObject {
                     rootView.invalidateLayout(for: updatingViews, animated: true)
                 }
             case #keyPath(SCKEvent.title) where change[.newKey] is String:
-                cachedTitle = change[.newKey] as! String
+                let changed = change[.newKey] as! String
+                guard changed != cachedTitle else {return}
+                cachedTitle = changed
                 eventView.innerLabel.stringValue = cachedTitle
             case #keyPath(SCKEvent.user.eventColor):
                 let newUser = o.user

@@ -176,7 +176,7 @@ final class SCKEventHolderTests: XCTestCase {
         let holder = SCKEventHolder(event: validTestEvent, view: eventView, controller: controller)!
         eventView.eventHolder = holder
         controller.layoutInvalidationPromise = expectation(description: "Layout")
-        let newDate = Calendar.current.date(bySettingHour: 11, minute: 0, second: 0, of: Date())!
+        let newDate = Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: Date())!
         XCTAssertEqual(holder.cachedScheduledDate, validTestEvent.scheduledDate)
         validTestEvent.setValue(newDate, forKey: "scheduledDate")
         XCTAssertEqual(holder.cachedScheduledDate, newDate)
