@@ -40,6 +40,7 @@
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
 		99BA3AC31DBF800E00A6FB33 /* BaseDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */; };
 		99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */; };
+		99CAA5B71E642D20008E19F9 /* SCKViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */; };
 		99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */; };
 		99CAFCD91DC9EAC7004502AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCD81DC9EAC7004502AA /* Assets.xcassets */; };
 		99CAFCDC1DC9EAC7004502AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCDA1DC9EAC7004502AA /* Main.storyboard */; };
@@ -150,6 +151,7 @@
 		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		99C152DA1A82D94C00096C8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKViewControllerTests.swift; sourceTree = "<group>"; };
 		99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SCKExample-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99CAFCD81DC9EAC7004502AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				993F7FD51DFABCAC009201DA /* SCKObjCTests.m */,
 				99680BED1DFC937600C3033E /* SCKDayPointTests.swift */,
 				997E41DD1DFE7DF50005EFE4 /* SCKSynchronousFreeTimeFinderTests.swift */,
+				99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */,
 				992C11191DEB591D00E156D0 /* TestController.xib */,
 				992C11101DEB54B300E156D0 /* Info.plist */,
 			);
@@ -567,6 +570,7 @@
 			files = (
 				997E41DE1DFE7DF50005EFE4 /* SCKSynchronousFreeTimeFinderTests.swift in Sources */,
 				993F7FD41DFAB63F009201DA /* SCKWeekViewTests.swift in Sources */,
+				99CAA5B71E642D20008E19F9 /* SCKViewControllerTests.swift in Sources */,
 				993F7FD61DFABCAC009201DA /* SCKObjCTests.m in Sources */,
 				991901C71DF81D0D00C57622 /* SCKEventHolderTests.swift in Sources */,
 				99F4DDEC1E5DAF9F00D7A161 /* SCKEventRequestTests.swift in Sources */,

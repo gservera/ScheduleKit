@@ -62,6 +62,7 @@ class SCKDayViewTests: XCTestCase {
         let sD = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
         let eD = calendar.date(bySettingHour:23, minute:59, second:59, of: Date())
         let interval = DateInterval(start: sD!, end: eD!)
+        dayView.decreaseDayOffset(self)
         dayView.resetDayOffset(self)
         XCTAssertEqual(dayView.dateInterval, interval, "Today not set.")
     }

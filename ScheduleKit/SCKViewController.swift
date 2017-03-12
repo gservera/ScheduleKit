@@ -68,8 +68,11 @@ import AppKit
     /// Set this attribute to control whether events must be displayed in a
     /// `SCKDayView` or in a `SCKWeekView`. Ideally, set the appropiate value
     /// before the controller's view is loaded, overriding `loadView()` if 
-    /// necessary. You may also use this property to switch between modes once
-    /// a schedule view is already installed.
+    /// necessary. 
+    /// 
+    /// - Note: You may also use this property to switch between modes once
+    /// a schedule view is already installed. In this case, you must also set up
+    /// the new date interval manually.
     @objc public var mode: SCKViewControllerMode = .day {
         didSet {
             // If value changed and a view was already installed, replace it.

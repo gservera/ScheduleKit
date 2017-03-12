@@ -346,12 +346,13 @@ public class SCKGridView: SCKView {
         return SCKRelativeTimeLocationInvalid
     }
     
-    /// <#Description#>
+    /// Returns the Y-axis position in the view's coordinate system that represents a particular hour and
+    /// minute combination.
     ///
     /// - Parameters:
-    ///   - hour: <#hour description#>
-    ///   - m: <#m description#>
-    /// - Returns: <#return value description#>
+    ///   - hour: The hour.
+    ///   - m: The minute.
+    /// - Returns: The calculated Y position.
     internal func yFor(hour: Int, minute m: Int) -> CGFloat {
         let canvas = contentRect
         let hours = CGFloat(hourCount)
