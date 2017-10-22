@@ -77,7 +77,7 @@ import Cocoa
     @IBOutlet public weak var controller: SCKViewController!
     
     /// The schedule view's delegate.
-    public weak var delegate: SCKViewDelegate?
+    @objc public weak var delegate: SCKViewDelegate?
     
     
     //MARK: - NSView overrides
@@ -92,7 +92,7 @@ import Cocoa
     
     public override func draw(_ dirtyRect: NSRect) {
         NSColor.white.setFill()
-        NSRectFill(dirtyRect)
+        dirtyRect.fill()
     }
     
     
@@ -101,7 +101,7 @@ import Cocoa
     /// The displayed date interval. Setting this value marks the view as needing
     /// display. You should call a reload data method on the controller object to
     /// provide matching events after calling this method.
-    public var dateInterval: DateInterval = DateInterval() {
+    @objc public var dateInterval: DateInterval = DateInterval() {
         didSet { needsDisplay = true }
     }
 

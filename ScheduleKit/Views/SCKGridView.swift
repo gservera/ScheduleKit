@@ -399,7 +399,7 @@ public class SCKGridView: SCKView {
     
     public override var intrinsicContentSize: NSSize {
         // Defines intrinsic height based on hour height and hour count.
-        return CGSize(width: NSViewNoIntrinsicMetric,
+        return CGSize(width: NSView.noIntrinsicMetric,
                       height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
     }
     
@@ -501,15 +501,17 @@ public class SCKGridView: SCKView {
         // Insert day labeling view
         guard let superview = newSuperview else { return }
         let height = Constants.DayLabelArea.height
-        if let parent = newSuperview?.superview as? NSScrollView {
+        if let parent = newSuperview?.superview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
             dayLabelingView.layer?.opacity = 0.95
-            dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor).isActive = true
-            dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor).isActive = true
-            dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor).isActive = true
-            dayLabelingView.heightAnchor.constraint(equalToConstant: height).isActive = true
+            NSLayoutConstraint.activate([
+                dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor),
+                dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor),
+                dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor),
+                dayLabelingView.heightAnchor.constraint(equalToConstant: height)
+            ])
         }
         
         // Restore zoom if possible
@@ -620,7 +622,7 @@ public class SCKGridView: SCKView {
     private func drawUnavailableTimeRanges() {
         NSColor(red: 0.925, green: 0.942, blue: 0.953, alpha: 1.0).set()
         for range in unavailableTimeRanges {
-            NSRectFill(rectForUnavailableTimeRange(range))
+            rectForUnavailableTimeRange(range).fill()
         }
     }
     
@@ -636,7 +638,7 @@ public class SCKGridView: SCKView {
                            y: canvas.minY,
                            width: 1.0,
                            height: canvas.height)
-            NSRectFill(r)
+            r.fill()
         }
     }
     
@@ -648,7 +650,7 @@ public class SCKGridView: SCKView {
                            y: canvas.minY + CGFloat(hour) * hourHeight - 0.4,
                            width: canvas.width + 8.0,
                            height: 1.0)
-            NSRectFill(r)
+            r.fill()
         }
     }
     
@@ -660,7 +662,7 @@ public class SCKGridView: SCKView {
         let yOrigin = canvas.minY + canvas.height * CGFloat(elapsedMinutes / minuteCount)
         
         NSColor.red.setFill()
-        NSRectFill(CGRect(x: canvas.minX, y: yOrigin-0.25, width: canvas.width, height: 0.5))
+        CGRect(x: canvas.minX, y: yOrigin-0.25, width: canvas.width, height: 0.5).fill()
         NSBezierPath(ovalIn: CGRect(x: canvas.minX-2.0, y: yOrigin-2.0, width: 4.0, height: 4.0)).fill()
     }
     
@@ -669,7 +671,7 @@ public class SCKGridView: SCKView {
         (dV.backgroundColor ?? NSColor.darkGray).setFill()
         
         func fill(_ x: CGFloat, _ y: CGFloat, _ w: CGFloat, _ h: CGFloat) {
-            NSRectFill(CGRect(x: x, y: y, width: w, height: h))
+            CGRect(x: x, y: y, width: w, height: h).fill()
         }
         
         let canvas = contentRect
@@ -692,8 +694,8 @@ public class SCKGridView: SCKView {
             let sLabelText = NSString(format: "%ld:%02ld", sPoint.hour, sPoint.minute)
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
             let attrs = [
-                NSForegroundColorAttributeName: NSColor.darkGray,
-                NSFontAttributeName: NSFont.systemFont(ofSize: 12.0)
+                NSAttributedStringKey.foregroundColor: NSColor.darkGray,
+                NSAttributedStringKey.font: NSFont.systemFont(ofSize: 12.0)
             ]
             let sLabelSize = sLabelText.size(withAttributes: attrs)
             let eLabelSize = eLabelText.size(withAttributes: attrs)

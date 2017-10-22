@@ -85,7 +85,7 @@ import AppKit
     /// The scroll view managed by the controller.
     @objc public private(set) var scrollView: NSScrollView = {
         let sV = NSScrollView(frame: CGRect.zero)
-        sV.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        sV.autoresizingMask = [.width, .height]
         sV.hasVerticalScroller = true
         return sV
     }()
@@ -456,7 +456,7 @@ import AppKit
     // Objective-C target.
     private var _delegateProxy: _SCKObjCEventManagingProxy?
     
-    @available(*, unavailable)
+    //@available(*, unavailable)
     // Sets the `delegate` property (Objective-C only).
     @objc public func setObjCDelegate(_ delegate: SCKObjCEventManaging?) {
         self.delegate = delegate

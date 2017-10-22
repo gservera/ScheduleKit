@@ -55,7 +55,7 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DayCalendarPopover" {
+        if segue.identifier?.rawValue == "DayCalendarPopover" {
             let destination = segue.destinationController as! DayCalendarPopoverViewController
             destination.dayView = scheduleView as! SCKDayView!
         }
@@ -102,7 +102,7 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
         alert.informativeText = "You've modified the duration of event '\(event.title)'.\n\nPrevious date: \(oldValue) min.\nNew date: \(newValue) min.\n\nAre you sure?)"
         alert.addButton(withTitle: "Save changes")
         alert.addButton(withTitle: "Discard")
-        return alert.runModal() == NSAlertFirstButtonReturn
+        return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
     }
     
     func scheduleController(_ controller: SCKViewController, shouldChangeDateOfConcreteEvent event: TestEvent, from oldValue: Date, to newValue: Date) -> Bool {
@@ -112,7 +112,7 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
         alert.informativeText = "You've modified the date and time of event '\(event.title)'.\n\nPrevious date: \(formatter.string(from: oldValue)).\nNew date: \(formatter.string(from: newValue)).\n\nAre you sure?)"
         alert.addButton(withTitle: "Save changes")
         alert.addButton(withTitle: "Discard")
-        return alert.runModal() == NSAlertFirstButtonReturn
+        return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
     }
 }
 

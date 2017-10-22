@@ -23,16 +23,16 @@ final class EventLoadingView: NSView {
             label.isBezeled = false
             label.drawsBackground = false
             label.stringValue = "Loading events asynchronously…"
-            label.font = NSFont.systemFont(ofSize: 30.0, weight: NSFontWeightThin)
+            label.font = NSFont.systemFont(ofSize: 30.0, weight: NSFont.Weight.thin)
             addSubview(label)
             label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
             label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 10.0).isActive = true
             label.sizeToFit()
-            label.setContentCompressionResistancePriority(1000, for: .horizontal)
-            label.setContentHuggingPriority(1000, for: .horizontal)
+            label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 1000), for: .horizontal)
+            label.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 1000), for: .horizontal)
             label.textColor = NSColor.darkGray
             
-            spinner.style = .spinningStyle
+            spinner.style = .spinning
             spinner.translatesAutoresizingMaskIntoConstraints = false
             spinner.isIndeterminate = true
             addSubview(spinner)
@@ -46,7 +46,7 @@ final class EventLoadingView: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         NSColor.white.set()
-        NSRectFill(dirtyRect)
+        dirtyRect.fill()
     }
     
 }

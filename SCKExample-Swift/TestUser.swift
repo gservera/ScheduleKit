@@ -10,8 +10,8 @@ import ScheduleKit
 import Cocoa
 
 final class TestUser: NSObject, SCKUser {
-    var name: String
-    var eventColor: NSColor
+    @objc var name: String
+    @objc var eventColor: NSColor
     
     init(name: String, color: NSColor) {
         self.name = name

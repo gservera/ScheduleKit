@@ -15,7 +15,7 @@ final class TableCellView: NSTableCellView {
             let index = tableView.row(for: self)
             let set = IndexSet(integer: index)
             tableView.selectRowIndexes(IndexSet(set), byExtendingSelection: false)
-            TableViewController.shared?.performSegue(withIdentifier: "Edit", sender: sender)
+            TableViewController.shared?.performSegue(withIdentifier: NSStoryboardSegue.Identifier(rawValue: "Edit"), sender: sender)
         }
     }
 }
@@ -33,7 +33,7 @@ final class TableViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.appearance = NSAppearance(named: NSAppearanceNameVibrantLight)
+        view.window?.appearance = NSAppearance(named: NSAppearance.Name.vibrantLight)
         view.window?.titlebarAppearsTransparent = true
         view.window?.titleVisibility = .hidden
     }
@@ -70,13 +70,13 @@ final class TableViewController: NSViewController {
     private weak var clickedEditButton: NSButton?
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         clickedEditButton = sender as? NSButton
-        if segue.identifier == "Edit" {
+        if segue.identifier?.rawValue == "Edit" {
             let destination = segue.destinationController as! EditEventViewController
             destination.event = EventEngine.shared.events[tableView.selectedRow] as! TestEvent
         }
     }
     
-    override func presentViewController(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect, of positioningView: NSView, preferredEdge: NSRectEdge, behavior: NSPopoverBehavior) {
+    override func presentViewController(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect, of positioningView: NSView, preferredEdge: NSRectEdge, behavior: NSPopover.Behavior) {
         super.presentViewController(viewController, asPopoverRelativeTo: clickedEditButton!.frame, of: clickedEditButton!.superview!, preferredEdge: NSRectEdge.maxX, behavior: .transient)
     }
     

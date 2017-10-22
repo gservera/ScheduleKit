@@ -35,11 +35,11 @@ public enum EventKind: Int {
 
 @objc final class TestEvent: NSObject, SCKEvent {
     
-    var eventKind: Int
+    @objc var eventKind: Int
     @objc var user: SCKUser
-    var title: String
-    var duration: Int
-    var scheduledDate: Date
+    @objc var title: String
+    @objc var duration: Int
+    @objc var scheduledDate: Date
     
     init(kind: EventKind, user: TestUser, title: String, duration: Int, date: Date) {
         eventKind = kind.rawValue

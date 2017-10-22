@@ -45,9 +45,9 @@ public final class SCKEventView: NSView {
     /// observed.
     private(set) var innerLabel: SCKTextField = {
         let _label = SCKTextField(frame: .zero)
-        _label.setContentCompressionResistancePriority(249, for: .horizontal)
-        _label.setContentCompressionResistancePriority(249, for: .vertical)
-        _label.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
+        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
+        _label.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
         return _label
     }()
     
@@ -92,7 +92,7 @@ public final class SCKEventView: NSView {
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
         if inLiveResize {
             fillColor.set()
-            NSRectFill(wholeRect)
+            wholeRect.fill()
         } else {
             fillColor.setFill()
             let path = NSBezierPath(roundedRect: wholeRect, xRadius: 2.0, yRadius: 2.0)
@@ -131,7 +131,7 @@ public final class SCKEventView: NSView {
     public override func resetCursorRects() {
         // FIXME: Cursor beyond view bounds?
         let r = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
-        addCursorRect(r, cursor: .resizeUpDown())
+        addCursorRect(r, cursor: .resizeUpDown)
     }
     
     // MARK: - Mouse events and dragging
@@ -167,7 +167,7 @@ public final class SCKEventView: NSView {
     public override func mouseDragged(with event: NSEvent) {
         switch draggingStatus {
         // User began dragging from bottom
-        case .idle where NSCursor.current() == NSCursor.resizeUpDown():
+        case .idle where NSCursor.current == NSCursor.resizeUpDown:
             draggingStatus = .draggingDuration(oldValue: eventHolder.cachedDuration,
                                               lastValue: eventHolder.cachedDuration)
             scheduleView.beginDragging(eventView: self)

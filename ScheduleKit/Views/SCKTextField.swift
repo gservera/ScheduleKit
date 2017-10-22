@@ -69,9 +69,14 @@ private final class SCKTextFieldCell: NSTextFieldCell {
 /// This class provides a custom NSTextField whose cell renders its string value
 /// vertically centered when the actual text is not selected and/or being edited.
 internal final class SCKTextField: NSTextField {
-
-    override class func cellClass() -> AnyClass {
-        return SCKTextFieldCell.self
+    
+    override class var cellClass: AnyClass? {
+        get {
+            return SCKTextFieldCell.self
+        }
+        set {
+            self.cellClass = newValue
+        }
     }
     
     override init(frame frameRect: NSRect) {
