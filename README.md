@@ -168,7 +168,7 @@ github "gservera/ScheduleKit" "master"
 
 Run `carthage update` on your project's directory to build the framework and drag the built `ScheduleKit.framework` into your Xcode project.
  
-##Ideas for the future
+## Ideas for the future
  
 * Ability to create an event by clicking and dragging on a region of the view (thus, setting the corresponding start and end date values), as suggested by @ronnyek
 
