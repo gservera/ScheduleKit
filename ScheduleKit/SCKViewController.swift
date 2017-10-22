@@ -207,7 +207,7 @@ import AppKit
     
     /// Set this property to `true` to perform event fetching asyncronously.
     /// Default value is `false`.
-    public var loadsEventsAsynchronously: Bool = false
+    @objc public var loadsEventsAsynchronously: Bool = false
     
     
     /// A set to track all the event requests initiated by this controller.

@@ -21,7 +21,7 @@ final class SCKViewControllerSyncGenericTests: XCTestCase, SCKEventManaging {
     override func setUp() {
         super.setUp()
         w = NSWindow(contentRect: CGRect(x:0,y:0,width:800,height:600), styleMask: [], backing: .buffered, defer: false)
-        c = SCKViewController(nibName: "TestController", bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
+        c = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
         w.contentView = c.view
         w.orderFront(nil)
         c.eventManager = self
@@ -136,7 +136,7 @@ final class SCKViewControllerSyncGenericDefaultImplTests: XCTestCase, SCKEventMa
     override func setUp() {
         super.setUp()
         w = NSWindow(contentRect: CGRect(x:0,y:0,width:800,height:600), styleMask: [], backing: .buffered, defer: false)
-        c = SCKViewController(nibName: "TestController", bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
+        c = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
         w.contentView = c.view
         w.orderFront(nil)
         c.eventManager = self
@@ -183,7 +183,7 @@ final class SCKViewControllerSyncConcreteTests: XCTestCase, SCKConcreteEventMana
     override func setUp() {
         super.setUp()
         w = NSWindow(contentRect: CGRect(x:0,y:0,width:800,height:600), styleMask: [], backing: .buffered, defer: false)
-        c = SCKViewController(nibName: "TestController", bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
+        c = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
         w.contentView = c.view
         w.orderFront(nil)
         c.eventManager = self
@@ -232,7 +232,7 @@ final class SCKViewControllerSyncConcreteDefaultImplTests: XCTestCase, SCKConcre
     override func setUp() {
         super.setUp()
         w = NSWindow(contentRect: CGRect(x:0,y:0,width:800,height:600), styleMask: [], backing: .buffered, defer: false)
-        c = SCKViewController(nibName: "TestController", bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
+        c = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: Bundle(for: SCKViewControllerSyncGenericTests.self))
         w.contentView = c.view
         w.orderFront(nil)
         c.eventManager = self
