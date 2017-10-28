@@ -94,9 +94,9 @@ import Cocoa
 
     // MARK: - Date handling
 
-    public private(set) var startDate: Date = Date()
-    public private(set) var endDate: Date = Date()
-    public private(set) var duration: TimeInterval = 0
+    @objc public private(set) var startDate: Date = Date()
+    @objc public private(set) var endDate: Date = Date()
+    @objc public private(set) var duration: TimeInterval = 0
     
     /// The displayed date interval. Setting this value marks the view as needing
     /// display. You should call a reload data method on the controller object to
