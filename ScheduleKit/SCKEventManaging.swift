@@ -38,9 +38,9 @@ import Cocoa
 /// this protocol directly. See the `SCKViewController` class description to
 /// learn more.
 public protocol SCKEventManaging: class {
-    
+
     // MARK: - Data source
-    
+
     /// This method is required when providing events to a SCKViewController
     /// synchronously.
     ///
@@ -49,10 +49,8 @@ public protocol SCKEventManaging: class {
     ///   - controller: The SCKViewController requesting events.
     /// - Returns: An array of events compatible with the passed date interval to
     ///            be displayed in the controller's schedule view.
-    func events(in dateInterval: DateInterval,
-                for controller: SCKViewController) -> [SCKEvent]
-    
-    
+    func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent]
+
     /// This method is required when providing events to a SCKViewController
     /// asynchronously. To fetch events in a background queue, keep a reference
     /// of the event request (from which you can get the requested date interval)
@@ -63,53 +61,43 @@ public protocol SCKEventManaging: class {
     /// - Parameters:
     ///   - controller: The SCKViewController requesting events.
     ///   - request: The just created event request.
-    func scheduleController(_ controller: SCKViewController,
-                            didMakeEventRequest request: SCKEventRequest) -> Void
-    
-    // MARK: -
-    
-    // MARK: Event selection
-    
+    func scheduleController(_ controller: SCKViewController, didMakeEventRequest request: SCKEventRequest)
+
+    // MARK: - Event selection
+
     /// Implement this method to be notified when an event is selected.
     ///
     /// - Parameters:
     ///   - controller: The SCKViewController owning the selected event view.
     ///   - event: The selected event object.
-    func scheduleController(_ controller: SCKViewController,
-                            didSelectEvent event: SCKEvent) -> Void
-    
-    
+    func scheduleController(_ controller: SCKViewController, didSelectEvent event: SCKEvent)
+
     /// Implement this method to be notified when an event is deselected in a
     /// schedule view.
     ///
     /// - Parameter controller: The SCKViewController owning the schedule view.
-    func scheduleControllerDidClearSelection(_ controller: SCKViewController) -> Void
-    
-    
+    func scheduleControllerDidClearSelection(_ controller: SCKViewController)
+
     // MARK: Double clicking
-    
+
     /// Implement this method to be notified when an empty date is double clicked
     /// in a schedule view.
     ///
     /// - Parameters:
     ///   - controller: The SCKViewController owning the schedule view.
     ///   - date: The double clicked date.
-    func scheduleController(_ controller: SCKViewController,
-                            didDoubleClickBlankDate date: Date) -> Void
-    
-    
+    func scheduleController(_ controller: SCKViewController, didDoubleClickBlankDate date: Date)
+
     /// Implement this method to be notified when an event is double clicked in a
     /// schedule view.
     ///
     /// - Parameters:
     ///   - controller: The SCKViewController managing the event.
     ///   - event: The double clicked event.
-    func scheduleController(_ controller: SCKViewController,
-                            didDoubleClickEvent event: SCKEvent) -> Void
-    
-    
+    func scheduleController(_ controller: SCKViewController, didDoubleClickEvent event: SCKEvent)
+
     // MARK: Event changing
-    
+
     /// Implement this method to conditionally allow or deny a user-initiated
     /// duration change in one of the events managed by a SCKViewController. If
     /// you don't implement this method, changes are allowed by default.
@@ -123,8 +111,7 @@ public protocol SCKEventManaging: class {
     func scheduleController(_ controller: SCKViewController,
                             shouldChangeDurationOfEvent event: SCKEvent,
                             from oldValue: Int, to newValue: Int) -> Bool
-    
-    
+
     /// Implement this method to conditionally allow or deny a user-initiated
     /// date change in one of the events managed by a SCKViewController. If
     /// you don't implement this method, changes are allowed by default.
@@ -138,10 +125,9 @@ public protocol SCKEventManaging: class {
     func scheduleController(_ controller: SCKViewController,
                             shouldChangeDateOfEvent event: SCKEvent,
                             from oldValue: Date, to newValue: Date) -> Bool
-    
-    
+
     // MARK: Contextual menu
-    
+
     /// Implement this method to conditionally provide a contextual menu for
     /// one or more events in a schedule view.
     ///
@@ -151,42 +137,32 @@ public protocol SCKEventManaging: class {
     /// - Returns: An NSMenu object to will be displayed as a contextual menu or
     ///            `nil` if you don't want to display a menu for this particular
     ///            event.
-    func scheduleController(_ controller: SCKViewController,
-                            menuForEvent event: SCKEvent) -> NSMenu?
-    
+    func scheduleController(_ controller: SCKViewController, menuForEvent event: SCKEvent) -> NSMenu?
+
 }
 
 public extension SCKEventManaging {
-    
-    func events(in dateInterval: DateInterval,
-                for controller: SCKViewController) -> [SCKEvent] {
+
+    func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent] {
         return []
     }
-    
-    func scheduleController(_ controller: SCKViewController,
-                            didMakeEventRequest request: SCKEventRequest) { }
-    
 
-    func scheduleController(_ controller: SCKViewController,
-                            didSelectEvent event: SCKEvent) {}
-    
+    func scheduleController(_ controller: SCKViewController, didMakeEventRequest request: SCKEventRequest) { }
+
+    func scheduleController(_ controller: SCKViewController, didSelectEvent event: SCKEvent) {}
+
     func scheduleControllerDidClearSelection(_ controller: SCKViewController) {}
 
-    
-    func scheduleController(_ controller: SCKViewController,
-                            didDoubleClickBlankDate date: Date) {}
-    
-    
-    func scheduleController(_ controller: SCKViewController,
-                            didDoubleClickEvent event: SCKEvent) {}
-    
+    func scheduleController(_ controller: SCKViewController, didDoubleClickBlankDate date: Date) {}
+
+    func scheduleController(_ controller: SCKViewController, didDoubleClickEvent event: SCKEvent) {}
 
     func scheduleController(_ controller: SCKViewController,
                             shouldChangeDurationOfEvent event: SCKEvent,
                             from oldValue: Int, to newValue: Int) -> Bool {
         return true
     }
-    
+
     func scheduleController(_ controller: SCKViewController,
                             shouldChangeDateOfEvent event: SCKEvent,
                             from oldValue: Date, to newValue: Date) -> Bool {
@@ -198,4 +174,3 @@ public extension SCKEventManaging {
         return nil
     }
 }
-

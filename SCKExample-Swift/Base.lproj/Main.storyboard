@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11542"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -669,6 +669,9 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1160" height="600"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="B8D-0N-5wS" id="LgL-hJ-Byu"/>
+                        </connections>
                     </window>
                     <connections>
                         <segue destination="sby-SE-WNi" kind="relationship" relationship="window.shadowedContentViewController" id="lSq-MD-cmH"/>
@@ -690,8 +693,12 @@
                     <splitView key="splitView" misplaced="YES" dividerStyle="thin" vertical="YES" id="kGX-r3-8Sy">
                         <rect key="frame" x="0.0" y="0.0" width="1160" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="delegate" destination="sby-SE-WNi" id="X64-KX-KK8"/>
+                        </connections>
                     </splitView>
                     <connections>
+                        <outlet property="splitView" destination="kGX-r3-8Sy" id="0mk-d8-l9Z"/>
                         <segue destination="E4P-2b-KjP" kind="relationship" relationship="splitItems" id="nrd-6Q-fRC"/>
                         <segue destination="RLT-XA-2h8" kind="relationship" relationship="splitItems" id="APK-if-uID"/>
                         <segue destination="0LP-9I-XOz" kind="relationship" relationship="splitItems" id="Xw7-Qx-uIn"/>
@@ -709,7 +716,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="251" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView appearanceType="vibrantLight" blendingMode="withinWindow" material="light" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Ztu-os-gOV">
+                            <visualEffectView wantsLayer="YES" appearanceType="vibrantLight" blendingMode="withinWindow" material="light" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="Ztu-os-gOV">
                                 <rect key="frame" x="0.0" y="0.0" width="251" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bfB-yI-plD">
@@ -743,7 +750,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <segue destination="pOo-Hv-lBM" kind="popover" identifier="DayCalendarPopover" popoverAnchorView="JmV-wh-3y9" popoverBehavior="t" preferredEdge="minY" id="FCx-8j-b7h"/>
+                                            <segue destination="pOo-Hv-lBM" kind="popover" identifier="dayCalendarPopover" popoverAnchorView="JmV-wh-3y9" popoverBehavior="t" preferredEdge="minY" id="FCx-8j-b7h"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rDu-hI-qh1">
@@ -802,12 +809,8 @@
                             <constraint firstAttribute="trailing" secondItem="Ztu-os-gOV" secondAttribute="trailing" id="sun-Vb-iDD"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="arrayController" destination="ZpC-8J-Im0" id="t9h-H0-S1d"/>
-                    </connections>
                 </viewController>
                 <customObject id="k7J-Dt-8qt" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <arrayController automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="ZpC-8J-Im0"/>
             </objects>
             <point key="canvasLocation" x="-116" y="1803"/>
         </scene>
@@ -823,10 +826,9 @@
                                 <rect key="frame" x="20" y="61" width="139" height="148"/>
                                 <datePickerCell key="cell" alignment="left" drawsBackground="NO" datePickerStyle="clockAndCalendar" id="JG1-zi-rCK">
                                     <font key="font" metaFont="system"/>
-                                    <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                                        <!--1982-02-12 08:00:00 -0800-->
-                                        <timeZone key="timeZone" name="US/Pacific"/>
-                                    </calendarDate>
+                                    <date key="date" timeIntervalSinceReferenceDate="-595929600">
+                                        <!--1982-02-12 16:00:00 +0000-->
+                                    </date>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
@@ -868,7 +870,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="512" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <visualEffectView appearanceType="vibrantLight" blendingMode="withinWindow" material="light" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="0PN-uU-Xu1">
+                            <visualEffectView wantsLayer="YES" appearanceType="vibrantLight" blendingMode="withinWindow" material="light" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="0PN-uU-Xu1">
                                 <rect key="frame" x="0.0" y="0.0" width="512" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N0D-Ao-eVI">
@@ -986,12 +988,8 @@
                             <constraint firstItem="0PN-uU-Xu1" firstAttribute="leading" secondItem="6ZI-C6-MZr" secondAttribute="leading" id="e8o-Pl-3Lg"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="arrayController" destination="Yvu-hj-Xs2" id="Beq-RZ-4Eb"/>
-                    </connections>
                 </viewController>
                 <customObject id="vWw-hc-b7m" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <arrayController objectClassName="TestEvent" automaticallyPreparesContent="YES" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="Yvu-hj-Xs2"/>
             </objects>
             <point key="canvasLocation" x="295" y="1803"/>
         </scene>
@@ -1066,10 +1064,9 @@
                                 <rect key="frame" x="20" y="138" width="201" height="27"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="ZTy-9Q-MWK">
                                     <font key="font" metaFont="system"/>
-                                    <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                                        <!--1982-02-12 08:00:00 -0800-->
-                                        <timeZone key="timeZone" name="US/Pacific"/>
-                                    </calendarDate>
+                                    <date key="date" timeIntervalSinceReferenceDate="-595929600">
+                                        <!--1982-02-12 16:00:00 +0000-->
+                                    </date>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
@@ -1179,7 +1176,7 @@
                                             <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                             <color key="gridColor" white="0.80000000000000004" alpha="0.23547040343915343" colorSpace="deviceWhite"/>
                                             <tableColumns>
-                                                <tableColumn width="253" minWidth="40" maxWidth="1000" id="oaT-SX-6Ly">
+                                                <tableColumn identifier="" width="253" minWidth="40" maxWidth="1000" id="oaT-SX-6Ly">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1204,13 +1201,13 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                     <connections>
-                                                                        <binding destination="2B4-EQ-Iis" name="value" keyPath="objectValue.user.name" id="3Le-Ct-0PC"/>
                                                                         <binding destination="2B4-EQ-Iis" name="textColor" keyPath="objectValue.user.eventColor" id="AnG-WO-CRo"/>
+                                                                        <binding destination="2B4-EQ-Iis" name="value" keyPath="objectValue.user.name" id="3Le-Ct-0PC"/>
                                                                     </connections>
                                                                 </textField>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v81-f7-B6L">
-                                                                    <rect key="frame" x="7" y="33" width="46" height="21"/>
-                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="2pZ-ku-POB">
+                                                                    <rect key="frame" x="7" y="33" width="195" height="21"/>
+                                                                    <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Label" id="2pZ-ku-POB">
                                                                         <font key="font" metaFont="system" size="17"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1234,7 +1231,7 @@
                                                                 <constraint firstAttribute="bottom" secondItem="Btj-Ai-zCB" secondAttribute="bottom" constant="16" id="2Gv-Hb-yar"/>
                                                                 <constraint firstItem="bFz-AN-ATF" firstAttribute="centerY" secondItem="2B4-EQ-Iis" secondAttribute="centerY" id="B0y-LH-0bx"/>
                                                                 <constraint firstItem="v81-f7-B6L" firstAttribute="leading" secondItem="2B4-EQ-Iis" secondAttribute="leading" constant="9" id="HqK-TQ-hhr"/>
-                                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="v81-f7-B6L" secondAttribute="trailing" constant="20" symbolic="YES" id="Wdk-4a-8hI"/>
+                                                                <constraint firstItem="bFz-AN-ATF" firstAttribute="leading" secondItem="v81-f7-B6L" secondAttribute="trailing" constant="8" symbolic="YES" id="Rul-fh-5nb"/>
                                                                 <constraint firstItem="v81-f7-B6L" firstAttribute="top" secondItem="2B4-EQ-Iis" secondAttribute="top" constant="16" id="X0u-B5-HCc"/>
                                                                 <constraint firstAttribute="trailing" secondItem="bFz-AN-ATF" secondAttribute="trailing" constant="8" id="Yi9-li-m7T"/>
                                                                 <constraint firstItem="Btj-Ai-zCB" firstAttribute="leading" secondItem="2B4-EQ-Iis" secondAttribute="leading" constant="9" id="iUl-6o-qou"/>
@@ -1321,7 +1318,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="tvu-15-ieO" id="bkA-cn-gHL"/>
-                        <segue destination="4Dc-ue-cGG" kind="popover" identifier="Edit" popoverBehavior="t" preferredEdge="maxY" id="cTv-Fc-H9p"/>
+                        <segue destination="4Dc-ue-cGG" kind="popover" identifier="edit" popoverBehavior="t" preferredEdge="maxY" id="cTv-Fc-H9p"/>
                     </connections>
                 </viewController>
                 <customObject id="mou-1K-tZc" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

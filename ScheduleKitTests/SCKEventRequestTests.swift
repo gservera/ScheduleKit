@@ -28,17 +28,17 @@ import XCTest
 @testable import ScheduleKit
 
 class RequestParsingMock: AsynchronousRequestParsing {
-    
+
     var completed = false
-    
+
     let expectation: XCTestExpectation?
-    
+
     init(expectation: XCTestExpectation?) {
         self.expectation = expectation
     }
-    
+
     var asynchronousRequests: Set<SCKEventRequest> = []
-    
+
     func parseData(in eventArray: [SCKEvent], from request: SCKEventRequest) {
         completed = true
         expectation?.fulfill()
@@ -48,11 +48,11 @@ class RequestParsingMock: AsynchronousRequestParsing {
 class SCKEventRequestTests: XCTestCase {
 
     var parser: RequestParsingMock?
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         parser = nil
         super.tearDown()
@@ -61,7 +61,7 @@ class SCKEventRequestTests: XCTestCase {
     func testSynchronousStandardRequest() {
         let condition = expectation(description: "Standard event request")
         parser = RequestParsingMock(expectation: condition)
-        
+
         let anyDateInterval = DateInterval(start: Date(), duration: 1)
         let request = SCKEventRequest(controller: parser!,
                                       dateInterval: anyDateInterval)
@@ -79,11 +79,11 @@ class SCKEventRequestTests: XCTestCase {
         XCTAssertEqual(request.debugDescription, "SCKEventRequest (Completed | Start: \(anyDateInterval.start.description) | End: \(anyDateInterval.end.description))")
         waitForExpectations(timeout: 5.0, handler: nil)
     }
-    
+
     func testAsynchronousMainThreadCompletion() {
         let condition = expectation(description: "Standard event request")
         parser = RequestParsingMock(expectation: condition)
-        
+
         let anyDateInterval = DateInterval(start: Date(), duration: 1)
         let request = SCKEventRequest(controller: parser!,
                                       dateInterval: anyDateInterval)
@@ -97,7 +97,7 @@ class SCKEventRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 5.0, handler: nil)
     }
-    
+
     func testAsynchronousBackgroundThreadNoCompletion() {
         parser = RequestParsingMock(expectation: nil)
         let exp = expectation(description: "Not called")
@@ -114,7 +114,7 @@ class SCKEventRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 5.0, handler: nil)
     }
-    
+
     func testCancellationNoCompletion() {
         parser = RequestParsingMock(expectation: nil)
         let exp = expectation(description: "Not called")
@@ -133,11 +133,11 @@ class SCKEventRequestTests: XCTestCase {
         }
         waitForExpectations(timeout: 5.0, handler: nil)
     }
-    
+
     func testConcreteAsynchronousMainThreadCompletion() {
         let condition = expectation(description: "Standard event request")
         parser = RequestParsingMock(expectation: condition)
-        
+
         let anyDateInterval = DateInterval(start: Date(), duration: 1)
         let request: SCKConcreteEventRequest<SCKEventMock> = SCKConcreteEventRequest(controller: parser!,
                                       dateInterval: anyDateInterval)

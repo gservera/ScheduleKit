@@ -38,37 +38,31 @@ import Cocoa
 public final class SCKDayView: SCKGridView {
 
     // MARK: - Day offset actions
-    
+
     /// Displays the previous day and asks the controller to fetch any matching
     /// events.
-    ///
     func decreaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .day)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 
-    
     /// Displays the next day and asks the controller to fetch any matching
     /// events.
-    ///
     func increaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .day)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 
-    
     /// Displays the default date interval (today) and asks the controller to
     /// fetch matching events.
-    ///
     func resetDayOffset(_ sender: Any) {
         let c = sharedCalendar
-        guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
-            else {
+        guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) else {
             fatalError("Could not calculate the start date for current day.")
         }
         dateInterval = DateInterval(start: sD, duration: dateInterval.duration)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 }

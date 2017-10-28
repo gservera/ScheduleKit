@@ -36,32 +36,27 @@ import Cocoa
 /// change the displayed hour range (which defaults to the whole day).
 ///
 public final class SCKWeekView: SCKGridView {
-    
+
     // MARK: - Displayed week offset
-    
+
     /// Displays the previous week and asks the controller to fetch any matching
     /// events.
-    ///
     func decreaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
-    
-    
+
     /// Displays the next week and asks the controller to fetch any matching 
     /// events.
-    ///
     func increaseWeekOffset(_ sender: Any) {
         let c = sharedCalendar
         dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
-    
-    
+
     /// Displays the default date interval (this week) and asks the controller to
     /// reload matching events.
-    ///
     func resetWeekOffset(_ sender: Any) {
         let units: Set<Calendar.Component> = [.weekOfYear, .yearForWeekOfYear]
         let weekComponents = sharedCalendar.dateComponents(units, from: Date())
@@ -69,6 +64,6 @@ public final class SCKWeekView: SCKGridView {
             fatalError("Could not calculate the start date for current week.")
         }
         dateInterval = DateInterval(start: start, duration: dateInterval.duration)
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 }

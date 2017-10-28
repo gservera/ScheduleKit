@@ -37,8 +37,7 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
     public fileprivate(set) var startMinute: Int
     public fileprivate(set) var endHour: Int
     public fileprivate(set) var endMinute: Int
-    
-    
+
     /// Initializes a new `SCKUnavailableTimeRange` object representing a concrete
     /// time range within a day. Fails for ranges with negative duration.
     ///
@@ -58,22 +57,22 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         guard TimeInterval(end - start) > 0 else {
             return nil
         }
-        
+
         self.weekday = weekday
         self.startHour = startHour
         self.startMinute = startMinute
         self.endHour = endHour
         self.endMinute = endMinute
     }
-    
+
     private var length: TimeInterval {
         let end = endHour * 3600 + endMinute * 60
         let start = startHour * 3600 + startMinute * 60
         return TimeInterval(end - start)
     }
-    
+
     // MARK: Date interval transforming
-    
+
     /// Calculates all the date intervals that match the unavailable time range in
     /// a greater date interval.
     ///
@@ -81,7 +80,7 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
     /// - Returns: An array of date intervals matching the defined range.
     public func matchingOccurrences(in dateInterval: DateInterval) -> [DateInterval] {
         var intervals: [DateInterval] = []
-        
+
         var unavailableRangeComponents = DateComponents()
         unavailableRangeComponents.hour = startHour
         unavailableRangeComponents.minute = startMinute
@@ -105,13 +104,13 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         }
         return intervals
     }
-    
+
     // MARK: - Equatable and hashable
-    
+
     public override var hash: Int {
         return weekday.hashValue ^ startHour.hashValue ^ startMinute.hashValue ^ endHour.hashValue ^ endMinute.hashValue
     }
-    
+
     public override func isEqual(_ object: Any?) -> Bool {
         guard let o = object as? SCKUnavailableTimeRange else {
             return false
@@ -120,19 +119,19 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
             && self.startHour == o.startHour && self.startMinute == o.startMinute
             && self.endHour == o.endHour && self.endMinute == o.endMinute)
     }
-    
+
     // MARK: - NSSecureCoding
-    
+
     private static let weekdayKey     = "BreakWeekday"
     private static let startHourKey   = "BreakSH"
     private static let startMinuteKey = "BreakSM"
     private static let endHourKey     = "BreakEH"
     private static let endMinuteKey   = "BreakEM"
-    
+
     public static var supportsSecureCoding: Bool {
         return true
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         weekday     = aDecoder.decodeInteger(forKey: SCKUnavailableTimeRange.weekdayKey)
         startHour   = aDecoder.decodeInteger(forKey: SCKUnavailableTimeRange.startHourKey)
@@ -140,15 +139,12 @@ public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
         endHour     = aDecoder.decodeInteger(forKey: SCKUnavailableTimeRange.endHourKey)
         endMinute   = aDecoder.decodeInteger(forKey: SCKUnavailableTimeRange.endMinuteKey)
     }
-    
+
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(weekday,     forKey: SCKUnavailableTimeRange.weekdayKey)
-        aCoder.encode(startHour,   forKey: SCKUnavailableTimeRange.startHourKey)
+        aCoder.encode(weekday, forKey: SCKUnavailableTimeRange.weekdayKey)
+        aCoder.encode(startHour, forKey: SCKUnavailableTimeRange.startHourKey)
         aCoder.encode(startMinute, forKey: SCKUnavailableTimeRange.startMinuteKey)
-        aCoder.encode(endHour,     forKey: SCKUnavailableTimeRange.endHourKey)
-        aCoder.encode(endMinute,   forKey: SCKUnavailableTimeRange.endMinuteKey)
+        aCoder.encode(endHour, forKey: SCKUnavailableTimeRange.endHourKey)
+        aCoder.encode(endMinute, forKey: SCKUnavailableTimeRange.endMinuteKey)
     }
 }
-
-
-

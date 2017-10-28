@@ -34,11 +34,10 @@ import Cocoa
     @objc var eventColor: NSColor { get }
 }
 
-
 /// Any type implementing the properties required to define an event displayed in
 /// a `SCKView` subclass.
-@objc public protocol SCKEvent: NSObjectProtocol {
-    
+@objc public protocol SCKEvent: NSObjectProtocol where Self: NSObject {
+
     /// An integer used by the `SCKView` to distinguish between different event
     /// types when `colorMode` is set to `.byEventKind`. Please reserve the `-1`
     /// value for special or transitory events.
@@ -48,24 +47,18 @@ import Cocoa
     ///         this property. The framework does not include the enum to allow
     ///         you to define it with the event types you need.
     @objc var eventKind: Int { get }
-    
-    
+
     /// The event's duration in minutes.
     @objc var duration: Int { get set }
-    
 
     /// The event's starting date and time.
     @objc var scheduledDate: Date { get set }
-    
-    
+
     /// A string describing this event. It will be drawn inside of the respective
     /// `SCKEventView`.
     @objc var title: String { get }
-    
-    
+
     /// The user object associated with the event, also referred as the event's
     /// owner.
     @objc var user: SCKUser { get }
-
 }
-

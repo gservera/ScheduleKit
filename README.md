@@ -175,7 +175,7 @@ Run `carthage update` on your project's directory to build the framework and dra
 
 ## Requirements
 
-* **Xcode**: 8.1 or greater.
+* **Xcode**: 9.0 or greater.
 * **Deployment target**: macOS 10.12
 
 ## Unit Tests

@@ -27,11 +27,11 @@
 import Cocoa
 
 private final class SCKTextFieldCell: NSTextFieldCell {
-    
+
     /// A flag property to track whether the text field is selected or being
     /// edited.
     private var editingOrSelected = false
-    
+
     fileprivate override func drawingRect(forBounds rect: NSRect) -> NSRect {
         var rect = super.drawingRect(forBounds: rect)
         if !editingOrSelected {
@@ -44,17 +44,17 @@ private final class SCKTextFieldCell: NSTextFieldCell {
         }
         return rect
     }
-    
+
     override func select(withFrame rect: NSRect, in controlView: NSView,
                          editor textObj: NSText, delegate: Any?,
-                         start selStart: Int,    length selLength: Int) {
+                         start selStart: Int, length selLength: Int) {
         let newRect = drawingRect(forBounds: rect)
         editingOrSelected = true
         super.select(withFrame: newRect, in: controlView, editor: textObj,
                      delegate: delegate, start: selStart, length: selLength)
         editingOrSelected = false
     }
-    
+
     override func edit(withFrame rect: NSRect, in controlView: NSView,
                        editor textObj: NSText, delegate: Any?, event: NSEvent?) {
         let newRect = drawingRect(forBounds: rect)
@@ -65,11 +65,10 @@ private final class SCKTextFieldCell: NSTextFieldCell {
     }
 }
 
-
 /// This class provides a custom NSTextField whose cell renders its string value
 /// vertically centered when the actual text is not selected and/or being edited.
 internal final class SCKTextField: NSTextField {
-    
+
     override class var cellClass: AnyClass? {
         get {
             return SCKTextFieldCell.self
@@ -78,23 +77,23 @@ internal final class SCKTextField: NSTextField {
             self.cellClass = newValue
         }
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setUpDefaultProperties()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setUpDefaultProperties()
     }
-    
+
     /// Sets up the text field default properties.
     private func setUpDefaultProperties() {
         drawsBackground = false
         isEditable = false
         isBezeled = false
         alignment = .center
-        font = NSFont.systemFont(ofSize: 12.0)
+        font = .systemFont(ofSize: 12.0)
     }
 }

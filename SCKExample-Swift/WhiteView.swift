@@ -8,17 +8,14 @@
 
 import Cocoa
 
-
 @IBDesignable final class WhiteView: NSView {
 
     override var isOpaque: Bool {
         return true
     }
 
-    
     override func draw(_ dirtyRect: NSRect) {
         NSColor.white.set()
         dirtyRect.fill()
     }
-
 }

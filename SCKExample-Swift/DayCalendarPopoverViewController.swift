@@ -12,17 +12,17 @@ import ScheduleKit
 class DayCalendarPopoverViewController: NSViewController {
 
     weak var dayView: SCKDayView!
-    
+
     @IBOutlet var todayButton: NSButton!
     @IBOutlet var datePicker: NSDatePicker!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.dateValue = dayView.dateInterval.start
         todayButton.target = dayView.controller
         todayButton.action = #selector(SCKViewController.resetOffset(_:))
     }
-    
+
     @IBAction func datePickerValueChanged(_ sender: NSDatePicker) {
         let calendar = Calendar.current
         let sD = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: sender.dateValue)

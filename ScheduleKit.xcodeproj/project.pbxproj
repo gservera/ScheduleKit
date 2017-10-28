@@ -35,6 +35,8 @@
 		999950951D8EB7CE00128669 /* SCKEventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950941D8EB7CE00128669 /* SCKEventHolder.swift */; };
 		999950971D8EE25A00128669 /* SCKEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950961D8EE25A00128669 /* SCKEventView.swift */; };
 		999950991D8F216600128669 /* SCKView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950981D8F216600128669 /* SCKView.swift */; };
+		99A418711F9E0421001CB55C /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 99A418701F9E0421001CB55C /* .swiftlint.yml */; };
+		99A418731F9E14ED001CB55C /* SegueHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A418721F9E14ED001CB55C /* SegueHandling.swift */; };
 		99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B577DB1DC61A870010A6A5 /* SCKTextField.swift */; };
 		99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */; };
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
@@ -144,6 +146,8 @@
 		999950941D8EB7CE00128669 /* SCKEventHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventHolder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		999950961D8EE25A00128669 /* SCKEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		999950981D8F216600128669 /* SCKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKView.swift; sourceTree = "<group>"; };
+		99A418701F9E0421001CB55C /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		99A418721F9E14ED001CB55C /* SegueHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandling.swift; sourceTree = "<group>"; };
 		99B577DB1DC61A870010A6A5 /* SCKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKTextField.swift; path = Views/SCKTextField.swift; sourceTree = "<group>"; };
 		99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEvent.swift; sourceTree = "<group>"; };
 		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
@@ -297,6 +301,7 @@
 				99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */,
 				99CAFCF21DC9F97D004502AA /* DayViewController.swift */,
 				998260201DDB74FE00C46586 /* WeekViewController.swift */,
+				99A418721F9E14ED001CB55C /* SegueHandling.swift */,
 				996E96511DE984710056022E /* EditEventViewController.swift */,
 				99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */,
 				998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */,
@@ -311,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				99D50B421DF7731B00A729B4 /* cartfile */,
+				99A418701F9E0421001CB55C /* .swiftlint.yml */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
 				99C152DA1A82D94C00096C8E /* README.md */,
 				99CDA4601A7066C200AFB505 /* LICENSE.md */,
@@ -462,6 +468,7 @@
 				99E7D09D1A4AF3B500713F18 /* Frameworks */,
 				99E7D09E1A4AF3B500713F18 /* Headers */,
 				99E7D09F1A4AF3B500713F18 /* Resources */,
+				99A4186F1F9E037B001CB55C /* Run swiftlint */,
 			);
 			buildRules = (
 			);
@@ -558,11 +565,29 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A418711F9E0421001CB55C /* .swiftlint.yml in Resources */,
 				99CDA4611A7066C200AFB505 /* LICENSE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		99A4186F1F9E037B001CB55C /* Run swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run swiftlint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		992C11081DEB54B200E156D0 /* Sources */ = {
@@ -598,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A418731F9E14ED001CB55C /* SegueHandling.swift in Sources */,
 				998260211DDB74FE00C46586 /* WeekViewController.swift in Sources */,
 				99CAFCED1DC9F067004502AA /* EventLoadingView.swift in Sources */,
 				99CAFCEF1DC9F294004502AA /* TableViewController.swift in Sources */,
