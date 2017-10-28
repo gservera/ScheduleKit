@@ -12,12 +12,12 @@ class EditEventViewController: NSViewController {
 
     @objc weak var event: TestEvent!
     @IBOutlet var userPopUp: NSPopUpButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        userPopUp.selectItem(at: EventEngine.shared.users.index(of: event.user as! TestUser)!)
+        userPopUp.selectItem(at: EventEngine.shared.users.index(of: event.testUser)!)
     }
-    
+
     @IBAction func usePopUpChanged(_ sender: NSPopUpButton) {
         let targetUser = EventEngine.shared.users[sender.indexOfSelectedItem]
         event.willChangeValue(forKey: "user")

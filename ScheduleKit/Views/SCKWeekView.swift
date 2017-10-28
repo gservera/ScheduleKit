@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 29/10/2016.
- *  Copyright:  © 2016 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2016-2017 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,9 @@ import Cocoa
 /// change the displayed hour range (which defaults to the whole day).
 ///
 public final class SCKWeekView: SCKGridView {
-    
+
     // MARK: - Displayed week offset
-    
+
     /// Displays the previous week and asks the controller to fetch any matching
     /// events.
     ///
@@ -51,10 +51,9 @@ public final class SCKWeekView: SCKGridView {
             let offset = c.dateInterval(base, offsetBy: -1, .weekOfYear)
             setDateIntervalWithDates(from: offset.start, to: offset.end)
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
-    
-    
+
     /// Displays the next week and asks the controller to fetch any matching 
     /// events.
     ///
@@ -67,13 +66,11 @@ public final class SCKWeekView: SCKGridView {
             let offset = c.dateInterval(base, offsetBy: 1, .weekOfYear)
             setDateIntervalWithDates(from: offset.start, to: offset.end)
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
-    
-    
+
     /// Displays the default date interval (this week) and asks the controller to
     /// reload matching events.
-    ///
     func resetWeekOffset(_ sender: Any) {
         let units: Set<Calendar.Component> = [.weekOfYear, .yearForWeekOfYear]
         let weekComponents = sharedCalendar.dateComponents(units, from: Date())
@@ -86,6 +83,6 @@ public final class SCKWeekView: SCKGridView {
             setDateIntervalWithDates(from: start,
                                      to: start.addingTimeInterval(self.duration))
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 }

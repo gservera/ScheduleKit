@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2015 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -31,39 +31,39 @@ import Cocoa
 /// mouse events, including drag and drop operations, which may derive in changes
 /// to the represented event.
 public final class SCKEventView: NSView {
-    
+
     /// The event holder represented by this view.
     internal var eventHolder: SCKEventHolder! {
         didSet {
             innerLabel.stringValue = eventHolder.cachedTitle
         }
     }
-    
+
     /// A label that displays the represented event's title or its duration when
     /// dragging the view from the bottom edge. The title value is updated
     /// automatically by the event holder when a change in the event's title is 
     /// observed.
     private(set) var innerLabel: SCKTextField = {
         let _label = SCKTextField(frame: .zero)
-        _label.setContentCompressionResistancePriority(249, for: .horizontal)
-        _label.setContentCompressionResistancePriority(249, for: .vertical)
-        _label.autoresizingMask = [.viewWidthSizable, .viewHeightSizable]
+        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
+        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
+        _label.autoresizingMask = [.width, .height]
         return _label
     }()
-    
+
     // MARK: - Drawing
-    
+
     /// A cached copy of the last used background color to increase drawing
     /// performance. Invalidated when the schedule view's color mode changes or
     /// when the event's user or user event color changes in .byEventOwner mode.
-    internal var backgroundColor: NSColor? = nil
-    
+    internal var backgroundColor: NSColor?
+
     public override func draw(_ dirtyRect: CGRect) {
         let isAnyViewSelected = (scheduleView.selectedEventView != nil)
         let isThisViewSelected = (scheduleView.selectedEventView == self)
-        
+
         var fillColor: NSColor
-        
+
         if isAnyViewSelected && !isThisViewSelected {
             // Set color to gray when another event is selected
             fillColor = NSColor(white: 0.85, alpha: 1.0)
@@ -83,36 +83,37 @@ public final class SCKEventView: NSView {
             }
             fillColor = backgroundColor!
         }
-        
+
         // Make more transparent if dragging this view.
-        if isThisViewSelected, case .draggingContent(_,_,_) = draggingStatus {
+        if isThisViewSelected, case .draggingContent(_, _, _) = draggingStatus {
             fillColor = fillColor.withAlphaComponent(0.7)
         }
-        
+
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
         if inLiveResize {
             fillColor.set()
-            NSRectFill(wholeRect)
+            wholeRect.fill()
         } else {
             fillColor.setFill()
             let path = NSBezierPath(roundedRect: wholeRect, xRadius: 2.0, yRadius: 2.0)
-            if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y || scheduleView.contentRect.maxY < frame.maxY {
+            if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y
+                || scheduleView.contentRect.maxY < frame.maxY {
                 fillColor.withAlphaComponent(0.2).setFill()
             }
             path.fill()
         }
     }
-    
+
     // MARK: - View lifecycle
-    
+
     /// The `SCKView` instance th which this view has been added.
-    private weak var scheduleView: SCKView!
-    
+    internal weak var scheduleView: SCKView!
+
     public override func viewDidEndLiveResize() {
         super.viewDidEndLiveResize()
         needsDisplay = true
     }
-    
+
     public override func viewDidMoveToSuperview() {
         scheduleView = superview as? SCKView
         // Add the title label to the view hierarchy.
@@ -121,21 +122,20 @@ public final class SCKEventView: NSView {
             addSubview(innerLabel)
         }
     }
-    
+
     // MARK: - Overrides
-    
+
     public override var isFlipped: Bool {
         return true
     }
-    
+
     public override func resetCursorRects() {
-        // FIXME: Cursor beyond view bounds?
         let r = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
-        addCursorRect(r, cursor: .resizeUpDown())
+        addCursorRect(r, cursor: .resizeUpDown)
     }
-    
+
     // MARK: - Mouse events and dragging
-    
+
     public override func mouseDown(with event: NSEvent) {
         // Select this view if not selected yet. This will trigger selection
         // methods on the controller's delegate.
@@ -143,9 +143,9 @@ public final class SCKEventView: NSView {
             scheduleView.selectedEventView = self
         }
     }
-    
+
     // MARK: Dragging
-    
+
     /// A type to describe the drag & drop state of an `SCKEventView`.
     ///
     /// - idle: The view is not being dragged yet.
@@ -160,20 +160,20 @@ public final class SCKEventView: NSView {
             innerDelta: CGFloat
         )
     }
-    
+
     /// The view's drag and drop state.
     private var draggingStatus: Status = .idle
-    
+
     public override func mouseDragged(with event: NSEvent) {
         switch draggingStatus {
         // User began dragging from bottom
-        case .idle where NSCursor.current() == NSCursor.resizeUpDown():
+        case .idle where NSCursor.current == NSCursor.resizeUpDown:
             draggingStatus = .draggingDuration(oldValue: eventHolder.cachedDuration,
                                               lastValue: eventHolder.cachedDuration)
             scheduleView.beginDragging(eventView: self)
-            fallthrough
-        // User continued dragging (and fallthrough)
-        case .draggingDuration(_, _):
+            parseDurationDrag(with: event)
+        // User continued dragging
+        case .draggingDuration:
             parseDurationDrag(with: event)
         default:
             // User began dragging from center
@@ -188,12 +188,12 @@ public final class SCKEventView: NSView {
         }
         scheduleView.continueDragging()
     }
-    
+
     private func parseDurationDrag(with event: NSEvent) {
         guard case .draggingDuration(let old, let last) = draggingStatus else {
             return
         }
-        
+
         let superLoc = scheduleView.convert(event.locationInWindow, from: nil)
         let sDate = eventHolder.cachedScheduledDate
         if let eDate = scheduleView.calculateDate(for: scheduleView.relativeTimeLocation(for: superLoc)) {
@@ -205,7 +205,7 @@ public final class SCKEventView: NSView {
                     let endDate = eventHolder.cachedScheduledDate.addingTimeInterval(Double(inSeconds))
                     var relativeEnd = scheduleView.calculateRelativeTimeLocation(for: endDate)
                     if relativeEnd == Double(NSNotFound) {
-                        relativeEnd = 1.0;
+                        relativeEnd = 1.0
                     }
                     eventHolder.relativeLength = relativeEnd - eventHolder.relativeStart
                     scheduleView.invalidateLayout(for: self)
@@ -218,22 +218,22 @@ public final class SCKEventView: NSView {
             }
         }
     }
-    
+
     private func parseContentDrag(with event: NSEvent) {
         guard case .draggingContent(let old, _, let delta) = draggingStatus else {
             return
         }
-        
+
         var tPoint = scheduleView.convert(event.locationInWindow, from: nil)
         tPoint.y -= delta
-        
+
         var newStartLoc = scheduleView.relativeTimeLocation(for: tPoint)
         if newStartLoc == SCKRelativeTimeLocationInvalid && tPoint.y < scheduleView.frame.midY {
             //May be too close to an edge, check if too low
             tPoint.y = scheduleView.contentRect.minY
             newStartLoc = scheduleView.relativeTimeLocation(for: tPoint)
         }
-        if newStartLoc != SCKRelativeTimeLocationInvalid  {
+        if newStartLoc != SCKRelativeTimeLocationInvalid {
             tPoint.y += frame.height
             let newEndLoc = scheduleView.relativeTimeLocation(for: tPoint)
             if newEndLoc != SCKRelativeTimeLocationInvalid {
@@ -244,40 +244,47 @@ public final class SCKEventView: NSView {
             }
         }
     }
-    
+
     // MARK: Mouse up
-    
+
     public override func mouseUp(with event: NSEvent) {
         switch draggingStatus {
         case .draggingDuration(let old, let new):
-            
+
             // Restore title 
             innerLabel.stringValue = eventHolder.cachedTitle
-            
+            let event = eventHolder.representedObject
             var shouldContinue = true
             if let eventManager = scheduleView.controller.eventManager {
-                shouldContinue = eventManager.scheduleController(scheduleView.controller, shouldChangeDurationOfEvent: eventHolder.representedObject, from: old, to: new)
+                shouldContinue = eventManager.scheduleController(scheduleView.controller,
+                                                                 shouldChangeDurationOfEvent: event,
+                                                                 from: old,
+                                                                 to: new)
             }
             if shouldContinue {
                 commitDraggingOperation {
-                    eventHolder.representedObject.duration = new
+                    event.duration = new
                 }
             } else {
                 eventHolder.cachedDuration = old
                 flushUncommitedDraggingOperation()
             }
-            
+
             scheduleView.endDragging()
-            
+
         case .draggingContent(let oldStart, let newStart, _):
             if let scheduledDate = scheduleView.calculateDate(for: newStart) {
+                let event = eventHolder.representedObject
                 var shouldContinue = true
                 if let eventManager = scheduleView.controller.eventManager {
-                    shouldContinue = eventManager.scheduleController(scheduleView.controller, shouldChangeDateOfEvent: eventHolder.representedObject, from: eventHolder.representedObject.scheduledDate, to: scheduledDate)
+                    shouldContinue = eventManager.scheduleController(scheduleView.controller,
+                                                                     shouldChangeDateOfEvent: event,
+                                                                     from: eventHolder.representedObject.scheduledDate,
+                                                                     to: scheduledDate)
                 }
                 if shouldContinue {
                     commitDraggingOperation {
-                        eventHolder.representedObject.scheduledDate = scheduledDate
+                        event.scheduledDate = scheduledDate
                     }
                 } else {
                     let oldDate = scheduleView.calculateDate(for: oldStart)!
@@ -286,16 +293,17 @@ public final class SCKEventView: NSView {
                 }
             }
             scheduleView.endDragging()
-            
+
         case .idle where event.clickCount == 2:
-            scheduleView.controller.eventManager?.scheduleController(scheduleView.controller, didDoubleClickEvent: eventHolder.representedObject)
-        default: break;
+            scheduleView.controller.eventManager?.scheduleController(scheduleView.controller,
+                                                                     didDoubleClickEvent: eventHolder.representedObject)
+        default: break
         }
         draggingStatus = .idle
         needsDisplay = true
     }
-    
-    private func commitDraggingOperation(withChanges closure: () -> ()) {
+
+    private func commitDraggingOperation(withChanges closure: () -> Void) {
         eventHolder.stopObservingRepresentedObjectChanges()
         closure()
         eventHolder.resumeObservingRepresentedObjectChanges()
@@ -303,21 +311,21 @@ public final class SCKEventView: NSView {
         // FIXME: needed? will be called from endDraggingEventView
         scheduleView.invalidateLayoutForAllEventViews()
     }
-    
+
     private func flushUncommitedDraggingOperation() {
         eventHolder.recalculateRelativeValues()
         scheduleView.invalidateLayout(for: self)
     }
-    
+
     // MARK: Right mouse events
-    
+
     public override func menu(for event: NSEvent) -> NSMenu? {
         guard let c = scheduleView.controller, let eM = c.eventManager else {
             return nil
         }
         return eM.scheduleController(c, menuForEvent: eventHolder.representedObject)
     }
-    
+
     public override func rightMouseDown(with event: NSEvent) {
         // Select the event if not selected and continue showing the contextual
         // menu if any.
@@ -326,5 +334,4 @@ public final class SCKEventView: NSView {
         }
         super.rightMouseDown(with: event)
     }
-    
 }

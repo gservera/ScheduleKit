@@ -9,19 +9,15 @@
 import Cocoa
 import ScheduleKit
 
-
 extension NSNotification.Name {
     static var eventCountChanged = NSNotification.Name("eventCountChangedNotification")
 }
 
-
-
-
 final class EventEngine {
-    
-    var events: [SCKEvent]
+
+    var events: [TestEvent]
     var users: [TestUser]
-    
+
     static var shared: EventEngine = EventEngine()
     private init() {
         users = [
@@ -30,9 +26,8 @@ final class EventEngine {
         ]
         events = TestEvent.sampleEvents(for: users)
     }
-    
+
     func notifyUpdates() {
         NotificationCenter.default.post(name: .eventCountChanged, object: self)
     }
-    
 }

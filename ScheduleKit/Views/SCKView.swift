@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2016 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import Cocoa
 /// An object conforming to the `SCKViewDelegate` protocol must implement a
 /// method required to set a color schedule view events.
 @objc public protocol SCKViewDelegate {
-    
+
     /// Implemented by a schedule view's delegate to provide different background
     /// colors for the different event types when the view's color mode is set to
     /// `.byEventKind`.
@@ -40,10 +40,8 @@ import Cocoa
     /// - Returns: The color that will be used as the corresponding event view's
     ///            background.
     @objc (colorForEventKind:inScheduleView:)
-    optional
-    func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
+    optional func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
 }
-
 
 /// An abstract NSView subclass that implements the basic functionality to manage
 /// a set of event views provided by an `SCKViewController` object. This class
@@ -57,47 +55,45 @@ import Cocoa
 /// - Note: Do not instantiate this class directly.
 ///
 @objc public class SCKView: NSView {
-    
+
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setUp()
     }
-    
+
     override public init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setUp()
     }
-    
+
     /// This method is intended to provide a common initialization point for all 
     /// instances, regardless of whether they have been initialized using
     /// `init(frame:)` or `init(coder:)`. Default implementation does nothing.
     func setUp() { }
-    
+
     /// The controller managing this view.
     @IBOutlet public weak var controller: SCKViewController!
-    
+
     /// The schedule view's delegate.
-    public weak var delegate: SCKViewDelegate?
-    
-    
-    //MARK: - NSView overrides
-    
+    @objc public weak var delegate: SCKViewDelegate?
+
+    // MARK: - NSView overrides
+
     override open var isFlipped: Bool {
         return true
     }
-    
+
     override open var isOpaque: Bool {
         return true
     }
-    
+
     public override func draw(_ dirtyRect: NSRect) {
         NSColor.white.setFill()
-        NSRectFill(dirtyRect)
+        dirtyRect.fill()
     }
-    
-    
+
     // MARK: - Date handling
-    
+
     public private(set) var startDate: Date = Date()
     public private(set) var endDate: Date = Date()
     public private(set) var duration: TimeInterval = 0
@@ -106,24 +102,23 @@ import Cocoa
     /// display. You should call a reload data method on the controller object to
     /// provide matching events after calling this method.
     @available(OSX 10.12, *)
-    public var dateInterval: DateInterval {
+    @objc public var dateInterval: DateInterval {
         get { return DateInterval(start: startDate, end: endDate) }
         set { startDate = newValue.start; endDate = newValue.end; duration = newValue.duration; didChangeDateInterval() }
     }
     
-    @available(OSX, deprecated: 10.12, message: "Use dateInterval property instead")
-    public func setDateIntervalWithDates(from start: Date, to end: Date) {
+    @available(*, deprecated: 10.12, message: "Use dateInterval property instead")
+    @objc public func setDateIntervalWithDates(from start: Date, to end: Date) {
         startDate = start; endDate = end; duration = end.timeIntervalSince(start); didChangeDateInterval()
     }
     
     internal func didChangeDateInterval() {
         needsDisplay = true
-        
     }
 
-    
+
     // MARK: - Date transforms
-    
+
     /// Calculates a date by transforming a relative time point in the schedule
     /// view's date interval.
     ///
@@ -144,8 +139,7 @@ import Cocoa
         }
         return Date(timeIntervalSinceReferenceDate: TimeInterval(numberOfSeconds))
     }
-    
-    
+
     /// Calculates the relative time location for a given date.
     ///
     /// - Parameter date: A date contained in the schedule view's date interval.
@@ -161,8 +155,7 @@ import Cocoa
         let startDateRef = startDate.timeIntervalSinceReferenceDate
         return (dateRef - startDateRef) / duration
     }
-    
-    
+
     /// Calculates the relative time location in the view's date interval for a
     /// given point in the view's coordinate system. The default implementation
     /// returns `SCKRelativeTimeLocationInvalid`. Subclasses must override this
@@ -175,14 +168,12 @@ import Cocoa
     func relativeTimeLocation(for point: CGPoint) -> SCKRelativeTimeLocation {
         return SCKRelativeTimeLocationInvalid
     }
-    
-    
-    //MARK: - Subview management
-    
+
+    // MARK: - Subview management
+
     /// An array containing all the event views displayed in this view.
     private(set) var eventViews: [SCKEventView] = []
-    
-    
+
     /// Registers a recently created `SCKEventView` with this instance. This
     /// method is called from the controller after adding the view as a subview
     /// of this schedule view. You should not call this method directly.
@@ -191,8 +182,7 @@ import Cocoa
     internal final func addEventView(_ eventView: SCKEventView) {
         eventViews.append(eventView)
     }
-    
-    
+
     /// Removes an `SCKEventView` from the array of subviews managed by this
     /// instance. This method is called from the controller before removing the
     /// view from its superview. You should not call this method directly.
@@ -206,38 +196,33 @@ import Cocoa
         }
         eventViews.remove(at: index)
     }
-    
-    
-    //MARK: - Event view layout
-    
+
+    // MARK: - Event view layout
+
     /// The portion of the view used to display events. Defaults to the full view
     /// frame. Subclasses override this property if they display additional items
     /// such as day or hour labels alongside the event views.
     public var contentRect: CGRect {
         return CGRect(origin: .zero, size: frame.size)
     }
-    
-    
+
     /// Indicates whether an event layout invalidation has been triggered by
     /// invoking the `invalidateFrames(for:)` method. Turns back to `false` when
     /// the invalidation process completes.
     private(set) var isInvalidatingLayout: Bool = false
-    
-    
+
     /// Override this method to perform additional tasks before the layout
     /// invalidation takes place. If you do so, don't forget to call super.
     public func beginLayoutInvalidation() {
         isInvalidatingLayout = true
     }
-    
-    
+
     /// Override this method to perform additional tasks after the layout
     /// invalidation has finished. If you do so, don't forget to call super.
     public func endLayoutInvalidation() {
         isInvalidatingLayout = false
     }
-    
-    
+
     /// Subclasses may override this method to perform additional calculations
     /// required to compute the event view's frame when the `layout()` method is 
     /// called. An example of these calculations include conflict management. The
@@ -247,8 +232,7 @@ import Cocoa
     /// - Note: Since the event view's frame will be eventually calculated in the
     ///         `layout()` method, you must avoid changing its frame in this one.
     func invalidateLayout(for eventView: SCKEventView) { }
-    
-    
+
     /// Triggers a series of operations that determine the frame of an array of
     /// `SCKEventView`s according to their event holder's properties and to other
     /// events which could be potentially in conflict with them. Eventually, the
@@ -268,62 +252,50 @@ import Cocoa
             Swift.print("Warning: Invalidation already triggered")
             return
         }
-        
+
         // 1. Prepare to invalidate (subclass customization point)
         beginLayoutInvalidation()
-        
+
         // 2. Freeze event holders
         var holdersToFreeze = controller.eventHolders
         // Exclude event view being dragged (already frozen)
-        if let draggedView = eventViewBeingDragged {
-            if let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
-                holdersToFreeze.remove(at: idx)
-            }
+        if let draggedView = eventViewBeingDragged, let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
+            holdersToFreeze.remove(at: idx)
         }
-        
-        for holder in holdersToFreeze {
-            holder.freeze()
-        }
-        
+
+        holdersToFreeze.forEach { $0.freeze() }
+
         // 3. Perform invalidation
-        for eventView in eventViews {
-            invalidateLayout(for: eventView)
-        }
-        
+        eventViews.forEach { invalidateLayout(for: $0) }
+
         // 4. Unfreeze event holders
-        for holder in holdersToFreeze {
-            holder.unfreeze()
-        }
-        
+        holdersToFreeze.forEach { $0.unfreeze() }
+
         // 5. Mark as needing layout
         needsLayout = true
-        
+
         // 6. Animate if requested
         if animated {
-            NSAnimationContext.runAnimationGroup({ (context) in
+            NSAnimationContext.runAnimationGroup({ [unowned self] (context) in
                 context.duration = 0.3
                 context.allowsImplicitAnimation = true
                 self.layoutSubtreeIfNeeded()
             }, completionHandler: nil)
         }
-        
+
         // 7. Finish (subclass customization point)
         endLayoutInvalidation()
     }
-    
-    
+
     /// A convenience method to trigger layout invalidation for all event views.
     ///
     /// - Parameter animated: Pass true to perform an animated subview layout.
     public final func invalidateLayoutForAllEventViews(animated: Bool = false) {
         invalidateLayout(for: eventViews, animated: animated)
     }
-    
-    
+
     // MARK: - Event coloring
-    
-    // TODO: Move color handling here
-    
+
     /// The color style used to draw the different event views. Setting this
     /// value to a different style marks event views as needing display.
     @objc public var colorMode: SCKEventColorMode = .byEventKind {
@@ -336,10 +308,9 @@ import Cocoa
             }
         }
     }
-    
-    
+
     // MARK: - Event selection
-    
+
     /// The currently selected event view or `nil` if none. Setting this value may
     /// trigger the `scheduleControllerDidClearSelection(_:)` and/or the
     /// `scheduleController(_:didSelectEvent:)` methods on the controller`s event
@@ -362,8 +333,7 @@ import Cocoa
             }
         }
     }
-    
-    
+
     public override func mouseDown(with event: NSEvent) {
         // Called when user clicks on an empty space.
         // Deselect selected event view if any
@@ -378,17 +348,15 @@ import Cocoa
             }
         }
     }
-    
-    
-    //MARK: - Drag & drop support
-    
+
+    // MARK: - Drag & drop support
+
     /// When dragging, the subview being dragged.
     internal weak var eventViewBeingDragged: SCKEventView?
-    
+
     internal func prepareForDragging() {
-        
     }
-    
+
     /// Called by an `SCKEventView` when a drag operation begins. This method
     /// sets the `eventViewBeingDragged` property and freezes the event view's
     /// holder to guarantee that its data remains consistent during the whole 
@@ -400,8 +368,7 @@ import Cocoa
         eventView.eventHolder.freeze()
         prepareForDragging()
     }
-    
-    
+
     /// Called by an `SCKEventView` every time that `mouseDragged(_:)` is called.
     /// Performs a layout invalidation to handle new conflicts, applies layout and 
     /// marks the schedule view as needing display.
@@ -410,8 +377,7 @@ import Cocoa
         layoutSubtreeIfNeeded()
         needsDisplay = true
     }
-    
-    
+
     /// Called by an `SCKEventView` when a drag operation ends. This method sets
     /// the `eventViewBeingDragged` property to nil, unfreezes the draged view's
     /// event holder and triggers a final layout invalidation and drawing for this
@@ -427,9 +393,7 @@ import Cocoa
         restoreAfterDragging()
         needsDisplay = true
     }
-    
+
     internal func restoreAfterDragging() {
-        
     }
-    
 }

@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 16/07/2015.
- *  Copyright:  © 2014-2016 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -28,9 +28,8 @@ import Foundation
 
 internal protocol AsynchronousRequestParsing: class {
     var asynchronousRequests: Set<SCKEventRequest> { get set }
-    func parseData(in eventArray: [SCKEvent], from request: SCKEventRequest) -> Void
+    func parseData(in eventArray: [SCKEvent], from request: SCKEventRequest)
 }
-
 
 /// The `SCKEventRequest` class represents a wrapper type used by an
 /// `SCKViewController` object to encapsulate relevant info and to handle
@@ -45,23 +44,22 @@ internal protocol AsynchronousRequestParsing: class {
 /// appropiate events asynchronously and, eventually, passing them back to
 /// the request on the main queue via the `complete(with:)` method.
 
+@objc public class SCKEventRequest: NSObject {
 
-@objc public class SCKEventRequest: NSObject  {
-    
-    //MARK: Variables
-    
+    // MARK: Variables
+
     /// Returns whether the request has been canceled.
     @objc public private(set) var isCanceled: Bool = false
-    
+
     /// The object that issued the request.
     internal private(set) weak var controller: AsynchronousRequestParsing?
-    
+
     /// The requested starting date parameter for the event fetch criteria.
     @objc public private(set) var startDate: Date
-    
+
     /// The requested ending date parameter for the event fetch criteria.
     @objc public private(set) var endDate: Date
-    
+
     /// The request date interval.
     @available(OSX 10.12, *)
     @objc public var dateInterval: DateInterval {
@@ -70,37 +68,37 @@ internal protocol AsynchronousRequestParsing: class {
     
     /// An internal flat to track completion.
     fileprivate var isCompleted: Bool = false
-    
-    
-    //MARK: Methods
-    
+
+    // MARK: Methods
+
     /// Called from the `SCKViewController` objects to initialize a new `SCKEventRequest`
-    /// based on the effective date criteria.
+    /// based on the effective date criteria. This method does not insert the
+    /// created request in the controller's `asynchronousRequests` set.
     ///
     /// - Parameters:
     ///   - c: The controller object that creates the request.
     ///   - dateInterval: The date interval that must be used in the event fetching.
     @available(OSX 10.12, *)
-    convenience internal init(controller c: AsynchronousRequestParsing, dateInterval: DateInterval) {
-        self.init(controller: c, from: dateInterval.start, to: dateInterval.end)
+    convenience internal init(controller: AsynchronousRequestParsing, dateInterval: DateInterval) {
+        self.init(controller: controller, from: dateInterval.start, to: dateInterval.end)
     }
     
     
     /// Called from the `SCKViewController` objects to initialize a new `SCKEventRequest`
-    /// based on the effective date criteria.
+    /// based on the effective date criteria. This method does not insert the
+    /// created request in the controller's `asynchronousRequests` set.
     ///
     /// - Parameters:
     ///   - c: The controller object that creates the request.
     ///   - sD: The starting date that must be used in the event fetching.
     ///   - eD: The ending date that must be used in the event fetching.
-    internal init(controller c: AsynchronousRequestParsing, from sD: Date, to eD: Date) {
-        controller = c
-        startDate = sD
-        endDate = eD
+    internal init(controller: AsynchronousRequestParsing, from start: Date, to end: Date) {
+        self.controller = controller
+        startDate = start
+        endDate = end
         super.init()
     }
 
-    
     ///
     /// Cancels the request if not canceled yet. This will make it ignore any
     /// subsequent calls to `complete(with:)`. In addition, the request will be
@@ -111,8 +109,7 @@ internal protocol AsynchronousRequestParsing: class {
         isCanceled = true
         _ = controller?.asynchronousRequests.remove(self)
     }
-    
-    
+
     /// If not canceled or already completed, fulfills the request passing back
     /// the suitable `SCKEvent` objects to the owning `SCKViewController`. In addition, 
     /// the request will be released by its owning `SCKViewController` object, so if 
@@ -132,26 +129,24 @@ internal protocol AsynchronousRequestParsing: class {
             _ = controller?.asynchronousRequests.remove(self)
         }
     }
-    
-    //MARK: Description
-    
+
+    // MARK: Description
+
     public override var debugDescription: String {
-        var base = String(describing: type(of:self))
-        base += " (" + (isCompleted ? "Completed |" : "In progress | ")
+        var base = String(describing: type(of: self))
+        base += " (" + (isCompleted ? "Completed | " : "In progress | ")
         base += "Start: \(startDate) | End: \(endDate))"
         return base
     }
-    
+
 }
-
-
 
 /// The `SCKConcreteEventRequest` is a convenience generic (thus, Swift-only) 
 /// `SCKEventRequest` subclass that replaces the base class when the owning 
 /// `SCKViewController` is working with a type-specific delegate, which allows
 /// you work in a more type-safe way.
-public final class SCKConcreteEventRequest<T>: SCKEventRequest  {
-    
+public final class SCKConcreteEventRequest<T>: SCKEventRequest {
+
     /// If not canceled or already completed, fulfills the request passing back
     /// the suitable `SCKEvent` objects to the owning `SCKViewController`. In addition,
     /// the request will be released by its owning `SCKViewController` object, so if
@@ -160,7 +155,7 @@ public final class SCKConcreteEventRequest<T>: SCKEventRequest  {
     /// - Parameter events: The asynchronously loaded events.
     /// - Warning: This method **must** be called from the main thread.
     ///
-    public func complete<T:SCKEvent>(with events: [T]) {
+    public func complete<T: SCKEvent>(with events: [T]) {
         super.complete(with: events)
     }
 

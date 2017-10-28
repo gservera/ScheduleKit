@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 29/10/2016.
- *  Copyright:  © 2016 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2016-2017 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import Cocoa
 public final class SCKDayView: SCKGridView {
 
     // MARK: - Day offset actions
-    
+
     /// Displays the previous day and asks the controller to fetch any matching
     /// events.
     ///
@@ -51,13 +51,11 @@ public final class SCKDayView: SCKGridView {
             let offset = c.dateInterval(base, offsetBy: -1, .day)
             setDateIntervalWithDates(from: offset.start, to: offset.end)
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 
-    
     /// Displays the next day and asks the controller to fetch any matching
     /// events.
-    ///
     func increaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         if #available(OSX 10.12, *) {
@@ -67,17 +65,14 @@ public final class SCKDayView: SCKGridView {
             let offset = c.dateInterval(base, offsetBy: 1, .day)
             setDateIntervalWithDates(from: offset.start, to: offset.end)
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 
-    
     /// Displays the default date interval (today) and asks the controller to
     /// fetch matching events.
-    ///
     func resetDayOffset(_ sender: Any) {
         let c = sharedCalendar
-        guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
-            else {
+        guard let sD = c.date(bySettingHour: 0, minute: 0, second: 0, of: Date()) else {
             fatalError("Could not calculate the start date for current day.")
         }
         if #available(OSX 10.12, *) {
@@ -86,6 +81,6 @@ public final class SCKDayView: SCKGridView {
             let offset = _DateInterval(start: sD, duration: duration)
             setDateIntervalWithDates(from: sD, to: offset.end)
         }
-        controller._internalReloadData()
+        controller.internalReloadData()
     }
 }

@@ -57,7 +57,7 @@
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDate *start = [cal dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
     NSDate *end = [cal dateBySettingHour:23 minute:59 second:59 ofDate:[NSDate date] options:0];
-    _scheduleView.dateInterval = [[NSDateInterval alloc] initWithStartDate:start endDate:end];
+    [(SCKView*)_scheduleView setDateIntervalWithDatesFrom:start to: end];
 }
 
 - (void)tearDown {

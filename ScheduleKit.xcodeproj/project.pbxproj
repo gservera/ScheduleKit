@@ -35,6 +35,7 @@
 		999950951D8EB7CE00128669 /* SCKEventHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950941D8EB7CE00128669 /* SCKEventHolder.swift */; };
 		999950971D8EE25A00128669 /* SCKEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950961D8EE25A00128669 /* SCKEventView.swift */; };
 		999950991D8F216600128669 /* SCKView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999950981D8F216600128669 /* SCKView.swift */; };
+		99A300A71FA53DA5007C24DE /* SegueHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A300A61FA53DA5007C24DE /* SegueHandling.swift */; };
 		99B577DC1DC61A870010A6A5 /* SCKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B577DB1DC61A870010A6A5 /* SCKTextField.swift */; };
 		99BA3ABF1DBF709C00A6FB33 /* SCKEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */; };
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
@@ -142,6 +143,7 @@
 		999950941D8EB7CE00128669 /* SCKEventHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventHolder.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		999950961D8EE25A00128669 /* SCKEventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SCKEventView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		999950981D8F216600128669 /* SCKView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKView.swift; sourceTree = "<group>"; };
+		99A300A61FA53DA5007C24DE /* SegueHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueHandling.swift; sourceTree = "<group>"; };
 		99B577DB1DC61A870010A6A5 /* SCKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCKTextField.swift; path = Views/SCKTextField.swift; sourceTree = "<group>"; };
 		99BA3ABE1DBF709C00A6FB33 /* SCKEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKEvent.swift; sourceTree = "<group>"; };
 		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				998260201DDB74FE00C46586 /* WeekViewController.swift */,
 				996E96511DE984710056022E /* EditEventViewController.swift */,
 				99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */,
+				99A300A61FA53DA5007C24DE /* SegueHandling.swift */,
 				998260221DDB91AD00C46586 /* DayCalendarPopoverViewController.swift */,
 				99CAFCD81DC9EAC7004502AA /* Assets.xcassets */,
 				99CAFCDA1DC9EAC7004502AA /* Main.storyboard */,
@@ -473,13 +476,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Guillem Servera";
 				TargetAttributes = {
 					992C110B1DEB54B200E156D0 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
-						LastSwiftMigration = 0810;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Manual;
 					};
 					998228511DDA684B0088B82F = {
@@ -495,7 +498,7 @@
 					99E7D0A01A4AF3B500713F18 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -589,6 +592,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A300A71FA53DA5007C24DE /* SegueHandling.swift in Sources */,
 				998260211DDB74FE00C46586 /* WeekViewController.swift in Sources */,
 				99CAFCED1DC9F067004502AA /* EventLoadingView.swift in Sources */,
 				99CAFCEF1DC9F294004502AA /* TableViewController.swift in Sources */,
@@ -684,7 +688,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -702,7 +706,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -763,7 +767,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -784,7 +788,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -796,7 +800,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -804,7 +810,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -843,7 +853,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -851,7 +863,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -897,7 +913,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -922,7 +938,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
