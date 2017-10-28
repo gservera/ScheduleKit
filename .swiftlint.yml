@@ -1,0 +1,19 @@
+disabled_rules: # rule identifiers to exclude from running
+
+opt_in_rules: # some rules are only opt-in
+- empty_count
+- missing_docs
+# Find all the available rules by running:
+# swiftlint rules
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+- Carthage
+
+reporter: "xcode"
+custom_rules:
+
+force_https: # From https://github.com/Twigz/Game
+name: "Force HTTPS over HTTP"
+regex: "((?i)http(?!s))"
+match_kinds: string
+message: "HTTPS should be favored over HTTP"
+severity: warning

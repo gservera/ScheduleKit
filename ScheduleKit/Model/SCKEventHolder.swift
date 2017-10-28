@@ -215,6 +215,15 @@ internal final class SCKEventHolder: NSObject {
     private var titleObservation: NSKeyValueObservation?
     private var userEventColorObservation: NSKeyValueObservation?
 
+    private func processOrEnqueueChange<T>(closure: @escaping (T) -> Void, parameter: T) {
+        guard !self.isFrozen else {
+            let cachedChange = DelayedChange(function: closure, parameter: parameter)
+            self.changesWhileFrozen.append(cachedChange)
+            return
+        }
+        closure(parameter)
+    }
+
     private func addDurationObserver<T: SCKEvent>(on object: T) {
         let keyPath: KeyPath<T, Int> = \T.duration
         durationObservation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change) in
@@ -240,14 +249,7 @@ internal final class SCKEventHolder: NSObject {
 
             guard let changed = change.newValue else { fatalError("Could not get new value") }
             guard changed != self.cachedDuration else { return }
-
-            guard !self.isFrozen else {
-                let cachedChange = DelayedChange(function: closure, parameter: changed)
-                self.changesWhileFrozen.append(cachedChange)
-                return
-            }
-
-            closure(changed)
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
         }
     }
 
@@ -282,14 +284,7 @@ internal final class SCKEventHolder: NSObject {
 
             guard let changed = change.newValue else { fatalError("Could not get new value") }
             guard changed != self.cachedScheduledDate else { return }
-
-            guard !self.isFrozen else {
-                let cachedChange = DelayedChange(function: closure, parameter: changed)
-                self.changesWhileFrozen.append(cachedChange)
-                return
-            }
-
-            closure(changed)
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
         }
     }
 
@@ -305,14 +300,7 @@ internal final class SCKEventHolder: NSObject {
             }
 
             guard let changed = change.newValue else { fatalError("Could not get new value") }
-
-            guard !self.isFrozen else {
-                let cachedChange = DelayedChange(function: closure, parameter: changed)
-                self.changesWhileFrozen.append(cachedChange)
-                return
-            }
-
-            closure(changed)
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
         }
     }
 
@@ -332,13 +320,7 @@ internal final class SCKEventHolder: NSObject {
                     strongSelf.eventView?.needsDisplay = true
                 }
             }
-            guard !self.isFrozen else {
-                let cachedChange = DelayedChange(function: closure, parameter: event.user)
-                self.changesWhileFrozen.append(cachedChange)
-                return
-            }
-
-            closure(event.user)
+            self.processOrEnqueueChange(closure: closure, parameter: event.user)
         }
     }
 
