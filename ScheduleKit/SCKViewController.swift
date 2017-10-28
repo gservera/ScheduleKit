@@ -295,8 +295,11 @@ import AppKit
         // Update last fetch
         _lastFetch = NSPointerArray.weakObjects()
         for e in events {
-            assert(scheduleView.dateInterval.contains(e.scheduledDate),
-                   "Invalid scheduledDate (\(e.scheduledDate)) for new event: \(e) in schedule view with date interval \(scheduleView.dateInterval); Asynchronous: \(loadsEventsAsynchronously)")
+            assert(scheduleView.dateInterval.contains(e.scheduledDate), """
+                Invalid scheduledDate (\(e.scheduledDate)) for new event: \(e)
+                in schedule view with date interval \(scheduleView.dateInterval);
+                Asynchronous: \(loadsEventsAsynchronously)
+                """)
             _lastFetch.addPointer(Unmanaged.passUnretained(e).toOpaque())
         }
 

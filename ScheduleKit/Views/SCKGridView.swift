@@ -394,8 +394,7 @@ public class SCKGridView: SCKView {
             case 0..<24: // Hour label
                 let o = CGPoint(x: marginLeft - size.width - 8, y: canvas.minY + CGFloat(i-firstHour) * hourHeight - 7)
                 label.frame = CGRect(origin: o, size: size)
-            default:
-                // Get the hour and the minute
+            default: // Get the hour and the minute
                 var hour = i; while hour >= 50 { hour -= 50 }
                 let minute = CGFloat((i-hour)/10)
                 let hourOffset = canvas.minY + CGFloat(hour - firstHour) * hourHeight
@@ -408,27 +407,25 @@ public class SCKGridView: SCKView {
         let offsetPerDay = 1.0/Double(dayCount)
         for eventView in subviews.flatMap({ $0 as? SCKEventView }) where eventView.eventHolder.isReady {
             let holder = eventView.eventHolder!
-            let oldFrame = eventView.frame
             let startOffset = eventView.eventHolder.relativeStart
             assert(startOffset != SCKRelativeTimeLocationInvalid, "Expected relative start to be set for: \(holder)")
             let day = Int(trunc(startOffset/offsetPerDay))
-            let date = eventView.eventHolder.cachedScheduledDate
-            let sPoint = SCKDayPoint(date: date)
-            let ePoint = SCKDayPoint(hour: sPoint.hour, minute: sPoint.minute+holder.cachedDuration, second: sPoint.second)
+            let sPoint = SCKDayPoint(date: eventView.eventHolder.cachedScheduledDate)
+            let eMinute = sPoint.minute + holder.cachedDuration
+            let ePoint = SCKDayPoint(hour: sPoint.hour, minute: eMinute, second: sPoint.second)
             var newFrame = CGRect.zero
             newFrame.origin.y = yFor(hour: sPoint.hour, minute: sPoint.minute)
             newFrame.size.height = yFor(hour: ePoint.hour, minute: ePoint.minute)-newFrame.minY
             newFrame.size.width = dayWidth / CGFloat(eventView.eventHolder.conflictCount)
             newFrame.origin.x = canvas.minX + CGFloat(day) * dayWidth + newFrame.width * CGFloat(holder.conflictIndex)
-            if oldFrame != newFrame {
+            if eventView.frame != newFrame {
                 eventView.frame = newFrame
             }
         }
     }
 
     public override func resize(withOldSuperviewSize oldSize: NSSize) {
-        super.resize(withOldSuperviewSize: oldSize) //Triggers layout
-        // Try to acommodate hour height. FIXME: Why?
+        super.resize(withOldSuperviewSize: oldSize) // Triggers layout. Try to acommodate hour height.
         let visibleHeight = superview!.frame.height - Constants.paddingTop
         let contentHeight = CGFloat(hourCount) * hourHeight
         if contentHeight < visibleHeight && hourCount > 0 {
@@ -464,12 +461,10 @@ public class SCKGridView: SCKView {
 
     // MARK: - Delegate defaults
 
-    /// Calls some of the delegate methods to reflect user preferences. The 
-    /// default implementation asks for unavailable time ranges and day start/end
-    /// hours. Subclasses may override this method to set up additional parameters 
-    /// by importing settings from their delegate objects. This method is called 
-    /// when the view is set up and when the `invalidateUserDefaults()` method
-    /// is called. You should not call this method directly.
+    /// Calls some of the delegate methods to reflect user preferences. The default implementation asks for
+    /// unavailable time ranges and day start/end hours. Subclasses may override this method to set up additional
+    /// parameters by importing settings from their delegate objects. This method is called when the view is set
+    /// up and when the `invalidateUserDefaults()` method is called. You should not call this method directly.
     internal func readDefaultsFromDelegate() {
         guard let delegate = delegate as? SCKGridViewDelegate else { return }
         if let unavailableRanges = delegate.unavailableTimeRanges?(for: self) {
@@ -526,8 +521,7 @@ public class SCKGridView: SCKView {
 
     // MARK: - Minute timer
 
-    /// A timer that fires every minute to mark the view as needing display in
-    /// order to update the "now" horizontal line.
+    /// A timer that fires every minute to mark the view as needing display in order to update the "now" line.
     private lazy var minuteTimer: Timer = {
         let sel = #selector(SCKGridView.minuteTimerFired(timer:))
         let t = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: sel, userInfo: nil, repeats: true)
@@ -660,9 +654,8 @@ extension SCKGridView {
         processNewHourHeight(hourHeight + 16.0 * event.magnification)
     }
 
-    /// Increases or decreases the hour height property if greater than the
-    /// minimum value and less than the maximum hour height. Marks the view as
-    /// needing display.
+    /// Increases or decreases the hour height property if greater than the minimum value and less than the maximum
+    /// hour height. Marks the view as needing display.
     /// - Parameter targetHeight: The calculated new hour height.
     private func processNewHourHeight(_ targetHeight: CGFloat) {
         guard targetHeight < Constants.MaxHeightPerHour else {

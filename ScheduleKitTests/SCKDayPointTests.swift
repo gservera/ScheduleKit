@@ -9,19 +9,7 @@
 import XCTest
 @testable import ScheduleKit
 
-//TODO: Mind hour count? (some days have 23! others 25!). Import from schedule view?
-
 final class SCKDayPointTests: XCTestCase {
-
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
 
     func testInitialization() {
         let point = SCKDayPoint(hour: 10, minute: 20, second: 30)

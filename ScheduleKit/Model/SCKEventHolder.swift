@@ -169,160 +169,12 @@ internal final class SCKEventHolder: NSObject {
 
     // MARK: - Change observing
 
-    /// A wrapper around a deferred change from the `representedObject`.
-    private struct DelayedChange {
-        /// The changed key path.
-        let closure: ((Any) -> Void)
-        /// The observed change dictionary.
-        let parameter: Any
-
-        init<T>(function: @escaping ((T) -> Void), parameter: T) {
-            self.closure = { (any) in
-                guard let casted = any as? T else {
-                    fatalError("Could not type-safe call delayed change closure")
-                }
-                function(casted)
-            }
-            self.parameter = parameter
-        }
-
-        func commit() {
-            closure(parameter)
-        }
-    }
-
     /// Set to `true` when observed changes observed from `representedObject`
-    /// should be ignored (either when the schedule view itself is making the 
+    /// should be ignored (either when the schedule view itself is making the
     /// change or when the represented object is not valid anymore).
     private var shouldIgnoreChanges: Bool = false
 
-    /// Begins ignoring changes observed from `representedObject`. This method is
-    /// called by the event view when commiting a dragging operation to avoid
-    /// observing its own changes. It's also called before deallocation when the
-    /// controller discards it during a reload data phase.
-    internal func stopObservingRepresentedObjectChanges() {
-        shouldIgnoreChanges = true
-    }
-
-    /// Stops ignoring changes observed from `representedObject`. This method is
-    /// called by the event view after commiting a dragging operation.
-    internal func resumeObservingRepresentedObjectChanges() {
-        shouldIgnoreChanges = false
-    }
-
-    private var durationObservation: NSKeyValueObservation?
-    private var scheduledDateObservation: NSKeyValueObservation?
-    private var titleObservation: NSKeyValueObservation?
-    private var userEventColorObservation: NSKeyValueObservation?
-
-    private func processOrEnqueueChange<T>(closure: @escaping (T) -> Void, parameter: T) {
-        guard !self.isFrozen else {
-            let cachedChange = DelayedChange(function: closure, parameter: parameter)
-            self.changesWhileFrozen.append(cachedChange)
-            return
-        }
-        closure(parameter)
-    }
-
-    private func addDurationObserver<T: SCKEvent>(on object: T) {
-        let keyPath: KeyPath<T, Int> = \T.duration
-        durationObservation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change) in
-
-            guard !self.shouldIgnoreChanges else { return }
-
-            guard !change.isPrior else {
-                self.previousConflicts = Set(self.controller!.resolvedConflicts(for: self))
-                return
-            }
-
-            let closure: ((Int) -> Void) = { [weak self] (newDuration) in
-                guard let strongSelf = self else { return }
-
-                strongSelf.cachedDuration = newDuration
-                strongSelf.recalculateRelativeValues()
-
-                let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
-                let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
-                let updatingViews = updatingHolders.flatMap { $0.eventView }
-                strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
-            }
-
-            guard let changed = change.newValue else { fatalError("Could not get new value") }
-            guard changed != self.cachedDuration else { return }
-            self.processOrEnqueueChange(closure: closure, parameter: changed)
-        }
-    }
-
-    private func addScheduledDateObserver<T: SCKEvent>(on object: T) {
-        let keyPath: KeyPath<T, Date> = \T.scheduledDate
-        scheduledDateObservation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change)in
-
-            guard !self.shouldIgnoreChanges else { return }
-
-            guard !change.isPrior else {
-                self.previousConflicts = Set(self.controller!.resolvedConflicts(for: self))
-                return
-            }
-
-            let closure: ((Date) -> Void) = { [weak self] (newDate) in
-                guard let strongSelf = self,
-                    let rootView = strongSelf.scheduleView else { return }
-
-                strongSelf.cachedScheduledDate = newDate
-                strongSelf.recalculateRelativeValues()
-
-                if !rootView.dateInterval.contains(newDate) {
-                    // Holder is now invalid, reload data will get rid of it.
-                    strongSelf.controller?.internalReloadData()
-                } else {
-                    let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
-                    let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
-                    let updatingViews = updatingHolders.flatMap { $0.eventView }
-                    strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
-                }
-            }
-
-            guard let changed = change.newValue else { fatalError("Could not get new value") }
-            guard changed != self.cachedScheduledDate else { return }
-            self.processOrEnqueueChange(closure: closure, parameter: changed)
-        }
-    }
-
-    private func addTitleObserver<T: SCKEvent>(on object: T) {
-        let keyPath: KeyPath<T, String> = \T.title
-        titleObservation = object.observe(keyPath, options: [.old, .new]) { [unowned self] (_, change) in
-            guard !self.shouldIgnoreChanges && change.oldValue != change.newValue else { return }
-
-            let closure: ((String) -> Void) = { [weak self] (newTitle) in
-                guard newTitle != self?.cachedTitle else { return }
-                self?.cachedTitle = newTitle
-                self?.eventView?.innerLabel.stringValue = newTitle
-            }
-
-            guard let changed = change.newValue else { fatalError("Could not get new value") }
-            self.processOrEnqueueChange(closure: closure, parameter: changed)
-        }
-    }
-
-    private func addUserEventColorObserver<T: SCKEvent>(on object: T) {
-        let keyPath: KeyPath<T, NSColor> = \T.user.eventColor
-        userEventColorObservation = object.observe(keyPath, options: [.old, .new]) { [unowned self] (event, change) in
-            guard !self.shouldIgnoreChanges else { return }
-
-            let closure: ((SCKUser) -> Void) = { [weak self] (updatedUser) in
-                guard let strongSelf = self else { return }
-                if strongSelf.cachedUser !== updatedUser {
-                    strongSelf.cachedUser = updatedUser
-                }
-                if strongSelf.scheduleView?.colorMode == .byEventOwner
-                    && change.oldValue != change.newValue {
-                    strongSelf.eventView?.backgroundColor = updatedUser.eventColor
-                    strongSelf.eventView?.needsDisplay = true
-                }
-            }
-            self.processOrEnqueueChange(closure: closure, parameter: event.user)
-        }
-    }
+    private var changeObserations = [NSKeyValueObservation]()
 
     // MARK: - State freezing
 
@@ -370,5 +222,153 @@ internal final class SCKEventHolder: NSObject {
             c.commit()
         }
         changesWhileFrozen = []
+    }
+}
+
+// MARK: - Change observation
+internal extension SCKEventHolder {
+    /// A wrapper around a deferred change from the `representedObject`.
+    private struct DelayedChange {
+        /// The changed key path.
+        let closure: ((Any) -> Void)
+        /// The observed change dictionary.
+        let parameter: Any
+
+        init<T>(function: @escaping ((T) -> Void), parameter: T) {
+            self.closure = { (any) in
+                guard let casted = any as? T else {
+                    fatalError("Could not type-safe call delayed change closure")
+                }
+                function(casted)
+            }
+            self.parameter = parameter
+        }
+
+        func commit() {
+            closure(parameter)
+        }
+    }
+
+    /// Begins ignoring changes observed from `representedObject`. This method is
+    /// called by the event view when commiting a dragging operation to avoid
+    /// observing its own changes. It's also called before deallocation when the
+    /// controller discards it during a reload data phase.
+    internal func stopObservingRepresentedObjectChanges() {
+        shouldIgnoreChanges = true
+    }
+
+    /// Stops ignoring changes observed from `representedObject`. This method is
+    /// called by the event view after commiting a dragging operation.
+    internal func resumeObservingRepresentedObjectChanges() {
+        shouldIgnoreChanges = false
+    }
+
+    private func processOrEnqueueChange<T>(closure: @escaping (T) -> Void, parameter: T) {
+        guard !self.isFrozen else {
+            let cachedChange = DelayedChange(function: closure, parameter: parameter)
+            self.changesWhileFrozen.append(cachedChange)
+            return
+        }
+        closure(parameter)
+    }
+
+    private func addDurationObserver<T: SCKEvent>(on object: T) {
+        let keyPath: KeyPath<T, Int> = \T.duration
+        let observation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change) in
+            guard !self.shouldIgnoreChanges else { return }
+            guard !change.isPrior else {
+                self.previousConflicts = Set(self.controller!.resolvedConflicts(for: self))
+                return
+            }
+
+            let closure: ((Int) -> Void) = { [weak self] (newDuration) in
+                guard let strongSelf = self else { return }
+
+                strongSelf.cachedDuration = newDuration
+                strongSelf.recalculateRelativeValues()
+
+                let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
+                let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
+                let updatingViews = updatingHolders.flatMap { $0.eventView }
+                strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
+            }
+
+            guard let changed = change.newValue else { fatalError("Could not get new value") }
+            guard changed != self.cachedDuration else { return }
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
+        }
+        changeObserations.append(observation)
+    }
+
+    private func addScheduledDateObserver<T: SCKEvent>(on object: T) {
+        let keyPath: KeyPath<T, Date> = \T.scheduledDate
+        let observation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change)in
+            guard !self.shouldIgnoreChanges else { return }
+            guard !change.isPrior else {
+                self.previousConflicts = Set(self.controller!.resolvedConflicts(for: self))
+                return
+            }
+
+            let closure: ((Date) -> Void) = { [weak self] (newDate) in
+                guard let strongSelf = self,
+                    let rootView = strongSelf.scheduleView else { return }
+
+                strongSelf.cachedScheduledDate = newDate
+                strongSelf.recalculateRelativeValues()
+
+                if !rootView.dateInterval.contains(newDate) {
+                    // Holder is now invalid, reload data will get rid of it.
+                    strongSelf.controller?.internalReloadData()
+                } else {
+                    let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
+                    let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
+                    let updatingViews = updatingHolders.flatMap { $0.eventView }
+                    strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
+                }
+            }
+
+            guard let changed = change.newValue else { fatalError("Could not get new value") }
+            guard changed != self.cachedScheduledDate else { return }
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
+        }
+        changeObserations.append(observation)
+    }
+
+    private func addTitleObserver<T: SCKEvent>(on object: T) {
+        let keyPath: KeyPath<T, String> = \T.title
+        let observation = object.observe(keyPath, options: [.old, .new]) { [unowned self] (_, change) in
+            guard !self.shouldIgnoreChanges && change.oldValue != change.newValue else { return }
+
+            let closure: ((String) -> Void) = { [weak self] (newTitle) in
+                guard newTitle != self?.cachedTitle else { return }
+                self?.cachedTitle = newTitle
+                self?.eventView?.innerLabel.stringValue = newTitle
+            }
+
+            guard let changed = change.newValue else { fatalError("Could not get new value") }
+            self.processOrEnqueueChange(closure: closure, parameter: changed)
+        }
+        changeObserations.append(observation)
+    }
+
+    private func addUserEventColorObserver<T: SCKEvent>(on object: T) {
+        let keyPath: KeyPath<T, NSColor> = \T.user.eventColor
+        let observation = object.observe(keyPath, options: [.old, .new]) { [unowned self] (event, change) in
+            guard !self.shouldIgnoreChanges else { return }
+
+            let closure: ((SCKUser) -> Void) = { [weak self] (updatedUser) in
+                guard let strongSelf = self else { return }
+                if strongSelf.cachedUser !== updatedUser {
+                    strongSelf.cachedUser = updatedUser
+                }
+                if strongSelf.scheduleView?.colorMode == .byEventOwner
+                    && change.oldValue != change.newValue {
+                    strongSelf.eventView?.backgroundColor = updatedUser.eventColor
+                    strongSelf.eventView?.needsDisplay = true
+                }
+            }
+            self.processOrEnqueueChange(closure: closure, parameter: event.user)
+        }
+        changeObserations.append(observation)
     }
 }
