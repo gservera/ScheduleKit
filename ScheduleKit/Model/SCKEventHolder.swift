@@ -48,7 +48,6 @@ internal final class SCKEventHolder: NSObject {
         cachedTitle = event.title
         cachedUser = event.user
         eventView = view
-        scheduleView = view.superview as? SCKView
         self.controller = controller
 
         super.init()
@@ -73,9 +72,6 @@ internal final class SCKEventHolder: NSObject {
 
     /// A reference to the `SCKEventView` associated with this event holder.
     private(set) weak var eventView: SCKEventView?
-
-    /// A reference the `SCKView` displaying the event.
-    private weak var scheduleView: SCKView?
 
     /// A convenience reference to the controller that created this holder.
     private weak var controller: SCKViewController?
@@ -133,7 +129,7 @@ internal final class SCKEventHolder: NSObject {
     ///         called instead.
     internal func recalculateRelativeValues() {
         // If view is not set, then do nothing.
-        guard let rootView = scheduleView else { return }
+        guard let rootView = eventView?.scheduleView else { return }
         // Invalidate state.
         isReady = false
         relativeStart = SCKRelativeTimeLocationInvalid
@@ -290,7 +286,7 @@ internal extension SCKEventHolder {
                 let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
                 let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
                 let updatingViews = updatingHolders.flatMap { $0.eventView }
-                strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
+                strongSelf.eventView?.scheduleView?.invalidateLayout(for: updatingViews)
             }
 
             guard let changed = change.newValue else { fatalError("Could not get new value") }
@@ -302,7 +298,7 @@ internal extension SCKEventHolder {
 
     private func addScheduledDateObserver<T: SCKEvent>(on object: T) {
         let keyPath: KeyPath<T, Date> = \T.scheduledDate
-        let observation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change)in
+        let observation = object.observe(keyPath, options: [.prior, .old, .new]) { [unowned self] (_, change) in
             guard !self.shouldIgnoreChanges else { return }
             guard !change.isPrior else {
                 self.previousConflicts = Set(self.controller!.resolvedConflicts(for: self))
@@ -310,21 +306,19 @@ internal extension SCKEventHolder {
             }
 
             let closure: ((Date) -> Void) = { [weak self] (newDate) in
-                guard let strongSelf = self,
-                    let rootView = strongSelf.scheduleView else { return }
-
+                guard let strongSelf = self, let rootView = strongSelf.eventView?.scheduleView else { return }
                 strongSelf.cachedScheduledDate = newDate
                 strongSelf.recalculateRelativeValues()
 
-                if !rootView.dateInterval.contains(newDate) {
+                guard rootView.dateInterval.contains(newDate) else {
                     // Holder is now invalid, reload data will get rid of it.
                     strongSelf.controller?.internalReloadData()
-                } else {
-                    let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
-                    let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
-                    let updatingViews = updatingHolders.flatMap { $0.eventView }
-                    strongSelf.scheduleView?.invalidateLayout(for: updatingViews)
+                    return
                 }
+                let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
+                let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
+                let updatingViews = updatingHolders.flatMap { $0.eventView }
+                strongSelf.eventView?.scheduleView?.invalidateLayout(for: updatingViews)
             }
 
             guard let changed = change.newValue else { fatalError("Could not get new value") }
@@ -361,7 +355,7 @@ internal extension SCKEventHolder {
                 if strongSelf.cachedUser !== updatedUser {
                     strongSelf.cachedUser = updatedUser
                 }
-                if strongSelf.scheduleView?.colorMode == .byEventOwner
+                if strongSelf.eventView?.scheduleView?.colorMode == .byEventOwner
                     && change.oldValue != change.newValue {
                     strongSelf.eventView?.backgroundColor = updatedUser.eventColor
                     strongSelf.eventView?.needsDisplay = true

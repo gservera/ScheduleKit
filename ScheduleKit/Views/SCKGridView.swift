@@ -148,7 +148,7 @@ public class SCKGridView: SCKView {
         label.stringValue = text
         label.font = .systemFont(ofSize: size)
         label.textColor = color
-        label.sizeToFit()
+        label.sizeToFit() // Needed
         return label
     }
 
@@ -228,11 +228,9 @@ public class SCKGridView: SCKView {
     /// as the key for n:00 labels and the hour plus 100*m for n:m labels.
     private var hourLabels: [Int: NSTextField] = [:]
 
-    /// Generates all the hour and minute labels for the displayed hour range
-    /// which have not been generated yet and installs them as subviews of this
-    /// view, while also removing the unneeded ones from its superview. Eventually
-    /// marks the view as needing layout. This method is called whenever the first
-    /// hour or the hour count properties change.
+    /// Generates all the hour and minute labels for the displayed hour range which have not been generated yet and
+    /// installs them as subviews of this view, while also removing the unneeded ones from its superview. Eventually
+    /// marks the view as needing layout. This method is called when the first hour or the hour count properties change.
     private func configureHourLabels() {
         // 1. Generate missing hour labels
         for hourIdx in 0..<hourCount {
@@ -337,12 +335,9 @@ public class SCKGridView: SCKView {
             eventView.eventHolder.conflictCount = conflicts.count
         } else {
             eventView.eventHolder.conflictCount = 1 //FIXME: Should not get here.
-            Swift.print("Unexpected behavior")
+            NSLog("Unexpected behavior")
         }
-        let idx = conflicts.index(where: { (tested) -> Bool in
-            return (tested === eventView.eventHolder)
-        }) ?? 0
-        eventView.eventHolder.conflictIndex = idx
+        eventView.eventHolder.conflictIndex = conflicts.index(where: { $0 === eventView.eventHolder }) ?? 0
     }
 
     override func prepareForDragging() {
@@ -362,9 +357,8 @@ public class SCKGridView: SCKView {
     }
 
     public override func layout() {
-        super.layout()
+        super.layout(); let canvas = contentRect
         guard dayCount > 0 else { return } // View is not ready
-        let canvas = contentRect
 
         // Layout day labels
         let marginLeft = Constants.HourAreaWidth
@@ -372,17 +366,15 @@ public class SCKGridView: SCKView {
         let dayWidth = dayLabelsRect.width / CGFloat(dayCount)
 
         for day in 0..<dayCount {
-            let minX = marginLeft + CGFloat(day) * dayWidth
-            let midY = Constants.DayAreaHeight/2.0
+            let minX = marginLeft + CGFloat(day) * dayWidth; let midY = Constants.DayAreaHeight/2.0
             let dLabel = dayLabels[day]
             let o = CGPoint(x: minX + dayWidth/2.0 - dLabel.frame.width/2.0, y: midY - dLabel.frame.height/2.0)
-            var r = CGRect(origin: o, size: dLabel.frame.size)
-            if day == 0 || (Int(dLabel.stringValue.components(separatedBy: " ")[1])! == 1) {
+            var r = CGRect(origin: o, size: dLabel.frame.size).offsetBy(dx: 0.0, dy: 8.0)
+            if day == 0 || (Int(dLabel.stringValue.components(separatedBy: " ")[1]) == 1) {
                 r.origin.y += 8.0
                 let mLabel = monthLabels[day]
-                let mLabelOrigin = CGPoint(x: minX + dayWidth / 2.0 - mLabel.frame.width/2.0,
-                                           y: midY - mLabel.frame.height/2.0 - 7.0)
-                mLabel.frame = CGRect(origin: mLabelOrigin, size: mLabel.frame.size)
+                let mOrigin = CGPoint(x: minX + dayWidth/2 - mLabel.frame.width/2, y: midY - mLabel.frame.height/2 - 7)
+                mLabel.frame = CGRect(origin: mOrigin, size: mLabel.frame.size)
             }
             dLabel.frame = r
         }
@@ -396,9 +388,8 @@ public class SCKGridView: SCKView {
                 label.frame = CGRect(origin: o, size: size)
             default: // Get the hour and the minute
                 var hour = i; while hour >= 50 { hour -= 50 }
-                let minute = CGFloat((i-hour)/10)
                 let hourOffset = canvas.minY + CGFloat(hour - firstHour) * hourHeight
-                let o = CGPoint(x: marginLeft - size.width + 4.0, y: hourOffset + hourHeight * minute/60.0 - 7.0)
+                let o = CGPoint(x: marginLeft-size.width + 4, y: hourOffset+hourHeight * CGFloat((i-hour)/10)/60.0 - 7)
                 label.frame = CGRect(origin: o, size: size)
             }
         }
@@ -407,10 +398,8 @@ public class SCKGridView: SCKView {
         let offsetPerDay = 1.0/Double(dayCount)
         for eventView in subviews.flatMap({ $0 as? SCKEventView }) where eventView.eventHolder.isReady {
             let holder = eventView.eventHolder!
-            let startOffset = eventView.eventHolder.relativeStart
-            assert(startOffset != SCKRelativeTimeLocationInvalid, "Expected relative start to be set for: \(holder)")
-            let day = Int(trunc(startOffset/offsetPerDay))
-            let sPoint = SCKDayPoint(date: eventView.eventHolder.cachedScheduledDate)
+            let day = Int(trunc(holder.relativeStart/offsetPerDay))
+            let sPoint = SCKDayPoint(date: holder.cachedScheduledDate)
             let eMinute = sPoint.minute + holder.cachedDuration
             let ePoint = SCKDayPoint(hour: sPoint.hour, minute: eMinute, second: sPoint.second)
             var newFrame = CGRect.zero
@@ -418,9 +407,7 @@ public class SCKGridView: SCKView {
             newFrame.size.height = yFor(hour: ePoint.hour, minute: ePoint.minute)-newFrame.minY
             newFrame.size.width = dayWidth / CGFloat(eventView.eventHolder.conflictCount)
             newFrame.origin.x = canvas.minX + CGFloat(day) * dayWidth + newFrame.width * CGFloat(holder.conflictIndex)
-            if eventView.frame != newFrame {
-                eventView.frame = newFrame
-            }
+            eventView.frame |= newFrame
         }
     }
 
@@ -505,13 +492,10 @@ public class SCKGridView: SCKView {
             let endSeconds = rng.endMinute * 60 + rng.endHour * 3600
             let startSeconds = rng.startMinute * 60 + rng.startHour * 3600
             let eDate = sDate.addingTimeInterval(Double(endSeconds - startSeconds))
-            let eOffset = calculateRelativeTimeLocation(for: eDate)
             let yOrigin = yFor(hour: rng.startHour, minute: rng.startMinute)
-            var yLength: CGFloat
-            if eOffset != SCKRelativeTimeLocationInvalid {
+            var yLength: CGFloat = frame.maxY - yOrigin // Assuming SCKRelativeTimeLocationInvalid for eDate
+            if calculateRelativeTimeLocation(for: eDate) != SCKRelativeTimeLocationInvalid {
                 yLength = yFor(hour: rng.endHour, minute: rng.endMinute) - yOrigin
-            } else {
-                yLength = frame.maxY - yOrigin
             }
             let weekday = (rng.weekday == -1) ? 0.0 : CGFloat(rng.weekday)
             return CGRect(x: canvas.minX + weekday * dayWidth, y: yOrigin, width: dayWidth, height: yLength)

@@ -61,8 +61,9 @@ extension SCKViewController {
 
         weak var delegate: SCKObjCEventManaging?
 
-        init(_ object: SCKObjCEventManaging) {
-            delegate = object
+        init?(_ object: SCKObjCEventManaging?) {
+            guard let some = object else { return nil }
+            delegate = some
         }
 
         func events(in dateInterval: DateInterval,

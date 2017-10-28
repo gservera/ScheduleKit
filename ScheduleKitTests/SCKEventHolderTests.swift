@@ -100,7 +100,8 @@ final class SCKEventHolderTests: XCTestCase {
         eventView = SCKEventView(frame: .zero)
         validTestEvent = SCKEventMock()
         invalidTestEvent = SCKEventMock()
-        invalidTestEvent.scheduledDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!.addingTimeInterval(-1)
+        let date = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        invalidTestEvent.scheduledDate = date.addingTimeInterval(-1)
     }
 
     override func tearDown() {

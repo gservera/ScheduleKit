@@ -69,44 +69,38 @@ public enum EventKind: Int {
 
         var dayMinus = DateComponents(); dayMinus.day = -1; dayMinus.hour = 1
 
-        events += [
-            TestEvent(kind: .generic, user: user1, title: "Event 1", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .generic, user: user1, title: "Event 11", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .visit, user: user2, title: "Event 12", duration: 60, date: cal.date(from: comps)!)
-        ]
+        func add(kind: EventKind, user: TestUser, title: String, components: DateComponents) {
+            let date = cal.date(from: components)!
+            events.append(TestEvent(kind: kind, user: user, title: title, duration: 60, date: date))
+        }
+        add(kind: .generic, user: user1, title: "Event 1", components: comps)
+        add(kind: .generic, user: user1, title: "Event 11", components: comps)
+        add(kind: .visit, user: user2, title: "Event 12", components: comps)
 
         comps.hour = 10
 
-        events += [
-            TestEvent(kind: .surgery, user: user1, title: "Event 2", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .visit, user: user2, title: "Event 3", duration: 60, date: cal.date(from: comps)!)
-        ]
+        add(kind: .surgery, user: user1, title: "Event 2", components: comps)
+        add(kind: .visit, user: user2, title: "Event 3", components: comps)
 
         comps.hour = 12
 
-        events += [
-            TestEvent(kind: .generic, user: user1, title: "Event 4", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .surgery, user: user1, title: "Event 13", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .generic, user: user1, title: "Event 14", duration: 60, date: cal.date(from: comps)!)
-        ]
+        add(kind: .generic, user: user1, title: "Event 4", components: comps)
+        add(kind: .surgery, user: user1, title: "Event 13", components: comps)
+        add(kind: .generic, user: user1, title: "Event 14", components: comps)
 
         comps.hour = 14
 
-        events += [
-            TestEvent(kind: .generic, user: user1, title: "Event 5", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .visit, user: user2, title: "Event 6", duration: 60, date: cal.date(from: comps)!),
-            TestEvent(kind: .generic, user: user1, title: "Event 7", duration: 60, date: cal.date(from: comps)!)
-        ]
+        add(kind: .generic, user: user1, title: "Event 5", components: comps)
+        add(kind: .visit, user: user2, title: "Event 6", components: comps)
+        add(kind: .generic, user: user1, title: "Event 7", components: comps)
 
         comps.minute = 30
-        events += [TestEvent(kind: .visit, user: user2, title: "Event 8", duration: 60, date: cal.date(from: comps)!) ]
+        add(kind: .visit, user: user2, title: "Event 8", components: comps)
         comps.minute = 0
         comps.hour = 16
-        events += [TestEvent(kind: .generic, user: user1, title: "Event 9", duration: 60, date: cal.date(from: comps)!)]
+        add(kind: .generic, user: user1, title: "Event 9", components: comps)
         comps.hour = 17
-        events += [
-            TestEvent(kind: .surgery, user: user2, title: "Event 10", duration: 60, date: cal.date(from: comps)!)
-        ]
+        add(kind: .surgery, user: user2, title: "Event 10", components: comps)
         return events
     }
 }

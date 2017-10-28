@@ -40,8 +40,7 @@ import Cocoa
     /// - Returns: The color that will be used as the corresponding event view's
     ///            background.
     @objc (colorForEventKind:inScheduleView:)
-    optional
-    func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
+    optional func color(for eventKindValue: Int, in scheduleView: SCKView) -> NSColor
 }
 
 /// An abstract NSView subclass that implements the basic functionality to manage
@@ -244,32 +243,24 @@ import Cocoa
         // 2. Freeze event holders
         var holdersToFreeze = controller.eventHolders
         // Exclude event view being dragged (already frozen)
-        if let draggedView = eventViewBeingDragged {
-            if let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
-                holdersToFreeze.remove(at: idx)
-            }
+        if let draggedView = eventViewBeingDragged, let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
+            holdersToFreeze.remove(at: idx)
         }
 
-        for holder in holdersToFreeze {
-            holder.freeze()
-        }
+        holdersToFreeze.forEach { $0.freeze() }
 
         // 3. Perform invalidation
-        for eventView in eventViews {
-            invalidateLayout(for: eventView)
-        }
+        eventViews.forEach { invalidateLayout(for: $0) }
 
         // 4. Unfreeze event holders
-        for holder in holdersToFreeze {
-            holder.unfreeze()
-        }
+        holdersToFreeze.forEach { $0.unfreeze() }
 
         // 5. Mark as needing layout
         needsLayout = true
 
         // 6. Animate if requested
         if animated {
-            NSAnimationContext.runAnimationGroup({ (context) in
+            NSAnimationContext.runAnimationGroup({ [unowned self] (context) in
                 context.duration = 0.3
                 context.allowsImplicitAnimation = true
                 self.layoutSubtreeIfNeeded()
@@ -348,7 +339,6 @@ import Cocoa
     internal weak var eventViewBeingDragged: SCKEventView?
 
     internal func prepareForDragging() {
-
     }
 
     /// Called by an `SCKEventView` when a drag operation begins. This method
@@ -389,6 +379,5 @@ import Cocoa
     }
 
     internal func restoreAfterDragging() {
-
     }
 }

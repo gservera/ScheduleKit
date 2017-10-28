@@ -107,7 +107,7 @@ public final class SCKEventView: NSView {
     // MARK: - View lifecycle
 
     /// The `SCKView` instance th which this view has been added.
-    private weak var scheduleView: SCKView!
+    internal weak var scheduleView: SCKView!
 
     public override func viewDidEndLiveResize() {
         super.viewDidEndLiveResize()

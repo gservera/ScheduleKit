@@ -109,33 +109,27 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
     }
     @objc public var showsSaturdays = true {
         didSet {
-            self.weekView.invalidateUserDefaults()
-            var dayCount = 5
-            if showsSaturdays {
-                dayCount += 1
-                if showsSundays {
-                    dayCount += 1
-                }
-            }
-            let eD = Calendar.current.date(byAdding: .day, value: dayCount, to: scheduleView.dateInterval.start)!
-            scheduleView.dateInterval = DateInterval(start: scheduleView.dateInterval.start, end: eD)
-            reloadData(ofConcreteType: TestEvent.self)
+            updateDayCount()
         }
     }
     @objc public var showsSundays = true {
         didSet {
-            self.weekView.invalidateUserDefaults()
-            var dayCount = 5
-            if showsSaturdays {
-                dayCount += 1
-                if showsSundays {
-                    dayCount += 1
-                }
-            }
-            let eD = Calendar.current.date(byAdding: .day, value: dayCount, to: scheduleView.dateInterval.start)!
-            scheduleView.dateInterval = DateInterval(start: scheduleView.dateInterval.start, end: eD)
-            reloadData(ofConcreteType: TestEvent.self)
+            updateDayCount()
         }
+    }
+
+    private func updateDayCount() {
+        self.weekView.invalidateUserDefaults()
+        var dayCount = 5
+        if showsSaturdays {
+            dayCount += 1
+            if showsSundays {
+                dayCount += 1
+            }
+        }
+        let eD = Calendar.current.date(byAdding: .day, value: dayCount, to: scheduleView.dateInterval.start)!
+        scheduleView.dateInterval = DateInterval(start: scheduleView.dateInterval.start, end: eD)
+        reloadData(ofConcreteType: TestEvent.self)
     }
 }
 

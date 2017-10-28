@@ -66,7 +66,9 @@ class SCKEventRequestTests: XCTestCase {
         let request = SCKEventRequest(controller: parser!,
                                       dateInterval: anyDateInterval)
         parser!.asynchronousRequests.insert(request)
-        XCTAssertEqual(request.debugDescription, "SCKEventRequest (In progress | Start: \(anyDateInterval.start.description) | End: \(anyDateInterval.end.description))")
+        let dd1 = anyDateInterval.start.description
+        let dd2 = anyDateInterval.end.description
+        XCTAssertEqual(request.debugDescription, "SCKEventRequest (In progress | Start: \(dd1) | End: \(dd2))")
         XCTAssertFalse(request.isCanceled)
         XCTAssertEqual(request.dateInterval, anyDateInterval)
         XCTAssertEqual(request.startDate, anyDateInterval.start)
@@ -76,7 +78,7 @@ class SCKEventRequestTests: XCTestCase {
         XCTAssertFalse(request.isCanceled)
         XCTAssertTrue(parser!.completed)
         XCTAssertEqual(parser!.asynchronousRequests.count, 0)
-        XCTAssertEqual(request.debugDescription, "SCKEventRequest (Completed | Start: \(anyDateInterval.start.description) | End: \(anyDateInterval.end.description))")
+        XCTAssertEqual(request.debugDescription, "SCKEventRequest (Completed | Start: \(dd1) | End: \(dd2))")
         waitForExpectations(timeout: 5.0, handler: nil)
     }
 

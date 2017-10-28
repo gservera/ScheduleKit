@@ -69,3 +69,11 @@ extension Calendar {
     }
 
 }
+
+// replace if different
+
+internal func |= <T: Equatable>(lhs: inout T, rhs: T) {
+    if lhs != rhs {
+        lhs = rhs
+    }
+}
