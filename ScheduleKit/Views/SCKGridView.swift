@@ -369,7 +369,7 @@ public class SCKGridView: SCKView {
             let minX = marginLeft + CGFloat(day) * dayWidth; let midY = Constants.DayAreaHeight/2.0
             let dLabel = dayLabels[day]
             let o = CGPoint(x: minX + dayWidth/2.0 - dLabel.frame.width/2.0, y: midY - dLabel.frame.height/2.0)
-            var r = CGRect(origin: o, size: dLabel.frame.size).offsetBy(dx: 0.0, dy: 8.0)
+            var r = CGRect(origin: o, size: dLabel.frame.size)
             if day == 0 || (Int(dLabel.stringValue.components(separatedBy: " ")[1]) == 1) {
                 r.origin.y += 8.0
                 let mLabel = monthLabels[day]

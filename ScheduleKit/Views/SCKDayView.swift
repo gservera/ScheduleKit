@@ -35,7 +35,7 @@ import Cocoa
 /// Optionally, you may set the `delegate` property and implement its methods to
 /// change the displayed hour range (which defaults to the whole day).
 ///
-public final class SCKDayView: SCKGridView {
+@objcMembers public final class SCKDayView: SCKGridView {
 
     // MARK: - Day offset actions
 

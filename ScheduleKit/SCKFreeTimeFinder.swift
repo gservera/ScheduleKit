@@ -26,7 +26,7 @@
 
 import Foundation
 
-@objc public final class SCKFreeTimeFinder: NSObject, AsynchronousRequestParsing {
+@objcMembers public final class SCKFreeTimeFinder: NSObject, AsynchronousRequestParsing {
 
     private let isAsynchronous: Bool
     private let _requestInit: (AsynchronousRequestParsing, DateInterval) -> SCKEventRequest

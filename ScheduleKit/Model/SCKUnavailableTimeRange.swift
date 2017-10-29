@@ -30,7 +30,7 @@ import Foundation
 /// unavailable time range within a day being represented by a subclass of @c
 /// `SCKGridView`. These values are conform to the `Hashable` and `NSSecureCoding`
 /// protocols.
-public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
+@objcMembers public class SCKUnavailableTimeRange: NSObject, NSSecureCoding {
 
     public fileprivate(set) var weekday: Int
     public fileprivate(set) var startHour: Int
