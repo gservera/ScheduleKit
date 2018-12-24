@@ -396,7 +396,7 @@ public class SCKGridView: SCKView {
 
         // Layout events
         let offsetPerDay = 1.0/Double(dayCount)
-        for eventView in subviews.flatMap({ $0 as? SCKEventView }) where eventView.eventHolder.isReady {
+        for eventView in subviews.compactMap({ $0 as? SCKEventView }) where eventView.eventHolder.isReady {
             let holder = eventView.eventHolder!
             let day = Int(trunc(holder.relativeStart/offsetPerDay))
             let sPoint = SCKDayPoint(date: holder.cachedScheduledDate)
@@ -589,7 +589,7 @@ public class SCKGridView: SCKView {
             let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dV.eventHolder.cachedDuration)*60.0))
             let sLabelText = NSString(format: "%ld:%02ld", sPoint.hour, sPoint.minute)
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
-            let attrs: [NSAttributedStringKey: Any] = [
+            let attrs: [NSAttributedString.Key: Any] = [
                 .foregroundColor: NSColor.darkGray,
                 .font: NSFont.systemFont(ofSize: 12.0)
             ]

@@ -23,7 +23,7 @@ final class SCKViewControllerSyncGenericTests: XCTestCase, SCKEventManaging {
         let bundle = Bundle(for: SCKViewControllerSyncGenericTests.self)
         let windowFrame = CGRect(x: 0, y: 0, width: 800, height: 600)
         window = NSWindow(contentRect: windowFrame, styleMask: [], backing: .buffered, defer: false)
-        controller = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: bundle)
+        controller = SCKViewController(nibName: "TestController", bundle: bundle)
         window.contentView = controller.view
         window.orderFront(nil)
         controller.eventManager = self
@@ -142,7 +142,7 @@ final class SCKViewControllerSyncGenericDefaultTests: XCTestCase, SCKEventManagi
         let bundle = Bundle(for: SCKViewControllerSyncGenericTests.self)
         let windowFrame = CGRect(x: 0, y: 0, width: 800, height: 600)
         window = NSWindow(contentRect: windowFrame, styleMask: [], backing: .buffered, defer: false)
-        controller = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: bundle)
+        controller = SCKViewController(nibName: "TestController", bundle: bundle)
         window.contentView = controller.view
         window.orderFront(nil)
         controller.eventManager = self
@@ -193,7 +193,7 @@ final class SCKViewControllerSyncConcreteTests: XCTestCase, SCKConcreteEventMana
         let bundle = Bundle(for: SCKViewControllerSyncGenericTests.self)
         let windowFrame = CGRect(x: 0, y: 0, width: 800, height: 600)
         window = NSWindow(contentRect: windowFrame, styleMask: [], backing: .buffered, defer: false)
-        controller = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: bundle)
+        controller = SCKViewController(nibName: "TestController", bundle: bundle)
         window.contentView = controller.view
         window.orderFront(nil)
         controller.eventManager = self
@@ -244,7 +244,7 @@ final class SCKViewControllerSyncConcreteImplTests: XCTestCase, SCKConcreteEvent
         let bundle = Bundle(for: SCKViewControllerSyncGenericTests.self)
         let windowFrame = CGRect(x: 0, y: 0, width: 800, height: 600)
         window = NSWindow(contentRect: windowFrame, styleMask: [], backing: .buffered, defer: false)
-        controller = SCKViewController(nibName: NSNib.Name(rawValue: "TestController"), bundle: bundle)
+        controller = SCKViewController(nibName: "TestController", bundle: bundle)
         window.contentView = controller.view
         window.orderFront(nil)
         controller.eventManager = self
