@@ -74,7 +74,7 @@ internal final class SCKTextField: NSTextField {
             return SCKTextFieldCell.self
         }
         set {
-            self.cellClass = newValue
+            super.cellClass = newValue
         }
     }
 

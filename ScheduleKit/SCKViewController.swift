@@ -298,7 +298,7 @@ import AppKit
         }
 
         // Insert new events
-        for e in (eventsToBeInserted.flatMap { $0 as? SCKEvent }) {
+        for e in (eventsToBeInserted.compactMap { $0 as? SCKEvent }) {
             let eventView = SCKEventView(frame: .zero)
             scheduleView.addSubview(eventView)
             scheduleView.addEventView(eventView)

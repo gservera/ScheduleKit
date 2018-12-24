@@ -285,7 +285,7 @@ internal extension SCKEventHolder {
 
                 let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
                 let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
-                let updatingViews = updatingHolders.flatMap { $0.eventView }
+                let updatingViews = updatingHolders.compactMap { $0.eventView }
                 strongSelf.eventView?.scheduleView?.invalidateLayout(for: updatingViews)
             }
 
@@ -317,7 +317,7 @@ internal extension SCKEventHolder {
                 }
                 let conflictsNow = Set(strongSelf.controller!.resolvedConflicts(for: strongSelf))
                 let updatingHolders = strongSelf.previousConflicts.union(conflictsNow)
-                let updatingViews = updatingHolders.flatMap { $0.eventView }
+                let updatingViews = updatingHolders.compactMap { $0.eventView }
                 strongSelf.eventView?.scheduleView?.invalidateLayout(for: updatingViews)
             }
 
