@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 28/10/2016.
- *  Copyright:  © 2016-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2016-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -118,15 +118,15 @@ public class SCKGridView: SCKView {
 
     /// The first hour of the day displayed.
     internal var firstHour: Int = 0 {
-        didSet { configureHourLabels() }
+        didSet { hourLabelingView.configureHourLabels(firstHour: firstHour, hourCount: hourCount) }
     }
 
     /// The total number of hours displayed.
     internal var hourCount: Int = 1 {
-        didSet { configureHourLabels() }
+        didSet { hourLabelingView.configureHourLabels(firstHour: firstHour, hourCount: hourCount) }
     }
 
-    /// The height for each hour row. Setting this value updated the saved one in
+    /// The height for each hour row. Setting this value updates the saved one in
     /// UserDefaults and updates hour labels visibility.
     internal var hourHeight: CGFloat = 0.0 {
         didSet {
@@ -135,21 +135,9 @@ public class SCKGridView: SCKView {
                 UserDefaults.standard.set(hourHeight, forKey: key)
                 invalidateIntrinsicContentSize()
             }
-            updateHourLabelsVisibility()
+            hourLabelingView.updateHourLabelsVisibility(hourHeight: hourHeight,
+                                                        eventViewBeingDragged: eventViewBeingDragged)
         }
-    }
-
-    // MARK: - Day and hour labels
-
-    private func label(_ text: String, size: CGFloat, color: NSColor) -> NSTextField {
-        let label = NSTextField(frame: .zero)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.isBordered = false; label.isEditable = false; label.isBezeled = false; label.drawsBackground = false
-        label.stringValue = text
-        label.font = .systemFont(ofSize: size)
-        label.textColor = color
-        label.sizeToFit() // Needed
-        return label
     }
 
     // MARK: Day and month labels
@@ -157,73 +145,8 @@ public class SCKGridView: SCKView {
     /// A container view for day labels. Pinned at the top of the scroll view.
     private let dayLabelingView = SCKDayLabelingView(frame: .zero)
 
-
-    // MARK: Hour labels
-
-    /// A dictionary containing all generated hour labels stored using the hour
-    /// as the key for n:00 labels and the hour plus 100*m for n:m labels.
-    private var hourLabels: [Int: NSTextField] = [:]
-
-    /// Generates all the hour and minute labels for the displayed hour range which have not been generated yet and
-    /// installs them as subviews of this view, while also removing the unneeded ones from its superview. Eventually
-    /// marks the view as needing layout. This method is called when the first hour or the hour count properties change.
-    private func configureHourLabels() {
-        // 1. Generate missing hour labels
-        for hourIdx in 0..<hourCount {
-            let hour = firstHour + hourIdx
-            if hourLabels[hour] != nil {
-                continue
-            }
-            hourLabels[hour] = label("\(hour):00", size: 11, color: .darkGray)
-            for min in [10, 15, 20, 30, 40, 45, 50] {
-                let mLabel = label("\(hour):\(min)  -", size: 10, color: .lightGray)
-                mLabel.isHidden = true
-                hourLabels[hour+min*10] = mLabel
-            }
-        }
-
-        // 2. Add visible hours' labels as subviews. Remove others if installed.
-        for (hour, label) in hourLabels {
-            guard hour < 100 else {continue}
-            let shouldBeInstalled = (hour >= firstHour && hour < firstHour + hourCount)
-            if label.superview != nil && !shouldBeInstalled {
-                label.removeFromSuperview()
-                for min in [10, 15, 20, 30, 40, 45, 50] {
-                    hourLabels[min*10+hour]?.removeFromSuperview()
-                }
-            } else if label.superview == nil && shouldBeInstalled {
-                addSubview(label)
-                for min in [10, 15, 20, 30, 40, 45, 50] {
-                    guard let mLabel = hourLabels[min*10+hour] else {
-                        Swift.print("Warning: An hour label was missing")
-                        continue
-                    }
-                    addSubview(mLabel)
-                }
-            }
-        }
-
-        // 3. Set needs layout
-        needsLayout = true
-    }
-
-    /// Shows or hides the half hour, quarter hour and 10-minute hour labels 
-    /// according to the hour height property. This method is called whenever the
-    /// mentioned property changes.
-    private func updateHourLabelsVisibility() {
-        for (key, value) in hourLabels {
-            guard eventViewBeingDragged == nil else {
-                value.isHidden = true
-                continue
-            }
-            switch key {
-            case 300..<324:                                  value.isHidden = (hourHeight < 40.0)
-            case 150..<174, 450..<474:                       value.isHidden = (hourHeight < 80.0 || hourHeight >= 120)
-            case 100..<124, 200..<224, 400..<424, 500..<524: value.isHidden = (hourHeight < 120.0)
-            default:                                         value.isHidden = false
-            }
-        }
-    }
+    /// A container view for hour labels. Pinned left in the scroll view.
+    private let hourLabelingView = SCKHourLabelingView(frame: .zero)
 
     // MARK: - Date transform additions
 
@@ -277,12 +200,14 @@ public class SCKGridView: SCKView {
     }
 
     override func prepareForDragging() {
-        updateHourLabelsVisibility()
+        hourLabelingView.updateHourLabelsVisibility(hourHeight: hourHeight,
+                                                    eventViewBeingDragged: eventViewBeingDragged)
         super.prepareForDragging()
     }
 
     override func restoreAfterDragging() {
-        updateHourLabelsVisibility()
+        hourLabelingView.updateHourLabelsVisibility(hourHeight: hourHeight,
+                                                    eventViewBeingDragged: eventViewBeingDragged)
         super.restoreAfterDragging()
     }
 
@@ -290,6 +215,11 @@ public class SCKGridView: SCKView {
 
     public override var intrinsicContentSize: NSSize {
         return CGSize(width: NSView.noIntrinsicMetric, height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
+    }
+
+    public override func removeFromSuperview() {
+        dayLabelingView.removeFromSuperview()
+        super.removeFromSuperview()
     }
 
     public override func layout() {
@@ -300,21 +230,6 @@ public class SCKGridView: SCKView {
         let marginLeft = Constants.HourAreaWidth
         let dayLabelsRect = CGRect(x: marginLeft, y: 0, width: frame.width-marginLeft, height: Constants.DayAreaHeight)
         let dayWidth = dayLabelsRect.width / CGFloat(dayCount)
-
-        // Layout hour labels
-        for (i, label) in hourLabels {
-            let size = label.frame.size
-            switch i {
-            case 0..<24: // Hour label
-                let o = CGPoint(x: marginLeft - size.width - 8, y: canvas.minY + CGFloat(i-firstHour) * hourHeight - 7)
-                label.frame = CGRect(origin: o, size: size)
-            default: // Get the hour and the minute
-                var hour = i; while hour >= 50 { hour -= 50 }
-                let hourOffset = canvas.minY + CGFloat(hour - firstHour) * hourHeight
-                let o = CGPoint(x: marginLeft-size.width + 4, y: hourOffset+hourHeight * CGFloat((i-hour)/10)/60.0 - 7)
-                label.frame = CGRect(origin: o, size: size)
-            }
-        }
 
         // Layout events
         let offsetPerDay = 1.0/Double(dayCount)
@@ -341,6 +256,7 @@ public class SCKGridView: SCKView {
             hourHeight = visibleHeight / CGFloat(hourCount)
         }
         dayLabelingView.needsUpdateConstraints = true
+        hourLabelingView.needsUpdateConstraints = true
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
@@ -355,6 +271,13 @@ public class SCKGridView: SCKView {
                 dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor),
                 dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor),
                 dayLabelingView.heightAnchor.constraint(equalToConstant: height)
+            ])
+            hourLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(hourLabelingView, positioned: .above, relativeTo: nil)
+            NSLayoutConstraint.activate([
+                hourLabelingView.leftAnchor.constraint(equalTo: leftAnchor),
+                hourLabelingView.widthAnchor.constraint(equalToConstant: Constants.HourAreaWidth),
+                hourLabelingView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.paddingTop)
             ])
         }
 
