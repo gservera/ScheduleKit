@@ -33,7 +33,6 @@
 
 - (void)viewDidAppear {
     NSWindow *window = [self.view window];
-    [window setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
     [window setTitlebarAppearsTransparent:YES];
     [window setTitleVisibility:NSWindowTitleHidden];
     [super viewDidAppear];

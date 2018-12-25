@@ -48,6 +48,7 @@ public final class SCKEventView: NSView {
         _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
         _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
         _label.autoresizingMask = [.width, .height]
+        _label.textColor = .black
         return _label
     }()
 

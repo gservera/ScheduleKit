@@ -60,6 +60,7 @@ final class SCKHourLabelingView: NSView {
     private var firstHour: Int = 0
     private var hourCount: Int = 0
     private var hourHeight: CGFloat = 0.0
+    var paddingTop: CGFloat = 0.0
 
     /// Generates all the hour and minute labels for the displayed hour range which have not been generated yet and
     /// installs them as subviews of this view, while also removing the unneeded ones from its superview. Eventually
@@ -100,7 +101,7 @@ final class SCKHourLabelingView: NSView {
                         continue
                     }
                     addSubview(mLabel)
-                    mLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4).isActive = true
+                    mLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
                     labelWrappers[min*10+hour]?.labelYConstraint = labelWrappers[min*10+hour]!.label.topAnchor.constraint(equalTo: topAnchor)
                 }
             }
@@ -141,13 +142,13 @@ final class SCKHourLabelingView: NSView {
             switch i {
             case 0..<24: // Hour label
                 let y = CGFloat(i-firstHour) * hourHeight - 7
-                wrapper.labelYConstraint.constant = y
+                wrapper.labelYConstraint.constant = y + paddingTop
                 wrapper.labelYConstraint.isActive = true
             default: // Get the hour and the minute
                 var hour = i; while hour >= 50 { hour -= 50 }
                 let hourOffset = CGFloat(hour - firstHour) * hourHeight
                 let y = hourOffset+hourHeight * CGFloat((i-hour)/10)/60.0 - 7
-                wrapper.labelYConstraint.constant = y
+                wrapper.labelYConstraint.constant = y + paddingTop
                 wrapper.labelYConstraint.isActive = true
             }
         }
@@ -156,6 +157,7 @@ final class SCKHourLabelingView: NSView {
     }
 
     public override var intrinsicContentSize: NSSize {
-        return CGSize(width: NSView.noIntrinsicMetric, height: CGFloat(hourCount) * hourHeight)
+        return CGSize(width: NSView.noIntrinsicMetric,
+                      height: paddingTop + CGFloat(hourCount) * hourHeight)
     }
 }

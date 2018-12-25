@@ -33,7 +33,6 @@ final class TableViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.appearance = NSAppearance(named: NSAppearance.Name.vibrantLight)
         view.window?.titlebarAppearsTransparent = true
         view.window?.titleVisibility = .hidden
     }
@@ -79,8 +78,9 @@ final class TableViewController: NSViewController {
         }
     }
 
-    override func present(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect,
-                                        of positioningView: NSView, preferredEdge: NSRectEdge,
+    override func present(_ viewController: NSViewController,
+                          asPopoverRelativeTo positioningRect: NSRect,
+                          of positioningView: NSView, preferredEdge: NSRectEdge,
                                         behavior: NSPopover.Behavior) {
         super.present(viewController, asPopoverRelativeTo: clickedEditButton!.frame,
                                     of: clickedEditButton!.superview!, preferredEdge: NSRectEdge.maxX,

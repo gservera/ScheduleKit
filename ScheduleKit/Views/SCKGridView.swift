@@ -276,11 +276,12 @@ public class SCKGridView: SCKView {
                 dayLabelingView.heightAnchor.constraint(equalToConstant: height)
             ])
             hourLabelingView.translatesAutoresizingMaskIntoConstraints = false
+            hourLabelingView.paddingTop = Constants.DayAreaMarginBottom
             addSubview(hourLabelingView, positioned: .above, relativeTo: nil)
             NSLayoutConstraint.activate([
                 hourLabelingView.leftAnchor.constraint(equalTo: leftAnchor),
                 hourLabelingView.widthAnchor.constraint(equalToConstant: Constants.HourAreaWidth),
-                hourLabelingView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.paddingTop)
+                hourLabelingView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.DayAreaHeight)
             ])
         }
 
@@ -290,6 +291,10 @@ public class SCKGridView: SCKView {
         let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            self?.dayLabelingView.needsUpdateConstraints = true
         }
     }
 
@@ -376,7 +381,7 @@ public class SCKGridView: SCKView {
     }
 
     private func drawUnavailableTimeRanges() {
-        NSColor(red: 0.925, green: 0.942, blue: 0.953, alpha: 1.0).set()
+        NSColor.windowBackgroundColor.set()
         unavailableTimeRanges.forEach { rectForUnavailableTimeRange($0).fill() }
     }
 
@@ -384,14 +389,14 @@ public class SCKGridView: SCKView {
         let canvas = CGRect(x: Constants.HourAreaWidth, y: Constants.DayAreaHeight,
                             width: frame.width-Constants.HourAreaWidth, height: frame.height-Constants.DayAreaHeight)
         let dayWidth = canvas.width / CGFloat(dayCount)
-        NSColor(deviceWhite: 0.95, alpha: 1.0).set()
+        NSColor.gridColor.set()
         for day in 0..<dayCount {
             CGRect(x: canvas.minX + CGFloat(day) * dayWidth, y: canvas.minY, width: 1.0, height: canvas.height).fill()
         }
     }
 
     private func drawHourDelimiters() {
-        NSColor(deviceWhite: 0.95, alpha: 1.0).set()
+        NSColor.gridColor.set()
         for hour in 0..<hourCount {
             CGRect(x: contentRect.minX-8.0, y: contentRect.minY + CGFloat(hour) * hourHeight - 0.4,
                    width: contentRect.width + 8.0, height: 1.0).fill()

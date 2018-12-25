@@ -24,10 +24,10 @@ public enum EventKind: Int {
 
     var color: NSColor {
         switch self {
-        case .generic: return NSColor(red: 0.60, green: 0.90, blue: 0.60, alpha: 1.0)
-        case .visit: return NSColor(red: 1.00, green: 0.86, blue: 0.29, alpha: 1.0)
-        case .surgery: return NSColor(red: 0.66, green: 0.82, blue: 1.00, alpha: 1.0)
-        case .transitory: return NSColor(red: 1.0, green: 0.4, blue: 0.1, alpha: 1.0)
+        case .generic: return NSColor.systemBlue
+        case .visit: return NSColor.systemYellow
+        case .surgery: return NSColor.systemGreen
+        case .transitory: return NSColor.systemOrange
         }
     }
 }

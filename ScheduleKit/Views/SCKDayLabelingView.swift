@@ -42,8 +42,8 @@ class SCKDayLabelingView: NSView {
             return label
         }
 
-        let weekdayLabel = WeekdayLabelWrapper.makeLabel(fontSize: 14, color: .darkGray)
-        let monthLabel = WeekdayLabelWrapper.makeLabel(fontSize: 12, color: .lightGray)
+        let weekdayLabel = WeekdayLabelWrapper.makeLabel(fontSize: 14, color: .labelColor)
+        let monthLabel = WeekdayLabelWrapper.makeLabel(fontSize: 12, color: .secondaryLabelColor)
 
         var weekdayLabelYConstraint: NSLayoutConstraint!
         var weekdayLabelXConstraint: NSLayoutConstraint!

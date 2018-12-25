@@ -21,8 +21,8 @@ final class EventEngine {
     static var shared: EventEngine = EventEngine()
     private init() {
         users = [
-            TestUser(name: "Test user 1", color: NSColor(red: 0.9, green: 0.65, blue: 0.4, alpha: 1.0)),
-            TestUser(name: "Test user 2", color: NSColor(red: 0.4, green: 0.65, blue: 0.9, alpha: 1.0))
+            TestUser(name: "Test user 1", color: NSColor.systemOrange),
+            TestUser(name: "Test user 2", color: NSColor.systemBlue)
         ]
         events = TestEvent.sampleEvents(for: users)
     }
