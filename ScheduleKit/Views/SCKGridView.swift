@@ -90,7 +90,7 @@ public class SCKGridView: SCKView {
         let sD = startDate
         let eD = endDate.addingTimeInterval(1)
         dayCount = sharedCalendar.dateComponents([.day], from: sD, to: eD).day!
-        configureDayLabels()
+        dayLabelingView.configure(dayCount: dayCount, startDate: sD)
         _ = self.minuteTimer
     }
 
@@ -154,73 +154,9 @@ public class SCKGridView: SCKView {
 
     // MARK: Day and month labels
 
-    /// An array containing all generated day labels.
-    private var dayLabels: [NSTextField] = []
-
-    /// An array containing all generated month labels.
-    private var monthLabels: [NSTextField] = []
-
     /// A container view for day labels. Pinned at the top of the scroll view.
-    private let dayLabelingView = NSView(frame: .zero)
+    private let dayLabelingView = SCKDayLabelingView(frame: .zero)
 
-    /// A date formatter for day labels.
-    private var dayLabelsDateFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "EEEE d"; return f
-    }()
-
-    /// A date formatter for month labels.
-    private var monthLabelsDateFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "MMMM"; return f
-    }()
-
-    /// Generates all the day and month labels for the displayed day range
-    /// which have not been generated yet and installs them as subviews of this
-    /// view, while also removing the unneeded ones from its superview. This
-    /// method also updates the label's string value to match the displayed date
-    /// interval. Eventually marks the view as needing layout. This method is 
-    /// called whenever the day interval property changes.
-    private func configureDayLabels() {
-        // 1. Generate missing labels
-        for day in 0..<dayCount {
-            if dayLabels.count > day { // Skip already created labels
-                continue
-            }
-            dayLabels.append(label("", size: 14.0, color: .darkGray))
-            let monthLabel = label("", size: 12.0, color: .lightGray)
-            monthLabel.isHidden = true
-            monthLabels.append(monthLabel)
-        }
-
-        // 2. Add visible days' labels as subviews. Remove others if installed.
-        // In addition, change label string values to the correct ones.
-        for (day, dayLabel) in dayLabels.enumerated() {
-            if dayLabel.superview != nil && day >= dayCount {
-                dayLabel.removeFromSuperview()
-                monthLabels[day].removeFromSuperview()
-            } else if day < dayCount {
-                if dayLabel.superview == nil {
-                    dayLabelingView.addSubview(dayLabel)
-                    dayLabelingView.addSubview(monthLabels[day])
-                }
-                let date = sharedCalendar.date(byAdding: .day, value: day, to: startDate)!
-                let text = dayLabelsDateFormatter.string(from: date).uppercased()
-                dayLabel.stringValue = text
-                dayLabel.sizeToFit()
-
-                // Show month label if first day in week or first day in month.
-                if day == 0 || sharedCalendar.component(.day, from: date) == 1 {
-                    let monthText = monthLabelsDateFormatter.string(from: date)
-                    monthLabels[day].stringValue = monthText
-                    monthLabels[day].sizeToFit()
-                    monthLabels[day].isHidden = false
-                } else {
-                    monthLabels[day].isHidden = true
-                }
-            }
-        }
-        // 3. Set needs layout
-        needsLayout = true
-    }
 
     // MARK: Hour labels
 
@@ -357,7 +293,6 @@ public class SCKGridView: SCKView {
     }
 
     public override func layout() {
-        NSLog("GridView layout triggered")
         super.layout(); let canvas = contentRect
         guard dayCount > 0 else { return } // View is not ready
 
@@ -365,20 +300,6 @@ public class SCKGridView: SCKView {
         let marginLeft = Constants.HourAreaWidth
         let dayLabelsRect = CGRect(x: marginLeft, y: 0, width: frame.width-marginLeft, height: Constants.DayAreaHeight)
         let dayWidth = dayLabelsRect.width / CGFloat(dayCount)
-
-        for day in 0..<dayCount {
-            let minX = marginLeft + CGFloat(day) * dayWidth; let midY = Constants.DayAreaHeight/2.0
-            let dLabel = dayLabels[day]
-            let o = CGPoint(x: minX + dayWidth/2.0 - dLabel.frame.width/2.0, y: midY - dLabel.frame.height/2.0)
-            var r = CGRect(origin: o, size: dLabel.frame.size)
-            if day == 0 || (Int(dLabel.stringValue.components(separatedBy: " ")[1]) == 1) {
-                r.origin.y += 8.0
-                let mLabel = monthLabels[day]
-                let mOrigin = CGPoint(x: minX + dayWidth/2 - mLabel.frame.width/2, y: midY - mLabel.frame.height/2 - 7)
-                mLabel.frame = CGRect(origin: mOrigin, size: mLabel.frame.size)
-            }
-            dLabel.frame = r
-        }
 
         // Layout hour labels
         for (i, label) in hourLabels {
@@ -413,35 +334,24 @@ public class SCKGridView: SCKView {
     }
 
     public override func resize(withOldSuperviewSize oldSize: NSSize) {
-        NSLog("View willresize")
         super.resize(withOldSuperviewSize: oldSize) // Triggers layout. Try to acommodate hour height.
         let visibleHeight = superview!.frame.height - Constants.paddingTop
         let contentHeight = CGFloat(hourCount) * hourHeight
         if contentHeight < visibleHeight && hourCount > 0 {
             hourHeight = visibleHeight / CGFloat(hourCount)
         }
-        var testView: NSView? = self
-        while testView != nil {
-            NSLog("=========================")
-            NSLog("View: %@", testView!)
-            NSLog("Translates: %d", testView!.translatesAutoresizingMaskIntoConstraints)
-            NSLog("Needs layout: %d", testView!.needsLayout)
-            NSLog("=========================")
-
-            testView = testView!.superview
-        }
+        dayLabelingView.needsUpdateConstraints = true
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
         // Insert day labeling view
-        NSLog("View will move to %@", newSuperview ?? "NULL")
         guard let superview = newSuperview else { return }
         let height = Constants.DayAreaHeight
         if let parent = newSuperview?.superview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             NSLayoutConstraint.activate([
-                dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor),
+                dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor, constant: Constants.HourAreaWidth),
                 dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor),
                 dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor),
                 dayLabelingView.heightAnchor.constraint(equalToConstant: height)
