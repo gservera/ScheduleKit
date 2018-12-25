@@ -79,10 +79,10 @@ final class TableViewController: NSViewController {
         }
     }
 
-    override func presentViewController(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect,
+    override func present(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect,
                                         of positioningView: NSView, preferredEdge: NSRectEdge,
                                         behavior: NSPopover.Behavior) {
-        super.presentViewController(viewController, asPopoverRelativeTo: clickedEditButton!.frame,
+        super.present(viewController, asPopoverRelativeTo: clickedEditButton!.frame,
                                     of: clickedEditButton!.superview!, preferredEdge: NSRectEdge.maxX,
                                     behavior: .transient)
     }

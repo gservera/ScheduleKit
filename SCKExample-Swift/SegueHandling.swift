@@ -25,8 +25,8 @@ struct SegueDescriptor<T: NSViewController> {
 }
 
 extension NSStoryboardSegue.Identifier {
-    static let edit = NSStoryboardSegue.Identifier(rawValue: "edit")
-    static let dayCalendarPopover = NSStoryboardSegue.Identifier(rawValue: "dayCalendarPopover")
+    static let edit = "edit"
+    static let dayCalendarPopover = "dayCalendarPopover"
 }
 
 @objcMembers class EventArrayController: NSArrayController {
