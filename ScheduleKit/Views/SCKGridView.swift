@@ -419,6 +419,7 @@ public class SCKGridView: SCKView {
         if contentHeight < visibleHeight && hourCount > 0 {
             hourHeight = visibleHeight / CGFloat(hourCount)
         }
+        superview?.needsLayout = true
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
@@ -437,8 +438,6 @@ public class SCKGridView: SCKView {
                 dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor),
                 dayLabelingView.heightAnchor.constraint(equalToConstant: height)
             ])
-            parent.needsLayout = true
-            dayLabelingView.needsLayout = true
         }
 
         // Restore zoom if possible
