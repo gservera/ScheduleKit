@@ -10,7 +10,7 @@
 [![codecov.io](https://codecov.io/github/gservera/ScheduleKit/coverage.svg?branch=master)](https://codecov.io/github/gservera/ScheduleKit?branch=master)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/gservera/ScheduleKit/master/LICENSE.md) 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-![Swift version](https://img.shields.io/badge/swift-3.0-orange.svg)
+![Swift version](https://img.shields.io/badge/swift-4.2-orange.svg)
  
 ScheduleKit is a powerful graphical event management framework for macOS that provides a great way to display a set of event-like objects in either a day or week based timetable.
 
@@ -168,14 +168,14 @@ github "gservera/ScheduleKit" "master"
 
 Run `carthage update` on your project's directory to build the framework and drag the built `ScheduleKit.framework` into your Xcode project.
  
-##Ideas for the future
+## Ideas for the future
  
 * Ability to create an event by clicking and dragging on a region of the view (thus, setting the corresponding start and end date values), as suggested by @ronnyek
 
 ## Requirements
 
-* **Xcode**: 8.1 or greater.
-* **Deployment target**: macOS 10.12
+* **Xcode**: 9.0 or greater.
+* **Deployment target**: macOS 10.11
 
 ## Unit Tests
 

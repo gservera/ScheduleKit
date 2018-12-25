@@ -35,13 +35,12 @@ import Cocoa
 /// Optionally, you may set the `delegate` property and implement its methods to
 /// change the displayed hour range (which defaults to the whole day).
 ///
-public final class SCKDayView: SCKGridView {
+@objcMembers public final class SCKDayView: SCKGridView {
 
     // MARK: - Day offset actions
 
     /// Displays the previous day and asks the controller to fetch any matching
     /// events.
-    ///
     func decreaseDayOffset(_ sender: Any) {
         let c = sharedCalendar
         if #available(OSX 10.12, *) {
