@@ -143,6 +143,7 @@ public class SCKGridView: SCKView {
 
     private func label(_ text: String, size: CGFloat, color: NSColor) -> NSTextField {
         let label = NSTextField(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.isBordered = false; label.isEditable = false; label.isBezeled = false; label.drawsBackground = false
         label.stringValue = text
         label.font = .systemFont(ofSize: size)
@@ -439,8 +440,6 @@ public class SCKGridView: SCKView {
         if let parent = newSuperview?.superview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
-            dayLabelingView.layer?.backgroundColor = NSColor.white.cgColor
-            dayLabelingView.layer?.opacity = 0.95
             NSLayoutConstraint.activate([
                 dayLabelingView.leftAnchor.constraint(equalTo: parent.leftAnchor),
                 dayLabelingView.rightAnchor.constraint(equalTo: parent.rightAnchor),
