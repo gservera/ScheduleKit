@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -105,6 +105,11 @@ public final class SCKEventView: NSView {
     }
 
     // MARK: - View lifecycle
+
+    var widthConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint!
+    var leadingConstraint: NSLayoutConstraint!
+    var topConstraint: NSLayoutConstraint!
 
     /// The `SCKView` instance th which this view has been added.
     internal weak var scheduleView: SCKView!

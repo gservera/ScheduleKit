@@ -222,11 +222,8 @@ public class SCKGridView: SCKView {
         super.removeFromSuperview()
     }
 
-    public override func layout() {
-        super.layout(); let canvas = contentRect
-        guard dayCount > 0 else { return } // View is not ready
+    public override func updateConstraints() {
 
-        // Layout day labels
         let marginLeft = Constants.HourAreaWidth
         let dayLabelsRect = CGRect(x: marginLeft, y: 0, width: frame.width-marginLeft, height: Constants.DayAreaHeight)
         let dayWidth = dayLabelsRect.width / CGFloat(dayCount)
@@ -239,13 +236,18 @@ public class SCKGridView: SCKView {
             let sPoint = SCKDayPoint(date: holder.cachedScheduledDate)
             let eMinute = sPoint.minute + holder.cachedDuration
             let ePoint = SCKDayPoint(hour: sPoint.hour, minute: eMinute, second: sPoint.second)
-            var newFrame = CGRect.zero
-            newFrame.origin.y = yFor(hour: sPoint.hour, minute: sPoint.minute)
-            newFrame.size.height = yFor(hour: ePoint.hour, minute: ePoint.minute)-newFrame.minY
-            newFrame.size.width = dayWidth / CGFloat(eventView.eventHolder.conflictCount)
-            newFrame.origin.x = canvas.minX + CGFloat(day) * dayWidth + newFrame.width * CGFloat(holder.conflictIndex)
-            eventView.frame |= newFrame
+            let top = yFor(hour: sPoint.hour, minute: sPoint.minute)
+            eventView.topConstraint.constant = top
+            eventView.heightConstraint.constant = yFor(hour: ePoint.hour, minute: ePoint.minute)-top
+            let width = dayWidth / CGFloat(eventView.eventHolder.conflictCount)
+            eventView.widthConstraint.constant = width
+            eventView.leadingConstraint.constant = Constants.HourAreaWidth + CGFloat(day) * dayWidth + width * CGFloat(holder.conflictIndex)
+            NSLayoutConstraint.activate([
+                eventView.topConstraint, eventView.leadingConstraint, eventView.widthConstraint, eventView.heightConstraint
+            ])
         }
+
+        super.updateConstraints()
     }
 
     public override func resize(withOldSuperviewSize oldSize: NSSize) {
@@ -257,6 +259,7 @@ public class SCKGridView: SCKView {
         }
         dayLabelingView.needsUpdateConstraints = true
         hourLabelingView.needsUpdateConstraints = true
+        needsUpdateConstraints = true
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {

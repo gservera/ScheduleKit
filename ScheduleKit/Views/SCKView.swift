@@ -272,7 +272,7 @@ import Cocoa
         holdersToFreeze.forEach { $0.unfreeze() }
 
         // 5. Mark as needing layout
-        needsLayout = true
+        needsUpdateConstraints = true
 
         // 6. Animate if requested
         if animated {
