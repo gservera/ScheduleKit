@@ -765,7 +765,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "567431815.594533"
+            timestampString = "567432582.953741"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "135"
@@ -781,7 +781,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "567431815.5979739"
+            timestampString = "567432582.954337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
@@ -797,28 +797,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "567431815.5983551"
+            timestampString = "567432582.9547369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
             endingLineNumber = "115"
             landmarkName = "updateHourParameters()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ScheduleKit/Views/SCKGridView.swift"
-            timestampString = "567431815.598657"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
-            landmarkName = "viewWillMove(toSuperview:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

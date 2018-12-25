@@ -412,6 +412,7 @@ public class SCKGridView: SCKView {
     }
 
     public override func resize(withOldSuperviewSize oldSize: NSSize) {
+        NSLog("View willresize")
         super.resize(withOldSuperviewSize: oldSize) // Triggers layout. Try to acommodate hour height.
         let visibleHeight = superview!.frame.height - Constants.paddingTop
         let contentHeight = CGFloat(hourCount) * hourHeight
@@ -436,6 +437,8 @@ public class SCKGridView: SCKView {
                 dayLabelingView.topAnchor.constraint(equalTo: parent.topAnchor),
                 dayLabelingView.heightAnchor.constraint(equalToConstant: height)
             ])
+            parent.needsLayout = true
+            dayLabelingView.needsLayout = true
         }
 
         // Restore zoom if possible
@@ -445,11 +448,6 @@ public class SCKGridView: SCKView {
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
         }
-    }
-
-    public override func viewDidMoveToSuperview() {
-        viewWillMove(toSuperview: superview)
-        NSLog("View did move to superview")
     }
 
     // MARK: - Delegate defaults
