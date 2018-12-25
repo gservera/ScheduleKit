@@ -419,8 +419,16 @@ public class SCKGridView: SCKView {
         if contentHeight < visibleHeight && hourCount > 0 {
             hourHeight = visibleHeight / CGFloat(hourCount)
         }
-        superview?.needsLayout = true
-        needsLayout = true
+        var testView: NSView? = self
+        while testView != nil {
+            NSLog("=========================")
+            NSLog("View: %@", testView!)
+            NSLog("Translates: %d", testView!.translatesAutoresizingMaskIntoConstraints)
+            NSLog("Needs layout: %d", testView!.needsLayout)
+            NSLog("=========================")
+
+            testView = testView!.superview
+        }
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
