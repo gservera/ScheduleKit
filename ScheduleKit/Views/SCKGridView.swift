@@ -420,6 +420,7 @@ public class SCKGridView: SCKView {
             hourHeight = visibleHeight / CGFloat(hourCount)
         }
         superview?.needsLayout = true
+        needsLayout = true
     }
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
