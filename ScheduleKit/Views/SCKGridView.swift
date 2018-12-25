@@ -356,6 +356,7 @@ public class SCKGridView: SCKView {
     }
 
     public override func layout() {
+        NSLog("GridView layout triggered")
         super.layout(); let canvas = contentRect
         guard dayCount > 0 else { return } // View is not ready
 
@@ -421,6 +422,7 @@ public class SCKGridView: SCKView {
 
     public override func viewWillMove(toSuperview newSuperview: NSView?) {
         // Insert day labeling view
+        NSLog("View will move to %@", newSuperview ?? "NULL")
         guard let superview = newSuperview else { return }
         let height = Constants.DayAreaHeight
         if let parent = newSuperview?.superview?.superview {
@@ -443,6 +445,11 @@ public class SCKGridView: SCKView {
         if hourHeight < minHourHeight || hourHeight > 1000.0 {
             hourHeight = minHourHeight
         }
+    }
+
+    public override func viewDidMoveToSuperview() {
+        viewWillMove(toSuperview: superview)
+        NSLog("View did move to superview")
     }
 
     // MARK: - Delegate defaults
