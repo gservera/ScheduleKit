@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 16/07/2015.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +69,7 @@ internal protocol AsynchronousRequestParsing: class {
     // MARK: Methods
 
     /// Called from the `SCKViewController` objects to initialize a new `SCKEventRequest`
-    /// based on the effective date criteria. This method does not insert the 
+    /// based on the effective date criteria. This method does not insert the
     /// created request in the controller's `asynchronousRequests` set.
     ///
     /// - Parameters:

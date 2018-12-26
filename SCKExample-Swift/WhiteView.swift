@@ -15,7 +15,7 @@ import Cocoa
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor.white.set()
+        NSColor.controlBackgroundColor.set()
         dirtyRect.fill()
     }
 }

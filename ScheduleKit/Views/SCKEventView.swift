@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -48,6 +48,7 @@ public final class SCKEventView: NSView {
         _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
         _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
         _label.autoresizingMask = [.width, .height]
+        _label.textColor = .black
         return _label
     }()
 
@@ -90,21 +91,33 @@ public final class SCKEventView: NSView {
         }
 
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
-        if inLiveResize {
-            fillColor.set()
-            wholeRect.fill()
+
+        fillColor.setFill()
+        wholeRect.fill()
+        let strokeColor: NSColor
+        if #available(OSX 10.14, *) {
+            strokeColor = fillColor.withSystemEffect(.pressed)
         } else {
-            fillColor.setFill()
-            let path = NSBezierPath(roundedRect: wholeRect, xRadius: 2.0, yRadius: 2.0)
-            if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y
-                || scheduleView.contentRect.maxY < frame.maxY {
-                fillColor.withAlphaComponent(0.2).setFill()
-            }
-            path.fill()
+            strokeColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
         }
+        let leftStrokeRect = CGRect(origin: .zero, size: CGSize(width: 4.0, height: frame.height))
+        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1), size: CGSize(width: frame.width, height: 1))
+        strokeColor.setFill()
+        leftStrokeRect.fill()
+        bottomStrokeRect.fill()
+        if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y
+            || scheduleView.contentRect.maxY < frame.maxY {
+            fillColor.withAlphaComponent(0.2).setFill()
+        }
+
     }
 
     // MARK: - View lifecycle
+
+    var widthConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint!
+    var leadingConstraint: NSLayoutConstraint!
+    var topConstraint: NSLayoutConstraint!
 
     /// The `SCKView` instance th which this view has been added.
     internal weak var scheduleView: SCKView!

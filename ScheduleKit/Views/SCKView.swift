@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -88,7 +88,7 @@ import Cocoa
     }
 
     public override func draw(_ dirtyRect: NSRect) {
-        NSColor.white.setFill()
+        NSColor.controlBackgroundColor.setFill()
         dirtyRect.fill()
     }
 
@@ -100,6 +100,7 @@ import Cocoa
     @objc public var dateInterval: DateInterval = DateInterval() {
         didSet { needsDisplay = true }
     }
+
 
     // MARK: - Date transforms
 
@@ -256,7 +257,7 @@ import Cocoa
         holdersToFreeze.forEach { $0.unfreeze() }
 
         // 5. Mark as needing layout
-        needsLayout = true
+        needsUpdateConstraints = true
 
         // 6. Animate if requested
         if animated {

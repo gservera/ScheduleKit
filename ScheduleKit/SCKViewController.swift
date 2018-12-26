@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 2/11/2016.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -291,7 +291,12 @@ import AppKit
         // Insert new events
         for e in (eventsToBeInserted.compactMap { $0 as? SCKEvent }) {
             let eventView = SCKEventView(frame: .zero)
+            eventView.translatesAutoresizingMaskIntoConstraints = false
             scheduleView.addSubview(eventView)
+            eventView.leadingConstraint = eventView.leadingAnchor.constraint(equalTo: scheduleView.leadingAnchor)
+            eventView.topConstraint = eventView.topAnchor.constraint(equalTo: scheduleView.topAnchor)
+            eventView.widthConstraint = eventView.widthAnchor.constraint(equalToConstant: 0)
+            eventView.heightConstraint = eventView.heightAnchor.constraint(equalToConstant: 0)
             scheduleView.addEventView(eventView)
             if let holder = SCKEventHolder(event: e, view: eventView, controller: self) {
                 eventView.eventHolder = holder

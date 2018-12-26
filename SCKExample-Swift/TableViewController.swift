@@ -33,7 +33,6 @@ final class TableViewController: NSViewController {
 
     override func viewDidAppear() {
         super.viewDidAppear()
-        view.window?.appearance = NSAppearance(named: NSAppearance.Name.vibrantLight)
         view.window?.titlebarAppearsTransparent = true
         view.window?.titleVisibility = .hidden
     }

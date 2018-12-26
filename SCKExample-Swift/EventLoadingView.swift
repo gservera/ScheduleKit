@@ -29,7 +29,7 @@ final class EventLoadingView: NSView {
             label.sizeToFit()
             label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 1000), for: .horizontal)
             label.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 1000), for: .horizontal)
-            label.textColor = NSColor.darkGray
+            label.textColor = NSColor.labelColor
 
             spinner.style = .spinning
             spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -44,7 +44,7 @@ final class EventLoadingView: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor.white.set()
+        NSColor.controlBackgroundColor.set()
         dirtyRect.fill()
     }
 }

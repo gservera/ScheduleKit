@@ -37,7 +37,6 @@ class SCKUnavailableTimeRangesTests: XCTestCase {
 
         let data = try! NSKeyedArchiver.archivedData(withRootObject: unavailable, requiringSecureCoding: true)
 
-
         guard let unarchived = try! NSKeyedUnarchiver.unarchivedObject(ofClass: SCKUnavailableTimeRange.self, from: data) else {
             XCTFail("Could not unarchive range")
             return
