@@ -5,3 +5,4 @@ xcode_scheme: ScheduleKit
 xcode_destination: platform=macOS
 after_success:
 - bash <(curl -s https://codecov.io/bash) -J 'ScheduleKit'
+
