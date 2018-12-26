@@ -91,18 +91,25 @@ public final class SCKEventView: NSView {
         }
 
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
-        if inLiveResize {
-            fillColor.set()
-            wholeRect.fill()
+
+        fillColor.setFill()
+        wholeRect.fill()
+        let strokeColor: NSColor
+        if #available(OSX 10.14, *) {
+            strokeColor = fillColor.withSystemEffect(.pressed)
         } else {
-            fillColor.setFill()
-            let path = NSBezierPath(roundedRect: wholeRect, xRadius: 2.0, yRadius: 2.0)
-            if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y
-                || scheduleView.contentRect.maxY < frame.maxY {
-                fillColor.withAlphaComponent(0.2).setFill()
-            }
-            path.fill()
+            strokeColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
         }
+        let leftStrokeRect = CGRect(origin: .zero, size: CGSize(width: 4.0, height: frame.height))
+        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1), size: CGSize(width: frame.width, height: 1))
+        strokeColor.setFill()
+        leftStrokeRect.fill()
+        bottomStrokeRect.fill()
+        if scheduleView.contentRect.origin.y > scheduleView.convert(frame.origin, from: self).y
+            || scheduleView.contentRect.maxY < frame.maxY {
+            fillColor.withAlphaComponent(0.2).setFill()
+        }
+
     }
 
     // MARK: - View lifecycle

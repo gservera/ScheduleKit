@@ -184,7 +184,8 @@ public class SCKGridView: SCKView {
     override public var contentRect: CGRect {
         // Exclude day and hour labeling areas.
         return CGRect(x: Constants.HourAreaWidth, y: Constants.paddingTop,
-                      width: frame.width - Constants.HourAreaWidth, height: frame.height - Constants.paddingTop)
+                      width: frame.width - Constants.HourAreaWidth,
+                      height: CGFloat(hourCount) * hourHeight)
     }
 
     override func invalidateLayout(for eventView: SCKEventView) {
@@ -214,7 +215,8 @@ public class SCKGridView: SCKView {
     // MARK: - NSView overrides
 
     public override var intrinsicContentSize: NSSize {
-        return CGSize(width: NSView.noIntrinsicMetric, height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
+        return CGSize(width: NSView.noIntrinsicMetric,
+                      height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
     }
 
     public override func removeFromSuperview() {
@@ -284,18 +286,17 @@ public class SCKGridView: SCKView {
                 hourLabelingView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.DayAreaHeight)
             ])
         }
-
-        // Restore zoom if possible
-        let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(String(describing: type(of: self)))"
-        hourHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
-        let minHourHeight = (superview.frame.height-Constants.paddingTop)/CGFloat(hourCount)
-        if hourHeight < minHourHeight || hourHeight > 1000.0 {
-            hourHeight = minHourHeight
-        }
-
         DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
             self?.dayLabelingView.needsUpdateConstraints = true
         }
+    }
+
+    public override func viewDidMoveToSuperview() {
+        super.viewDidMoveToSuperview()
+        // Restore zoom if possible
+        let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(String(describing: type(of: self)))"
+        let hHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
+        processNewHourHeight(hHeight)
     }
 
     // MARK: - Delegate defaults
@@ -474,10 +475,7 @@ extension SCKGridView {
 
     /// Increases the hour height property if less than the maximum value. Marks the view as needing display.
     func increaseZoomFactor() {
-        if hourHeight < Constants.MaxHeightPerHour {
-            hourHeight += 8.0
-            needsDisplay = true
-        }
+        processNewHourHeight(hourHeight + 8.0)
     }
 
     /// Decreases the hour height property if greater than the minimum value. Marks the view as needing display.
@@ -493,9 +491,12 @@ extension SCKGridView {
     /// hour height. Marks the view as needing display.
     /// - Parameter targetHeight: The calculated new hour height.
     private func processNewHourHeight(_ targetHeight: CGFloat) {
+        defer {
+            needsDisplay = true
+            needsUpdateConstraints = true
+        }
         guard targetHeight < Constants.MaxHeightPerHour else {
             hourHeight = Constants.MaxHeightPerHour
-            needsDisplay = true
             return
         }
         let minimumContentHeight = superview!.frame.height - Constants.paddingTop
@@ -504,6 +505,5 @@ extension SCKGridView {
         } else {
             hourHeight = minimumContentHeight / CGFloat(hourCount)
         }
-        needsDisplay = true
     }
 }

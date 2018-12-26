@@ -26,7 +26,7 @@
 
 import Cocoa
 
-class SCKDayLabelingView: NSView {
+class SCKDayLabelingView: NSVisualEffectView {
 
     class WeekdayLabelWrapper {
 
@@ -82,7 +82,7 @@ class SCKDayLabelingView: NSView {
     /// interval. Eventually marks the view as needing layout. This method is
     /// called whenever the day interval property changes.
     func configure(dayCount: Int, startDate: Date) {
-
+        blendingMode = .withinWindow
         // 1. Generate missing labels
         for day in 0..<dayCount {
             if labelWrappers.count > day { // Skip already created labels
