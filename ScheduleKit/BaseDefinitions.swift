@@ -24,7 +24,7 @@
  *  THE SOFTWARE.
  */
 
-import Foundation
+import Cocoa
 
 /// The shared calendar object used by the ScheduleKit framework.
 internal(set) var sharedCalendar = Calendar.current
@@ -66,6 +66,22 @@ extension Calendar {
         let start = date(byAdding: unit, value: value, to: interval.start)
         let end = date(byAdding: unit, value: value, to: interval.end)
         return DateInterval(start: start!, end: end!)
+    }
+
+}
+
+extension NSTextField {
+
+    static func makeLabel(fontSize: CGFloat, color: NSColor) -> NSTextField {
+        let label = NSTextField(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isBordered = false;
+        label.isEditable = false;
+        label.isBezeled = false;
+        label.drawsBackground = false
+        label.font = .systemFont(ofSize: fontSize)
+        label.textColor = color
+        return label
     }
 
 }

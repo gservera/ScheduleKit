@@ -511,7 +511,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKView.swift"
-            timestampString = "567479467.866399"
+            timestampString = "567522949.467308"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "205"
@@ -527,7 +527,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/EventLoadingView.swift"
-            timestampString = "567479467.8665299"
+            timestampString = "567522949.467453"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "18"
@@ -548,8 +548,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "95"
             endingLineNumber = "95"
-            landmarkName = "scheduleController(_:didMakeConcreteEventRequest:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -575,7 +575,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/TableViewController.swift"
-            timestampString = "567479467.8667361"
+            timestampString = "567525023.888804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "42"
@@ -591,7 +591,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKEventView.swift"
-            timestampString = "567479467.866838"
+            timestampString = "567522949.467706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "315"
@@ -612,8 +612,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
             endingLineNumber = "57"
-            landmarkName = "viewWillAppear()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -628,8 +628,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -671,7 +671,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKitTests/SCKEventHolderTests.swift"
-            timestampString = "567479467.866974"
+            timestampString = "567522949.467855"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
@@ -687,7 +687,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKitTests/SCKUnavailableTimeRangesTests.swift"
-            timestampString = "567479467.8670909"
+            timestampString = "567522949.467943"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
@@ -735,7 +735,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/SCKFreeTimeFinder.swift"
-            timestampString = "567479467.867203"
+            timestampString = "567522949.4680049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "134"
@@ -863,7 +863,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/DayViewController.swift"
-            timestampString = "530903069.912361"
+            timestampString = "567525023.889038"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"

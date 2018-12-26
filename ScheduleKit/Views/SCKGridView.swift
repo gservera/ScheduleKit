@@ -144,7 +144,7 @@ public class SCKGridView: SCKView {
     // MARK: Day and month labels
 
     /// A container view for day labels. Pinned at the top of the scroll view.
-    private let dayLabelingView = SCKDayLabelingView(frame: .zero)
+    private let dayLabelingView = SCKDayLabelingView(frame: CGRect(x: 0, y: 0, width: 0, height: Constants.DayAreaHeight))
 
     /// A container view for hour labels. Pinned left in the scroll view.
     private let hourLabelingView = SCKHourLabelingView(frame: .zero)

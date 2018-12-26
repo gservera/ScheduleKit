@@ -30,22 +30,10 @@ final class SCKHourLabelingView: NSView {
 
     class HourLabelWrapper {
 
-        static private func makeLabel(fontSize: CGFloat, color: NSColor) -> NSTextField {
-            let label = NSTextField(frame: .zero)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.isBordered = false;
-            label.isEditable = false;
-            label.isBezeled = false;
-            label.drawsBackground = false
-            label.font = .systemFont(ofSize: fontSize)
-            label.textColor = color
-            return label
-        }
-
         let label: NSTextField
 
         init(_ text: String, fontSize: CGFloat, color: NSColor) {
-            label = HourLabelWrapper.makeLabel(fontSize: fontSize, color: color)
+            label = NSTextField.makeLabel(fontSize: fontSize, color: color)
             label.stringValue = text
             label.sizeToFit()
         }

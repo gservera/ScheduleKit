@@ -30,20 +30,10 @@ class SCKDayLabelingView: NSVisualEffectView {
 
     class WeekdayLabelWrapper {
 
-        static private func makeLabel(fontSize: CGFloat, color: NSColor) -> NSTextField {
-            let label = NSTextField(frame: .zero)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.isBordered = false;
-            label.isEditable = false;
-            label.isBezeled = false;
-            label.drawsBackground = false
-            label.font = .systemFont(ofSize: fontSize)
-            label.textColor = color
-            return label
-        }
+        let weekdayLabel = NSTextField.makeLabel(fontSize: 14, color: .labelColor)
+        let monthLabel = NSTextField.makeLabel(fontSize: 12, color: .secondaryLabelColor)
 
-        let weekdayLabel = WeekdayLabelWrapper.makeLabel(fontSize: 14, color: .labelColor)
-        let monthLabel = WeekdayLabelWrapper.makeLabel(fontSize: 12, color: .secondaryLabelColor)
+        var isFirstDayOfMonth: Bool = false
 
         var weekdayLabelYConstraint: NSLayoutConstraint!
         var weekdayLabelXConstraint: NSLayoutConstraint!
@@ -53,13 +43,13 @@ class SCKDayLabelingView: NSVisualEffectView {
         func activateConstraints() {
             NSLayoutConstraint.activate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
-                ].compactMap{$0})
+            ].compactMap{$0})
         }
 
         func deactivateConstraints() {
             NSLayoutConstraint.deactivate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
-                ].compactMap{$0})
+            ].compactMap{$0})
         }
     }
 
@@ -103,6 +93,7 @@ class SCKDayLabelingView: NSVisualEffectView {
             } else if day < dayCount {
                 let date = sharedCalendar.date(byAdding: .day, value: day, to: startDate)!
                 let text = dayLabelsDateFormatter.string(from: date).uppercased()
+                wrapper.isFirstDayOfMonth = (sharedCalendar.component(.day, from: date) == 1)
                 wrapper.weekdayLabel.stringValue = text
                 wrapper.weekdayLabel.sizeToFit()
 
@@ -118,14 +109,16 @@ class SCKDayLabelingView: NSVisualEffectView {
                 }
 
                 // Show month label if first day in week or first day in month.
-                if day == 0 || sharedCalendar.component(.day, from: date) == 1 {
-
+                let midY = frame.height/2.0
+                if day == 0 || wrapper.isFirstDayOfMonth {
+                    wrapper.weekdayLabelYConstraint.constant = midY - wrapper.weekdayLabel.frame.height/2.0 - 8.0
                     let monthText = monthLabelsDateFormatter.string(from: date)
                     wrapper.monthLabel.stringValue = monthText
                     wrapper.monthLabel.sizeToFit()
+                    wrapper.monthLabelYConstraint.constant = midY - wrapper.monthLabel.frame.height/2 + 7
                     wrapper.monthLabel.isHidden = false
-
                 } else {
+                    wrapper.weekdayLabelYConstraint.constant = midY - wrapper.weekdayLabel.frame.height/2.0
                     wrapper.monthLabel.isHidden = true
                 }
             }
@@ -137,27 +130,20 @@ class SCKDayLabelingView: NSVisualEffectView {
     }
 
     override func updateConstraints() {
+        // 1. Calculate the available room for each wrapper's labels
+        let wrapperWidth = frame.width / CGFloat(labelWrappers.count)
 
-        let rect = CGRect(origin: .zero, size: frame.size)
-        let dayWidth = rect.width / CGFloat(labelWrappers.count)
-
-        for (day, wrapper) in labelWrappers.enumerated() {
-
-            let minX = CGFloat(day) * dayWidth;
-            let midY = frame.height/2.0
-            let leftMargin = minX + dayWidth/2.0 - wrapper.weekdayLabel.frame.width / 2.0
-
-            wrapper.weekdayLabelXConstraint.constant = leftMargin
-
-            if day == 0 || (Int(wrapper.weekdayLabel.stringValue.components(separatedBy: " ")[1]) == 1) {
-
-                wrapper.weekdayLabelYConstraint.constant = midY - wrapper.weekdayLabel.frame.height/2.0 - 8.0
-
-                let monthLeftMargin = minX + dayWidth/2 - wrapper.monthLabel.frame.width/2
+        for (weekdayIndex, wrapper) in labelWrappers.enumerated() {
+            // 2. Calculate each wrapper's X origin.
+            let wrapperMinX = CGFloat(weekdayIndex) * wrapperWidth;
+            // 3. Place weekday label in the horizontal axis
+            let weekdayLabelHalfWidth = wrapper.weekdayLabel.frame.width / 2.0
+            let weekdayLabelMinX = wrapperMinX + wrapperWidth/2.0 - weekdayLabelHalfWidth
+            wrapper.weekdayLabelXConstraint.constant = weekdayLabelMinX
+            // 4. Place month label in the horizontal axis if needed
+            if weekdayIndex == 0 || wrapper.isFirstDayOfMonth {
+                let monthLeftMargin = wrapperMinX + wrapperWidth/2.0 - wrapper.monthLabel.frame.width / 2.0
                 wrapper.monthLabelXConstraint.constant = monthLeftMargin
-                wrapper.monthLabelYConstraint.constant = midY - wrapper.monthLabel.frame.height/2 + 7
-            } else {
-                wrapper.weekdayLabelYConstraint.constant = midY - wrapper.weekdayLabel.frame.height/2.0
             }
         }
         super.updateConstraints()

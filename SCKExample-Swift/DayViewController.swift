@@ -56,7 +56,7 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
     private var lastCount = 0
 
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if segue.identifier == .dayCalendarPopover {
+        if segue.identifier == "dayCalendarPopover" {
             let destination = SegueDescriptor<DayCalendarPopoverViewController>(segue: segue).destination
             destination.dayView = dayView
         }

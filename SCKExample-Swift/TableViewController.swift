@@ -15,7 +15,7 @@ final class TableCellView: NSTableCellView {
             let index = tableView.row(for: self)
             let set = IndexSet(integer: index)
             tableView.selectRowIndexes(IndexSet(set), byExtendingSelection: false)
-            TableViewController.shared?.performSegue(withIdentifier: .edit, sender: sender)
+            TableViewController.shared?.performSegue(withIdentifier: "edit", sender: sender)
         }
     }
 }
@@ -72,16 +72,16 @@ final class TableViewController: NSViewController {
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         clickedEditButton = sender as? NSButton
 
-        if segue.identifier == NSStoryboardSegue.Identifier.edit {
+        if segue.identifier == "edit" {
             let destination = SegueDescriptor<EditEventViewController>(segue: segue).destination
             destination.event = EventEngine.shared.events[tableView.selectedRow]
         }
     }
 
-    override func presentViewController(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect,
+    override func present(_ viewController: NSViewController, asPopoverRelativeTo positioningRect: NSRect,
                                         of positioningView: NSView, preferredEdge: NSRectEdge,
                                         behavior: NSPopover.Behavior) {
-        super.presentViewController(viewController, asPopoverRelativeTo: clickedEditButton!.frame,
+        super.present(viewController, asPopoverRelativeTo: clickedEditButton!.frame,
                                     of: clickedEditButton!.superview!, preferredEdge: NSRectEdge.maxX,
                                     behavior: .transient)
     }
