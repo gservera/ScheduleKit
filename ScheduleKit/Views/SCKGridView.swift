@@ -268,7 +268,7 @@ public class SCKGridView: SCKView {
         // Insert day labeling view
         guard let superview = newSuperview else { return }
         let height = Constants.DayAreaHeight
-        if let parent = newSuperview?.superview?.superview {
+        if let parent = superview.superview?.superview {
             dayLabelingView.translatesAutoresizingMaskIntoConstraints = false
             parent.addSubview(dayLabelingView, positioned: .above, relativeTo: nil)
             NSLayoutConstraint.activate([
@@ -293,6 +293,7 @@ public class SCKGridView: SCKView {
 
     public override func viewDidMoveToSuperview() {
         super.viewDidMoveToSuperview()
+        guard superview != nil else { return } // Called when removed
         // Restore zoom if possible
         let zoomKey = SCKGridView.defaultsZoomKeyPrefix + ".\(String(describing: type(of: self)))"
         let hHeight = CGFloat(UserDefaults.standard.double(forKey: zoomKey))
