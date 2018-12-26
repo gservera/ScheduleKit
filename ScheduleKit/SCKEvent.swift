@@ -36,7 +36,7 @@ import Cocoa
 
 /// Any type implementing the properties required to define an event displayed in
 /// a `SCKView` subclass.
-@objc public protocol SCKEvent: NSObjectProtocol where Self: NSObject {
+@objc public protocol SCKEvent where Self: NSObject {
 
     /// An integer used by the `SCKView` to distinguish between different event
     /// types when `colorMode` is set to `.byEventKind`. Please reserve the `-1`

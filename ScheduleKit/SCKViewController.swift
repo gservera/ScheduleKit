@@ -398,7 +398,7 @@ import AppKit
     /// method, the schedule view will not reflect any change in that event.
     /// - Parameter event: The event that you don't want to be observed.
     @objc public final func stopObservingChanges(from event: SCKEvent) {
-        for holder in eventHolders where holder.representedObject.isEqual(event) {
+        for holder in eventHolders where holder.representedObject === event {
             holder.stopObservingRepresentedObjectChanges()
         }
     }

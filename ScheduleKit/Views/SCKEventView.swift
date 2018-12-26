@@ -67,7 +67,7 @@ public final class SCKEventView: NSView {
 
         if isAnyViewSelected && !isThisViewSelected {
             // Set color to gray when another event is selected
-            fillColor = NSColor(white: 0.85, alpha: 1.0)
+            fillColor = NSColor.windowBackgroundColor
         } else {
             // No view selected or this view selected. Let's determine background
             // color.
@@ -87,7 +87,11 @@ public final class SCKEventView: NSView {
 
         // Make more transparent if dragging this view.
         if isThisViewSelected, case .draggingContent(_, _, _) = draggingStatus {
-            fillColor = fillColor.withAlphaComponent(0.7)
+            if #available(OSX 10.14, *) {
+                fillColor = fillColor.withSystemEffect(.deepPressed)
+            } else {
+                fillColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
+            }
         }
 
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
@@ -114,9 +118,13 @@ public final class SCKEventView: NSView {
 
     // MARK: - View lifecycle
 
+    /// <#Description#>
     var widthConstraint: NSLayoutConstraint!
+    /// <#Description#>
     var heightConstraint: NSLayoutConstraint!
+    /// <#Description#>
     var leadingConstraint: NSLayoutConstraint!
+    /// <#Description#>
     var topConstraint: NSLayoutConstraint!
 
     /// The `SCKView` instance th which this view has been added.
@@ -137,6 +145,10 @@ public final class SCKEventView: NSView {
     }
 
     // MARK: - Overrides
+
+    public override var isOpaque: Bool {
+        return true
+    }
 
     public override var isFlipped: Bool {
         return true

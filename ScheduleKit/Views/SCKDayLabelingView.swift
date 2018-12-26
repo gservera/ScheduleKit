@@ -28,24 +28,34 @@ import Cocoa
 
 class SCKDayLabelingView: NSVisualEffectView {
 
+    /// <#Description#>
     class WeekdayLabelWrapper {
 
+        /// <#Description#>
         let weekdayLabel = NSTextField.makeLabel(fontSize: 14, color: .labelColor)
+        /// <#Description#>
         let monthLabel = NSTextField.makeLabel(fontSize: 12, color: .secondaryLabelColor)
 
+        /// <#Description#>
         var isFirstDayOfMonth: Bool = false
 
+        /// <#Description#>
         var weekdayLabelYConstraint: NSLayoutConstraint!
+        /// <#Description#>
         var weekdayLabelXConstraint: NSLayoutConstraint!
+        /// <#Description#>
         var monthLabelXConstraint: NSLayoutConstraint!
+        /// <#Description#>
         var monthLabelYConstraint: NSLayoutConstraint!
 
+        /// <#Description#>
         func activateConstraints() {
             NSLayoutConstraint.activate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
             ].compactMap{$0})
         }
 
+        /// <#Description#>
         func deactivateConstraints() {
             NSLayoutConstraint.deactivate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
@@ -63,6 +73,7 @@ class SCKDayLabelingView: NSVisualEffectView {
         let f = DateFormatter(); f.dateFormat = "MMMM"; return f
     }()
 
+    /// <#Description#>
     private var labelWrappers: [WeekdayLabelWrapper] = []
 
     /// Generates all the day and month labels for the displayed day range
@@ -148,5 +159,4 @@ class SCKDayLabelingView: NSVisualEffectView {
         }
         super.updateConstraints()
     }
-
 }
