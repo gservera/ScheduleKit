@@ -137,7 +137,6 @@ class SCKDayLabelingView: NSVisualEffectView {
 
         // 3. Set needs update constraints
         needsUpdateConstraints = true
-
     }
 
     override func updateConstraints() {

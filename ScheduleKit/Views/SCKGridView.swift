@@ -171,13 +171,13 @@ public class SCKGridView: SCKView {
     /// minute combination.
     /// - Parameters:
     ///   - hour: The hour.
-    ///   - m: The minute.
+    ///   - minute: The minute.
     /// - Returns: The calculated Y position.
     internal func yFor(hour: Int, minute: Int) -> CGFloat {
         let canvas = contentRect
         let hours = CGFloat(hourCount)
-        let h = CGFloat(hour - firstHour)
-        return canvas.minY + canvas.height * (h + CGFloat(minute)/60.0) / hours
+        let hourIndex = CGFloat(hour - firstHour)
+        return canvas.minY + canvas.height * (hourIndex + CGFloat(minute)/60.0) / hours
     }
 
     // MARK: - Event Layout overrides
@@ -413,8 +413,8 @@ public class SCKGridView: SCKView {
         let minuteCount = Double(hourCount) * 60.0
         let elapsedMinutes = Double(components.hour!-firstHour) * 60.0 + Double(components.minute!)
         let yOrigin = canvas.minY + canvas.height * CGFloat(elapsedMinutes / minuteCount)
-        NSColor.red.setFill()
-        CGRect(x: canvas.minX, y: yOrigin-0.25, width: canvas.width, height: 0.5).fill()
+        NSColor.systemRed.setFill()
+        CGRect(x: canvas.minX, y: yOrigin-0.5, width: canvas.width, height: 1.0).fill()
         NSBezierPath(ovalIn: CGRect(x: canvas.minX-2.0, y: yOrigin-2.0, width: 4.0, height: 4.0)).fill()
     }
 
