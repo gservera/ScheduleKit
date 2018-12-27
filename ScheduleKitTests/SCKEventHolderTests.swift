@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 27/11/2016.
- *  Copyright:  © 2014-2016 Guillem Servera (http://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -94,9 +94,9 @@ final class SCKEventHolderTests: XCTestCase {
         controller = _ControllerMock(nibName: "TestController", bundle: bundle)
         _ = controller.view
         scheduleView = controller.scheduleView!
-        let sD = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
-        let eD = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
-        scheduleView.dateInterval = DateInterval(start: sD, end: eD)
+        let sDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let eDate = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
+        scheduleView.dateInterval = DateInterval(start: sDate, end: eDate)
         eventView = SCKEventView(frame: .zero)
         validTestEvent = SCKEventMock()
         invalidTestEvent = SCKEventMock()

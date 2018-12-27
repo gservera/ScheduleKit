@@ -27,7 +27,7 @@
 import Cocoa
 
 /// The shared calendar object used by the ScheduleKit framework.
-internal(set) var sharedCalendar = Calendar.current
+var sharedCalendar = Calendar.current
 
 /// A `Double` value that represents relative time points between the lower and
 /// upper date bounds in a concrete `SCKView` subclass. Valid values are the ones
@@ -75,9 +75,9 @@ extension NSTextField {
     static func makeLabel(fontSize: CGFloat, color: NSColor) -> NSTextField {
         let label = NSTextField(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.isBordered = false;
-        label.isEditable = false;
-        label.isBezeled = false;
+        label.isBordered = false
+        label.isEditable = false
+        label.isBezeled = false
         label.drawsBackground = false
         label.font = .systemFont(ofSize: fontSize)
         label.textColor = color

@@ -141,6 +141,7 @@ public protocol SCKEventManaging: class {
 
 }
 
+// swiftlint:disable missing_docs
 public extension SCKEventManaging {
 
     func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent] {

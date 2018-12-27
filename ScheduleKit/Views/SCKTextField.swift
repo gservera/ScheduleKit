@@ -36,10 +36,10 @@ private final class SCKTextFieldCell: NSTextFieldCell {
         var rect = super.drawingRect(forBounds: rect)
         if !editingOrSelected {
             let size = cellSize(forBounds: rect)
-            let Δheight = rect.height - size.height
-            if Δheight > 0.0 {
-                rect.size.height -= Δheight
-                rect.origin.y = Δheight/2.0
+            let deltaHeight = rect.height - size.height
+            if deltaHeight > 0.0 {
+                rect.size.height -= deltaHeight
+                rect.origin.y = deltaHeight / 2.0
             }
         }
         return rect

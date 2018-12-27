@@ -42,16 +42,14 @@ import Cocoa
     /// Displays the previous week and asks the controller to fetch any matching
     /// events.
     func decreaseWeekOffset(_ sender: Any) {
-        let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
+        dateInterval = sharedCalendar.dateInterval(dateInterval, offsetBy: -1, .weekOfYear)
         controller.internalReloadData()
     }
 
     /// Displays the next week and asks the controller to fetch any matching 
     /// events.
     func increaseWeekOffset(_ sender: Any) {
-        let c = sharedCalendar
-        dateInterval = c.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
+        dateInterval = sharedCalendar.dateInterval(dateInterval, offsetBy: 1, .weekOfYear)
         controller.internalReloadData()
     }
 

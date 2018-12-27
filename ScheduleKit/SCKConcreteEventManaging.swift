@@ -126,7 +126,7 @@ public protocol SCKConcreteEventManaging: SCKEventManaging {
 }
 
 // MARK: - SCKConcreteEventManaging <-> SCKEventManaging translation
-
+// swiftlint:disable missing_docs
 public extension SCKConcreteEventManaging where EventType: SCKEvent {
 
     private func casted(_ event: SCKEvent) -> EventType {

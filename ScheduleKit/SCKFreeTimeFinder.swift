@@ -146,13 +146,7 @@ import Foundation
             let intervalIntent = DateInterval(start: startIntent, duration: length)
 
             // Check conflicts with unavailable ranges
-            var isUnavailable = false
-            for u in unavailableIntervals {
-                if u.intersects(intervalIntent) {
-                    isUnavailable = true
-                    break
-                }
-            }
+            let isUnavailable = unavailableIntervals.contains { $0.intersects(intervalIntent) }
 
             guard !isUnavailable else {
                 startIntent = startIntent.addingTimeInterval(60)
@@ -160,13 +154,7 @@ import Foundation
             }
 
             // Check conflicts with other events
-            var foundConflict = false
-            for otherInterval in eventIntervals {
-                if intervalIntent.intersects(otherInterval) {
-                    foundConflict = true
-                    break
-                }
-            }
+            let foundConflict = eventIntervals.contains { intervalIntent.intersects($0) }
             guard !foundConflict else {
                 startIntent = startIntent.addingTimeInterval(60)
                 continue

@@ -44,12 +44,12 @@ public final class SCKEventView: NSView {
     /// automatically by the event holder when a change in the event's title is 
     /// observed.
     private(set) var innerLabel: SCKTextField = {
-        let _label = SCKTextField(frame: .zero)
-        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
-        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
-        _label.autoresizingMask = [.width, .height]
-        _label.textColor = .black
-        return _label
+        let label = SCKTextField(frame: .zero)
+        label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
+        label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
+        label.autoresizingMask = [.width, .height]
+        label.textColor = .black
+        return label
     }()
 
     // MARK: - Drawing
@@ -105,7 +105,8 @@ public final class SCKEventView: NSView {
             strokeColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
         }
         let leftStrokeRect = CGRect(origin: .zero, size: CGSize(width: 4.0, height: frame.height))
-        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1), size: CGSize(width: frame.width, height: 1))
+        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1),
+                                      size: CGSize(width: frame.width, height: 1))
         strokeColor.setFill()
         leftStrokeRect.fill()
         bottomStrokeRect.fill()
@@ -155,8 +156,8 @@ public final class SCKEventView: NSView {
     }
 
     public override func resetCursorRects() {
-        let r = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
-        addCursorRect(r, cursor: .resizeUpDown)
+        let rect = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
+        addCursorRect(rect, cursor: .resizeUpDown)
     }
 
     // MARK: - Mouse events and dragging
@@ -345,10 +346,10 @@ public final class SCKEventView: NSView {
     // MARK: Right mouse events
 
     public override func menu(for event: NSEvent) -> NSMenu? {
-        guard let c = scheduleView.controller, let eM = c.eventManager else {
+        guard let controller = scheduleView.controller, let eventManager = controller.eventManager else {
             return nil
         }
-        return eM.scheduleController(c, menuForEvent: eventHolder.representedObject)
+        return eventManager.scheduleController(controller, menuForEvent: eventHolder.representedObject)
     }
 
     public override func rightMouseDown(with event: NSEvent) {

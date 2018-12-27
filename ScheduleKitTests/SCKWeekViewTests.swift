@@ -31,8 +31,8 @@ class SCKWeekViewTests: XCTestCase {
         let weekBeginning = calendar.date(from: weekComps)!
         weekComps.weekOfYear = weekComps.weekOfYear! + 1
         let nextWeekBeginning = calendar.date(from: weekComps)
-        let eD = nextWeekBeginning?.addingTimeInterval(-1)
-        let interval = DateInterval(start: weekBeginning, end: eD!)
+        let eDate = nextWeekBeginning?.addingTimeInterval(-1)
+        let interval = DateInterval(start: weekBeginning, end: eDate!)
         weekView.dateInterval = interval
     }
 
@@ -45,8 +45,8 @@ class SCKWeekViewTests: XCTestCase {
         let weekBeginning = calendar.date(from: weekComps)!
         weekComps.weekOfYear = weekComps.weekOfYear! + 1
         let nextWeekBeginning = calendar.date(from: weekComps)
-        let eD = nextWeekBeginning?.addingTimeInterval(-1)
-        let interval = DateInterval(start: weekBeginning, end: eD!)
+        let eDate = nextWeekBeginning?.addingTimeInterval(-1)
+        let interval = DateInterval(start: weekBeginning, end: eDate!)
 
         XCTAssertEqual(weekView.dateInterval, interval, "Last week not set.")
     }
@@ -60,8 +60,8 @@ class SCKWeekViewTests: XCTestCase {
         let weekBeginning = calendar.date(from: weekComps)!
         weekComps.weekOfYear = weekComps.weekOfYear! + 1
         let nextWeekBeginning = calendar.date(from: weekComps)
-        let eD = nextWeekBeginning?.addingTimeInterval(-1)
-        let interval = DateInterval(start: weekBeginning, end: eD!)
+        let eDate = nextWeekBeginning?.addingTimeInterval(-1)
+        let interval = DateInterval(start: weekBeginning, end: eDate!)
 
         XCTAssertEqual(weekView.dateInterval, interval, "Next week not set.")
     }

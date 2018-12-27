@@ -142,20 +142,19 @@ final class SCKHourLabelingView: NSView {
     }
 
     override func updateConstraints() {
-        for (i, wrapper) in labelWrappers {
+        for (idx, wrapper) in labelWrappers {
             guard wrapper.label.superview != nil else { continue }
-            switch i {
+            var yMargin: CGFloat
+            switch idx {
             case 0..<24: // Hour label
-                let y = CGFloat(i-firstHour) * hourHeight - 7
-                wrapper.yConstraint.constant = y + paddingTop
-                wrapper.yConstraint.isActive = true
+                yMargin = CGFloat(idx-firstHour) * hourHeight - 7
             default: // Get the hour and the minute
-                var hour = i; while hour >= 50 { hour -= 50 }
+                var hour = idx; while hour >= 50 { hour -= 50 }
                 let hourOffset = CGFloat(hour - firstHour) * hourHeight
-                let y = hourOffset+hourHeight * CGFloat((i-hour)/10)/60.0 - 7
-                wrapper.yConstraint.constant = y + paddingTop
-                wrapper.yConstraint.isActive = true
+                yMargin = hourOffset+hourHeight * CGFloat((idx-hour)/10)/60.0 - 7
             }
+            wrapper.yConstraint.constant = yMargin + paddingTop
+            wrapper.yConstraint.isActive = true
         }
         super.updateConstraints()
     }

@@ -19,8 +19,8 @@ final class SCKDayPointTests: XCTestCase {
         XCTAssertEqual(point.dayOffset, 37230)
 
         let calendar = Calendar.current
-        let d = calendar.date(bySettingHour: 10, minute: 20, second: 30, of: Date())
-        let point2 = SCKDayPoint(date: d!)
+        let date = calendar.date(bySettingHour: 10, minute: 20, second: 30, of: Date())
+        let point2 = SCKDayPoint(date: date!)
         XCTAssertEqual(point2.hour, 10)
         XCTAssertEqual(point2.minute, 20)
         XCTAssertEqual(point2.second, 30)

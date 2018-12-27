@@ -87,10 +87,10 @@ public class SCKGridView: SCKView {
 
     public override var dateInterval: DateInterval {
         didSet { // Set up day count and day labels
-            let sD = dateInterval.start
-            let eD = dateInterval.end.addingTimeInterval(1)
-            dayCount = sharedCalendar.dateComponents([.day], from: sD, to: eD).day!
-            dayLabelingView.configure(dayCount: dayCount, startDate: sD)
+            let sDate = dateInterval.start
+            let eDate = dateInterval.end.addingTimeInterval(1)
+            dayCount = sharedCalendar.dateComponents([.day], from: sDate, to: eDate).day!
+            dayLabelingView.configure(dayCount: dayCount, startDate: sDate)
             _ = self.minuteTimer
         }
     }
@@ -363,9 +363,9 @@ public class SCKGridView: SCKView {
     /// A timer that fires every minute to mark the view as needing display in order to update the "now" line.
     private lazy var minuteTimer: Timer = {
         let sel = #selector(SCKGridView.minuteTimerFired(timer:))
-        let t = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: sel, userInfo: nil, repeats: true)
-        t.tolerance = 50.0
-        return t
+        let tmr = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: sel, userInfo: nil, repeats: true)
+        tmr.tolerance = 50.0
+        return tmr
     }()
 
     @objc dynamic func minuteTimerFired(timer: Timer) {
@@ -419,14 +419,14 @@ public class SCKGridView: SCKView {
     }
 
     private func drawDraggingGuidesIfNeeded() {
-        guard let dV = eventViewBeingDragged else {return}
-        (dV.backgroundColor ?? NSColor.darkGray).setFill()
+        guard let dView = eventViewBeingDragged else { return }
+        (dView.backgroundColor ?? NSColor.darkGray).setFill()
 
         func fill(_ xPos: CGFloat, _ yPos: CGFloat, _ wDim: CGFloat, _ hDim: CGFloat) {
             CGRect(x: xPos, y: yPos, width: wDim, height: hDim).fill()
         }
         let canvas = contentRect
-        let dragFrame = dV.frame
+        let dragFrame = dView.frame
 
         // Left, right, top and bottom guides
         fill(canvas.minX, dragFrame.midY-1.0, dragFrame.minX-canvas.minX, 2.0)
@@ -441,7 +441,7 @@ public class SCKGridView: SCKView {
             fill(canvas.minX+dayWidth*CGFloat(trunc(startOffset/offsetPerDay)), canvas.minY, dayWidth, 2.0)
             let startDate = calculateDate(for: startOffset)!
             let sPoint = SCKDayPoint(date: startDate)
-            let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dV.eventHolder.cachedDuration)*60.0))
+            let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dView.eventHolder.cachedDuration)*60.0))
             let sLabelText = NSString(format: "%ld:%02ld", sPoint.hour, sPoint.minute)
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
             let attrs: [NSAttributedString.Key: Any] = [
@@ -458,7 +458,7 @@ public class SCKGridView: SCKView {
                                     width: eLabelSize.width, height: eLabelSize.height)
             sLabelText.draw(in: sLabelRect, withAttributes: attrs)
             eLabelText.draw(in: eLabelRect, withAttributes: attrs)
-            let durationText = "\(dV.eventHolder.cachedDuration) min"
+            let durationText = "\(dView.eventHolder.cachedDuration) min"
             let dLabelSize = durationText.size(withAttributes: attrs)
             let durationRect = CGRect(x: Constants.HourAreaWidth/2.0-dLabelSize.width/2.0,
                                       y: dragFrame.midY-dLabelSize.height/2.0,

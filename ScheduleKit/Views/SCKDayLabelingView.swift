@@ -52,25 +52,25 @@ class SCKDayLabelingView: NSVisualEffectView {
         func activateConstraints() {
             NSLayoutConstraint.activate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
-            ].compactMap{$0})
+            ].compactMap {$0})
         }
 
         /// <#Description#>
         func deactivateConstraints() {
             NSLayoutConstraint.deactivate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
-            ].compactMap{$0})
+            ].compactMap {$0})
         }
     }
 
     /// A date formatter for day labels.
     private let dayLabelsDateFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "EEEE d"; return f
+        let formatter = DateFormatter(); formatter.dateFormat = "EEEE d"; return formatter
     }()
 
     /// A date formatter for month labels.
     private let monthLabelsDateFormatter: DateFormatter = {
-        let f = DateFormatter(); f.dateFormat = "MMMM"; return f
+        let formatter = DateFormatter(); formatter.dateFormat = "MMMM"; return formatter
     }()
 
     /// <#Description#>
@@ -145,7 +145,7 @@ class SCKDayLabelingView: NSVisualEffectView {
 
         for (weekdayIndex, wrapper) in labelWrappers.enumerated() {
             // 2. Calculate each wrapper's X origin.
-            let wrapperMinX = CGFloat(weekdayIndex) * wrapperWidth;
+            let wrapperMinX = CGFloat(weekdayIndex) * wrapperWidth
             // 3. Place weekday label in the horizontal axis
             let weekdayLabelHalfWidth = wrapper.weekdayLabel.frame.width / 2.0
             let weekdayLabelMinX = wrapperMinX + wrapperWidth/2.0 - weekdayLabelHalfWidth

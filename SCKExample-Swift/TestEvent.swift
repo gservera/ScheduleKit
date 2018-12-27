@@ -49,11 +49,11 @@ public enum EventKind: Int {
         self.title = title
         self.duration = duration
 
-        var t = Int(date.timeIntervalSinceReferenceDate)
-        while t % 60 > 0 {
-            t += 1
+        var noSecondsDate = Int(date.timeIntervalSinceReferenceDate)
+        while noSecondsDate % 60 > 0 {
+            noSecondsDate += 1
         }
-        self.scheduledDate = Date(timeIntervalSinceReferenceDate: Double(t))
+        self.scheduledDate = Date(timeIntervalSinceReferenceDate: Double(noSecondsDate))
         super.init()
     }
 

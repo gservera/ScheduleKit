@@ -18,8 +18,8 @@ static EventEngine * __shared;
     self = [super init];
     if (self) {
         _users = @[
-                   [[TestUser alloc] initWithName:@"Dr. Test 1" color:[NSColor colorWithRed:0.9 green:0.65 blue:0.4 alpha:1.0]],
-                   [[TestUser alloc] initWithName:@"Dr. Test 2" color:[NSColor colorWithRed:0.4 green:0.65 blue:0.9 alpha:1.0]]
+                   [[TestUser alloc] initWithName:@"Dr. Test 1" color:[NSColor systemOrangeColor]],
+                   [[TestUser alloc] initWithName:@"Dr. Test 2" color:[NSColor systemBlueColor]]
         ];
         _events = [TestEvent sampleEventsForUsers:_users];
     }

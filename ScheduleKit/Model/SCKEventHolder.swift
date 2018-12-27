@@ -214,8 +214,8 @@ internal final class SCKEventHolder: NSObject {
         isFrozen = false
 
         // Process pending changes
-        for c in changesWhileFrozen {
-            c.commit()
+        for change in changesWhileFrozen {
+            change.commit()
         }
         changesWhileFrozen = []
     }

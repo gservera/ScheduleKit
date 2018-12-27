@@ -127,8 +127,8 @@ final class WeekViewController: SCKViewController, SCKConcreteEventManaging {
                 dayCount += 1
             }
         }
-        let eD = Calendar.current.date(byAdding: .day, value: dayCount, to: scheduleView.dateInterval.start)!
-        scheduleView.dateInterval = DateInterval(start: scheduleView.dateInterval.start, end: eD)
+        let eDate = Calendar.current.date(byAdding: .day, value: dayCount, to: scheduleView.dateInterval.start)!
+        scheduleView.dateInterval = DateInterval(start: scheduleView.dateInterval.start, end: eDate)
         reloadData(ofConcreteType: TestEvent.self)
     }
 }
