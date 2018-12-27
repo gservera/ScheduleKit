@@ -157,6 +157,7 @@
 		99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKDayPoint.swift; sourceTree = "<group>"; };
 		99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDefinitions.swift; sourceTree = "<group>"; };
 		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
+		99C1017D21D51B7A000E2530 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		99C152DA1A82D94C00096C8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKViewControllerTests.swift; sourceTree = "<group>"; };
@@ -321,6 +322,7 @@
 		99E7D0971A4AF3B500713F18 = {
 			isa = PBXGroup;
 			children = (
+				99C1017D21D51B7A000E2530 /* .gitignore */,
 				99D50B421DF7731B00A729B4 /* cartfile */,
 				99A418701F9E0421001CB55C /* .swiftlint.yml */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
