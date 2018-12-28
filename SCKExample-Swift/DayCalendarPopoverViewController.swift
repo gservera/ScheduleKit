@@ -25,9 +25,9 @@ class DayCalendarPopoverViewController: NSViewController {
 
     @IBAction func datePickerValueChanged(_ sender: NSDatePicker) {
         let calendar = Calendar.current
-        let sD = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: sender.dateValue)
-        let eD = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: sender.dateValue)
-        dayView.dateInterval = DateInterval(start: sD!, end: eD!)
+        let sDate = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: sender.dateValue)
+        let eDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: sender.dateValue)
+        dayView.dateInterval = DateInterval(start: sDate!, end: eDate!)
         dayView.controller.reloadData(ofConcreteType: TestEvent.self)
     }
 }

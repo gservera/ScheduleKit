@@ -326,10 +326,10 @@ import Cocoa
             for eventView in eventViews {
                 eventView.needsDisplay = true
             }
-            if let s = selectedEventView, let eM = controller.eventManager {
+            if let selected = selectedEventView, let eventManager = controller.eventManager {
                 //Event view has already checked if `s` was the same as old value.
-                let theEvent = s.eventHolder.representedObject
-                eM.scheduleController(controller, didSelectEvent: theEvent)
+                let theEvent = selected.eventHolder.representedObject
+                eventManager.scheduleController(controller, didSelectEvent: theEvent)
             }
         }
     }
@@ -342,9 +342,9 @@ import Cocoa
         if event.clickCount == 2 {
             let loc = convert(event.locationInWindow, from: nil)
             let offset = relativeTimeLocation(for: loc)
-            if offset != SCKRelativeTimeLocationInvalid, let eM = controller.eventManager {
+            if offset != SCKRelativeTimeLocationInvalid, let eventManager = controller.eventManager {
                 let blankDate = calculateDate(for: offset)!
-                eM.scheduleController(controller, didDoubleClickBlankDate: blankDate)
+                eventManager.scheduleController(controller, didDoubleClickBlankDate: blankDate)
             }
         }
     }

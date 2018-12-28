@@ -44,12 +44,12 @@ public final class SCKEventView: NSView {
     /// automatically by the event holder when a change in the event's title is 
     /// observed.
     private(set) var innerLabel: SCKTextField = {
-        let _label = SCKTextField(frame: .zero)
-        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
-        _label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
-        _label.autoresizingMask = [.width, .height]
-        _label.textColor = .black
-        return _label
+        let label = SCKTextField(frame: .zero)
+        label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
+        label.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 249), for: .vertical)
+        label.autoresizingMask = [.width, .height]
+        label.textColor = .black
+        return label
     }()
 
     // MARK: - Drawing
@@ -67,7 +67,7 @@ public final class SCKEventView: NSView {
 
         if isAnyViewSelected && !isThisViewSelected {
             // Set color to gray when another event is selected
-            fillColor = NSColor(white: 0.85, alpha: 1.0)
+            fillColor = NSColor.windowBackgroundColor
         } else {
             // No view selected or this view selected. Let's determine background
             // color.
@@ -87,7 +87,11 @@ public final class SCKEventView: NSView {
 
         // Make more transparent if dragging this view.
         if isThisViewSelected, case .draggingContent(_, _, _) = draggingStatus {
-            fillColor = fillColor.withAlphaComponent(0.7)
+            if #available(OSX 10.14, *) {
+                fillColor = fillColor.withSystemEffect(.deepPressed)
+            } else {
+                fillColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
+            }
         }
 
         let wholeRect = CGRect(origin: CGPoint.zero, size: frame.size)
@@ -101,7 +105,8 @@ public final class SCKEventView: NSView {
             strokeColor = fillColor.blended(withFraction: 0.2, of: .black) ?? .black
         }
         let leftStrokeRect = CGRect(origin: .zero, size: CGSize(width: 4.0, height: frame.height))
-        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1), size: CGSize(width: frame.width, height: 1))
+        let bottomStrokeRect = CGRect(origin: CGPoint(x: 0, y: frame.height-1),
+                                      size: CGSize(width: frame.width, height: 1))
         strokeColor.setFill()
         leftStrokeRect.fill()
         bottomStrokeRect.fill()
@@ -114,9 +119,13 @@ public final class SCKEventView: NSView {
 
     // MARK: - View lifecycle
 
+    /// The event view's width constraint
     var widthConstraint: NSLayoutConstraint!
+    /// The event view's height constraint
     var heightConstraint: NSLayoutConstraint!
+    /// The event view's leading constraint
     var leadingConstraint: NSLayoutConstraint!
+    /// The event view's top constraint
     var topConstraint: NSLayoutConstraint!
 
     /// The `SCKView` instance th which this view has been added.
@@ -138,13 +147,17 @@ public final class SCKEventView: NSView {
 
     // MARK: - Overrides
 
+    public override var isOpaque: Bool {
+        return true
+    }
+
     public override var isFlipped: Bool {
         return true
     }
 
     public override func resetCursorRects() {
-        let r = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
-        addCursorRect(r, cursor: .resizeUpDown)
+        let rect = NSRect(x: 0, y: frame.height-2.0, width: frame.width, height: 4.0)
+        addCursorRect(rect, cursor: .resizeUpDown)
     }
 
     // MARK: - Mouse events and dragging
@@ -333,10 +346,10 @@ public final class SCKEventView: NSView {
     // MARK: Right mouse events
 
     public override func menu(for event: NSEvent) -> NSMenu? {
-        guard let c = scheduleView.controller, let eM = c.eventManager else {
+        guard let controller = scheduleView.controller, let eventManager = controller.eventManager else {
             return nil
         }
-        return eM.scheduleController(c, menuForEvent: eventHolder.representedObject)
+        return eventManager.scheduleController(controller, menuForEvent: eventHolder.representedObject)
     }
 
     public override func rightMouseDown(with event: NSEvent) {

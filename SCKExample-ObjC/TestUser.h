@@ -3,17 +3,19 @@
 //  ScheduleKit
 //
 //  Created by Guillem Servera Negre on 14/11/16.
-//  Copyright © 2016 Guillem Servera. All rights reserved.
+//  Copyright © 2016-2017 Guillem Servera. All rights reserved.
 //
 
-@import Foundation;
 @import ScheduleKit;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TestUser : NSObject <SCKUser>
 
-- (nonnull instancetype)initWithName:(nonnull NSString*)name
-                               color:(nonnull NSColor*)color;
+- (instancetype)initWithName:(NSString*)name color:(NSColor*)color;
 
 @property (nonnull, strong) NSString * name;
-@property (nonatomic, readonly, strong) NSColor * _Nonnull eventColor;
+@property (nonatomic, readonly, strong) NSColor * eventColor;
 @end
+
+NS_ASSUME_NONNULL_END

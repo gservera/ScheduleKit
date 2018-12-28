@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 31/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -61,29 +61,29 @@ public struct SCKDayPoint {
     ///
     /// - returns: The initialized SCKDayPoint.
     public init(hour: Int, minute: Int, second: Int) {
-        var _hour = hour, _minute = minute, _second = second
-        while _second >= 60 {
-            _second -= 60; _minute += 1
+        var zHour = hour, zMinute = minute, zSecond = second
+        while zSecond >= 60 {
+            zSecond -= 60; zMinute += 1
         }
-        while _second <= -60 {
-            _second += 60; _minute -= 1
+        while zSecond <= -60 {
+            zSecond += 60; zMinute -= 1
         }
-        if _second < 0 {
-            _second = 60 + _second; _minute -= 1
+        if zSecond < 0 {
+            zSecond = 60 + zSecond; zMinute -= 1
         }
-        while _minute >= 60 {
-            _minute -= 60; _hour += 1
+        while zMinute >= 60 {
+            zMinute -= 60; zHour += 1
         }
-        while _minute <= -60 {
-            _minute += 60; _hour -= 1
+        while zMinute <= -60 {
+            zMinute += 60; zHour -= 1
         }
-        if _minute < 0 {
-            _minute = 60 + _minute; _hour -= 1
+        if zMinute < 0 {
+            zMinute = 60 + zMinute; zHour -= 1
         }
-        self.hour = _hour
-        self.minute = _minute
-        self.second = _second
-        dayOffset = Double(_second) + Double(_minute * 60) + Double (_hour * 3600)
+        self.hour = zHour
+        self.minute = zMinute
+        self.second = zSecond
+        dayOffset = Double(zSecond) + Double(zMinute * 60) + Double (zHour * 3600)
     }
 }
 

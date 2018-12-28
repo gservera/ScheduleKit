@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 24/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (http://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -214,8 +214,8 @@ internal final class SCKEventHolder: NSObject {
         isFrozen = false
 
         // Process pending changes
-        for c in changesWhileFrozen {
-            c.commit()
+        for change in changesWhileFrozen {
+            change.commit()
         }
         changesWhileFrozen = []
     }

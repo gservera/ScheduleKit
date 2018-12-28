@@ -56,7 +56,7 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
     private var lastCount = 0
 
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if segue.identifier == .dayCalendarPopover {
+        if segue.identifier == "dayCalendarPopover" {
             let destination = SegueDescriptor<DayCalendarPopoverViewController>(segue: segue).destination
             destination.dayView = dayView
         }
@@ -117,7 +117,8 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
         return alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
     }
 
-    func scheduleController(_ controller: SCKViewController, shouldChangeDateOfConcreteEvent event: TestEvent, from oldValue: Date, to newValue: Date) -> Bool {
+    func scheduleController(_ controller: SCKViewController, shouldChangeDateOfConcreteEvent event: TestEvent,
+                            from oldValue: Date, to newValue: Date) -> Bool {
         let formatter = DateFormatter(); formatter.dateStyle = .medium; formatter.timeStyle = .medium
         let alert = NSAlert()
         alert.messageText = "Date change"

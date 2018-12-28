@@ -64,7 +64,7 @@ import Cocoa
 ///
 public class SCKGridView: SCKView {
 
-    private struct Constants {
+    struct Constants {
         static let DayAreaHeight: CGFloat = 40.0
         static let DayAreaMarginBottom: CGFloat = 20.0
         static let MaxHeightPerHour: CGFloat = 300.0
@@ -143,7 +143,7 @@ public class SCKGridView: SCKView {
     // MARK: Day and month labels
 
     /// A container view for day labels. Pinned at the top of the scroll view.
-    private let dayLabelingView = SCKDayLabelingView(frame: .zero)
+    private let dayLabelingView = SCKDayLabelingView(frame: CGRect(x: 0, y: 0, width: 0, height: Constants.DayAreaHeight))
 
     /// A container view for hour labels. Pinned left in the scroll view.
     private let hourLabelingView = SCKHourLabelingView(frame: .zero)
@@ -170,13 +170,13 @@ public class SCKGridView: SCKView {
     /// minute combination.
     /// - Parameters:
     ///   - hour: The hour.
-    ///   - m: The minute.
+    ///   - minute: The minute.
     /// - Returns: The calculated Y position.
     internal func yFor(hour: Int, minute: Int) -> CGFloat {
         let canvas = contentRect
         let hours = CGFloat(hourCount)
-        let h = CGFloat(hour - firstHour)
-        return canvas.minY + canvas.height * (h + CGFloat(minute)/60.0) / hours
+        let hourIndex = CGFloat(hour - firstHour)
+        return canvas.minY + canvas.height * (hourIndex + CGFloat(minute)/60.0) / hours
     }
 
     // MARK: - Event Layout overrides
@@ -245,7 +245,8 @@ public class SCKGridView: SCKView {
             eventView.widthConstraint.constant = width
             eventView.leadingConstraint.constant = Constants.HourAreaWidth + CGFloat(day) * dayWidth + width * CGFloat(holder.conflictIndex)
             NSLayoutConstraint.activate([
-                eventView.topConstraint, eventView.leadingConstraint, eventView.widthConstraint, eventView.heightConstraint
+                eventView.topConstraint, eventView.leadingConstraint,
+                eventView.widthConstraint, eventView.heightConstraint
             ])
         }
 
@@ -339,7 +340,8 @@ public class SCKGridView: SCKView {
     func rectForUnavailableTimeRange(_ rng: SCKUnavailableTimeRange) -> CGRect {
         let canvas = contentRect
         let dayWidth: CGFloat = canvas.width / CGFloat(dayCount)
-        let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0, of: startDate)!
+        let sDate = sharedCalendar.date(bySettingHour: rng.startHour, minute: rng.startMinute, second: 0,
+                                        of: startDate)!
         let sOffset = calculateRelativeTimeLocation(for: sDate)
         if sOffset != SCKRelativeTimeLocationInvalid {
             let endSeconds = rng.endMinute * 60 + rng.endHour * 3600
@@ -361,9 +363,9 @@ public class SCKGridView: SCKView {
     /// A timer that fires every minute to mark the view as needing display in order to update the "now" line.
     private lazy var minuteTimer: Timer = {
         let sel = #selector(SCKGridView.minuteTimerFired(timer:))
-        let t = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: sel, userInfo: nil, repeats: true)
-        t.tolerance = 50.0
-        return t
+        let tmr = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: sel, userInfo: nil, repeats: true)
+        tmr.tolerance = 50.0
+        return tmr
     }()
 
     @objc dynamic func minuteTimerFired(timer: Timer) {
@@ -411,20 +413,20 @@ public class SCKGridView: SCKView {
         let minuteCount = Double(hourCount) * 60.0
         let elapsedMinutes = Double(components.hour!-firstHour) * 60.0 + Double(components.minute!)
         let yOrigin = canvas.minY + canvas.height * CGFloat(elapsedMinutes / minuteCount)
-        NSColor.red.setFill()
-        CGRect(x: canvas.minX, y: yOrigin-0.25, width: canvas.width, height: 0.5).fill()
+        NSColor.systemRed.setFill()
+        CGRect(x: canvas.minX, y: yOrigin-0.5, width: canvas.width, height: 1.0).fill()
         NSBezierPath(ovalIn: CGRect(x: canvas.minX-2.0, y: yOrigin-2.0, width: 4.0, height: 4.0)).fill()
     }
 
     private func drawDraggingGuidesIfNeeded() {
-        guard let dV = eventViewBeingDragged else {return}
-        (dV.backgroundColor ?? NSColor.darkGray).setFill()
+        guard let dView = eventViewBeingDragged else { return }
+        (dView.backgroundColor ?? NSColor.darkGray).setFill()
 
         func fill(_ xPos: CGFloat, _ yPos: CGFloat, _ wDim: CGFloat, _ hDim: CGFloat) {
             CGRect(x: xPos, y: yPos, width: wDim, height: hDim).fill()
         }
         let canvas = contentRect
-        let dragFrame = dV.frame
+        let dragFrame = dView.frame
 
         // Left, right, top and bottom guides
         fill(canvas.minX, dragFrame.midY-1.0, dragFrame.minX-canvas.minX, 2.0)
@@ -439,7 +441,7 @@ public class SCKGridView: SCKView {
             fill(canvas.minX+dayWidth*CGFloat(trunc(startOffset/offsetPerDay)), canvas.minY, dayWidth, 2.0)
             let startDate = calculateDate(for: startOffset)!
             let sPoint = SCKDayPoint(date: startDate)
-            let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dV.eventHolder.cachedDuration)*60.0))
+            let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dView.eventHolder.cachedDuration)*60.0))
             let sLabelText = NSString(format: "%ld:%02ld", sPoint.hour, sPoint.minute)
             let eLabelText = NSString(format: "%ld:%02ld", ePoint.hour, ePoint.minute)
             let attrs: [NSAttributedString.Key: Any] = [
@@ -456,7 +458,7 @@ public class SCKGridView: SCKView {
                                     width: eLabelSize.width, height: eLabelSize.height)
             sLabelText.draw(in: sLabelRect, withAttributes: attrs)
             eLabelText.draw(in: eLabelRect, withAttributes: attrs)
-            let durationText = "\(dV.eventHolder.cachedDuration) min"
+            let durationText = "\(dView.eventHolder.cachedDuration) min"
             let dLabelSize = durationText.size(withAttributes: attrs)
             let durationRect = CGRect(x: Constants.HourAreaWidth/2.0-dLabelSize.width/2.0,
                                       y: dragFrame.midY-dLabelSize.height/2.0,

@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 31/12/2014.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -148,12 +148,12 @@ import Foundation
     }
 
     public override func isEqual(_ object: Any?) -> Bool {
-        guard let o = object as? SCKUnavailableTimeRange else {
+        guard let obj = object as? SCKUnavailableTimeRange else {
             return false
         }
-        return (self.weekday == o.weekday
-            && self.startHour == o.startHour && self.startMinute == o.startMinute
-            && self.endHour == o.endHour && self.endMinute == o.endMinute)
+        return (self.weekday == obj.weekday
+            && self.startHour == obj.startHour && self.startMinute == obj.startMinute
+            && self.endHour == obj.endHour && self.endMinute == obj.endMinute)
     }
 
     // MARK: - NSSecureCoding

@@ -175,7 +175,6 @@
 		99D399591DDA705D00498366 /* TestEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEvent.m; sourceTree = "<group>"; };
 		99D3995B1DDA74B000498366 /* EventEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventEngine.h; sourceTree = "<group>"; };
 		99D3995C1DDA74B000498366 /* EventEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventEngine.m; sourceTree = "<group>"; };
-		99D50B421DF7731B00A729B4 /* cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = cartfile; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
@@ -313,7 +312,6 @@
 		99E7D0971A4AF3B500713F18 = {
 			isa = PBXGroup;
 			children = (
-				99D50B421DF7731B00A729B4 /* cartfile */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
 				99C152DA1A82D94C00096C8E /* README.md */,
 				99CDA4601A7066C200AFB505 /* LICENSE.md */,

@@ -11,6 +11,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/gservera/ScheduleKit/master/LICENSE.md) 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 ![Swift version](https://img.shields.io/badge/swift-4.2-orange.svg)
+[![codebeat badge](https://codebeat.co/badges/ad7dedb3-b3a1-4936-9804-0f97693c9c05)](https://codebeat.co/projects/github-com-gservera-schedulekit-elcapitan-support)
  
 ScheduleKit is a powerful graphical event management framework for macOS that provides a great way to display a set of event-like objects in either a day or week based timetable.
 

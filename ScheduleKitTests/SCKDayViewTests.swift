@@ -49,19 +49,20 @@ class SCKDayViewTests: XCTestCase {
 
     func testTomorrowDateInterval() {
         let calendar = Calendar.current
-        let t = calendar.date(byAdding: .day, value: 1, to: Date())!
-        let sD = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: t)
-        let eD = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: t)
-        let interval = DateInterval(start: sD!, end: eD!)
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: Date())!
+        let sDate = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: tomorrow)
+        let eDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: tomorrow)
+        let interval = DateInterval(start: sDate!, end: eDate!)
         dayView.increaseDayOffset(self)
         XCTAssertEqual(dayView.dateInterval, interval, "Tomorrow not set.")
     }
 
     func testResetDateInterval() {
         let calendar = Calendar.current
-        let sD = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
-        let eD = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())
-        let interval = DateInterval(start: sD!, end: eD!)
+        let sDate = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())
+        let eDate = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())
+        let interval = DateInterval(start: sDate!, end: eDate!)
+        dayView.decreaseDayOffset(self)
         dayView.resetDayOffset(self)
         XCTAssertEqual(dayView.dateInterval, interval, "Today not set.")
     }

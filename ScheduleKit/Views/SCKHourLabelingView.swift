@@ -26,48 +26,53 @@
 
 import Cocoa
 
+/// The SCKGridView's subview that displays a set of hour labels suitable for the view.
 final class SCKHourLabelingView: NSView {
 
-    class HourLabelWrapper {
+    /// A class to group a each hour label with its top margin constraint.
+    private class HourLabelWrapper {
 
-        static private func makeLabel(fontSize: CGFloat, color: NSColor) -> NSTextField {
-            let label = NSTextField(frame: .zero)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.isBordered = false;
-            label.isEditable = false;
-            label.isBezeled = false;
-            label.drawsBackground = false
-            label.font = .systemFont(ofSize: fontSize)
-            label.textColor = color
-            return label
-        }
-
+        /// The hour label
         let label: NSTextField
 
+        /// The label's top margin constraint.
+        var yConstraint: NSLayoutConstraint!
+
+        /// Initializes a new label + layout constraint pair.
+        ///
+        /// - Parameters:
+        ///   - text: The hour label's text (example 8:00)
+        ///   - fontSize: A font size for the hour label
+        ///   - color: The hour label's text color
         init(_ text: String, fontSize: CGFloat, color: NSColor) {
-            label = HourLabelWrapper.makeLabel(fontSize: fontSize, color: color)
+            label = NSTextField.makeLabel(fontSize: fontSize, color: color)
             label.stringValue = text
             label.sizeToFit()
         }
-
-        var labelYConstraint: NSLayoutConstraint!
     }
 
     /// A dictionary containing all generated hour labels stored using the hour
     /// as the key for n:00 labels and the hour plus 100*m for n:m labels.
     private var labelWrappers: [Int: HourLabelWrapper] = [:]
 
+    /// A local copy of the superview's first hour.
     private var firstHour: Int = 0
+
+    /// A local copy of the superview's hour count.
     private var hourCount: Int = 0
+
+    /// A local copy of the superview's calculated hour height.
     private var hourHeight: CGFloat = 0.0
+
+    /// A local copy of the superview's day labeling area height.
     var paddingTop: CGFloat = 0.0
 
     /// Generates all the hour and minute labels for the displayed hour range which have not been generated yet and
     /// installs them as subviews of this view, while also removing the unneeded ones from its superview. Eventually
     /// marks the view as needing layout. This method is called when the first hour or the hour count properties change.
     func configureHourLabels(firstHour: Int, hourCount: Int) {
-        self.hourCount = hourCount
         self.firstHour = firstHour
+        self.hourCount = hourCount
         // 1. Generate missing hour labels
         for hourIdx in 0..<hourCount {
             let hour = firstHour + hourIdx
@@ -94,15 +99,16 @@ final class SCKHourLabelingView: NSView {
             } else if wrapper.label.superview == nil && shouldBeInstalled {
                 addSubview(wrapper.label)
                 wrapper.label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-                wrapper.labelYConstraint = wrapper.label.topAnchor.constraint(equalTo: topAnchor)
+                wrapper.yConstraint = wrapper.label.topAnchor.constraint(equalTo: topAnchor)
                 for min in [10, 15, 20, 30, 40, 45, 50] {
-                    guard let mLabel = labelWrappers[min*10+hour]?.label else {
+                    guard let mWrapper = labelWrappers[min*10+hour] else {
                         Swift.print("Warning: An hour label was missing")
                         continue
                     }
+                    let mLabel = mWrapper.label
                     addSubview(mLabel)
                     mLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-                    labelWrappers[min*10+hour]?.labelYConstraint = labelWrappers[min*10+hour]!.label.topAnchor.constraint(equalTo: topAnchor)
+                    mWrapper.yConstraint = mLabel.topAnchor.constraint(equalTo: topAnchor)
                 }
             }
         }
@@ -136,28 +142,24 @@ final class SCKHourLabelingView: NSView {
     }
 
     override func updateConstraints() {
-
-        for (i, wrapper) in labelWrappers {
+        for (idx, wrapper) in labelWrappers {
             guard wrapper.label.superview != nil else { continue }
-            switch i {
+            var yMargin: CGFloat
+            switch idx {
             case 0..<24: // Hour label
-                let y = CGFloat(i-firstHour) * hourHeight - 7
-                wrapper.labelYConstraint.constant = y + paddingTop
-                wrapper.labelYConstraint.isActive = true
+                yMargin = CGFloat(idx-firstHour) * hourHeight - 7
             default: // Get the hour and the minute
-                var hour = i; while hour >= 50 { hour -= 50 }
+                var hour = idx; while hour >= 50 { hour -= 50 }
                 let hourOffset = CGFloat(hour - firstHour) * hourHeight
-                let y = hourOffset+hourHeight * CGFloat((i-hour)/10)/60.0 - 7
-                wrapper.labelYConstraint.constant = y + paddingTop
-                wrapper.labelYConstraint.isActive = true
+                yMargin = hourOffset+hourHeight * CGFloat((idx-hour)/10)/60.0 - 7
             }
+            wrapper.yConstraint.constant = yMargin + paddingTop
+            wrapper.yConstraint.isActive = true
         }
-
         super.updateConstraints()
     }
 
     public override var intrinsicContentSize: NSSize {
-        return CGSize(width: NSView.noIntrinsicMetric,
-                      height: paddingTop + CGFloat(hourCount) * hourHeight)
+        return CGSize(width: NSView.noIntrinsicMetric, height: paddingTop + CGFloat(hourCount) * hourHeight)
     }
 }

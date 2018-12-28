@@ -50,9 +50,8 @@ import AppKit
 /// method to begin new event fetches. If you work with multiple event classes, you'll have to use `SCKEventManaging`
 /// and call `reloadData()` to load new events instead.
 ///
-/// Events are fetched synchronously by default, but asynchronous event fetching
-/// is also available by setting the `loadsEventsAsynchronously` property to true
-/// and implementing the proper event manager methods.
+/// Events are fetched synchronously by default, but asynchronous event fetching is also available by setting
+/// the `loadsEventsAsynchronously` property to true and implementing the proper event manager methods.
 ///
 /// - Note: `SCKConcreteEventManaging` is not available in Objective-C. In
 ///         addition, the event manager must be set via `-setObjCDelegate:`.
@@ -75,10 +74,10 @@ import AppKit
 
     /// The scroll view managed by the controller.
     @objc public private(set) var scrollView: NSScrollView = {
-        let sV = NSScrollView(frame: .zero)
-        sV.autoresizingMask = [.width, .height]
-        sV.hasVerticalScroller = true
-        return sV
+        let sView = NSScrollView(frame: .zero)
+        sView.autoresizingMask = [.width, .height]
+        sView.hasVerticalScroller = true
+        return sView
     }()
 
     /// The schedule view managed by the controller
@@ -87,8 +86,8 @@ import AppKit
     /// Installs a new schedule view as the scroll view's document view, according to the value set in `mode`.
     private func setUpScheduleView() {
         let oldDelegate = scheduleView?.delegate
-        let f = CGRect(origin: CGPoint.zero, size: scrollView.contentSize)
-        let sView = (mode == .day) ? SCKDayView(frame: f) : SCKWeekView(frame: f)
+        let frame = CGRect(origin: CGPoint.zero, size: scrollView.contentSize)
+        let sView = (mode == .day) ? SCKDayView(frame: frame) : SCKWeekView(frame: frame)
         scrollView.documentView?.removeFromSuperview()
         scheduleView = nil
         scheduleView = sView
@@ -96,11 +95,11 @@ import AppKit
         sView.delegate = oldDelegate
         sView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.documentView = scheduleView
-        let p = sView.superview!
+        let clipView = sView.superview!
         NSLayoutConstraint.activate([
-            sView.leadingAnchor.constraint(equalTo: p.leadingAnchor),
-            sView.trailingAnchor.constraint(equalTo: p.trailingAnchor),
-            sView.topAnchor.constraint(equalTo: p.topAnchor)
+            sView.leadingAnchor.constraint(equalTo: clipView.leadingAnchor),
+            sView.trailingAnchor.constraint(equalTo: clipView.trailingAnchor),
+            sView.topAnchor.constraint(equalTo: clipView.topAnchor)
         ])
     }
 
@@ -122,7 +121,6 @@ import AppKit
     /// The object that works as the data source and delegate for this controller. A common implementation when
     /// subclassing `SCKViewController` is to make the subclass conform to either `SCKEventManaging` or
     /// `SCKConcreteEventManaging` and set itself as the event manager.
-    ///
     /// - Note: In an Objective-C target, you must use the `delegate` property instead.
     public weak var eventManager: SCKEventManaging?
 
@@ -134,7 +132,6 @@ import AppKit
 
     /// Triggers a synchronous or asynchronous event fetch operation on the event manager object. The used method
     /// will depend on the value of the `loadsEventsAsynchronously` property.
-    ///
     /// - Important: This is the method you should call to reload data from an Objective-C target or when working
     ///              with multiple event classes, but *never* in the concrete type mode. See more about the available
     ///              options in the class description. Once you've called this, *you must always reload data using the
@@ -153,7 +150,6 @@ import AppKit
 
     /// Triggers a synchronous or asynchronous event fetch operation on the event manager object. The used method
     /// will depend on the value of the `loadsEventsAsynchronously` property.
-    ///
     /// - Important: This is the method you should call to reload data when working with a single event class in Swift,
     ///              but *never* when working with multiple event classes. See more about the available options in the
     ///              class description. Once you've called this, *you must always reload data using the same
@@ -173,8 +169,7 @@ import AppKit
 
     // MARK: - Asynchronous event loading
 
-    /// Set this property to `true` to perform event fetching asyncronously.
-    /// Default value is `false`.
+    /// Set this property to `true` to perform event fetching asyncronously. Default value is `false`.
     @objc public var loadsEventsAsynchronously: Bool = false
 
     /// A set to track all the event requests initiated by this controller.
@@ -254,7 +249,6 @@ import AppKit
 
     /// The common pathway for parsing both syncrhonously and asynchronously
     /// loaded events. This method performs a series of operations:
-    ///
     /// 1. Compares the passed events to the last fetch. If they're the same, the
     ///    processing ends by simply invalidating their event views' layout.
     /// 2. If the sets are different, updates the _lastFecth property and continues.
@@ -298,7 +292,7 @@ import AppKit
         }
 
         // Insert new events
-        for e in (eventsToBeInserted.compactMap { $0 as? SCKEvent }) {
+        for event in (eventsToBeInserted.compactMap { $0 as? SCKEvent }) {
             let eventView = SCKEventView(frame: .zero)
             eventView.translatesAutoresizingMaskIntoConstraints = false
             scheduleView.addSubview(eventView)
@@ -307,14 +301,13 @@ import AppKit
             eventView.widthConstraint = eventView.widthAnchor.constraint(equalToConstant: 0)
             eventView.heightConstraint = eventView.heightAnchor.constraint(equalToConstant: 0)
             scheduleView.addEventView(eventView)
-            if let holder = SCKEventHolder(event: e, view: eventView, controller: self) {
+            if let holder = SCKEventHolder(event: event, view: eventView, controller: self) {
                 eventView.eventHolder = holder
                 eventHolders.insert(holder)
             } else {
                 print("Warning: Could not generate event holder")
             }
         }
-
         // Invalidate the view's layout.
         scheduleView.invalidateLayoutForAllEventViews(animated: false)
     }
@@ -407,7 +400,7 @@ import AppKit
     /// method, the schedule view will not reflect any change in that event.
     /// - Parameter event: The event that you don't want to be observed.
     @objc public final func stopObservingChanges(from event: SCKEvent) {
-        for holder in eventHolders where holder.representedObject.isEqual(event) {
+        for holder in eventHolders where holder.representedObject === event {
             holder.stopObservingRepresentedObjectChanges()
         }
     }

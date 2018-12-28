@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 3/10/2016.
- *  Copyright:  © 2014-2017 Guillem Servera (https://github.com/gservera)
+ *  Copyright:  © 2014-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ private final class SCKTextFieldCell: NSTextFieldCell {
         var rect = super.drawingRect(forBounds: rect)
         if !editingOrSelected {
             let size = cellSize(forBounds: rect)
-            let Δheight = rect.height - size.height
-            if Δheight > 0.0 {
-                rect.size.height -= Δheight
-                rect.origin.y = Δheight/2.0
+            let deltaHeight = rect.height - size.height
+            if deltaHeight > 0.0 {
+                rect.size.height -= deltaHeight
+                rect.origin.y = deltaHeight / 2.0
             }
         }
         return rect
