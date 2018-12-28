@@ -323,9 +323,9 @@
 			isa = PBXGroup;
 			children = (
 				99C1017D21D51B7A000E2530 /* .gitignore */,
-				99D50B421DF7731B00A729B4 /* cartfile */,
 				99A418701F9E0421001CB55C /* .swiftlint.yml */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
+				99D50B421DF7731B00A729B4 /* cartfile */,
 				99C152DA1A82D94C00096C8E /* README.md */,
 				99CDA4601A7066C200AFB505 /* LICENSE.md */,
 				99E7D0A31A4AF3B500713F18 /* ScheduleKit */,

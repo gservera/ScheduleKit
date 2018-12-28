@@ -740,11 +740,7 @@
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JmV-wh-3y9">
                                         <rect key="frame" x="29" y="12" width="16" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="0Vl-vQ-z0T"/>
-                                            <constraint firstAttribute="width" constant="16" id="d35-bh-9gw"/>
-                                        </constraints>
-                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="calendar" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="sCJ-6V-BGy">
+                                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="today" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="sCJ-6V-BGy">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -895,10 +891,6 @@
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vI3-ow-Ls7">
                                         <rect key="frame" x="29" y="12" width="16" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="16" id="azU-qn-AiD"/>
-                                            <constraint firstAttribute="height" constant="16" id="kSh-RO-I7V"/>
-                                        </constraints>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="today" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="oUO-m4-Vdv">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1340,7 +1332,6 @@
         <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NSRightFacingTriangleTemplate" width="9" height="12"/>
-        <image name="calendar" width="100" height="100"/>
-        <image name="today" width="100" height="100"/>
+        <image name="today" width="16" height="16"/>
     </resources>
 </document>

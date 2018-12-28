@@ -26,55 +26,65 @@
 
 import Cocoa
 
+/// The SCKGridView's subview that displays a suitable set of weekday and month labels.
 class SCKDayLabelingView: NSVisualEffectView {
 
-    /// <#Description#>
+    /// A class to group a each weekday label with its month label and layout constraints.
     class WeekdayLabelWrapper {
 
-        /// <#Description#>
+        /// The weekday label.
         let weekdayLabel = NSTextField.makeLabel(fontSize: 14, color: .labelColor)
-        /// <#Description#>
+        /// A month label. Shown in first day of week or first day of month.
         let monthLabel = NSTextField.makeLabel(fontSize: 12, color: .secondaryLabelColor)
-
-        /// <#Description#>
+        /// Whether this wrapper represents the first day of the month.
         var isFirstDayOfMonth: Bool = false
-
-        /// <#Description#>
+        /// The weekday label's top constraint regarding the labeling view.
         var weekdayLabelYConstraint: NSLayoutConstraint!
-        /// <#Description#>
+        /// The weekday label's leading constraint regarding the labeling view.
         var weekdayLabelXConstraint: NSLayoutConstraint!
-        /// <#Description#>
+        /// The month label's leading constraint regarding the labeling view.
         var monthLabelXConstraint: NSLayoutConstraint!
-        /// <#Description#>
+        /// The month label's top constraint regarding the labeling view.
         var monthLabelYConstraint: NSLayoutConstraint!
 
-        /// <#Description#>
+        /// Activates the leading and top constraints for the week and month labels.
         func activateConstraints() {
             NSLayoutConstraint.activate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
             ].compactMap {$0})
         }
 
-        /// <#Description#>
+        /// Deactivates the leading and top constraints for the week and month labels.
         func deactivateConstraints() {
             NSLayoutConstraint.deactivate([
                 weekdayLabelXConstraint, weekdayLabelYConstraint, monthLabelXConstraint, monthLabelYConstraint
             ].compactMap {$0})
         }
+
+        deinit {
+            weekdayLabel.removeFromSuperview()
+            monthLabel.removeFromSuperview()
+        }
     }
 
-    /// A date formatter for day labels.
+    /// The date formatter for day labels.
     private let dayLabelsDateFormatter: DateFormatter = {
         let formatter = DateFormatter(); formatter.dateFormat = "EEEE d"; return formatter
     }()
 
-    /// A date formatter for month labels.
+    /// The date formatter for month labels.
     private let monthLabelsDateFormatter: DateFormatter = {
         let formatter = DateFormatter(); formatter.dateFormat = "MMMM"; return formatter
     }()
 
-    /// <#Description#>
+    /// An array containing all generated day label wrappers.
     private var labelWrappers: [WeekdayLabelWrapper] = []
+
+    /// A local copy of the SCKGridView's day count.
+    private var dayCount: Int = 0
+
+    /// A local copy of the SCKGridView's start date.
+    private var startDate: Date!
 
     /// Generates all the day and month labels for the displayed day range
     /// which have not been generated yet and installs them as subviews of this
@@ -82,26 +92,29 @@ class SCKDayLabelingView: NSVisualEffectView {
     /// method also updates the label's string value to match the displayed date
     /// interval. Eventually marks the view as needing layout. This method is
     /// called whenever the day interval property changes.
+    /// - Warning: View is not inserted nor has a valid frame the first time this
+    ///            method is called.
     func configure(dayCount: Int, startDate: Date) {
         blendingMode = .withinWindow
+        self.dayCount = dayCount
+        self.startDate = startDate
         // 1. Generate missing labels
-        for day in 0..<dayCount {
-            if labelWrappers.count > day { // Skip already created labels
-                continue
-            }
-            let wrapper = WeekdayLabelWrapper()
-            labelWrappers.append(wrapper)
+        for day in 0..<dayCount where day >= labelWrappers.count { // Skip already created wrappers
+            labelWrappers.append(WeekdayLabelWrapper())
         }
         labelWrappers.removeSubrange(dayCount..<labelWrappers.count)
 
-        // 2. Add visible days' labels as subviews. Remove others if installed.
+        // 2. Prepare date formatters
+        reconfigureDateFormatAccordingToFrameWidth()
+
+        // 3. Add visible days' labels as subviews. Remove others if installed.
         // In addition, change label string values to the correct ones.
         for (day, wrapper) in labelWrappers.enumerated() {
             if wrapper.weekdayLabel.superview != nil && day >= dayCount {
                 wrapper.deactivateConstraints()
                 wrapper.weekdayLabel.removeFromSuperview()
                 wrapper.monthLabel.removeFromSuperview()
-            } else if day < dayCount {
+            } else {
                 let date = sharedCalendar.date(byAdding: .day, value: day, to: startDate)!
                 let text = dayLabelsDateFormatter.string(from: date).uppercased()
                 wrapper.isFirstDayOfMonth = (sharedCalendar.component(.day, from: date) == 1)
@@ -135,7 +148,7 @@ class SCKDayLabelingView: NSVisualEffectView {
             }
         }
 
-        // 3. Set needs update constraints
+        // 4. Set needs update constraints
         needsUpdateConstraints = true
     }
 
@@ -157,5 +170,26 @@ class SCKDayLabelingView: NSVisualEffectView {
             }
         }
         super.updateConstraints()
+    }
+
+    override func resize(withOldSuperviewSize oldSize: NSSize) {
+        super.resize(withOldSuperviewSize: oldSize)
+        // Reconfigure weekday and month labels' text to match the new size
+        guard let superview = superview else { return }
+        let oldWidth = oldSize.width / CGFloat(dayCount)
+        let newWidth = superview.frame.width / CGFloat(dayCount)
+        if oldWidth <= 110 && newWidth > 110 {
+            configure(dayCount: dayCount, startDate: startDate)
+        } else if oldWidth > 110 && newWidth <= 110 {
+            configure(dayCount: dayCount, startDate: startDate)
+        }
+    }
+
+    /// Changes the weekday and month date formatters' format to match a new size
+    private func reconfigureDateFormatAccordingToFrameWidth() {
+        guard let superview = superview else { return }
+        let prefersWiderFormat = superview.frame.width / CGFloat(dayCount) > 110
+        dayLabelsDateFormatter.dateFormat = prefersWiderFormat ? "EEEE d" : "EEE d"
+        monthLabelsDateFormatter.dateFormat = prefersWiderFormat ? "MMMM" : "MMM"
     }
 }

@@ -64,7 +64,7 @@ import Cocoa
 ///
 public class SCKGridView: SCKView {
 
-    private struct Constants {
+    struct Constants {
         static let DayAreaHeight: CGFloat = 40.0
         static let DayAreaMarginBottom: CGFloat = 20.0
         static let MaxHeightPerHour: CGFloat = 300.0
@@ -246,7 +246,8 @@ public class SCKGridView: SCKView {
             eventView.widthConstraint.constant = width
             eventView.leadingConstraint.constant = Constants.HourAreaWidth + CGFloat(day) * dayWidth + width * CGFloat(holder.conflictIndex)
             NSLayoutConstraint.activate([
-                eventView.topConstraint, eventView.leadingConstraint, eventView.widthConstraint, eventView.heightConstraint
+                eventView.topConstraint, eventView.leadingConstraint,
+                eventView.widthConstraint, eventView.heightConstraint
             ])
         }
 

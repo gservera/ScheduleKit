@@ -29,7 +29,7 @@ import Cocoa
 /// The SCKGridView's subview that displays a set of hour labels suitable for the view.
 final class SCKHourLabelingView: NSView {
 
-    /// A struct to group a each hour label with its top margin constraint.
+    /// A class to group a each hour label with its top margin constraint.
     private class HourLabelWrapper {
 
         /// The hour label
