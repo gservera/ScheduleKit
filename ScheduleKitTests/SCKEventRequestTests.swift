@@ -3,7 +3,7 @@
  *  ScheduleKit
  *
  *  Created:    Guillem Servera on 22/2/2017.
- *  Copyright:  © 2017 Guillem Servera (http://github.com/gservera)
+ *  Copyright:  © 2017-2019 Guillem Servera (https://github.com/gservera)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
