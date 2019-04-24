@@ -4,68 +4,20 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>SCKExample-ObjC.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>SCKExample-Swift.xcscheme</key>
+		<key>SCKExample-ObjC.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>SCKExample-Swift.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>ScheduleKit.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
-		</dict>
-	</dict>
-	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>990207221A55E00700912DF5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>990207311A55E00700912DF5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>992C110B1DEB54B200E156D0</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>995E93661A634C5100A3D2BF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>995E93781A634C5100A3D2BF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>998228511DDA684B0088B82F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>99CAFCD11DC9EAC7004502AA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>99E7D0A01A4AF3B500713F18</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>99E7D0AB1A4AF3B500713F18</key>
-		<dict>
-			<key>primary</key>
-			<true/>
 		</dict>
 	</dict>
 </dict>
