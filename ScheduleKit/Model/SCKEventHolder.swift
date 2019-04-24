@@ -249,13 +249,13 @@ internal extension SCKEventHolder {
     /// called by the event view when commiting a dragging operation to avoid
     /// observing its own changes. It's also called before deallocation when the
     /// controller discards it during a reload data phase.
-    internal func stopObservingRepresentedObjectChanges() {
+    func stopObservingRepresentedObjectChanges() {
         shouldIgnoreChanges = true
     }
 
     /// Stops ignoring changes observed from `representedObject`. This method is
     /// called by the event view after commiting a dragging operation.
-    internal func resumeObservingRepresentedObjectChanges() {
+    func resumeObservingRepresentedObjectChanges() {
         shouldIgnoreChanges = false
     }
 

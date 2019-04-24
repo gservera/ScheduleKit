@@ -287,7 +287,7 @@ import AppKit
                 existingHolder.stopObservingRepresentedObjectChanges()
                 scheduleView.removeEventView(existingHolder.eventView!)
                 existingHolder.eventView?.removeFromSuperview()
-                eventHolders.remove(at: eventHolders.index(of: existingHolder)!)
+                eventHolders.remove(at: eventHolders.firstIndex(of: existingHolder)!)
             }
         }
 

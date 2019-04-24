@@ -27,7 +27,7 @@
 import Cocoa
 
 /// The shared calendar object used by the ScheduleKit framework.
-internal(set) var sharedCalendar = Calendar.current
+var sharedCalendar = Calendar.current
 
 /// A `Double` value that represents relative time points between the lower and
 /// upper date bounds in a concrete `SCKView` subclass. Valid values are the ones

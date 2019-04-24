@@ -197,7 +197,7 @@ public class SCKGridView: SCKView {
             eventView.eventHolder.conflictCount = 1 //FIXME: Should not get here.
             NSLog("Unexpected behavior")
         }
-        eventView.eventHolder.conflictIndex = conflicts.index(where: { $0 === eventView.eventHolder }) ?? 0
+        eventView.eventHolder.conflictIndex = conflicts.firstIndex(where: { $0 === eventView.eventHolder }) ?? 0
     }
 
     override func prepareForDragging() {

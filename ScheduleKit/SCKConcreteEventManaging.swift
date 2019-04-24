@@ -152,46 +152,46 @@ public extension SCKConcreteEventManaging where EventType: SCKEvent {
     // SCKConcreteEventManaging's SCKEventManaging implementation.
 
     @available(OSX 10.12, *)
-    public func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent] {
+    func events(in dateInterval: DateInterval, for controller: SCKViewController) -> [SCKEvent] {
         return concreteEvents(in: dateInterval, for: controller)
     }
 
     @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
-    public func events(in dateInterval: _DateInterval,
+    func events(in dateInterval: _DateInterval,
                        for controller: SCKViewController) -> [SCKEvent] {
         return concreteEvents(inLegacy: dateInterval, for: controller)
     }
     
-    public func scheduleController(_ controller: SCKViewController, didMakeEventRequest request: SCKEventRequest) {
+    func scheduleController(_ controller: SCKViewController, didMakeEventRequest request: SCKEventRequest) {
         guard let casted = request as? SCKConcreteEventRequest<EventType> else {
             fatalError("Passed \(request) does not match expected type \(String(describing: EventType.self))")
         }
         return scheduleController(controller, didMakeConcreteEventRequest: casted)
     }
 
-    public func scheduleController(_ controller: SCKViewController, didSelectEvent event: SCKEvent) {
+    func scheduleController(_ controller: SCKViewController, didSelectEvent event: SCKEvent) {
         scheduleController(controller, didSelectConcreteEvent: casted(event))
     }
 
-    public func scheduleController(_ controller: SCKViewController, didDoubleClickEvent event: SCKEvent) {
+    func scheduleController(_ controller: SCKViewController, didDoubleClickEvent event: SCKEvent) {
         scheduleController(controller, didDoubleClickConcreteEvent: casted(event))
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    shouldChangeDurationOfEvent event: SCKEvent,
                                    from oldValue: Int, to newValue: Int) -> Bool {
         return scheduleController(controller, shouldChangeDurationOfConcreteEvent: casted(event),
                                   from: oldValue, to: newValue)
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    shouldChangeDateOfEvent event: SCKEvent,
                                    from oldValue: Date, to newValue: Date) -> Bool {
         return scheduleController(controller, shouldChangeDateOfConcreteEvent: casted(event),
                                   from: oldValue, to: newValue)
     }
 
-    public func scheduleController(_ controller: SCKViewController, menuForEvent event: SCKEvent) -> NSMenu? {
+    func scheduleController(_ controller: SCKViewController, menuForEvent event: SCKEvent) -> NSMenu? {
         return scheduleController(controller, menuForConcreteEvent: casted(event))
     }
 }
@@ -202,53 +202,53 @@ public extension SCKConcreteEventManaging where EventType: SCKEvent {
     // We provide default implementations to make them optional
 
     @available(OSX 10.12, *)
-    public func concreteEvents(in dateInterval: DateInterval,
+    func concreteEvents(in dateInterval: DateInterval,
                                for controller: SCKViewController) -> [EventType] {
         return []
     }
 
     @available(OSX, deprecated: 10.12, message: "_DateInterval is unavailable in macOS 10.12, use native DateInterval instead.")
-    public func concreteEvents(inLegacy dateInterval: _DateInterval,
+    func concreteEvents(inLegacy dateInterval: _DateInterval,
                                for controller: SCKViewController) -> [EventType] {
         return []
     }
     
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    didMakeConcreteEventRequest request: SCKConcreteEventRequest<EventType>) {
     }
 
-    public func scheduleControllerDidClearSelection(_ controller: SCKViewController) {
+    func scheduleControllerDidClearSelection(_ controller: SCKViewController) {
 
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    didSelectConcreteEvent event: EventType) {
 
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    didDoubleClickBlankDate date: Date) {
 
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    didDoubleClickConcreteEvent event: EventType) {
 
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    shouldChangeDurationOfConcreteEvent event: EventType,
                                    from oldValue: Int, to newValue: Int) -> Bool {
         return true
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    shouldChangeDateOfConcreteEvent event: EventType,
                                    from oldValue: Date, to newValue: Date) -> Bool {
         return true
     }
 
-    public func scheduleController(_ controller: SCKViewController,
+    func scheduleController(_ controller: SCKViewController,
                                    menuForConcreteEvent event: EventType) -> NSMenu? {
         return nil
     }
