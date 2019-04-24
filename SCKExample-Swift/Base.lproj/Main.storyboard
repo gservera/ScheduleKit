@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -600,7 +600,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSourceList:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -711,7 +711,7 @@
         <scene sceneID="3jP-Fq-Gyh">
             <objects>
                 <viewController id="RLT-XA-2h8" customClass="DayViewController" customModule="SCKExample_Swift" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" id="Lte-8v-1rP" customClass="WhiteView" customModule="SCKExample_Swift" customModuleProvider="target">
+                    <view key="view" wantsLayer="YES" id="Lte-8v-1rP">
                         <rect key="frame" x="0.0" y="0.0" width="251" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1156,7 +1156,7 @@
         <scene sceneID="Jvp-tF-M8W">
             <objects>
                 <viewController id="E4P-2b-KjP" customClass="TableViewController" customModule="SCKExample_Swift" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="sgW-8v-IJh" customClass="WhiteView" customModule="SCKExample_Swift" customModuleProvider="target">
+                    <view key="view" id="sgW-8v-IJh">
                         <rect key="frame" x="0.0" y="0.0" width="256" height="600"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -1332,6 +1332,6 @@
         <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NSRightFacingTriangleTemplate" width="9" height="12"/>
-        <image name="today" width="32" height="32"/>
+        <image name="today" width="16" height="16"/>
     </resources>
 </document>

@@ -53,7 +53,6 @@
 		99CAFCE41DC9EAEE004502AA /* TestEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCE31DC9EAEE004502AA /* TestEvent.swift */; };
 		99CAFCE51DC9EB0E004502AA /* ScheduleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; };
 		99CAFCE61DC9EB0E004502AA /* ScheduleKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		99CAFCEB1DC9EFBC004502AA /* WhiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */; };
 		99CAFCED1DC9F067004502AA /* EventLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */; };
 		99CAFCEF1DC9F294004502AA /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCEE1DC9F294004502AA /* TableViewController.swift */; };
 		99CAFCF11DC9F2A5004502AA /* EventEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCF01DC9F2A5004502AA /* EventEngine.swift */; };
@@ -179,7 +178,6 @@
 		99CAFCDD1DC9EAC7004502AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99CAFCE11DC9EAE5004502AA /* TestUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUser.swift; sourceTree = "<group>"; };
 		99CAFCE31DC9EAEE004502AA /* TestEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEvent.swift; sourceTree = "<group>"; };
-		99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteView.swift; sourceTree = "<group>"; };
 		99CAFCEC1DC9F067004502AA /* EventLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventLoadingView.swift; sourceTree = "<group>"; };
 		99CAFCEE1DC9F294004502AA /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		99CAFCF01DC9F2A5004502AA /* EventEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEngine.swift; sourceTree = "<group>"; };
@@ -331,7 +329,6 @@
 				99CAFCEE1DC9F294004502AA /* TableViewController.swift */,
 				99CAFCE11DC9EAE5004502AA /* TestUser.swift */,
 				99CAFCE31DC9EAEE004502AA /* TestEvent.swift */,
-				99CAFCEA1DC9EFBC004502AA /* WhiteView.swift */,
 				99CAFCF21DC9F97D004502AA /* DayViewController.swift */,
 				998260201DDB74FE00C46586 /* WeekViewController.swift */,
 				99A418721F9E14ED001CB55C /* SegueHandling.swift */,
@@ -706,7 +703,6 @@
 				996E96521DE984710056022E /* EditEventViewController.swift in Sources */,
 				99CAFCE41DC9EAEE004502AA /* TestEvent.swift in Sources */,
 				99CAFCF11DC9F2A5004502AA /* EventEngine.swift in Sources */,
-				99CAFCEB1DC9EFBC004502AA /* WhiteView.swift in Sources */,
 				99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */,
 				99CAFCE21DC9EAE5004502AA /* TestUser.swift in Sources */,
 				99CAFCF31DC9F97D004502AA /* DayViewController.swift in Sources */,
