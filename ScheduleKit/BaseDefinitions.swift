@@ -85,3 +85,9 @@ extension NSTextField {
     }
 
 }
+
+extension CGRect {
+    static func fill(_ xPos: CGFloat, _ yPos: CGFloat, _ wDim: CGFloat, _ hDim: CGFloat) {
+        CGRect(x: xPos, y: yPos, width: wDim, height: hDim).fill()
+    }
+}

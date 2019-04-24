@@ -334,8 +334,6 @@ public final class SCKEventView: NSView {
         closure()
         eventHolder.resumeObservingRepresentedObjectChanges()
         eventHolder.recalculateRelativeValues()
-        // FIXME: needed? will be called from endDraggingEventView
-        scheduleView.invalidateLayoutForAllEventViews()
     }
 
     private func flushUncommitedDraggingOperation() {

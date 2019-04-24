@@ -15,7 +15,7 @@ class EditEventViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        userPopUp.selectItem(at: EventEngine.shared.users.index(of: event.testUser)!)
+        userPopUp.selectItem(at: EventEngine.shared.users.firstIndex(of: event.testUser)!)
     }
 
     @IBAction func usePopUpChanged(_ sender: NSPopUpButton) {

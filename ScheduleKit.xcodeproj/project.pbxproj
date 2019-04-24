@@ -44,6 +44,7 @@
 		99BA3AC11DBF73DF00A6FB33 /* SCKDayPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC01DBF73DF00A6FB33 /* SCKDayPoint.swift */; };
 		99BA3AC31DBF800E00A6FB33 /* BaseDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */; };
 		99BA3AC51DBF814800A6FB33 /* SCKUnavailableTimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */; };
+		99C1018621D756FA000E2530 /* ScheduleKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C1018521D756FA000E2530 /* ScheduleKitUITests.swift */; };
 		99CAA5B71E642D20008E19F9 /* SCKViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */; };
 		99CAFCD51DC9EAC7004502AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99CAFCD41DC9EAC7004502AA /* AppDelegate.swift */; };
 		99CAFCD91DC9EAC7004502AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99CAFCD81DC9EAC7004502AA /* Assets.xcassets */; };
@@ -82,6 +83,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 99E7D0A01A4AF3B500713F18;
 			remoteInfo = ScheduleKit;
+		};
+		99C1018821D756FA000E2530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99E7D0981A4AF3B500713F18 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99CAFCD11DC9EAC7004502AA;
+			remoteInfo = "SCKExample-Swift";
 		};
 		99CAFCE71DC9EB0E004502AA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -158,6 +166,9 @@
 		99BA3AC21DBF800E00A6FB33 /* BaseDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseDefinitions.swift; sourceTree = "<group>"; };
 		99BA3AC41DBF814800A6FB33 /* SCKUnavailableTimeRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKUnavailableTimeRange.swift; sourceTree = "<group>"; };
 		99C1017D21D51B7A000E2530 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		99C1018321D756FA000E2530 /* ScheduleKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScheduleKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99C1018521D756FA000E2530 /* ScheduleKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleKitUITests.swift; sourceTree = "<group>"; };
+		99C1018721D756FA000E2530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99C152D91A82D4A000096C8E /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		99C152DA1A82D94C00096C8E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		99CAA5B61E642D20008E19F9 /* SCKViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCKViewControllerTests.swift; sourceTree = "<group>"; };
@@ -181,7 +192,6 @@
 		99D399591DDA705D00498366 /* TestEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestEvent.m; sourceTree = "<group>"; };
 		99D3995B1DDA74B000498366 /* EventEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventEngine.h; sourceTree = "<group>"; };
 		99D3995C1DDA74B000498366 /* EventEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventEngine.m; sourceTree = "<group>"; };
-		99D50B421DF7731B00A729B4 /* cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = cartfile; sourceTree = "<group>"; };
 		99E7D0A11A4AF3B500713F18 /* ScheduleKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ScheduleKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E7D0A51A4AF3B500713F18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99E7D0A61A4AF3B500713F18 /* ScheduleKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleKit.h; sourceTree = "<group>"; };
@@ -204,6 +214,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				998228661DDA686F0088B82F /* ScheduleKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99C1018021D756FA000E2530 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +314,15 @@
 			name = "Schedule views";
 			sourceTree = "<group>";
 		};
+		99C1018421D756FA000E2530 /* ScheduleKitUITests */ = {
+			isa = PBXGroup;
+			children = (
+				99C1018521D756FA000E2530 /* ScheduleKitUITests.swift */,
+				99C1018721D756FA000E2530 /* Info.plist */,
+			);
+			path = ScheduleKitUITests;
+			sourceTree = "<group>";
+		};
 		99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,13 +351,13 @@
 				99C1017D21D51B7A000E2530 /* .gitignore */,
 				99A418701F9E0421001CB55C /* .swiftlint.yml */,
 				99C152D91A82D4A000096C8E /* .travis.yml */,
-				99D50B421DF7731B00A729B4 /* cartfile */,
 				99C152DA1A82D94C00096C8E /* README.md */,
 				99CDA4601A7066C200AFB505 /* LICENSE.md */,
 				99E7D0A31A4AF3B500713F18 /* ScheduleKit */,
 				992C110D1DEB54B300E156D0 /* ScheduleKitTests */,
 				99CAFCD31DC9EAC7004502AA /* SCKExample-Swift */,
 				998228531DDA684B0088B82F /* SCKExample-ObjC */,
+				99C1018421D756FA000E2530 /* ScheduleKitUITests */,
 				99E7D0A21A4AF3B500713F18 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -343,6 +369,7 @@
 				99CAFCD21DC9EAC7004502AA /* SCKExample-Swift.app */,
 				998228521DDA684B0088B82F /* SCKExample-ObjC.app */,
 				992C110C1DEB54B200E156D0 /* ScheduleKitTests.xctest */,
+				99C1018321D756FA000E2530 /* ScheduleKitUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,6 +476,24 @@
 			productReference = 998228521DDA684B0088B82F /* SCKExample-ObjC.app */;
 			productType = "com.apple.product-type.application";
 		};
+		99C1018221D756FA000E2530 /* ScheduleKitUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99C1018A21D756FA000E2530 /* Build configuration list for PBXNativeTarget "ScheduleKitUITests" */;
+			buildPhases = (
+				99C1017F21D756FA000E2530 /* Sources */,
+				99C1018021D756FA000E2530 /* Frameworks */,
+				99C1018121D756FA000E2530 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99C1018921D756FA000E2530 /* PBXTargetDependency */,
+			);
+			name = ScheduleKitUITests;
+			productName = ScheduleKitUITests;
+			productReference = 99C1018321D756FA000E2530 /* ScheduleKitUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 99CAFCDE1DC9EAC7004502AA /* Build configuration list for PBXNativeTarget "SCKExample-Swift" */;
@@ -493,37 +538,44 @@
 		99E7D0981A4AF3B500713F18 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 1010;
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Guillem Servera";
 				TargetAttributes = {
 					992C110B1DEB54B200E156D0 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
-						LastSwiftMigration = 1010;
-						ProvisioningStyle = Manual;
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
 					};
 					998228511DDA684B0088B82F = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
 						ProvisioningStyle = Automatic;
 					};
+					99C1018221D756FA000E2530 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = Q6R76RZ9Z8;
+						LastSwiftMigration = 1020;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 99CAFCD11DC9EAC7004502AA;
+					};
 					99CAFCD11DC9EAC7004502AA = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
 					99E7D0A01A4AF3B500713F18 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = Q6R76RZ9Z8;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
 			buildConfigurationList = 99E7D09B1A4AF3B500713F18 /* Build configuration list for PBXProject "ScheduleKit" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -538,6 +590,7 @@
 				992C110B1DEB54B200E156D0 /* ScheduleKitTests */,
 				99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */,
 				998228511DDA684B0088B82F /* SCKExample-ObjC */,
+				99C1018221D756FA000E2530 /* ScheduleKitUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -557,6 +610,13 @@
 			files = (
 				9982285E1DDA684B0088B82F /* Assets.xcassets in Resources */,
 				998228611DDA684B0088B82F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99C1018121D756FA000E2530 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +687,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99C1017F21D756FA000E2530 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99C1018621D756FA000E2530 /* ScheduleKitUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		99CAFCCE1DC9EAC7004502AA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -685,6 +753,11 @@
 			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
 			targetProxy = 992C11121DEB54B300E156D0 /* PBXContainerItemProxy */;
 		};
+		99C1018921D756FA000E2530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99CAFCD11DC9EAC7004502AA /* SCKExample-Swift */;
+			targetProxy = 99C1018821D756FA000E2530 /* PBXContainerItemProxy */;
+		};
 		99CAFCE81DC9EB0E004502AA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 99E7D0A01A4AF3B500713F18 /* ScheduleKit */;
@@ -719,17 +792,20 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -740,14 +816,17 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ScheduleKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -789,6 +868,61 @@
 			};
 			name = Release;
 		};
+		99C1018B21D756FA000E2530 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ScheduleKitUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SCKExample-Swift";
+			};
+			name = Debug;
+		};
+		99C1018C21D756FA000E2530 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = Q6R76RZ9Z8;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ScheduleKitUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKitUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "SCKExample-Swift";
+			};
+			name = Release;
+		};
 		99CAFCDF1DC9EAC7004502AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -808,7 +942,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -829,7 +963,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.gservera.SCKExample-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -837,6 +971,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -892,6 +1027,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -958,7 +1094,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -983,7 +1119,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gservera.ScheduleKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1004,6 +1140,15 @@
 			buildConfigurations = (
 				998228641DDA684B0088B82F /* Debug */,
 				998228651DDA684B0088B82F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		99C1018A21D756FA000E2530 /* Build configuration list for PBXNativeTarget "ScheduleKitUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99C1018B21D756FA000E2530 /* Debug */,
+				99C1018C21D756FA000E2530 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1332,6 +1332,6 @@
         <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NSRightFacingTriangleTemplate" width="9" height="12"/>
-        <image name="today" width="16" height="16"/>
+        <image name="today" width="32" height="32"/>
     </resources>
 </document>

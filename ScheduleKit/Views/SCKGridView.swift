@@ -32,20 +32,17 @@ import Cocoa
 @objc public protocol SCKGridViewDelegate: SCKViewDelegate {
 
     /// Implement this method to specify the first displayed hour. Defaults to 0.
-    ///
     /// - Parameter gridView: The grid view asking for a start hour.
     /// - Returns: An hour value from 0 to 24.
     @objc(dayStartHourForGridView:) func dayStartHour(for gridView: SCKGridView) -> Int
 
     /// Implement this method to specify the last displayed hour. Defaults to 24.
-    ///
     /// - Parameter gridView: The grid view asking for a start hour.
     /// - Returns: An hour value from 0 to 24, where 0 is parsed as 24.
     @objc(dayEndHourForGridView:) func dayEndHour(for gridView: SCKGridView) -> Int
 
     /// Implemented by a grid-style schedule view's delegate to provide an array
     /// of unavailable time ranges that are drawn as so by the view.
-    ///
     /// - Parameter gridView: The schedule view asking for the values.
     /// - Returns: The array of unavailable time ranges (may be empty).
     @objc(unavailableTimeRangesForGridView:)
@@ -59,9 +56,7 @@ import Cocoa
 ///
 /// It also manages a series of day, month, hour and hour fraction labels, which 
 /// are automatically updated and laid out by this class.
-///
 /// - Note: Do not instantiate this class directly.
-///
 public class SCKGridView: SCKView {
 
     struct Constants {
@@ -104,10 +99,9 @@ public class SCKGridView: SCKView {
     /// A view representign the day end hour.
     private var dayEndPoint = SCKDayPoint(hour: 24, minute: 0, second: 0)
 
-    /// Called when the `dayStartPoint` and `dayEndPoint` change during
-    /// initialisation or when their values are read from the delegate. Sets the
-    /// `firstHour` and `hourCount` properties and ensures a minimum height per hour
-    /// to fill the view.
+    /// Called when the `dayStartPoint` and `dayEndPoint` change during  initialisation
+    /// or when their values are read from the delegate. Sets the `firstHour` and
+    /// `hourCount` properties and ensures a minimum height per hour to fill the view.
     private func updateHourParameters() {
         firstHour = dayStartPoint.hour
         hourCount = dayEndPoint.hour - dayStartPoint.hour
@@ -198,7 +192,7 @@ public class SCKGridView: SCKView {
             eventView.eventHolder.conflictCount = 1 //FIXME: Should not get here.
             NSLog("Unexpected behavior")
         }
-        eventView.eventHolder.conflictIndex = conflicts.index(where: { $0 === eventView.eventHolder }) ?? 0
+        eventView.eventHolder.conflictIndex = conflicts.firstIndex(where: { $0 === eventView.eventHolder }) ?? 0
     }
 
     override func prepareForDragging() {
@@ -216,8 +210,7 @@ public class SCKGridView: SCKView {
     // MARK: - NSView overrides
 
     public override var intrinsicContentSize: NSSize {
-        return CGSize(width: NSView.noIntrinsicMetric,
-                      height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
+        return CGSize(width: NSView.noIntrinsicMetric, height: CGFloat(hourCount) * hourHeight + Constants.paddingTop)
     }
 
     public override func removeFromSuperview() {
@@ -226,7 +219,6 @@ public class SCKGridView: SCKView {
     }
 
     public override func updateConstraints() {
-
         let marginLeft = Constants.HourAreaWidth
         let dayLabelsRect = CGRect(x: marginLeft, y: 0, width: frame.width-marginLeft, height: Constants.DayAreaHeight)
         let dayWidth = dayLabelsRect.width / CGFloat(dayCount)
@@ -250,7 +242,6 @@ public class SCKGridView: SCKView {
                 eventView.widthConstraint, eventView.heightConstraint
             ])
         }
-
         super.updateConstraints()
     }
 
@@ -423,23 +414,20 @@ public class SCKGridView: SCKView {
         guard let dView = eventViewBeingDragged else { return }
         (dView.backgroundColor ?? NSColor.darkGray).setFill()
 
-        func fill(_ xPos: CGFloat, _ yPos: CGFloat, _ wDim: CGFloat, _ hDim: CGFloat) {
-            CGRect(x: xPos, y: yPos, width: wDim, height: hDim).fill()
-        }
         let canvas = contentRect
         let dragFrame = dView.frame
 
         // Left, right, top and bottom guides
-        fill(canvas.minX, dragFrame.midY-1.0, dragFrame.minX-canvas.minX, 2.0)
-        fill(dragFrame.maxX, dragFrame.midY-1.0, frame.width-dragFrame.maxX, 2.0)
-        fill(dragFrame.midX-1.0, canvas.minY, 2.0, dragFrame.minY-canvas.minY)
-        fill(dragFrame.midX-1.0, dragFrame.maxY, 2.0, frame.height-dragFrame.maxY)
+        CGRect.fill(canvas.minX, dragFrame.midY-1.0, dragFrame.minX-canvas.minX, 2.0)
+        CGRect.fill(dragFrame.maxX, dragFrame.midY-1.0, frame.width-dragFrame.maxX, 2.0)
+        CGRect.fill(dragFrame.midX-1.0, canvas.minY, 2.0, dragFrame.minY-canvas.minY)
+        CGRect.fill(dragFrame.midX-1.0, dragFrame.maxY, 2.0, frame.height-dragFrame.maxY)
 
         let dayWidth = canvas.width / CGFloat(dayCount)
         let offsetPerDay = 1.0/Double(dayCount)
         let startOffset = relativeTimeLocation(for: CGPoint(x: dragFrame.midX, y: dragFrame.minY))
         if startOffset != SCKRelativeTimeLocationInvalid {
-            fill(canvas.minX+dayWidth*CGFloat(trunc(startOffset/offsetPerDay)), canvas.minY, dayWidth, 2.0)
+            CGRect.fill(canvas.minX + dayWidth * CGFloat(trunc(startOffset/offsetPerDay)), canvas.minY, dayWidth, 2.0)
             let startDate = calculateDate(for: startOffset)!
             let sPoint = SCKDayPoint(date: startDate)
             let ePoint = SCKDayPoint(date: startDate.addingTimeInterval(Double(dView.eventHolder.cachedDuration)*60.0))
@@ -473,8 +461,7 @@ public class SCKGridView: SCKView {
 
 extension SCKGridView {
 
-    /// A prefix that appended to the class name works as a user defaults key for
-    /// the last zoom level used by each subclass.
+    /// A prefix appended to the class name to work as a key to store last zoom level for each subclass in user defaults
     private static let defaultsZoomKeyPrefix = "MEKZoom"
 
     /// Increases the hour height property if less than the maximum value. Marks the view as needing display.

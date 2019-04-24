@@ -63,8 +63,13 @@ public enum EventKind: Int {
         let user1 = users[0]
         let user2 = users[1]
 
-        let cal = Calendar.current
-        var comps = cal.dateComponents([.day, .month, .year], from: Date())
+        let cal = Calendar(identifier: .gregorian)
+        var testDateComponents = DateComponents()
+        testDateComponents.year = 2020
+        testDateComponents.month = 5
+        testDateComponents.day = 1
+        let date = cal.date(from: testDateComponents)!
+        var comps = cal.dateComponents([.day, .month, .year], from: date)
         comps.hour = 9
 
         var dayMinus = DateComponents(); dayMinus.day = -1; dayMinus.hour = 1

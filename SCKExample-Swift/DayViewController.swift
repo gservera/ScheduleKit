@@ -44,9 +44,16 @@ final class DayViewController: SCKViewController, SCKConcreteEventManaging {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        let calendar = Calendar.current
-        let dayBeginning = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
-        let dayEnding = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: Date())!
+        let calendar = Calendar(identifier: .gregorian)
+        var testDateComponents = DateComponents()
+        testDateComponents.year = 2020
+        testDateComponents.month = 5
+        testDateComponents.day = 1
+        let date = calendar.date(from: testDateComponents)!
+        let dayBeginning = calendar.date(bySettingHour: 0, minute: 0, second: 0, of: date)!
+        let dayEnding = calendar.date(bySettingHour: 23, minute: 59, second: 59, of: date)!
+        scheduleView.setAccessibilityIdentifier("DayView")
+        scheduleView.setAccessibilityElement(true)
         scheduleView.delegate = self
         scheduleView.dateInterval = DateInterval(start: dayBeginning, end: dayEnding)
         reloadData(ofConcreteType: TestEvent.self)

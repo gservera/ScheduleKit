@@ -543,7 +543,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/WeekViewController.swift"
-            timestampString = "567699285.374032"
+            timestampString = "567766020.33781"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "95"
@@ -591,7 +591,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ScheduleKit/Views/SCKEventView.swift"
-            timestampString = "567614479.1767401"
+            timestampString = "567852784.8095731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
@@ -607,7 +607,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/WeekViewController.swift"
-            timestampString = "567699285.37421"
+            timestampString = "567766020.337992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
@@ -623,7 +623,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/WeekViewController.swift"
-            timestampString = "567699285.37428"
+            timestampString = "567766020.338071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
@@ -863,12 +863,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SCKExample-Swift/DayViewController.swift"
-            timestampString = "567526287.096293"
+            timestampString = "567766020.338279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ScheduleKitUITests/ScheduleKitUITests.swift"
+            timestampString = "567852784.810068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "testClickEvent()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

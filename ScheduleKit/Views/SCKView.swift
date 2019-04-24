@@ -174,7 +174,7 @@ import Cocoa
     /// - Parameter eventView: The event view to be removed. Must have been added
     ///                        previously via `addEventView(_:)`.
     internal final func removeEventView(_ eventView: SCKEventView) {
-        guard let index = eventViews.index(of: eventView) else {
+        guard let index = eventViews.firstIndex(of: eventView) else {
             Swift.print("Warning: Attempting to remove an unregistered event view")
             return
         }
@@ -243,7 +243,7 @@ import Cocoa
         // 2. Freeze event holders
         var holdersToFreeze = controller.eventHolders
         // Exclude event view being dragged (already frozen)
-        if let draggedView = eventViewBeingDragged, let idx = holdersToFreeze.index(of: draggedView.eventHolder) {
+        if let draggedView = eventViewBeingDragged, let idx = holdersToFreeze.firstIndex(of: draggedView.eventHolder) {
             holdersToFreeze.remove(at: idx)
         }
 

@@ -100,7 +100,7 @@ extension SCKDayPoint: Comparable {
 }
 
 extension SCKDayPoint: Hashable {
-    public var hashValue: Int {
-        return dayOffset.hashValue
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(dayOffset)
     }
 }
